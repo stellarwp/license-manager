@@ -43,10 +43,14 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 
 	const Chevron = expanded ? ChevronDown : ChevronRight;
 
+	// Legacy-licensed features are not marked available by the API but should
+	// render identically to available features — full controls, no muted style.
+	const isVisuallyAvailable = feature.is_available || showLegacyBadge;
+
 	return (
 		<div className={ cn(
 			'border-b last:border-b-0',
-			feature.is_available
+			isVisuallyAvailable
 				? cn( 'bg-white', pendingAction && 'opacity-75' )
 				: 'bg-muted/30'
 		) }>
@@ -59,7 +63,7 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 					<FeatureIcon slug={ feature.slug } />
 					<span className={ cn(
 						'font-medium min-w-0 text-sm truncate',
-						! feature.is_available && 'text-muted-foreground'
+						! isVisuallyAvailable && 'text-muted-foreground'
 					) }>
 						{ feature.name }
 					</span>
@@ -67,7 +71,7 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 					{ showLegacyBadge && <LicenseBadge type="legacy" /> }
 				</div>
 
-				{ feature.is_available ? (
+				{ isVisuallyAvailable ? (
 					<div className="flex items-center gap-3 ml-auto shrink-0">
 						<VersionDisplay
 							feature={ feature }
@@ -109,7 +113,7 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 				<div className="px-4 pb-3 pl-[2.75rem]">
 					<p className={ cn(
 						'text-sm text-muted-foreground leading-relaxed',
-						feature.is_available ? '!mt-[0.75em] !mb-0' : 'mt-2 mb-0'
+						isVisuallyAvailable ? '!mt-[0.75em] !mb-0' : 'mt-2 mb-0'
 					) }>
 						{ feature.description }
 					</p>
