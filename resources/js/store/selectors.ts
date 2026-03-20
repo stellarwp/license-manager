@@ -108,6 +108,17 @@ export const getActiveLegacyLicense = (state: State, slug: string): LegacyLicens
 export const isProductUnifiedLicensed = (state: State, productSlug: string): boolean =>
 	state.license.license.products.some( (p) => p.product_slug === productSlug );
 
+/**
+ * True when at least one feature belonging to the product has an active legacy license.
+ */
+export const hasActiveLegacyLicenseForProduct = createSelector(
+	(state: State, productSlug: string): boolean =>
+		Object.values( state.features.bySlug )
+			.filter( (f) => f.product === productSlug )
+			.some( (f) => state.legacyLicenses.bySlug[ f.slug ]?.is_active === true ),
+	(state: State, productSlug: string) => [ state.features.bySlug, state.legacyLicenses.bySlug, productSlug ]
+);
+
 // ---------------------------------------------------------------------------
 // Catalog
 // ---------------------------------------------------------------------------

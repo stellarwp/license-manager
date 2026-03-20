@@ -32,13 +32,14 @@ export function ProductSection( { product }: ProductSectionProps ) {
     const isSearching = searchQuery.trim().length > 0;
 
     // Full unfiltered set — used only for header counts so they stay stable.
-    const { hasLicense, licenseProduct, allFeaturesUnfiltered } = useSelect(
+    const { hasLicense, licenseProduct, allFeaturesUnfiltered, hasActiveLegacy } = useSelect(
         ( select ) => {
             const licenseProducts = select( harborStore ).getLicenseProducts();
             return {
                 allFeaturesUnfiltered: select( harborStore ).getFeaturesByProduct( product.slug ),
                 hasLicense:            select( harborStore ).hasLicense(),
                 licenseProduct:        licenseProducts.find( ( lp ) => lp.product_slug === product.slug ) ?? null,
+                hasActiveLegacy:       select( uplinkStore ).hasActiveLegacyLicenseForProduct( product.slug ),
             };
         },
         [ product.slug ],
@@ -66,6 +67,8 @@ export function ProductSection( { product }: ProductSectionProps ) {
                 </h2>
                 { tierName ? (
                     <LicenseBadge type="licensed" tierName={ tierName } />
+                ) : hasActiveLegacy ? (
+                    <LicenseBadge type="legacy" />
                 ) : (
                     <LicenseBadge type="not-licensed" className="text-white border-white/40" />
                 ) }
