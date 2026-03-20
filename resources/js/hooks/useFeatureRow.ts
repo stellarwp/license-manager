@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as harborStore } from '@/store';
+import { isFreeFeature } from '@/lib/license-utils';
 import { useToast } from '@/context/toast-context';
 import { HarborError } from '@/errors';
 import type { Feature } from '@/types/api';
@@ -52,7 +53,7 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 		[ feature.slug, feature.product ]
 	);
 
-	const showFreeBadge = feature.tier === null;
+	const showFreeBadge = isFreeFeature( feature.tier );
 
 	const [ pendingAction, setPendingAction ] = useState<PendingAction>( null );
 

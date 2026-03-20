@@ -7,6 +7,7 @@
 import { useSelect } from '@wordpress/data';
 import { useFilteredFeatures } from '@/hooks/useFilteredFeatures';
 import { store as harborStore } from '@/store';
+import { isFreeFeature } from '@/lib/license-utils';
 import type { CatalogTier, Feature } from '@/types/api';
 
 interface FeatureGroups {
@@ -41,11 +42,10 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
         [ productSlug ]
     );
 
-    const isFreeFeature       = ( f: Feature ) => ! f.tier || f.tier.toLowerCase().includes( 'free' );
-    const isLegacyAvailable   = ( f: Feature ) => activeLegacySlugs.has( f.slug );
+    const isLegacyAvailable = ( f: Feature ) => activeLegacySlugs.has( f.slug );
 
-    const availableFeatures = allFeatures.filter( ( f ) => f.is_available || isFreeFeature( f ) || isLegacyAvailable( f ) );
-    const lockedFeatures    = allFeatures.filter( ( f ) => ! f.is_available && ! isFreeFeature( f ) && ! isLegacyAvailable( f ) );
+    const availableFeatures = allFeatures.filter( ( f ) => f.is_available || isFreeFeature( f.tier ) || isLegacyAvailable( f ) );
+    const lockedFeatures    = allFeatures.filter( ( f ) => ! f.is_available && ! isFreeFeature( f.tier ) && ! isLegacyAvailable( f ) );
 
     const sortedCatalogTiers = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
 
