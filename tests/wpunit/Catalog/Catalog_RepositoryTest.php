@@ -187,13 +187,15 @@ final class Catalog_RepositoryTest extends HarborTestCase {
 
 		// Overwrite with a different collection.
 		$this->repository->set_catalog(
-			Catalog_Collection::from_array( [
+			Catalog_Collection::from_array(
 				[
-					'product_slug' => 'new-product',
-					'tiers'        => [],
-					'features'     => [],
-				],
-			] )
+					[
+						'product_slug' => 'new-product',
+						'tiers'        => [],
+						'features'     => [],
+					],
+				]
+			)
 		);
 
 		$after = $this->repository->get_cached();
