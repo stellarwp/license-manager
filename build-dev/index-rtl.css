@@ -399,6 +399,9 @@
   .uplink-ui .mt-2 {
     margin-top: calc(var(--spacing) * 2) !important;
   }
+  .uplink-ui .mt-8 {
+    margin-top: calc(var(--spacing) * 8) !important;
+  }
   .uplink-ui .\!mb-0 {
     margin-bottom: calc(var(--spacing) * 0) !important;
   }
