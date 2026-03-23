@@ -47,31 +47,25 @@ export const isFeatureUpdating = (state: State, slug: string): boolean =>
 	state.features.updating[slug] ?? false;
 
 /**
- * True when any plugin or theme feature is being toggled or updated.
+ * True when any feature is being toggled or updated.
  *
- * Both toggle and update operations trigger WordPress install/activate/deactivate
- * operations that should not run concurrently. Flag features are exempt
- * because they only flip a database option.
+ * Toggle and update operations trigger WordPress install/activate/deactivate
+ * operations that should not run concurrently.
  *
  * Memoized via createSelector so the loops only re-run when
  * the relevant sub-trees actually change.
  */
 export const isAnyInstallableBusy = createSelector(
 	(state: State): boolean => {
-		const { toggling, updating, bySlug } = state.features;
-		const isNonFlag = (slug: string): boolean => {
-			const feature = bySlug[slug];
-			return feature !== undefined && feature.type !== 'flag';
-		};
+		const { toggling, updating } = state.features;
 		return (
-			Object.keys(toggling).some(isNonFlag) ||
-			Object.keys(updating).some(isNonFlag)
+			Object.keys(toggling).length > 0 ||
+			Object.keys(updating).length > 0
 		);
 	},
 	(state: State) => [
 		state.features.toggling,
 		state.features.updating,
-		state.features.bySlug,
 	]
 );
 

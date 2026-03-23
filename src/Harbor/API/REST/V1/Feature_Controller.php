@@ -3,6 +3,7 @@
 namespace LiquidWeb\Harbor\API\REST\V1;
 
 use LiquidWeb\Harbor\Features\Error_Code;
+use LiquidWeb\Harbor\Features\Feature_Resource;
 use LiquidWeb\Harbor\Features\Manager;
 use LiquidWeb\Harbor\Features\Types\Feature;
 use LiquidWeb\Harbor\Utils\Cast;
@@ -191,7 +192,7 @@ class Feature_Controller extends WP_REST_Controller {
 		$data = [];
 
 		foreach ( $features as $feature ) {
-			$data[] = $feature->to_array();
+			$data[] = Feature_Resource::from_feature( $feature )->to_array();
 		}
 
 		return new WP_REST_Response( $data );
@@ -224,7 +225,7 @@ class Feature_Controller extends WP_REST_Controller {
 			);
 		}
 
-		return new WP_REST_Response( $feature->to_array() );
+		return new WP_REST_Response( Feature_Resource::from_feature( $feature )->to_array() );
 	}
 
 	/**
@@ -246,7 +247,7 @@ class Feature_Controller extends WP_REST_Controller {
 		}
 
 		return new WP_REST_Response(
-			$feature->to_array()
+			Feature_Resource::from_feature( $feature )->to_array()
 		);
 	}
 
@@ -268,7 +269,7 @@ class Feature_Controller extends WP_REST_Controller {
 		}
 
 		return new WP_REST_Response(
-			$feature->to_array()
+			Feature_Resource::from_feature( $feature )->to_array()
 		);
 	}
 
@@ -290,7 +291,7 @@ class Feature_Controller extends WP_REST_Controller {
 		}
 
 		return new WP_REST_Response(
-			$feature->to_array()
+			Feature_Resource::from_feature( $feature )->to_array()
 		);
 	}
 
@@ -372,12 +373,6 @@ class Feature_Controller extends WP_REST_Controller {
 				'readonly'    => true,
 				'context'     => [ 'view' ],
 			],
-			'version'           => [
-				'description' => __( 'Latest available version from the catalog, or null. Only present for installable features.', '%TEXTDOMAIN%' ),
-				'type'        => [ 'string', 'null' ],
-				'readonly'    => true,
-				'context'     => [ 'view' ],
-			],
 			'changelog'         => [
 				'description' => __( 'Changelog HTML for the latest version, or null. Only present for installable features.', '%TEXTDOMAIN%' ),
 				'type'        => [ 'string', 'null' ],
@@ -405,9 +400,9 @@ class Feature_Controller extends WP_REST_Controller {
 				'readonly'    => true,
 				'context'     => [ 'view' ],
 			],
-			'has_update'        => [
-				'description' => __( 'Whether a newer version is available and the feature is currently installed.', '%TEXTDOMAIN%' ),
-				'type'        => 'boolean',
+			'update_version'    => [
+				'description' => __( 'The version available via WordPress update transients, or null if no update is available.', '%TEXTDOMAIN%' ),
+				'type'        => [ 'string', 'null' ],
 				'readonly'    => true,
 				'context'     => [ 'view' ],
 			],
@@ -445,15 +440,6 @@ class Feature_Controller extends WP_REST_Controller {
 						$base_properties,
 						[ 'type' => array_merge( $base_properties['type'], [ 'enum' => [ Feature::TYPE_THEME ] ] ) ],
 						$installable_properties
-					),
-				],
-				[
-					'title'                => 'flag',
-					'type'                 => 'object',
-					'additionalProperties' => true,
-					'properties'           => array_merge(
-						$base_properties,
-						[ 'type' => array_merge( $base_properties['type'], [ 'enum' => [ Feature::TYPE_FLAG ] ] ) ]
 					),
 				],
 			],

@@ -35,15 +35,14 @@ final class Theme extends Feature implements Installable {
 				'is_dot_org'        => $attributes['is_dot_org'] ?? false,
 				'released_at'       => $attributes['released_at'] ?? null,
 				'installed_version' => $attributes['installed_version'] ?? null,
-				'version'           => $attributes['version'] ?? null,
 				'changelog'         => $attributes['changelog'] ?? null,
 			]
 		);
 
-		parent::__construct( $attributes );
+		// version lives in the catalog, not on the feature type.
+		unset( $attributes['version'] );
 
-		// has_update() reads $this->attributes, so it must be set after parent::__construct().
-		$this->attributes['has_update'] = $this->has_update();
+		parent::__construct( $attributes );
 	}
 
 	/**
@@ -88,29 +87,6 @@ final class Theme extends Feature implements Installable {
 	}
 
 	/**
-	 * Whether a newer version is available and this theme is currently installed.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool
-	 */
-	public function has_update(): bool {
-		$installed_version = $this->get_installed_version();
-
-		if ( $installed_version === null ) {
-			return false;
-		}
-
-		$catalog_version = Cast::to_string( $this->attributes['version'] ?? '' );
-
-		if ( $catalog_version === '' ) {
-			return false;
-		}
-
-		return version_compare( $catalog_version, $installed_version, '>' );
-	}
-
-	/**
 	 * Builds the complete update data array for this Theme feature.
 	 *
 	 * @since 1.0.0
@@ -120,18 +96,21 @@ final class Theme extends Feature implements Installable {
 	 * @return array<string, mixed>
 	 */
 	public function get_update_data( Catalog_Feature $catalog_feature ): array {
+		$installed_version = $this->get_installed_version() ?? '';
+		$catalog_version   = $catalog_feature->get_version() ?? '';
+
 		return [
 			'name'              => $this->get_name(),
 			'slug'              => $this->get_slug(),
-			'version'           => $catalog_feature->get_version() ?? '',
+			'version'           => $catalog_version,
 			'package'           => $catalog_feature->get_download_url() ?? '',
 			'url'               => $this->get_documentation_url(),
 			'author'            => implode( ', ', $this->get_authors() ),
 			'sections'          => [
 				'description' => $this->get_description(),
 			],
-			'installed_version' => $this->get_installed_version() ?? '',
-			'has_update'        => $this->has_update(),
+			'installed_version' => $installed_version,
+			'has_update'        => $installed_version !== '' && $catalog_version !== '' && version_compare( $catalog_version, $installed_version, '>' ),
 		];
 	}
 

@@ -65,7 +65,7 @@ The catalog defines which features exist, their metadata (name, description, typ
 
 For `Installable` features (Plugin, Theme), the resolver also reads `installed_version` from disk and stores it on the resolved Feature. This is the version currently on the site, distinct from the catalog's `version` which is the latest available. Flag features always have `installed_version: null`.
 
-`has_update()` is a computed method on the `Installable` interface that centralizes the update-available check. It returns `true` when the feature is installed on disk and `version_compare( catalog_version, installed_version, '>' )`. Both Plugin and Theme implement this method. The update handlers (`Plugin_Handler`, `Theme_Handler`) delegate to this result (via the `has_update` field in the update data array) rather than performing their own inline comparison.
+Update availability is not stamped onto the Feature objects themselves. The update handlers (`Plugin_Handler`, `Theme_Handler`) inject entries into the WordPress update transients (`update_plugins`, `update_themes`) after applying additional gating (dot-org exclusion, license checks). The REST layer uses `Feature_Resource` to read those transients and expose `update_version` — the version from the transient's `response` entry, or `null` when no update is available. This avoids a circular dependency: reading the transient fires our `site_transient` filter, which calls the resolver, so the transient can only be read after resolution is complete.
 
 Edge cases:
 
@@ -135,7 +135,7 @@ Five endpoints under `liquidweb/harbor/v1`. All require `manage_options`.
 | `/features/{slug}/disable` | POST   | Disable a feature                                               |
 | `/features/{slug}/update`  | POST   | Update a feature to the latest available version                |
 
-Each Feature object includes `is_enabled`, stamped with live state from its strategy by the Manager before any consumer receives it. Installable features (Plugin, Theme) additionally include `has_update` — a pre-computed boolean the frontend can read directly without doing any version parsing.
+Each Feature object includes `is_enabled`, stamped with live state from its strategy by the Manager before any consumer receives it. The REST layer wraps each Feature in a `Feature_Resource` that reads the WordPress update transient to resolve `update_version` — the version available via the transient, or `null` when no update is available. A non-null `update_version` is the signal that an update is available.
 
 ## Error Codes
 
@@ -181,7 +181,7 @@ Each Feature object includes `is_enabled`, stamped with live state from its stra
 | **Whether available** (`is_available`)                  | **Licensing capabilities array** — feature slug present in `Product_Entry::get_capabilities()`. Falls back to catalog tier rank 0 when unlicensed.                                  |
 | **Whether enabled** (`is_enabled`)                      | Live WordPress state (plugin activation / theme disk / flag option), stamped by Manager                                                                                             |
 | **Installed version** (`installed_version`)             | Read from disk during resolution via `Installable`. Null for flags and uninstalled extensions                                                                                       |
-| **Update available** (`has_update`)                     | Computed by `Installable::has_update()`: `version_compare( catalog_version, installed_version, '>' )`. False when not installed or catalog version is absent. Plugin and Theme only |
+| **Update available** (`update_version`)                  | Derived from WordPress update transients by `Feature_Resource`. Non-null when the transient's `response` array contains an entry (meaning the update handlers have approved the update). Plugin and Theme only |
 
 ## What Features Does Not Do
 
