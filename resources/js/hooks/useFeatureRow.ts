@@ -38,10 +38,8 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 	const { enableFeature, disableFeature, updateFeature } = useDispatch( harborStore );
 
 	const installableBusy = useSelect(
-		( select ) =>
-			feature.type !== 'flag' &&
-			select( harborStore ).isAnyInstallableBusy(),
-		[ feature.type ]
+		( select ) => select( harborStore ).isAnyInstallableBusy(),
+		[]
 	);
 
 	const showLegacyBadge = useSelect(

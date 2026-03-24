@@ -13,7 +13,7 @@
  *
  * @since 1.0.0
  */
-export type FeatureType = 'plugin' | 'theme' | 'flag';
+export type FeatureType = 'plugin' | 'theme';
 
 /**
  * Base properties shared by all feature types.
@@ -53,19 +53,6 @@ interface BaseFeature {
      * Whether the feature is currently enabled (persisted server-side).
      */
     is_enabled: boolean;
-    /**
-     * Latest available version string, if known.
-     */
-    version?: string;
-    /**
-     * Installed version string, if known.
-     */
-    installed_version?: string;
-    /**
-     * Whether a newer version is available and the feature is currently installed.
-     * Only present for installable features (plugin/theme).
-     */
-    has_update?: boolean;
 }
 
 /**
@@ -91,6 +78,14 @@ export interface PluginFeature extends BaseFeature {
      * Whether the plugin is hosted on WordPress.org.
      */
     is_dot_org: boolean;
+    /**
+     * Currently installed version, or null if not installed.
+     */
+    installed_version: string | null;
+    /**
+     * Version available via WordPress update transients, or null if no update.
+     */
+    update_version: string | null;
 }
 
 /**
@@ -108,15 +103,14 @@ export interface ThemeFeature extends BaseFeature {
      * Whether the theme is hosted on WordPress.org.
      */
     is_dot_org: boolean;
-}
-
-/**
- * A feature gated by a database option flag.
- *
- * @since 1.0.0
- */
-export interface FlagFeature extends BaseFeature {
-    type: 'flag';
+    /**
+     * Currently installed version, or null if not installed.
+     */
+    installed_version: string | null;
+    /**
+     * Version available via WordPress update transients, or null if no update.
+     */
+    update_version: string | null;
 }
 
 /**
@@ -124,15 +118,7 @@ export interface FlagFeature extends BaseFeature {
  *
  * @since 1.0.0
  */
-export type Feature = PluginFeature | ThemeFeature | FlagFeature;
-
-/**
- * Plugin and theme features that trigger WordPress install/activate/deactivate
- * operations. Flag features are excluded because they only flip a DB option.
- *
- * @since 1.0.0
- */
-export type InstallableFeature = PluginFeature | ThemeFeature;
+export type Feature = PluginFeature | ThemeFeature;
 
 // ---------------------------------------------------------------------------
 // Catalog types — GET /liquidweb/harbor/v1/catalog
