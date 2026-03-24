@@ -18,16 +18,13 @@ export function ErrorItem( { error, nested = false }: Props ) {
     const cause = error.cause instanceof HarborError ? error.cause : null;
 
     return (
-        <li className="flex flex-col gap-1">
+        <li className="flex flex-col gap-2 m-0">
             <span className={ `flex items-start gap-2 text-sm ${ nested ? 'text-muted-foreground' : 'font-medium text-foreground' }` }>
-                { nested
-                    ? <span className="shrink-0" aria-hidden="true">–</span>
-                    : <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-destructive" aria-hidden="true" />
-                }
+                { ! nested && <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-destructive" aria-hidden="true" /> }
                 { error.message }
             </span>
             { cause && (
-                <ul className="ml-3 space-y-1 border-l border-border pl-3">
+                <ul className="ml-4 space-y-1 border-l-2 border-border pl-4">
                     <ErrorItem error={ cause } nested />
                 </ul>
             ) }

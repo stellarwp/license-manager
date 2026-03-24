@@ -8,7 +8,7 @@
  * @package LiquidWeb\Harbor
  */
 import { __ } from '@wordpress/i18n';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Mail } from 'lucide-react';
 import { useErrorModal } from '@/context/error-modal-context';
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
 import { ErrorItem } from '@/components/atoms/ErrorItem';
@@ -26,43 +26,45 @@ export function ErrorModal() {
     if ( errors.length === 0 ) return null;
 
     return (
-        <Dialog open onClose={ clearAll }>
+        <Dialog open onClose={ clearAll } maxWidth="max-w-xl">
             <DialogHeader
                 title={ __( 'There are issues that need your attention', '%TEXTDOMAIN%' ) }
                 onClose={ clearAll }
             />
             <DialogContent>
-                <ul className="space-y-3">
+                <ul className="flex flex-col gap-6">
                     { errors.map( ( error ) => (
                         <ErrorItem key={ error.code } error={ error } />
                     ) ) }
                 </ul>
             </DialogContent>
-            <DialogFooter className="justify-between items-center">
+            <DialogFooter className="justify-between items-center bg-gray-100 rounded-b-lg py-4">
                 <div className="flex flex-col gap-1">
                     <p className="text-xs text-muted-foreground m-0">
                         { __( 'Need help resolving this?', '%TEXTDOMAIN%' ) }
                     </p>
-                    <
-                        href={ DOCS_URL }
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                    >
-                        { __( 'View documentation', '%TEXTDOMAIN%' ) }
-                        <ExternalLink className="w-3 h-3" />
-                    </a>
-                    <a
-                        href={ SUPPORT_URL }
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                    >
-                        { __( 'Contact support', '%TEXTDOMAIN%' ) }
-                        <ExternalLink className="w-3 h-3" />
-                    </a>
+                    <div className="flex gap-8">
+                        <a
+                            href={ DOCS_URL }
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                            { __( 'View documentation', '%TEXTDOMAIN%' ) }
+                            <ExternalLink className="w-3 h-3 -translate-y-px" />
+                        </a>
+                        <a
+                            href={ SUPPORT_URL }
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 text-xs font-bold uppercase text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                            { __( 'Contact support', '%TEXTDOMAIN%' ) }
+                            <Mail className="w-3 h-3 -translate-y-px" />
+                        </a>
+                    </div>
                 </div>
-                <Button onClick={ clearAll }>
+                <Button size="lg" onClick={ clearAll }>
                     { __( 'Dismiss', '%TEXTDOMAIN%' ) }
                 </Button>
             </DialogFooter>
