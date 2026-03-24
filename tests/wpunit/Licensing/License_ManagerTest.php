@@ -117,6 +117,44 @@ final class License_ManagerTest extends HarborTestCase {
 	}
 
 	// -------------------------------------------------------------------------
+	// store_embedded_key_if_present()
+	// -------------------------------------------------------------------------
+
+	public function test_store_embedded_key_if_present_stores_key_when_none_exists(): void {
+		$manager = $this->make_manager_with_embedded_key( 'LWSW-EMBEDDED-KEY' );
+
+		$manager->store_embedded_key_if_present();
+
+		$this->assertSame( 'LWSW-EMBEDDED-KEY', get_option( License_Repository::KEY_OPTION_NAME ) );
+	}
+
+	public function test_store_embedded_key_if_present_returns_true_on_success(): void {
+		$manager = $this->make_manager_with_embedded_key( 'LWSW-EMBEDDED-KEY' );
+
+		$this->assertTrue( $manager->store_embedded_key_if_present() );
+	}
+
+	public function test_store_embedded_key_if_present_returns_false_when_no_key_file(): void {
+		$this->assertFalse( $this->manager->store_embedded_key_if_present() );
+	}
+
+	public function test_store_embedded_key_if_present_returns_false_when_key_already_stored(): void {
+		$manager = $this->make_manager_with_embedded_key( 'LWSW-EMBEDDED-KEY' );
+		$manager->store_key( 'LWSW-STORED-KEY' );
+
+		$this->assertFalse( $manager->store_embedded_key_if_present() );
+	}
+
+	public function test_store_embedded_key_if_present_does_not_overwrite_stored_key(): void {
+		$manager = $this->make_manager_with_embedded_key( 'LWSW-EMBEDDED-KEY' );
+		$manager->store_key( 'LWSW-STORED-KEY' );
+
+		$manager->store_embedded_key_if_present();
+
+		$this->assertSame( 'LWSW-STORED-KEY', get_option( License_Repository::KEY_OPTION_NAME ) );
+	}
+
+	// -------------------------------------------------------------------------
 	// store() / delete()
 	// -------------------------------------------------------------------------
 

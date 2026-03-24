@@ -93,13 +93,9 @@ class License_Manager {
 			return $key;
 		}
 
-		$key = $this->discover_embedded_key();
+		$this->store_embedded_key_if_present();
 
-		if ( $key !== null ) {
-			$this->repository->store_key( $key );
-		}
-
-		return $key;
+		return $this->repository->get_key();
 	}
 
 	/**
@@ -431,6 +427,28 @@ class License_Manager {
 		}
 
 		return $collection;
+	}
+
+	/**
+	 * Scan active plugins for a bundled LWSW_KEY.php and store the first valid
+	 * key found. Does nothing if a key is already stored.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool Whether a key was discovered and stored.
+	 */
+	public function store_embedded_key_if_present(): bool {
+		if ( $this->repository->get_key() !== null ) {
+			return false;
+		}
+
+		$key = $this->discover_embedded_key();
+
+		if ( $key === null ) {
+			return false;
+		}
+
+		return $this->repository->store_key( $key );
 	}
 
 	/**
