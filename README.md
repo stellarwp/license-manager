@@ -71,7 +71,7 @@ You can also add lines below to your composer file in order to run command autom
 
 ## Registering a plugin
 
-To register your plugin, you need to filter the `lw-harbor/product_registry` hook.
+To register your plugin, you need to filter the `lw-harbor/product_registry` hook. See the [Harbor Integration Guide](/docs/harbor-integration-guide.md) for more details.
 
 ```php
 add_filter('lw-harbor/product_registry', function (array $products): array {
@@ -123,6 +123,7 @@ bunx @stellarwp/changelogger write --overwrite-version <version>
 - [Features](/docs/features.md) — Feature types, resolution, strategies, Manager API, REST endpoints.
 - [Unified License Key](/docs/unified-license-key-system-design.md) — Key model, seat mechanics, system boundaries.
 - [Multi-Instance Architecture](/docs/harbor-fat-leader-thin-instance.md) — Leader election, cross-instance hooks, thin instances.
+- [Harbor Integration Guide](/docs/harbor-integration-guide.md) — How to integrate your plugin with Harbor.
 
 ### General
 
