@@ -4,7 +4,7 @@
  * Covers tier name, unlicensed, legacy, and free indicators so that
  * all license badge rendering flows through a single atom.
  *
- * @package StellarWP\Uplink
+ * @package LiquidWeb\Harbor
  */
 import { __ } from '@wordpress/i18n';
 import { Badge } from '@/components/ui/badge';

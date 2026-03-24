@@ -688,7 +688,7 @@ __webpack_require__.r(__webpack_exports__);
  * Covers tier name, unlicensed, legacy, and free indicators so that
  * all license badge rendering flows through a single atom.
  *
- * @package StellarWP\Uplink
+ * @package LiquidWeb\Harbor
  */
 
 
@@ -2579,8 +2579,8 @@ __webpack_require__.r(__webpack_exports__);
  * Radix UI Select primitives styled to the project's design system.
  *
  * Intentionally NOT using Select.Portal — portal content renders outside
- * .uplink-ui and would be invisible to the PostCSS scope plugin (all Tailwind
- * utilities are scoped to .uplink-ui). The Content renders in the DOM tree but
+ * .lw-harbor-ui and would be invisible to the PostCSS scope plugin (all Tailwind
+ * utilities are scoped to .lw-harbor-ui). The Content renders in the DOM tree but
  * Radix positions it with position:fixed so it still floats above other elements.
  *
  * @package LiquidWeb\Harbor
@@ -2842,7 +2842,7 @@ __webpack_require__.r(__webpack_exports__);
  * Single-component tooltip wrapper built on Radix UI.
  *
  * Uses a Portal + inline styles instead of Tailwind utilities because the
- * Portal teleports content outside .uplink-ui, where the PostCSS scope plugin
+ * Portal teleports content outside .lw-harbor-ui, where the PostCSS scope plugin
  * would no longer apply. z-index 100001 clears the WP admin bar (99999) and
  * our dialogs (100000).
  *
@@ -17306,7 +17306,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (0,_store__WEBPACK_IMPORTED_MODULE_1__.registerHarborStore)();
-const rootElement = document.getElementById('uplink-root');
+const rootElement = document.getElementById('lw-harbor-root');
 if (rootElement) {
   // Delay execution until after the DOM is fully loaded.
   window.addEventListener('DOMContentLoaded', () => {
