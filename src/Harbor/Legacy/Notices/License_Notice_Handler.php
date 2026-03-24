@@ -225,7 +225,7 @@ class License_Notice_Handler {
 
 			wp_localize_script(
 				$handle,
-				'uplinkNoticeDismiss',
+				'harborNoticeDismiss',
 				[
 					'ttl'     => self::DISMISS_TTL,
 					'metaKey' => self::DISMISSED_META_KEY,
