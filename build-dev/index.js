@@ -685,7 +685,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Unified badge for all license-related states.
  *
- * Covers tier name, not-licensed, legacy, and free indicators so that
+ * Covers tier name, unlicensed, legacy, and free indicators so that
  * all license badge rendering flows through a single atom.
  *
  * @package StellarWP\Uplink
@@ -696,18 +696,18 @@ __webpack_require__.r(__webpack_exports__);
 
 const variantMap = {
   licensed: 'gradient',
-  'not-licensed': 'outline',
+  unlicensed: 'outline',
   legacy: 'warning',
   free: 'secondary'
 };
 const labelMap = {
-  'not-licensed': () => (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Not Licensed', '%TEXTDOMAIN%'),
+  unlicensed: () => (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Unlicensed', '%TEXTDOMAIN%'),
   legacy: () => (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Legacy', '%TEXTDOMAIN%'),
   free: () => (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Free', '%TEXTDOMAIN%')
 };
 
 /**
- * @since 3.0.0
+ * @since 1.0.0
  */
 function LicenseBadge({
   type,
@@ -929,12 +929,12 @@ function StatusBadge({
     });
   }
 
-  // not-licensed or locked without tier label
+  // unlicensed or locked without tier label
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_components_ui_badge__WEBPACK_IMPORTED_MODULE_5__.Badge, {
     variant: "outline",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
       className: "w-3 h-3"
-    }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Not Licensed', '%TEXTDOMAIN%')]
+    }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Unlicensed', '%TEXTDOMAIN%')]
   });
 }
 
@@ -2018,7 +2018,7 @@ function ProductSection({
       }) : hasActiveLegacy ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
         type: "legacy"
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
-        type: "not-licensed",
+        type: "unlicensed",
         className: "text-white border-white/40"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
         className: "ml-auto text-xs text-white/70",
@@ -3858,7 +3858,7 @@ function isFreeFeature(tier) {
 }
 
 /**
- * @since 3.0.0
+ * @since 1.0.0
  */
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', {
