@@ -23,21 +23,22 @@ import type { MapResolvableSelect, ResolvableSelectResponse } from './types';
 type ResolvableRecord = Record<string, ResolvableSelectResponse<unknown>>;
 
 /**
- * Find the first error among a set of resolvable results and normalize it
+ * Collect all errors among a set of resolvable results and normalize each
  * as a HarborError.
  */
-function findError( results: ResolvableRecord ): HarborError | null {
+function findErrors( results: ResolvableRecord ): HarborError[] {
+    const errors: HarborError[] = [];
     for ( const key in results ) {
         const entry = results[ key ];
         if ( entry.status === 'ERROR' ) {
-            return HarborError.syncFrom(
+            errors.push( HarborError.syncFrom(
                 entry.error,
                 ErrorCode.ResolutionFailed,
                 __( 'Liquid Web Software failed to load your data.', '%TEXTDOMAIN%' ),
-            );
+            ) );
         }
     }
-    return null;
+    return errors;
 }
 
 /**
@@ -68,19 +69,19 @@ export default function useResolvableSelectWithError<
     const result = useResolvableSelect( mapResolvableSelect, deps );
     const { addError, removeError } = useErrorModal();
 
-    // Track the code of the last error this hook pushed so we can clear
-    // exactly that entry when the resolver recovers.
-    const lastErrorCodeRef = useRef<string | null>( null );
+    // Track the codes pushed by this hook instance so we can clear exactly
+    // those entries when all resolvers recover.
+    const lastErrorCodesRef = useRef<string[]>( [] );
 
     useEffect( () => {
-        const found = findError( result );
+        const found = findErrors( result );
 
-        if ( found ) {
-            lastErrorCodeRef.current = found.code;
-            addError( found );
-        } else if ( lastErrorCodeRef.current !== null ) {
-            removeError( lastErrorCodeRef.current );
-            lastErrorCodeRef.current = null;
+        if ( found.length > 0 ) {
+            lastErrorCodesRef.current = found.map( ( e ) => e.code );
+            found.forEach( ( error ) => addError( error ) );
+        } else if ( lastErrorCodesRef.current.length > 0 ) {
+            lastErrorCodesRef.current.forEach( ( code ) => removeError( code ) );
+            lastErrorCodesRef.current = [];
         }
     }, [ result, addError, removeError ] );
 
