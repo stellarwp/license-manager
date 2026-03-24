@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as harborStore } from '@/store';
+import { isFreeFeature } from '@/lib/license-utils';
 import { useToast } from '@/context/toast-context';
 import { HarborError } from '@/errors';
 import type { Feature } from '@/types/api';
@@ -23,6 +24,8 @@ export interface FeatureRowState {
 	badgeStatus:     FeatureStatus;
 	showSwitch:      boolean;
 	switchChecked:   boolean;
+	showLegacyBadge: boolean;
+	showFreeBadge:   boolean;
 	handleToggle:    ( checked: boolean ) => Promise<void>;
 	handleUpdate:    () => Promise<void>;
 }
@@ -40,6 +43,17 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 			select( harborStore ).isAnyInstallableBusy(),
 		[ feature.type ]
 	);
+
+	const showLegacyBadge = useSelect(
+		( select ) => {
+			const activeLegacy = select( uplinkStore ).getActiveLegacyLicense( feature.slug );
+			if ( ! activeLegacy ) return false;
+			return ! select( uplinkStore ).isProductUnifiedLicensed( feature.product );
+		},
+		[ feature.slug, feature.product ]
+	);
+
+	const showFreeBadge = isFreeFeature( feature.tier );
 
 	const [ pendingAction, setPendingAction ] = useState<PendingAction>( null );
 
@@ -92,9 +106,11 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 	return {
 		pendingAction,
 		installableBusy,
-		badgeStatus:  badgeStatus as FeatureStatus,
+		badgeStatus:     badgeStatus as FeatureStatus,
 		showSwitch,
 		switchChecked,
+		showLegacyBadge,
+		showFreeBadge,
 		handleToggle,
 		handleUpdate,
 	};
