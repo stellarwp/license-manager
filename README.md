@@ -34,23 +34,6 @@ add_action( 'plugins_loaded', function() {
   */
  $container = new Container();
  Config::set_container( $container );
- Config::set_hook_prefix( 'my-custom-prefix' );
-
- /*
-  * If you wish to allow a customer to authorize their product, set your Token Auth Prefix.
-  *
-  * This will allow storage of a unique token associated with the customer's license/domain.
-  *
-  * Important: The Token auth prefix should be the same across all of your products.
-  */
- Config::set_token_auth_prefix( 'my_origin' );
-
- // Optionally, change the default auth token caching.
- Config::set_auth_cache_expiration( WEEK_IN_SECONDS );
-
- // Or, disable it completely.
- Config::set_auth_cache_expiration( -1 );
-
  Harbor::init();
 }, 0 );
 ```
