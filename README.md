@@ -1,13 +1,15 @@
 # LiquidWeb Harbor
 
-[![CI](https://github.com/stellarwp/harbor/workflows/CI/badge.svg)](https://github.com/stellarwp/harbor/actions?query=branch%3Amain) [![Static Analysis](https://github.com/stellarwp/harbor/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/static-analysis.yml)
+[![PHP Compatibility](https://github.com/stellarwp/harbor/actions/workflows/compatibility.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/compatibility.yml)
+[![PHP Tests](https://github.com/stellarwp/harbor/actions/workflows/tests-php.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/tests-php.yml)
+[![PHPStan](https://github.com/stellarwp/harbor/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/static-analysis.yml)
 
 ## Installation
 
 It's recommended that you install Harbor as a project dependency via [Composer](https://getcomposer.org/):
 
 ```bash
-composer require liquidweb/harbor
+composer require stellarwp/harbor
 ```
 
 > We _actually_ recommend that this library gets included in your project using [Strauss](https://github.com/BrianHenryIE/strauss).
@@ -71,31 +73,7 @@ You can also add lines below to your composer file in order to run command autom
 
 ## Registering a plugin
 
-To register your plugin, you need to filter the `lw-harbor/product_registry` hook.
-
-```php
-add_filter('lw-harbor/product_registry', function (array $products): array {
-    $products[] = [
-        'product'      => 'your-product',          // Product (brand) slug — all plugins in the same product share a unified license
-        'slug'         => 'your-plugin',         // Unique slug for this specific plugin
-        'name'         => 'Your Plugin',         // Human-readable product name
-        'version'      => YOUR_PLUGIN_VERSION,   // Current plugin version
-        'embedded_key' => getBundledLicenseKey(), // Optional: pre-embedded license key
-    ];
-
-    return $products;
-});
-```
-
-**Product array fields:**
-
-| Field          | Required | Description                                                                         |
-| -------------- | -------- | ----------------------------------------------------------------------------------- |
-| `product`      | Yes      | Product (brand) slug. All plugins in the same product share a unified license.      |
-| `slug`         | Yes      | Unique identifier for this plugin. Used in `lw_harbor_is_product_license_active()`. |
-| `name`         | Yes      | Human-readable name shown in the license UI.                                        |
-| `version`      | Yes      | Current plugin version.                                                             |
-| `embedded_key` | No       | A license key bundled with the plugin.                                              |
+Harbor discovers your plugin's embedded key automatically by scanning active plugins for a file named `LWSW_KEY.php` in the plugin root. No filter registration is required. See the [Harbor Integration Guide](/docs/harbor-integration-guide.md) for more details.
 
 ## Changelog
 
@@ -123,6 +101,7 @@ bunx @stellarwp/changelogger write --overwrite-version <version>
 - [Features](/docs/features.md) — Feature types, resolution, strategies, Manager API, REST endpoints.
 - [Unified License Key](/docs/unified-license-key-system-design.md) — Key model, seat mechanics, system boundaries.
 - [Multi-Instance Architecture](/docs/harbor-fat-leader-thin-instance.md) — Leader election, cross-instance hooks, thin instances.
+- [Harbor Integration Guide](/docs/harbor-integration-guide.md) — How to integrate your plugin with Harbor.
 
 ### General
 
