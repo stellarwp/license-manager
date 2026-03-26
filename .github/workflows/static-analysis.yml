@@ -29,7 +29,7 @@ jobs:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
           dependency-versions: highest
         env:
-          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.STELLARWP_ACCESS_TOKEN }}"}}'
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.GH_BOT_TOKEN }}"}}'
 
       # See https://phpstan.org/user-guide/result-cache#setup-in-github-actions for more info.
       - name: Restore PHPStan cache

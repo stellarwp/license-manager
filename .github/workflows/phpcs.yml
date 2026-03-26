@@ -28,7 +28,7 @@ jobs:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
           dependency-versions: highest
         env:
-          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.STELLARWP_ACCESS_TOKEN }}"}}'
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.GH_BOT_TOKEN }}"}}'
 
       - if: github.ref == 'refs/heads/main'
         name: Run full phpcs check
