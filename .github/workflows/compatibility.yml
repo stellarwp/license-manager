@@ -39,13 +39,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Configure GitHub OAuth for Composer
-        run: composer config --global github-oauth.github.com ${{ secrets.STELLARWP_ACCESS_TOKEN }}
-
       - uses: ramsey/composer-install@v3
         with:
           composer-options: "--ignore-platform-reqs"
           dependency-versions: highest
+        env:
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.COMPOSER_TOKEN }}"}}'
 
       - name: Run PHP Compatibility
         run: composer compatibility:php-${{ matrix.php-version }}

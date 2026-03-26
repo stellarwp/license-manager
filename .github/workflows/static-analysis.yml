@@ -24,12 +24,11 @@ jobs:
           extensions: mbstring, intl
           coverage: none
 
-      - name: Configure GitHub OAuth for Composer
-        run: composer config --global github-oauth.github.com ${{ secrets.STELLARWP_ACCESS_TOKEN }}
-
       - uses: ramsey/composer-install@v3
         with:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
+        env:
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.COMPOSER_TOKEN }}"}}'
 
       # See https://phpstan.org/user-guide/result-cache#setup-in-github-actions for more info.
       - name: Restore PHPStan cache
