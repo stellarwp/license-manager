@@ -450,7 +450,7 @@ class License_Manager {
 		} catch ( NotFoundException $e ) {
 			return new WP_Error( Error_Code::INVALID_KEY, $e->getMessage(), [ 'status' => Error_Code::http_status( Error_Code::INVALID_KEY ) ] );
 		} catch ( ApiErrorExceptionInterface $e ) {
-			return new WP_Error( $e->errorCode(), $e->getMessage(), [ 'status' => $e->statusCode() ] );
+			return new WP_Error( $e->errorCode(), $e->getMessage(), array_merge( [ 'status' => $e->statusCode() ], $e->errorPayLoad() ?? [] ) );
 		} catch ( \Exception $e ) {
 			static::debug_log( sprintf( 'Products API exception: %s', $e->getMessage() ) );
 			return new WP_Error( Error_Code::INVALID_RESPONSE, $e->getMessage(), [ 'status' => 500 ] );
