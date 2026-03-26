@@ -48,11 +48,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:stellarwp/licensing-api-client.git"
+            "url": "https://github.com/stellarwp/licensing-api-client.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:stellarwp/licensing-api-client-wordpress.git"
+            "url": "https://github.com/stellarwp/licensing-api-client-wordpress.git"
         }
     ],
     "require-dev": {
