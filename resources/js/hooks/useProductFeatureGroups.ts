@@ -7,8 +7,7 @@
 import { useSelect } from '@wordpress/data';
 import { useFilteredFeatures } from '@/hooks/useFilteredFeatures';
 import { store as harborStore } from '@/store';
-import { isFreeFeature } from '@/lib/license-utils';
-import { getFeatureMismatch } from '@/lib/feature-utils';
+import { isFreeFeature, getFeatureMismatch } from '@/lib/feature-utils';
 import type { CatalogTier, Feature } from '@/types/api';
 
 export interface FeatureGroups {
