@@ -24,6 +24,9 @@ jobs:
           extensions: mbstring, intl
           coverage: none
 
+      - name: Configure GitHub OAuth for Composer
+        run: composer config github-oauth.github.com ${{ secrets.STELLARWP_ACCESS_TOKEN }}
+
       - uses: ramsey/composer-install@v3
         with:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
