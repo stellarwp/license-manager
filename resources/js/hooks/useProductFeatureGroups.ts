@@ -8,6 +8,7 @@ import { useSelect } from '@wordpress/data';
 import { useFilteredFeatures } from '@/hooks/useFilteredFeatures';
 import { store as harborStore } from '@/store';
 import { isFreeFeature } from '@/lib/license-utils';
+import { getFeatureMismatch } from '@/lib/feature-utils';
 import type { CatalogTier, Feature } from '@/types/api';
 
 interface FeatureGroups {
@@ -44,8 +45,24 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
 
     const isLegacyAvailable = ( f: Feature ) => activeLegacySlugs.has( f.slug );
 
-    const availableFeatures = allFeatures.filter( ( f ) => f.is_available || isFreeFeature( f.tier ) || isLegacyAvailable( f ) );
-    const lockedFeatures    = allFeatures.filter( ( f ) => ! f.is_available && ! isFreeFeature( f.tier ) && ! isLegacyAvailable( f ) );
+    // Available: the standard set, PLUS revoked features.
+    // Revoked features are in the user's tier but have had their capability removed.
+    // They render as disabled rows in the available section (not in upgrade accordions),
+    // since the user does not need to upgrade — the tier already covers them.
+    const availableFeatures = allFeatures.filter( ( f ) =>
+        f.is_available ||
+        isFreeFeature( f.tier ) ||
+        isLegacyAvailable( f ) ||
+        getFeatureMismatch( f ) === 'revoked'
+    );
+
+    // Locked: not available, not free, not legacy, and not revoked.
+    const lockedFeatures = allFeatures.filter( ( f ) =>
+        ! f.is_available &&
+        ! isFreeFeature( f.tier ) &&
+        ! isLegacyAvailable( f ) &&
+        getFeatureMismatch( f ) !== 'revoked'
+    );
 
     const sortedCatalogTiers = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
 
