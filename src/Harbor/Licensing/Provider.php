@@ -4,6 +4,7 @@ namespace LiquidWeb\Harbor\Licensing;
 
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
+use LiquidWeb\Harbor\Harbor;
 use LiquidWeb\Harbor\Licensing\Registry\Product_Registry;
 use LiquidWeb\Harbor\Licensing\Repositories\License_Repository;
 use LiquidWeb\LicensingApiClient\Config as LicensingConfig;
@@ -26,16 +27,19 @@ final class Provider extends Abstract_Provider {
 		$this->container->singleton(
 			LicensingClientInterface::class,
 			function () {
-				$psr17 = new Psr17Factory();
-				return ( new WordPressApiFactory(
+				$psr17   = new Psr17Factory();
+				$factory = new WordPressApiFactory(
 					new WordPressHttpClient(),
 					$psr17,
 					$psr17
-				) )->make( new LicensingConfig(
-					Config::get_api_base_url(),
-					null,
-					'lwsw-harbor/1.0'
-				) );
+				);
+				return $factory->make(
+					new LicensingConfig(
+						Config::get_api_base_url(),
+						null,
+						'lw-harbor/' . Harbor::VERSION
+					)
+				);
 			}
 		);
 

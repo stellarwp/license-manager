@@ -89,6 +89,7 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 		}
 
 		$json = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		/** @var array{products: list<array{product_slug: string, tier: string, status: string, expires: string, capabilities: list<string>, activations: array{site_limit: int, active_count: int, over_limit: bool, domains: list<string>}, activated_here?: bool, validation_status?: string}>} $data */
 		$data = json_decode( (string) $json, true );
 
 		$catalog = Catalog::from( $data );
@@ -100,6 +101,8 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @throws \BadMethodCallException Always.
 	 */
 	public function entitlements(): EntitlementsResourceInterface {
 		throw new \BadMethodCallException( 'Fixture_Client does not support entitlements().' );
@@ -107,6 +110,8 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @throws \BadMethodCallException Always.
 	 */
 	public function licenses(): LicensesResourceInterface {
 		throw new \BadMethodCallException( 'Fixture_Client does not support licenses().' );
@@ -114,6 +119,8 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @throws \BadMethodCallException Always.
 	 */
 	public function credits(): CreditsResourceInterface {
 		throw new \BadMethodCallException( 'Fixture_Client does not support credits().' );
@@ -135,6 +142,8 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @param string $token The token (unused).
 	 */
 	public function withToken( string $token ): LicensingClientInterface {
 		return $this;
