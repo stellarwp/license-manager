@@ -25,7 +25,7 @@ jobs:
           coverage: none
 
       - name: Configure GitHub OAuth for Composer
-        run: composer config github-oauth.github.com ${{ secrets.STELLARWP_ACCESS_TOKEN }}
+        run: composer config --global github-oauth.github.com ${{ secrets.STELLARWP_ACCESS_TOKEN }}
 
       - uses: ramsey/composer-install@v3
         with:
