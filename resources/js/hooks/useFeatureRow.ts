@@ -97,10 +97,10 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 	};
 
 	const badgeStatus =
-		pendingAction        ? pendingAction :
-		mismatch === 'revoked' ? 'locked'    :
-		featureEnabled       ? 'enabled'     :
-		                       'available';
+		pendingAction                              ? pendingAction :
+		mismatch === 'revoked' && ! featureEnabled ? 'locked'      :
+		featureEnabled                             ? 'enabled'     :
+		                                             'available';
 	const showSwitch   = pendingAction !== 'installing' && pendingAction !== 'updating';
 	const switchChecked =
 		pendingAction === 'enabling' || pendingAction === 'installing'

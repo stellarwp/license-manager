@@ -83,14 +83,14 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 								? __( 'Upgrade your license to receive updates and support.', '%TEXTDOMAIN%' )
 								: undefined
 							}
-							onUpdate={ showLegacyBadge ? undefined : handleUpdate }
+							onUpdate={ showLegacyBadge || mismatch === 'revoked' ? undefined : handleUpdate }
 						/>
 						<StatusBadge status={ badgeStatus } />
 						{ showSwitch && (
 							<Switch
 								checked={ switchChecked }
 								onCheckedChange={ handleToggle }
-								disabled={ !! pendingAction || installableBusy || mismatch === 'revoked' }
+								disabled={ !! pendingAction || installableBusy || ( mismatch === 'revoked' && ! switchChecked ) }
 								aria-label={
 									switchChecked
 										? /* translators: %s is the name of the feature to disable */
