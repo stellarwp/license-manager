@@ -111,7 +111,7 @@ class Manager {
 
 			return new WP_Error(
 				Error_Code::CAPABILITY_REVOKED,
-				__( 'This feature has been removed from your license capabilities. Contact support.', 'harbor' )
+				__( 'This feature has been removed from your license capabilities. Contact support.', '%TEXTDOMAIN%' )
 			);
 		}
 
