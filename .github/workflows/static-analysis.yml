@@ -36,11 +36,11 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: phpstan-cache
-          key: v3-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          key: v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
           restore-keys: |
-            v3-phpstan-${{ runner.os }}-${{ github.ref_name }}-
-            v3-phpstan-${{ runner.os }}-
-            v3-phpstan-
+            v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-
+            v1-phpstan-${{ runner.os }}-
+            v1-phpstan-
 
       - name: Run PHPStan static analysis
         run: composer test:analysis
@@ -50,4 +50,4 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           path: phpstan-cache
-          key: v3-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          key: v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
