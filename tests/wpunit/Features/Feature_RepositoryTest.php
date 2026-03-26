@@ -363,7 +363,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$method = new ReflectionMethod( Resolve_Feature_Collection::class, 'hydrate_feature' );
 		$method->setAccessible( true ); // Required for PHP < 8.1.
 
-		$result = $method->invoke( $resolver, $catalog_feature, $product, null );
+		$result = $method->invoke( $resolver, $catalog_feature, $product, null, -1 );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( Error_Code::UNKNOWN_FEATURE_TYPE, $result->get_error_code() );
@@ -408,7 +408,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$method = new ReflectionMethod( Resolve_Feature_Collection::class, 'hydrate_feature' );
 		$method->setAccessible( true ); // Required for PHP < 8.1.
 
-		$result = $method->invoke( $resolver, $catalog_feature, $product, [ 'test-flag' ] );
+		$result = $method->invoke( $resolver, $catalog_feature, $product, [ 'test-flag' ], 1 );
 
 		$this->assertInstanceOf( Flag::class, $result );
 		$this->assertSame( 'test-flag', $result->get_slug() );
