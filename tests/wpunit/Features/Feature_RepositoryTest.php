@@ -4,7 +4,7 @@ namespace LiquidWeb\Harbor\Tests\Features;
 
 use ReflectionMethod;
 use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Tests\Catalog\Fixture_Client as Catalog_Fixture;
+use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client as Catalog_Fixture;
 use LiquidWeb\Harbor\Catalog\Results\Catalog_Feature;
 use LiquidWeb\Harbor\Catalog\Results\Catalog_Tier;
 use LiquidWeb\Harbor\Catalog\Results\Product_Catalog;

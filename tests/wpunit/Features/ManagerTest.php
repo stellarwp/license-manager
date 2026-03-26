@@ -4,7 +4,7 @@ namespace LiquidWeb\Harbor\Tests\Features;
 
 use LiquidWeb\Harbor\Catalog\Catalog_Repository;
 use LiquidWeb\Harbor\Catalog\Clients\Catalog_Client;
-use LiquidWeb\Harbor\Tests\Catalog\Fixture_Client as Catalog_Fixture;
+use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client as Catalog_Fixture;
 use LiquidWeb\Harbor\Features\Error_Code;
 use LiquidWeb\Harbor\Features\Feature_Collection;
 use LiquidWeb\Harbor\Features\Feature_Repository;
