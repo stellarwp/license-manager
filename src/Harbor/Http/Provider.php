@@ -19,32 +19,9 @@ final class Provider extends Abstract_Provider {
 	 * @inheritDoc
 	 */
 	public function register(): void {
-		$this->container->singleton(
-			WordPressHttpClient::class,
-			static function () {
-				return new WordPressHttpClient();
-			}
-		);
-
-		$this->container->singleton(
-			Psr17Factory::class,
-			static function () {
-				return new Psr17Factory();
-			}
-		);
-
-		$this->container->singleton(
-			RequestFactoryInterface::class,
-			function () {
-				return $this->container->get( Psr17Factory::class );
-			}
-		);
-
-		$this->container->singleton(
-			StreamFactoryInterface::class,
-			function () {
-				return $this->container->get( Psr17Factory::class );
-			}
-		);
+		$this->container->singleton( WordPressHttpClient::class );
+		$this->container->singleton( Psr17Factory::class );
+		$this->container->singleton( RequestFactoryInterface::class, Psr17Factory::class );
+		$this->container->singleton( StreamFactoryInterface::class, Psr17Factory::class );
 	}
 }
