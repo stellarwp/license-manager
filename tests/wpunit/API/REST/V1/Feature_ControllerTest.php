@@ -49,7 +49,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 			Plugin::from_array(
 				[
 					'slug'              => 'feature-alpha',
-					'product'             => 'GroupA',
+					'product'           => 'GroupA',
 					'tier'              => 'Tier 1',
 					'name'              => 'Feature Alpha',
 					'description'       => 'Alpha description',
@@ -62,7 +62,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 			Flag::from_array(
 				[
 					'slug'              => 'feature-beta',
-					'product'             => 'GroupB',
+					'product'           => 'GroupB',
 					'tier'              => 'Tier 2',
 					'name'              => 'Feature Beta',
 					'description'       => 'Beta description',
@@ -992,7 +992,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 		$this->assertTrue( $plugin['additionalProperties'] );
 		$this->assertSame( [ Feature::TYPE_PLUGIN ], $plugin['properties']['type']['enum'] );
 
-		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'documentation_url', 'is_enabled', 'plugin_file', 'released_at', 'version', 'changelog', 'authors', 'is_dot_org', 'installed_version', 'has_update' ];
+		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_catalog_tier', 'documentation_url', 'is_enabled', 'plugin_file', 'released_at', 'version', 'changelog', 'authors', 'is_dot_org', 'installed_version', 'has_update' ];
 
 		foreach ( $expected as $property ) {
 			$this->assertArrayHasKey( $property, $plugin['properties'], "Missing plugin schema property: {$property}" );
@@ -1014,7 +1014,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 		$this->assertSame( 'theme', $theme['title'] );
 		$this->assertSame( [ Feature::TYPE_THEME ], $theme['properties']['type']['enum'] );
 
-		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'documentation_url', 'is_enabled', 'released_at', 'version', 'changelog', 'authors', 'is_dot_org', 'installed_version', 'has_update' ];
+		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_catalog_tier', 'documentation_url', 'is_enabled', 'released_at', 'version', 'changelog', 'authors', 'is_dot_org', 'installed_version', 'has_update' ];
 
 		foreach ( $expected as $property ) {
 			$this->assertArrayHasKey( $property, $theme['properties'], "Missing theme schema property: {$property}" );
@@ -1037,7 +1037,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 		$this->assertSame( 'flag', $flag['title'] );
 		$this->assertSame( [ Feature::TYPE_FLAG ], $flag['properties']['type']['enum'] );
 
-		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'documentation_url', 'is_enabled' ];
+		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_catalog_tier', 'documentation_url', 'is_enabled' ];
 
 		foreach ( $expected as $property ) {
 			$this->assertArrayHasKey( $property, $flag['properties'], "Missing flag schema property: {$property}" );

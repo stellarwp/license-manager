@@ -24,7 +24,7 @@ final class FeatureTest extends HarborTestCase {
 
 		$this->feature = new class( [
 			'slug'              => 'test-feature',
-			'product'             => 'TEC',
+			'product'           => 'TEC',
 			'tier'              => 'Tier 1',
 			'name'              => 'Test Feature',
 			'description'       => 'A test feature.',
@@ -45,12 +45,13 @@ final class FeatureTest extends HarborTestCase {
 				return new self(
 					[
 						'slug'              => $data['slug'],
-						'product'             => $data['product'],
+						'product'           => $data['product'],
 						'tier'              => $data['tier'],
 						'name'              => $data['name'],
 						'description'       => $data['description'] ?? '',
 						'type'              => $data['type'] ?? 'test-type',
 						'is_available'      => $data['is_available'],
+						'in_catalog_tier'   => $data['in_catalog_tier'] ?? false,
 						'is_enabled'        => $data['is_enabled'] ?? false,
 						'documentation_url' => $data['documentation_url'] ?? '',
 					]
@@ -123,6 +124,28 @@ final class FeatureTest extends HarborTestCase {
 	}
 
 	/**
+	 * Tests that is_in_catalog_tier defaults to false when not set.
+	 *
+	 * @return void
+	 */
+	public function test_is_in_catalog_tier_defaults_to_false(): void {
+		$this->assertFalse( $this->feature->is_in_catalog_tier() );
+	}
+
+	/**
+	 * Tests that is_in_catalog_tier returns true when explicitly set.
+	 *
+	 * @return void
+	 */
+	public function test_is_in_catalog_tier_returns_true_when_set(): void {
+		$feature = $this->feature::from_array(
+			array_merge( $this->feature->to_array(), [ 'in_catalog_tier' => true ] )
+		);
+
+		$this->assertTrue( $feature->is_in_catalog_tier() );
+	}
+
+	/**
 	 * Tests that is_enabled defaults to false.
 	 *
 	 * @return void
@@ -137,7 +160,7 @@ final class FeatureTest extends HarborTestCase {
 	 * @return void
 	 */
 	public function test_is_enabled_round_trips_through_from_array(): void {
-		$data                = $this->feature->to_array();
+		$data               = $this->feature->to_array();
 		$data['is_enabled'] = true;
 
 		$rebuilt = $this->feature::from_array( $data );
@@ -167,7 +190,7 @@ final class FeatureTest extends HarborTestCase {
 		$this->assertSame(
 			[
 				'slug'              => 'test-feature',
-				'product'             => 'TEC',
+				'product'           => 'TEC',
 				'tier'              => 'Tier 1',
 				'name'              => 'Test Feature',
 				'description'       => 'A test feature.',
@@ -191,7 +214,7 @@ final class FeatureTest extends HarborTestCase {
 		$feature = $this->feature::from_array(
 			[
 				'slug'              => 'from-array-feature',
-				'product'             => 'LearnDash',
+				'product'           => 'LearnDash',
 				'tier'              => 'Tier 2',
 				'name'              => 'From Array',
 				'description'       => 'Hydrated from array.',

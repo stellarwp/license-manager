@@ -59,7 +59,7 @@ final class ManagerTest extends HarborTestCase {
 			Flag::from_array(
 				[
 					'slug'         => 'test-feature',
-					'product'        => 'TestGroup',
+					'product'      => 'TestGroup',
 					'tier'         => 'Tier 1',
 					'name'         => 'Test Feature',
 					'is_available' => true,
@@ -151,6 +151,31 @@ final class ManagerTest extends HarborTestCase {
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( Error_Code::FEATURE_NOT_FOUND, $result->get_error_code() );
+	}
+
+	/**
+	 * Tests enabling a revoked feature returns a CAPABILITY_REVOKED WP_Error.
+	 *
+	 * @return void
+	 */
+	public function test_it_returns_wp_error_when_enabling_revoked_feature(): void {
+		$this->collection->add(
+			Flag::from_array(
+				[
+					'slug'            => 'revoked-feature',
+					'product'         => 'TestGroup',
+					'tier'            => 'Tier 1',
+					'name'            => 'Revoked Feature',
+					'is_available'    => false,
+					'in_catalog_tier' => true,
+				]
+			)
+		);
+
+		$result = $this->manager->enable( 'revoked-feature' );
+
+		$this->assertInstanceOf( WP_Error::class, $result );
+		$this->assertSame( Error_Code::CAPABILITY_REVOKED, $result->get_error_code() );
 	}
 
 	/**
@@ -649,7 +674,7 @@ final class ManagerTest extends HarborTestCase {
 			Flag::from_array(
 				[
 					'slug'         => 'locked-feature',
-					'product'        => 'TestGroup',
+					'product'      => 'TestGroup',
 					'tier'         => 'Pro',
 					'name'         => 'Locked Feature',
 					'is_available' => false,
