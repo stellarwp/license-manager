@@ -1,5 +1,7 @@
 import type { Feature, FeatureMismatchType } from '@/types/api';
 
+export type LicenseBadgeType = 'free' | 'legacy' | 'bonus' | 'revoked';
+
 /**
  * True when a feature requires no paid tier — either it has no tier at all
  * or its tier slug contains "free" (e.g. "give-free").
@@ -8,6 +10,19 @@ import type { Feature, FeatureMismatchType } from '@/types/api';
  */
 export function isFreeFeature( tier: string | null ): boolean {
     return ! tier || tier.toLowerCase().includes( 'free' );
+}
+
+/**
+ * Returns the single license badge type to display for a feature row, or null if none applies.
+ *
+ * Enforces mutual exclusivity: only the first matching condition wins.
+ *
+ * @since 1.0.0
+ */
+export function getLicenseBadgeType( feature: Feature, isLegacy: boolean ): LicenseBadgeType | null {
+    if ( isFreeFeature( feature.tier ) ) return 'free';
+    if ( isLegacy )                       return 'legacy';
+    return getFeatureMismatch( feature );
 }
 
 /**
