@@ -2,12 +2,12 @@
 
 namespace LiquidWeb\Harbor\Catalog;
 
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
 use LiquidWeb\Harbor\Catalog\Clients\Catalog_Client;
 use LiquidWeb\Harbor\Catalog\Clients\Http_Client;
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
+use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
+use Nyholm\Psr7\Factory\Psr17Factory;
 
 /**
  * Registers the Catalog subsystem in the DI container.
@@ -24,8 +24,8 @@ final class Provider extends Abstract_Provider {
 			Catalog_Client::class,
 			function () {
 				return new Http_Client(
-					$this->container->get( ClientInterface::class ),
-					$this->container->get( RequestFactoryInterface::class ),
+					$this->container->get( WordPressHttpClient::class ),
+					$this->container->get( Psr17Factory::class ),
 					Config::get_api_base_url()
 				);
 			}

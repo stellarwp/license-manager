@@ -27,17 +27,20 @@ jobs:
       - uses: ramsey/composer-install@v3
         with:
           composer-options: "--ignore-platform-reqs --optimize-autoloader"
+          dependency-versions: highest
+        env:
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.GH_BOT_TOKEN }}"}}'
 
       # See https://phpstan.org/user-guide/result-cache#setup-in-github-actions for more info.
       - name: Restore PHPStan cache
         uses: actions/cache/restore@v4
         with:
           path: phpstan-cache
-          key: v2-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          key: v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
           restore-keys: |
-            v2-phpstan-${{ runner.os }}-${{ github.ref_name }}-
-            v2-phpstan-${{ runner.os }}-
-            v2-phpstan-
+            v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-
+            v1-phpstan-${{ runner.os }}-
+            v1-phpstan-
 
       - name: Run PHPStan static analysis
         run: composer test:analysis
@@ -47,4 +50,4 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           path: phpstan-cache
-          key: v2-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          key: v1-phpstan-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
