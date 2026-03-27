@@ -4,6 +4,7 @@
  *
  * @package LiquidWeb\Harbor
  */
+import { useMemo } from 'react';
 import { useSelect } from '@wordpress/data';
 import { useFilteredFeatures } from '@/hooks/useFilteredFeatures';
 import { store as harborStore } from '@/store';
@@ -23,33 +24,28 @@ export interface FeatureGroups {
 export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
     const allFeatures = useFilteredFeatures( productSlug );
 
-    const { catalogTiers, activeLegacySlugs, userTierRank } = useSelect(
-        ( select ) => {
-            const tiers = select( harborStore ).getProductCatalog( productSlug )?.tiers ?? [];
-
-            // Derive the rank of the user's licensed tier for this product.
-            const licenseProducts = select( harborStore ).getLicenseProducts();
-            const licenseProduct  = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
-            const userTier        = licenseProduct?.tier
-                ? tiers.find( ( t ) => t.slug === licenseProduct.tier )
-                : null;
-            const rank = userTier?.rank ?? -1;  // -1 = unlicensed (show all tier groups)
-
-            // When the product is covered by a unified tier, legacy slugs are irrelevant.
-            if ( select( harborStore ).isProductUnifiedLicensed( productSlug ) ) {
-                return { catalogTiers: tiers, activeLegacySlugs: new Set<string>(), userTierRank: rank };
-            }
-
-            const slugs = new Set(
-                select( harborStore ).getLegacyLicenses()
-                    .filter( ( l ) => l.is_active )
-                    .map( ( l ) => l.slug )
-            );
-
-            return { catalogTiers: tiers, activeLegacySlugs: slugs, userTierRank: rank };
-        },
+    const { catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses } = useSelect(
+        ( select ) => ({
+            catalogTiers:      select( harborStore ).getProductCatalog( productSlug )?.tiers ?? [],
+            licenseProducts:   select( harborStore ).getLicenseProducts(),
+            isUnifiedLicensed: select( harborStore ).isProductUnifiedLicensed( productSlug ),
+            legacyLicenses:    select( harborStore ).getLegacyLicenses(),
+        }),
         [ productSlug ]
     );
+
+    const { activeLegacySlugs, userTierRank, sortedCatalogTiers, upgradeCatalogTiers } = useMemo( () => {
+        const sorted         = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
+        const licenseProduct = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
+        const userTier       = licenseProduct?.tier ? sorted.find( ( t ) => t.slug === licenseProduct.tier ) : null;
+        const rank           = userTier?.rank ?? -1;  // -1 = unlicensed (show all tier groups)
+        const upgrade        = sorted.filter( ( t ) => t.rank > rank );
+        const slugs          = isUnifiedLicensed
+            ? new Set<string>()
+            : new Set( legacyLicenses.filter( ( l ) => l.is_active ).map( ( l ) => l.slug ) );
+
+        return { activeLegacySlugs: slugs, userTierRank: rank, sortedCatalogTiers: sorted, upgradeCatalogTiers: upgrade };
+    }, [ catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses, productSlug ] );
 
     const isLegacyAvailable = ( f: Feature ) => activeLegacySlugs.has( f.slug );
 
@@ -71,9 +67,6 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
         ! isLegacyAvailable( f ) &&
         getFeatureMismatch( f ) !== 'revoked'
     );
-
-    const sortedCatalogTiers  = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
-    const upgradeCatalogTiers = sortedCatalogTiers.filter( ( t ) => t.rank > userTierRank );
 
     const lockedByTier = sortedCatalogTiers.reduce<Record<string, Feature[]>>(
         ( acc, tier ) => {
