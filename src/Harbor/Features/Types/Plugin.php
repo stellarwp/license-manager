@@ -42,9 +42,6 @@ final class Plugin extends Feature implements Installable {
 		);
 
 		parent::__construct( $attributes );
-
-		// has_update() reads $this->attributes, so it must be set after parent::__construct().
-		$this->attributes['has_update'] = $this->has_update();
 	}
 
 	/**
@@ -101,29 +98,6 @@ final class Plugin extends Feature implements Installable {
 	}
 
 	/**
-	 * Whether a newer version is available and this plugin is currently installed.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool
-	 */
-	public function has_update(): bool {
-		$installed_version = $this->get_installed_version();
-
-		if ( $installed_version === null ) {
-			return false;
-		}
-
-		$catalog_version = Cast::to_string( $this->attributes['version'] ?? '' );
-
-		if ( $catalog_version === '' ) {
-			return false;
-		}
-
-		return version_compare( $catalog_version, $installed_version, '>' );
-	}
-
-	/**
 	 * Builds the complete update data array for this Plugin feature.
 	 *
 	 * @since 1.0.0
@@ -133,10 +107,13 @@ final class Plugin extends Feature implements Installable {
 	 * @return array<string, mixed>
 	 */
 	public function get_update_data( Catalog_Feature $catalog_feature ): array {
+		$installed_version = $this->get_installed_version() ?? '';
+		$catalog_version   = $catalog_feature->get_version() ?? '';
+
 		return [
 			'name'              => $this->get_name(),
 			'slug'              => $this->get_slug(),
-			'version'           => $catalog_feature->get_version() ?? '',
+			'version'           => $catalog_version,
 			'package'           => $catalog_feature->get_download_url() ?? '',
 			'url'               => $this->get_documentation_url(),
 			'author'            => implode( ', ', $this->get_authors() ),
@@ -144,8 +121,8 @@ final class Plugin extends Feature implements Installable {
 				'description' => $this->get_description(),
 			],
 			'plugin_file'       => $this->get_plugin_file(),
-			'installed_version' => $this->get_installed_version() ?? '',
-			'has_update'        => $this->has_update(),
+			'installed_version' => $installed_version,
+			'has_update'        => $installed_version !== '' && $catalog_version !== '' && version_compare( $catalog_version, $installed_version, '>' ),
 		];
 	}
 
