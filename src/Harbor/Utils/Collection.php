@@ -5,7 +5,8 @@ namespace LiquidWeb\Harbor\Utils;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use Iterator;
+use IteratorAggregate;
+use Traversable;
 
 /**
  * A generic keyed collection.
@@ -15,9 +16,9 @@ use Iterator;
  * @template TValue
  *
  * @implements ArrayAccess<string, TValue>
- * @implements Iterator<string, TValue>
+ * @implements IteratorAggregate<string, TValue>
  */
-class Collection implements ArrayAccess, Iterator, Countable {
+class Collection implements ArrayAccess, IteratorAggregate, Countable {
 
 	/**
 	 * The collection items.
@@ -29,40 +30,20 @@ class Collection implements ArrayAccess, Iterator, Countable {
 	protected array $items;
 
 	/**
-	 * The original Iterator, for memoization.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var Iterator<string, TValue>|null
-	 */
-	private ?Iterator $iterator = null;
-
-	/**
 	 * Constructor for a keyed collection.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Iterator<string, TValue>|array<string, TValue> $items An array or iterator of items.
+	 * @param Traversable|array<string, TValue> $items An array or traversable of items.
 	 *
 	 * @return void
 	 */
 	public function __construct( $items = [] ) {
-		if ( $items instanceof Iterator ) {
-			$this->iterator = $items;
-			$items          = iterator_to_array( $items );
+		if ( $items instanceof Traversable ) {
+			$items = iterator_to_array( $items );
 		}
 
 		$this->items = $items;
-	}
-
-	/**
-	 * @since 1.0.0
-	 *
-	 * @return TValue|false
-	 */
-	#[\ReturnTypeWillChange]
-	public function current() {
-		return current( $this->items );
 	}
 
 	/**
@@ -76,23 +57,6 @@ class Collection implements ArrayAccess, Iterator, Countable {
 	 */
 	public function get( $offset ) {
 		return $this->offsetGet( $offset );
-	}
-
-	/**
-	 * @since 1.0.0
-	 *
-	 * @return array-key|null
-	 */
-	#[\ReturnTypeWillChange]
-	public function key() {
-		return key( $this->items );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function next(): void {
-		next( $this->items );
 	}
 
 	/**
@@ -165,38 +129,22 @@ class Collection implements ArrayAccess, Iterator, Countable {
 	/**
 	 * @inheritDoc
 	 */
-	public function rewind(): void {
-		reset( $this->items );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function valid(): bool {
-		return key( $this->items ) !== null;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
 	public function count(): int {
 		return count( $this->items );
 	}
 
 	/**
-	 * Returns a clone of the underlying iterator.
+	 * Returns a fresh iterator over the collection items.
+	 *
+	 * A new ArrayIterator is created on each call so that nested or
+	 * re-entrant foreach loops over the same Collection instance cannot
+	 * corrupt each other's cursor position.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Iterator<string, TValue>
+	 * @return ArrayIterator<string, TValue>
 	 */
-	public function getIterator(): Iterator {
-		if ( isset( $this->iterator ) ) {
-			return $this->iterator;
-		}
-
-		$this->iterator = new ArrayIterator( $this->items );
-
-		return $this->iterator;
+	public function getIterator(): ArrayIterator {
+		return new ArrayIterator( $this->items );
 	}
 }
