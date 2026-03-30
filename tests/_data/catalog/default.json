@@ -564,7 +564,7 @@
     ],
     "features": [
       {
-        "feature_slug": "learndash-core",
+        "feature_slug": "sfwd-lms",
         "type": "plugin",
         "minimum_tier": "learndash-basic",
         "plugin_file": "sfwd-lms/sfwd_lms.php",
@@ -581,12 +581,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-memberdash",
+        "feature_slug": "memberdash",
         "type": "plugin",
         "minimum_tier": "learndash-basic",
         "plugin_file": "memberdash/memberdash.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-memberdash",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/memberdash",
         "name": "MemberDash",
         "description": "Membership and content restriction functionality.",
         "category": "membership",
@@ -635,12 +635,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-instructor-role",
+        "feature_slug": "instructor-role",
         "type": "plugin",
         "minimum_tier": "learndash-elite",
         "plugin_file": "instructor-role/instructor.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-instructor-role",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/instructor-role",
         "name": "Instructor Role",
         "description": "Add multiple course authors without compromising site security by creating roles with restricted back-end access to Course Authors.",
         "category": "core",
@@ -689,12 +689,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-reviews-plus",
+        "feature_slug": "wdm-course-review",
         "type": "plugin",
         "minimum_tier": "learndash-elite",
         "plugin_file": "wdm-course-review/wdm-course-review.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-ratings-reviews",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/wdm-course-review",
         "name": "Ratings, Reviews & Feedback",
         "description": "Full control over the display of ratings and reviews, set custom templates, and make your courses better with student feedback.",
         "category": "core",
@@ -707,12 +707,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-seats-plus",
+        "feature_slug": "ld-group-registration",
         "type": "plugin",
         "minimum_tier": "learndash-elite",
         "plugin_file": "ld-group-registration/ld-group-registration.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-seats-plus",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/ld-group-registration",
         "name": "Group Registration",
         "description": "Group registration and seat management for LearnDash courses.",
         "category": "management",
@@ -833,12 +833,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-tec",
+        "feature_slug": "ld-tec",
         "type": "plugin",
         "minimum_tier": "learndash-basic",
         "plugin_file": "learndash-tec/learndash-tec.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-tec",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/ld-tec",
         "name": "Events Calendar",
         "description": "Connect an event with a course or group and automatically enroll the user using The Events Calendar.",
         "category": "integration",
@@ -1049,12 +1049,12 @@
         "changelog": "<h4>Latest release</h4><ul><li>Bug fixes and performance improvements.</li></ul>"
       },
       {
-        "feature_slug": "learndash-multilingual",
+        "feature_slug": "ld-multilingual",
         "type": "plugin",
         "minimum_tier": "learndash-basic",
         "plugin_file": "learndash-multilingual/ld-multilingual.php",
         "is_dot_org": false,
-        "download_url": "https://licensing.stellarwp.com/api/plugins/learndash-multilingual",
+        "download_url": "https://licensing.stellarwp.com/api/plugins/ld-multilingual",
         "name": "Multilingual",
         "description": "Greater compatibility between LearnDash and multilingual sites using 3rd party translation plugins.",
         "category": "integration",

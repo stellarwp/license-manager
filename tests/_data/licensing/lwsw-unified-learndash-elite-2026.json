@@ -14,15 +14,15 @@
       "validation_status": "valid",
       "is_valid": true,
       "capabilities": [
-        "learndash-core",
-        "learndash-memberdash",
+        "sfwd-lms",
+        "memberdash",
         "learndash-achievements",
         "learndash-certificate-builder",
         "learndash-elementor",
         "learndash-notifications",
         "learndash-woocommerce",
         "learndash-integrity",
-        "learndash-tec",
+        "ld-tec",
         "learndash-zapier",
         "learndash-migration",
         "learndash-paidmemberships",
@@ -34,15 +34,15 @@
         "learndash-2checkout",
         "learndash-event-espresso",
         "learndash-samcart",
-        "learndash-multilingual",
+        "ld-multilingual",
         "learndash-restrict-content-pro",
         "learndash-gradebook",
         "learndash-notes",
         "learndash-propanel",
         "learndash-groups-plus",
-        "learndash-instructor-role",
-        "learndash-reviews-plus",
-        "learndash-seats-plus"
+        "instructor-role",
+        "wdm-course-review",
+        "ld-group-registration"
       ],
       "activated_here": true
     }
