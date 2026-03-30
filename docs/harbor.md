@@ -133,11 +133,11 @@ There is no automatic migration from per-resource keys to unified keys.
 
 ## Documentation Map
 
-| Document                                                          | Covers                                                             |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [This document](harbor.md)                                                            | Architecture overview and how the layers relate                    |
-| [Licensing](subsystems/licensing.md)                                                   | Key discovery, API responses, validation workflows, caching        |
-| [Catalog](subsystems/catalog.md)                                                       | Product families, tiers, features, the Commerce Portal API         |
-| [Features](subsystems/features.md)                                                     | Feature types, resolution, strategies, Manager API, REST endpoints |
-| [Unified License Key](architecture/unified-license-key-system-design.md)               | Key model, seat mechanics, system boundaries                       |
-| [Multi-Instance Architecture](architecture/fat-leader-thin-instance.md)                | Leader election, cross-instance hooks, thin instances              |
+| Document                                                                    | Covers                                                             |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [This document](harbor.md)                                                  | Architecture overview and how the layers relate                    |
+| [Licensing](subsystems/licensing.md)                                        | Key discovery, API responses, validation workflows, caching        |
+| [Catalog](subsystems/catalog.md)                                            | Product families, tiers, features, the Commerce Portal API         |
+| [Features](subsystems/features.md)                                          | Feature types, resolution, strategies, Manager API, REST endpoints |
+| [Unified License Key](architecture/unified-license-key-system-design.md)    | Key model, seat mechanics, system boundaries                       |
+| [Multi-Instance Architecture](architecture/fat-leader-thin-instance.md)     | Leader election, cross-instance hooks, thin instances              |
