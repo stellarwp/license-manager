@@ -66,10 +66,10 @@ interface BaseFeature {
      */
     installed_version?: string;
     /**
-     * Whether a newer version is available and the feature is currently installed.
+     * Version available in the WordPress update transient, or null when no update is pending.
      * Only present for installable features (plugin/theme).
      */
-    has_update?: boolean;
+    update_version?: string | null;
 }
 
 /**
