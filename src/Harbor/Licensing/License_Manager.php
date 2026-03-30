@@ -141,7 +141,7 @@ class License_Manager {
 	 * @param string $domain  The site domain sent to the licensing API.
 	 * @param bool   $network Whether to store at the network level (multisite only).
 	 *
-	 * @return Product_Entry[]|WP_Error The product list on success, WP_Error on failure.
+	 * @return Product_Collection|WP_Error The product collection on success, WP_Error on failure.
 	 */
 	public function validate_and_store( string $key, string $domain, bool $network = false ) {
 		static::debug_log(
@@ -174,7 +174,6 @@ class License_Manager {
 			return $throttled;
 		}
 
-		/** @var Product_Entry[]|WP_Error $result */
 		$result = $this->call_products_api( $key, $domain );
 
 		if ( is_wp_error( $result ) ) {
@@ -204,7 +203,9 @@ class License_Manager {
 			)
 		);
 
-		$this->repository->set_products( Product_Collection::from_array( $result ) );
+		$collection = Product_Collection::from_array( $result );
+
+		$this->repository->set_products( $collection );
 
 		if ( ! $this->repository->store_key( $key, $network ) ) {
 			static::debug_log( 'Failed to persist license key to repository.' );
@@ -218,7 +219,7 @@ class License_Manager {
 
 		static::debug_log( 'License key validated and stored successfully.' );
 
-		return $result;
+		return $collection;
 	}
 
 	/**
