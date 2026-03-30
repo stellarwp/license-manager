@@ -211,7 +211,7 @@ final class License_ManagerTest extends HarborTestCase {
 	public function test_validate_and_store_returns_products_for_recognized_key(): void {
 		$result = $this->manager->validate_and_store( 'LWSW-UNIFIED-PRO-2026', 'example.com' );
 
-		$this->assertIsArray( $result );
+		$this->assertInstanceOf( Product_Collection::class, $result );
 		$this->assertNotEmpty( $result );
 	}
 
@@ -330,7 +330,7 @@ final class License_ManagerTest extends HarborTestCase {
 
 		$result = $this->manager->validate_and_store( 'LWSW-UNIFIED-PRO-2026', 'example.com' );
 
-		$this->assertIsArray( $result );
+		$this->assertInstanceOf( Product_Collection::class, $result );
 		$this->assertNotEmpty( $result );
 	}
 
