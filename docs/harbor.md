@@ -63,6 +63,14 @@ See [Features](subsystems/features.md) for the resolution algorithm, strategies,
 
 ### How They Relate
 
+```mermaid
+flowchart TD
+    CatalogAPI["Commerce Portal\n(Catalog API)"] -->|"product families,\ntiers + ranks,\nfeatures + types,\nminimum_tier"| CatalogCache["Catalog Cache\n(wp_option)"]
+    LicensingAPI["Liquid Web Software\nv1 Licensing API"] -->|"product_slug, tier, status,\nseats, validation_status,\ncapabilities[]"| LicensingCache["Licensing Cache\n(wp_option)"]
+    CatalogCache --> Resolution["Feature Resolution\n\njoins by slug,\nchecks slug in capabilities[]"]
+    LicensingCache --> Resolution
+    Resolution -->|Feature_Collection| REST["REST API\n/features, /license"]
+    REST -->|JSON over HTTP| UI["React UI\n(Software Manager)\n\nis_available, is_enabled,\nenable / disable"]
 ```
               ┌──────────────────────┐
               │      Liquid Web      │
@@ -146,5 +154,6 @@ There is no automatic migration from per-resource keys to unified keys.
 | [REST API Reference](api/rest/)                                             | Endpoint specs, parameters, error codes                            |
 | [WP-CLI Reference](guides/cli.md)                                           | Command reference and scripting patterns                           |
 | [Integration Guide](guides/integration.md)                                  | Bootstrapping Harbor in a plugin, legacy license reporting         |
+| [Frontend](subsystems/frontend.md)                                          | React app, @wordpress/data store, component hierarchy, CSS scoping |
 | [Notices](subsystems/notices.md)                                            | Admin notices, legacy license warnings, persistent dismissal       |
 | [Testing Guide](guides/testing.md)                                          | Codeception setup, fixture data, debug logging                     |
