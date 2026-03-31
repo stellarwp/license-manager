@@ -17,9 +17,9 @@ class Provider extends Abstract_Provider {
 	 * @inheritDoc
 	 */
 	public function register(): void {
-		$this->container->singleton( License_Repository::class, License_Repository::class );
+		$this->container->singleton( License_Repository::class );
 
-		$this->container->singleton( License_Notice_Handler::class, License_Notice_Handler::class );
+		$this->container->singleton( License_Notice_Handler::class );
 
 		$this->register_dismissed_notices_meta();
 

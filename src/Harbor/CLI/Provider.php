@@ -27,9 +27,9 @@ final class Provider extends Abstract_Provider {
 			return;
 		}
 
-		$this->container->singleton( Feature::class, Feature::class );
-		$this->container->singleton( License::class, License::class );
-		$this->container->singleton( Catalog::class, Catalog::class );
+		$this->container->singleton( Feature::class );
+		$this->container->singleton( License::class );
+		$this->container->singleton( Catalog::class );
 
 		WP_CLI::add_hook( 'after_wp_load', [ $this, 'register_commands' ] );
 	}

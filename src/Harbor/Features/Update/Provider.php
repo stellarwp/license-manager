@@ -20,10 +20,10 @@ class Provider extends Abstract_Provider {
 	 * @return void
 	 */
 	public function register(): void {
-		$this->container->singleton( Resolve_Update_Data::class, Resolve_Update_Data::class );
+		$this->container->singleton( Resolve_Update_Data::class );
 
-		$this->container->singleton( Plugin_Handler::class, Plugin_Handler::class );
-		$this->container->singleton( Theme_Handler::class, Theme_Handler::class );
+		$this->container->singleton( Plugin_Handler::class );
+		$this->container->singleton( Theme_Handler::class );
 
 		add_action( 'init', [ $this, 'register_hooks' ] );
 	}

@@ -20,14 +20,14 @@ class Provider extends Abstract_Provider {
 	 * @return void
 	 */
 	public function register(): void {
-		$this->container->singleton( Strategy_Factory::class, Strategy_Factory::class );
+		$this->container->singleton( Strategy_Factory::class );
 
-		$this->container->singleton( Resolve_Feature_Collection::class, Resolve_Feature_Collection::class );
-		$this->container->singleton( Feature_Repository::class, Feature_Repository::class );
-		$this->container->singleton( Feature_Collection::class, Feature_Collection::class );
-		$this->container->singleton( Manager::class, Manager::class );
+		$this->container->singleton( Resolve_Feature_Collection::class );
+		$this->container->singleton( Feature_Repository::class );
+		$this->container->singleton( Feature_Collection::class );
+		$this->container->singleton( Manager::class );
 
-		$this->container->singleton( Update\Provider::class, Update\Provider::class );
+		$this->container->singleton( Update\Provider::class );
 		$this->container->get( Update\Provider::class )->register();
 	}
 }

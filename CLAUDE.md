@@ -48,7 +48,7 @@ All debug logging goes through the `With_Debugging` trait (`src/Harbor/Traits/Wi
 **Prefer auto-wiring.** When all constructor parameters are type-hinted with classes already registered in the container, pass the class string as both arguments and let DI52 resolve dependencies via reflection:
 
 ```php
-$this->container->singleton( SomeService::class, SomeService::class );
+$this->container->singleton( Some_Service::class );
 ```
 
 **Use a closure only when necessary** — e.g. post-construction setup is required, a non-container scalar must be passed, or a factory/interface binding is needed. When a closure is required, it must close over `$this->container` rather than accepting a typed `ContainerInterface $c` parameter. DI52's `ClosureBuilder::build()` passes the raw `lucatume\DI52\Container` directly to closures — it does not resolve the parameter from the container. That inner class only implements PSR-11's `Psr\Container\ContainerInterface`, not `StellarWP\ContainerContract\ContainerInterface`, so a typed parameter causes a `TypeError` when the plugin uses a wrapper-pattern container.
@@ -56,9 +56,9 @@ $this->container->singleton( SomeService::class, SomeService::class );
 ```php
 // Correct — close over $this->container
 $this->container->singleton(
-    SomeService::class,
+    Some_Service::class,
     function () {
-        $service = new SomeService( $this->container->get( Dep::class ) );
+        $service = new Some_Service( $this->container->get( Dep::class ) );
         $service->setup();
         return $service;
     }
@@ -66,9 +66,9 @@ $this->container->singleton(
 
 // Wrong — do not accept ContainerInterface as a parameter
 $this->container->singleton(
-    SomeService::class,
+    Some_Service::class,
     static function ( ContainerInterface $c ) {
-        return new SomeService( $c->get( Dep::class ) );
+        return new Some_Service( $c->get( Dep::class ) );
     }
 );
 ```
