@@ -43,24 +43,28 @@ The minimum PHP version is 7.4 (see `composer.json`). Do not use language featur
 
 All debug logging goes through the `With_Debugging` trait (`src/Harbor/Traits/With_Debugging.php`). Never call `error_log()` directly — use `debug_log()`, `debug_log_throwable()`, or `debug_log_wp_error()` instead. Since it's a trait, standalone global functions that aren't inside a class can't use it — route those through a class that uses the trait (see `Global_Function_Registry` for the pattern).
 
-## DI container closures
+## DI container registration
 
-Provider closures that need container services must close over `$this->container` rather than accepting a typed `ContainerInterface $c` parameter. DI52's `ClosureBuilder::build()` passes the raw `lucatume\DI52\Container` directly to closures — it does not resolve the parameter from the container. That inner class only implements PSR-11's `Psr\Container\ContainerInterface`, not `StellarWP\ContainerContract\ContainerInterface`, so a typed parameter causes a `TypeError` when the plugin uses a wrapper-pattern container (outer wrapper implements `StellarWP\ContainerContract\ContainerInterface`, inner DI52 does not).
-
-**Correct pattern** (used in `Licensing\Provider` and all providers after this fix):
+**Prefer auto-wiring.** When all constructor parameters are type-hinted with classes already registered in the container, pass the class string as both arguments and let DI52 resolve dependencies via reflection:
 
 ```php
+$this->container->singleton( SomeService::class, SomeService::class );
+```
+
+**Use a closure only when necessary** — e.g. post-construction setup is required, a non-container scalar must be passed, or a factory/interface binding is needed. When a closure is required, it must close over `$this->container` rather than accepting a typed `ContainerInterface $c` parameter. DI52's `ClosureBuilder::build()` passes the raw `lucatume\DI52\Container` directly to closures — it does not resolve the parameter from the container. That inner class only implements PSR-11's `Psr\Container\ContainerInterface`, not `StellarWP\ContainerContract\ContainerInterface`, so a typed parameter causes a `TypeError` when the plugin uses a wrapper-pattern container.
+
+```php
+// Correct — close over $this->container
 $this->container->singleton(
     SomeService::class,
     function () {
-        return new SomeService( $this->container->get( Dep::class ) );
+        $service = new SomeService( $this->container->get( Dep::class ) );
+        $service->setup();
+        return $service;
     }
 );
-```
 
-**Wrong pattern** (do not use):
-
-```php
+// Wrong — do not accept ContainerInterface as a parameter
 $this->container->singleton(
     SomeService::class,
     static function ( ContainerInterface $c ) {
