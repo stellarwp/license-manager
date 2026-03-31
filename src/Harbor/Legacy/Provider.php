@@ -2,7 +2,6 @@
 
 namespace LiquidWeb\Harbor\Legacy;
 
-use StellarWP\ContainerContract\ContainerInterface;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Legacy\Notices\License_Notice_Handler;
 use LiquidWeb\Harbor\Notice\Notice_Controller;
@@ -22,10 +21,10 @@ class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			License_Notice_Handler::class,
-			static function ( ContainerInterface $c ): License_Notice_Handler {
+			function (): License_Notice_Handler {
 				return new License_Notice_Handler(
-					$c->get( License_Repository::class ),
-					$c->get( Notice_Controller::class )
+					$this->container->get( License_Repository::class ),
+					$this->container->get( Notice_Controller::class )
 				);
 			}
 		);

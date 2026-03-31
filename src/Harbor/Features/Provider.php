@@ -2,7 +2,6 @@
 
 namespace LiquidWeb\Harbor\Features;
 
-use StellarWP\ContainerContract\ContainerInterface;
 use LiquidWeb\Harbor\Catalog\Catalog_Repository;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Features\Strategy\Strategy_Factory;
@@ -32,11 +31,11 @@ class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			Resolve_Feature_Collection::class,
-			function ( ContainerInterface $c ) {
+			function () {
 				$resolver = new Resolve_Feature_Collection(
-					$c->get( Catalog_Repository::class ),
-					$c->get( License_Manager::class ),
-					$c->get( Data::class )
+					$this->container->get( Catalog_Repository::class ),
+					$this->container->get( License_Manager::class ),
+					$this->container->get( Data::class )
 				);
 
 				$this->register_default_types( $resolver );
@@ -47,9 +46,9 @@ class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			Feature_Repository::class,
-			static function ( ContainerInterface $c ) {
+			function () {
 				return new Feature_Repository(
-					$c->get( Resolve_Feature_Collection::class )
+					$this->container->get( Resolve_Feature_Collection::class )
 				);
 			}
 		);
@@ -58,10 +57,10 @@ class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			Manager::class,
-			static function ( ContainerInterface $c ) {
+			function () {
 				return new Manager(
-					$c->get( Feature_Repository::class ),
-					$c->get( Strategy_Factory::class )
+					$this->container->get( Feature_Repository::class ),
+					$this->container->get( Strategy_Factory::class )
 				);
 			}
 		);

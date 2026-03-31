@@ -2,7 +2,6 @@
 
 namespace LiquidWeb\Harbor\CLI;
 
-use StellarWP\ContainerContract\ContainerInterface;
 use LiquidWeb\Harbor\Catalog\Catalog_Repository;
 use LiquidWeb\Harbor\CLI\Commands\Catalog;
 use LiquidWeb\Harbor\CLI\Commands\Feature;
@@ -35,26 +34,26 @@ final class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			Feature::class,
-			static function ( ContainerInterface $c ) {
-				return new Feature( $c->get( Manager::class ) );
+			function () {
+				return new Feature( $this->container->get( Manager::class ) );
 			}
 		);
 
 		$this->container->singleton(
 			License::class,
-			static function ( ContainerInterface $c ) {
+			function () {
 				return new License(
-					$c->get( License_Manager::class ),
-					$c->get( Data::class ),
-					$c->get( Legacy_License_Repository::class )
+					$this->container->get( License_Manager::class ),
+					$this->container->get( Data::class ),
+					$this->container->get( Legacy_License_Repository::class )
 				);
 			}
 		);
 
 		$this->container->singleton(
 			Catalog::class,
-			static function ( ContainerInterface $c ) {
-				return new Catalog( $c->get( Catalog_Repository::class ) );
+			function () {
+				return new Catalog( $this->container->get( Catalog_Repository::class ) );
 			}
 		);
 

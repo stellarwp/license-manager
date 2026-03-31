@@ -2,7 +2,6 @@
 
 namespace LiquidWeb\Harbor\Features\Update;
 
-use StellarWP\ContainerContract\ContainerInterface;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Features\Feature_Repository;
 use LiquidWeb\Harbor\Licensing\License_Manager;
@@ -27,22 +26,22 @@ class Provider extends Abstract_Provider {
 
 		$this->container->singleton(
 			Plugin_Handler::class,
-			static function ( ContainerInterface $c ) {
+			function () {
 				return new Plugin_Handler(
-					$c->get( Resolve_Update_Data::class ),
-					$c->get( Feature_Repository::class ),
-					$c->get( License_Manager::class )
+					$this->container->get( Resolve_Update_Data::class ),
+					$this->container->get( Feature_Repository::class ),
+					$this->container->get( License_Manager::class )
 				);
 			}
 		);
 
 		$this->container->singleton(
 			Theme_Handler::class,
-			static function ( ContainerInterface $c ) {
+			function () {
 				return new Theme_Handler(
-					$c->get( Resolve_Update_Data::class ),
-					$c->get( Feature_Repository::class ),
-					$c->get( License_Manager::class )
+					$this->container->get( Resolve_Update_Data::class ),
+					$this->container->get( Feature_Repository::class ),
+					$this->container->get( License_Manager::class )
 				);
 			}
 		);
