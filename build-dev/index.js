@@ -2137,12 +2137,10 @@ function ProductSection({
   const {
     hasLicense,
     licenseProduct,
-    allFeaturesUnfiltered,
     hasActiveLegacy
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => {
     const licenseProducts = select(_store__WEBPACK_IMPORTED_MODULE_6__.store).getLicenseProducts();
     return {
-      allFeaturesUnfiltered: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).getFeaturesByProduct(product.slug),
       hasLicense: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).hasLicense(),
       licenseProduct: licenseProducts.find(lp => lp.product_slug === product.slug) ?? null,
       hasActiveLegacy: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).hasActiveLegacyLicenseForProduct(product.slug)
@@ -2154,10 +2152,8 @@ function ProductSection({
     sortedCatalogTiers,
     upgradeCatalogTiers
   } = (0,_hooks_useProductFeatureGroups__WEBPACK_IMPORTED_MODULE_8__.useProductFeatureGroups)(product.slug);
-
-  // Counts derived from the unfiltered set — unaffected by search.
-  const activeCount = allFeaturesUnfiltered.filter(f => f.is_available && f.is_enabled).length;
-  const deactivatedCount = allFeaturesUnfiltered.filter(f => f.is_available && !f.is_enabled).length;
+  const activeCount = availableFeatures.filter(f => f.is_enabled).length;
+  const deactivatedCount = availableFeatures.filter(f => !f.is_enabled).length;
   const tierName = licenseProduct ? sortedCatalogTiers.find(t => t.slug === licenseProduct.tier)?.name ?? licenseProduct.tier : null;
   const hasContent = availableFeatures.length > 0 || Object.values(lockedByTier).some(f => f.length > 0);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("section", {
