@@ -3,11 +3,10 @@
 namespace LiquidWeb\Harbor\API\Functions;
 
 use LiquidWeb\Harbor\Admin\Feature_Manager_Page;
+use LiquidWeb\Harbor\API\Functions\Actions\Display_Legacy_License_Page_Notice;
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Features\Manager;
 use LiquidWeb\Harbor\Licensing\Repositories\License_Repository;
-use LiquidWeb\Harbor\Notice\Notice;
-use LiquidWeb\Harbor\Notice\Notice_Controller;
 use LiquidWeb\Harbor\Traits\With_Debugging;
 use Throwable;
 
@@ -132,37 +131,7 @@ class Global_Function_Registry {
 		\_lw_harbor_global_function_registry(
 			'lw_harbor_display_legacy_license_page_notice',
 			$version,
-			static function ( string $product_name = '' ): void {
-				try {
-					$url = admin_url( 'admin.php?page=' . Feature_Manager_Page::PAGE_SLUG );
-
-					if ( $product_name !== '' ) {
-						$message = sprintf(
-							/* translators: 1: product name (e.g. "GiveWP"), 2: URL to the Liquid Web Software Manager page. */
-							__(
-								'As of 2026, %1$s is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses purchased prior to 2026. Newer licenses are managed through the <a href="%2$s">Liquid Web Software Manager</a>.',
-								'%TEXTDOMAIN%'
-							),
-							esc_html( $product_name ),
-							esc_url( $url )
-						);
-					} else {
-						$message = sprintf(
-							/* translators: %s is the URL to the Liquid Web Software Manager page. */
-							__(
-								'As of 2026, this plugin is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses purchased prior to 2026. Newer licenses are managed through the <a href="%s">Liquid Web Software Manager</a>.',
-								'%TEXTDOMAIN%'
-							),
-							esc_url( $url )
-						);
-					}
-
-					$notice = new Notice( Notice::INFO, $message );
-					Config::get_container()->get( Notice_Controller::class )->render( $notice->to_array() );
-				} catch ( Throwable $e ) {
-					self::debug_log_throwable( $e, 'Error displaying legacy license notice' );
-				}
-			}
+			new Display_Legacy_License_Page_Notice()
 		);
 	}
 }
