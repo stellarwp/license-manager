@@ -21,13 +21,14 @@ import { HarborError } from '@/errors';
  */
 export function LicensePanel() {
     const { addToast }      = useToast();
-    const { deleteLicense } = useDispatch( harborStore );
+    const { deleteLicense, refreshLicense } = useDispatch( harborStore );
 
-    const { licenseKey, licenseProducts, catalogs } = useSelect(
+    const { licenseKey, licenseProducts, catalogs, isRefreshing } = useSelect(
         ( select ) => ({
             licenseKey:      select( harborStore ).getLicenseKey(),
             licenseProducts: select( harborStore ).getLicenseProducts(),
             catalogs:        select( harborStore ).getCatalog(),
+            isRefreshing:    select( harborStore ).isLicenseRefreshing(),
         }),
         []
     );
@@ -67,6 +68,15 @@ export function LicensePanel() {
         }
     };
 
+    const handleRefresh = async () => {
+        const result = await refreshLicense();
+        if ( result instanceof HarborError ) {
+            addToast( result.message, 'error' );
+        } else {
+            addToast( __( 'License refreshed.', '%TEXTDOMAIN%' ), 'success' );
+        }
+    };
+
     return (
         <div className="sticky top-4 w-[280px] shrink-0 space-y-6">
             <LicenseSection
@@ -74,6 +84,8 @@ export function LicensePanel() {
                 licenseProducts={ licenseProducts }
                 tierNameMap={ tierNameMap }
                 onRemove={ handleRemove }
+                onRefresh={ handleRefresh }
+                isRefreshing={ isRefreshing }
             />
             <UpsellSection
                 products={ upsellProducts }
