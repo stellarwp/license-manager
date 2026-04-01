@@ -178,6 +178,47 @@ export const storeLicense =
 	};
 
 /**
+ * Refresh the license from the upstream service via the REST API, then
+ * invalidate the features resolver so the UI reflects any plan changes.
+ *
+ * @since 1.0.0
+ */
+export const refreshLicense =
+	(): Thunk<HarborError | null> =>
+	async ({ dispatch, select }) => {
+		if (!select.canModifyLicense()) {
+			return new HarborError(
+				ErrorCode.LicenseActionInProgress,
+				__(
+					'Liquid Web Software Manager failed to refresh your license, another action is in progress.',
+					'%TEXTDOMAIN%'
+				)
+			);
+		}
+		dispatch({ type: 'REFRESH_LICENSE_START' });
+		try {
+			const result = await apiFetch<License>({
+				path: '/liquidweb/harbor/v1/license/refresh',
+				method: 'POST',
+			});
+			dispatch({ type: 'REFRESH_LICENSE_FINISHED', license: result });
+			dispatch.invalidateResolution('getFeatures', []);
+			return null;
+		} catch (err) {
+			const error = await HarborError.wrap(
+				err,
+				ErrorCode.LicenseRefreshFailed,
+				__(
+					'Liquid Web Software Manager failed to refresh your license.',
+					'%TEXTDOMAIN%'
+				)
+			);
+			dispatch({ type: 'REFRESH_LICENSE_FAILED', error });
+			return error;
+		}
+	};
+
+/**
  * Delete the stored license key via the REST API, then invalidate the
  * features resolver so the UI refreshes.
  *
