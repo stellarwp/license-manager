@@ -20,7 +20,7 @@ class Register_Submenu {
 			static function () use ( $parent_slug ): void {
 				$page_url = lw_harbor_get_license_page_url();
 
-				if ($page_url === '') {
+				if ( $page_url === '' ) {
 					return;
 				}
 
