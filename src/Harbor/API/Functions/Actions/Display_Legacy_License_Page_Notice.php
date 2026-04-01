@@ -36,7 +36,7 @@ class Display_Legacy_License_Page_Notice {
 				$message = sprintf(
 					/* translators: 1: product name (e.g. "GiveWP"), 2: URL to the Liquid Web Software Manager page. */
 					__(
-						'As of 2026, %1$s is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses purchased prior to 2026. Newer licenses are managed through the <a href="%2$s">Liquid Web Software Manager</a>.',
+						'%1$s is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses from your previous %1$s account. If you purchased a new plan through Liquid Web, your products are managed through the <a href="%2$s">Liquid Web Software Manager</a>.',
 						'%TEXTDOMAIN%'
 					),
 					esc_html( $product_name ),
@@ -46,7 +46,7 @@ class Display_Legacy_License_Page_Notice {
 				$message = sprintf(
 					/* translators: %s is the URL to the Liquid Web Software Manager page. */
 					__(
-						'As of 2026, this plugin is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses purchased prior to 2026. Newer licenses are managed through the <a href="%s">Liquid Web Software Manager</a>.',
+						'This plugin is now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses from your previous account. If you purchased a new plan through Liquid Web, your products are managed through the <a href="%s">Liquid Web Software Manager</a>.',
 						'%TEXTDOMAIN%'
 					),
 					esc_url( $url )
