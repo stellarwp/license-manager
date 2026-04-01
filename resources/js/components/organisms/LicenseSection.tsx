@@ -5,7 +5,7 @@
  */
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { KeyRound, Pencil, Trash2 } from 'lucide-react';
+import { KeyRound, Loader2, Pencil, RefreshCw, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogHeader, DialogContent, DialogFooter } from '@/components/ui/dialog';
 import { SectionHeader } from '@/components/atoms/SectionHeader';
@@ -19,12 +19,14 @@ interface LicenseSectionProps {
     licenseProducts: LicenseProduct[];
     tierNameMap:     Record<string, string>;
     onRemove:        () => Promise<void>;
+    onRefresh:       () => Promise<void>;
+    isRefreshing:    boolean;
 }
 
 /**
  * @since 1.0.0
  */
-export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRemove }: LicenseSectionProps ) {
+export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRemove, onRefresh, isRefreshing }: LicenseSectionProps ) {
     const [ editingOpen, setEditingOpen ] = useState( false );
 
     const hasLicense = licenseKey !== null;
@@ -71,6 +73,24 @@ export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRe
                         />
                     ) ) }
                 </div>
+            ) }
+
+            { hasLicense && (
+                <button
+                    type="button"
+                    onClick={ onRefresh }
+                    disabled={ isRefreshing }
+                    className="flex items-center gap-1 text-[11px] text-muted-foreground transition-colors hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    { isRefreshing
+                        ? <Loader2 className="w-3 h-3 animate-spin" />
+                        : <RefreshCw className="w-3 h-3" />
+                    }
+                    { isRefreshing
+                        ? __( 'Refreshing...', '%TEXTDOMAIN%' )
+                        : __( 'Refresh', '%TEXTDOMAIN%' )
+                    }
+                </button>
             ) }
 
             <Dialog
