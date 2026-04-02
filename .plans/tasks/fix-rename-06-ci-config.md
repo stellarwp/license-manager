@@ -12,15 +12,15 @@ The GitHub Actions workflow still references old names. The `slic use` command w
 
 Update `.github/workflows/tests-php.yml`:
 
-| Old | New |
-|---|---|
-| `StellarWP Uplink` (comment, line ~91) | `LiquidWeb Harbor` |
+| Old                                          | New                      |
+| -------------------------------------------- | ------------------------ |
+| `StellarWP Uplink` (comment, line ~91)       | `LiquidWeb Harbor`       |
 | `${SLIC_BIN} use license-manager` (line ~93) | `${SLIC_BIN} use harbor` |
 
 Update `tests/wpunit.suite.dist.yml`:
 
-| Old | New |
-|---|---|
+| Old                               | New                               |
+| --------------------------------- | --------------------------------- |
 | `title: 'StellarWP Uplink Tests'` | `title: 'LiquidWeb Harbor Tests'` |
 
 Check for any other workflow files under `.github/` or test config files with remaining Uplink or license-manager references.

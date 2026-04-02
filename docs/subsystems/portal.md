@@ -22,16 +22,16 @@ The product's own entry plugin is also returned as a feature within its portal. 
 
 Each product defines an ordered set of tiers that represent subscription levels. Tiers are ranked, and a higher rank means a higher tier with more entitlements.
 
-| Field           | Type     | Description                                                                 |
-| --------------- | -------- | --------------------------------------------------------------------------- |
-| `slug`          | string   | Unique identifier within the product (e.g., `kadence-basic`, `kadence-pro`) |
-| `name`          | string   | Display name (e.g., "Basic", "Pro", "Agency")                               |
-| `rank`          | int      | Numeric ordering value. Higher rank = higher tier                           |
-| `price`         | int      | Price in the smallest currency unit (e.g., cents)                           |
-| `currency`      | string   | Currency code (e.g., `USD`)                                                 |
-| `features`      | string[] | Marketing feature strings for this tier                                     |
-| `herald_slugs`  | string[] | Herald slugs associated with this tier                                      |
-| `purchase_url`  | string   | Checkout URL to purchase or upgrade to this tier                            |
+| Field          | Type     | Description                                                                 |
+| -------------- | -------- | --------------------------------------------------------------------------- |
+| `slug`         | string   | Unique identifier within the product (e.g., `kadence-basic`, `kadence-pro`) |
+| `name`         | string   | Display name (e.g., "Basic", "Pro", "Agency")                               |
+| `rank`         | int      | Numeric ordering value. Higher rank = higher tier                           |
+| `price`        | int      | Price in the smallest currency unit (e.g., cents)                           |
+| `currency`     | string   | Currency code (e.g., `USD`)                                                 |
+| `features`     | string[] | Marketing feature strings for this tier                                     |
+| `herald_slugs` | string[] | Herald slugs associated with this tier                                      |
+| `purchase_url` | string   | Checkout URL to purchase or upgrade to this tier                            |
 
 Tiers are always sorted by rank. This ordering drives feature availability. A feature that requires `kadence-pro` (rank 2) is available to anyone on `kadence-pro` or `kadence-agency` (rank 3), but not to someone on `kadence-basic` (rank 1).
 
@@ -43,23 +43,23 @@ A product's tiers are its own. Tier slugs are namespaced to the product (`kadenc
 
 Features are the individual plugins and themes that make up a product family. Each feature belongs to one product and has a minimum tier requirement.
 
-| Field               | Type           | Description                                                                                                                        |
-| ------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `slug`              | string         | Unique identifier (e.g., `kad-blocks-pro`, `ld-propanel`)                                                                          |
-| `kind`              | string         | One of `plugin` or `theme`                                                                                                         |
-| `minimum_tier`      | string         | Tier slug required to access this feature                                                                                          |
-| `plugin_file`       | string\|null   | Plugin file path relative to plugins dir (e.g., `kadence-blocks-pro/kadence-blocks-pro.php`). Null for themes                      |
-| `wporg_slug`        | string\|null   | WordPress.org slug for `plugins_api()`. Non-null means the feature is on WordPress.org                                             |
-| `download_url`      | string\|null   | Download URL for features not on WordPress.org                                                                                     |
-| `version`           | string\|null   | Latest available version from the Commerce Portal                                                                                  |
-| `release_date`      | string\|null   | Release date of the latest version (ISO 8601)                                                                                      |
-| `changelog`         | string\|null   | Changelog HTML for the latest version, consistent with `plugins_api()` sections                                                    |
-| `name`              | string         | Display name                                                                                                                       |
-| `description`       | string         | Short description of what the feature does                                                                                         |
-| `category`          | string         | Grouping category (e.g., `blocks`, `theme`, `security`, `woocommerce`)                                                             |
-| `authors`           | string[]\|null | Product/author names. Null if not applicable.                                                                                      |
-| `documentation_url` | string         | Link to the feature's documentation                                                                                                |
-| `homepage`          | string\|null   | URL to the feature's homepage                                                                                                      |
+| Field               | Type           | Description                                                                                                   |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------- |
+| `slug`              | string         | Unique identifier (e.g., `kad-blocks-pro`, `ld-propanel`)                                                     |
+| `kind`              | string         | One of `plugin` or `theme`                                                                                    |
+| `minimum_tier`      | string         | Tier slug required to access this feature                                                                     |
+| `plugin_file`       | string\|null   | Plugin file path relative to plugins dir (e.g., `kadence-blocks-pro/kadence-blocks-pro.php`). Null for themes |
+| `wporg_slug`        | string\|null   | WordPress.org slug for `plugins_api()`. Non-null means the feature is on WordPress.org                        |
+| `download_url`      | string\|null   | Download URL for features not on WordPress.org                                                                |
+| `version`           | string\|null   | Latest available version from the Commerce Portal                                                             |
+| `release_date`      | string\|null   | Release date of the latest version (ISO 8601)                                                                 |
+| `changelog`         | string\|null   | Changelog HTML for the latest version, consistent with `plugins_api()` sections                               |
+| `name`              | string         | Display name                                                                                                  |
+| `description`       | string         | Short description of what the feature does                                                                    |
+| `category`          | string         | Grouping category (e.g., `blocks`, `theme`, `security`, `woocommerce`)                                        |
+| `authors`           | string[]\|null | Product/author names. Null if not applicable.                                                                 |
+| `documentation_url` | string         | Link to the feature's documentation                                                                           |
+| `homepage`          | string\|null   | URL to the feature's homepage                                                                                 |
 
 #### Feature Types
 
@@ -118,10 +118,10 @@ Tests use a fixture PSR-18 client that serves local JSON from `tests/_data/porta
 
 ## Error Codes
 
-| Code                                  | Constant            | Meaning                                   |
-| ------------------------------------- | ------------------- | ----------------------------------------- |
+| Code                                 | Constant            | Meaning                                  |
+| ------------------------------------ | ------------------- | ---------------------------------------- |
 | `lw-harbor-portal-product-not-found` | `PRODUCT_NOT_FOUND` | Requested product slug not in the portal |
-| `lw-harbor-portal-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be parsed           |
+| `lw-harbor-portal-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be parsed          |
 
 ## Portal Shape
 
@@ -180,9 +180,9 @@ Tier slugs are product-prefixed (`kadence-pro`, `give-basic`) and are consistent
 The portal uses delivery-oriented kind names (`plugin`, `theme`). The Features subsystem maps these to its own type hierarchy during resolution:
 
 | Portal kind | Feature class | Meaning                      |
-| ------------ | ------------- | ---------------------------- |
-| `plugin`     | `Plugin`      | Installable WordPress plugin |
-| `theme`      | `Theme`       | Installable WordPress theme  |
+| ----------- | ------------- | ---------------------------- |
+| `plugin`    | `Plugin`      | Installable WordPress plugin |
+| `theme`     | `Theme`       | Installable WordPress theme  |
 
 ### What the Portal Does Not Know
 
@@ -192,7 +192,7 @@ The portal describes what exists. It does not know:
 | -------------------------------------------- | --------------------------------------------------------- |
 | What tier is the customer on?                | [Licensing](licensing.md)                                 |
 | Is this key valid?                           | [Licensing](licensing.md)                                 |
-| Is a feature available to this customer?     | [Features](features.md) (joins portal + licensing)       |
+| Is a feature available to this customer?     | [Features](features.md) (joins portal + licensing)        |
 | Is a feature currently enabled on this site? | [Features](features.md) (checks local state)              |
 | What version is installed on this site?      | [Features](features.md) (reads from disk via Installable) |
 

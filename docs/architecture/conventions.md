@@ -146,7 +146,7 @@ wp_enqueue_script( 'lw-harbor-notice-dismiss', ... );
 | Store name         | `'lw'`                                  |
 | Store registration | `registerHarborStore`                   |
 | Store import alias | `harborStore`                           |
-| REST paths         | `'/liquidweb/harbor/v1/...'`                   |
+| REST paths         | `'/liquidweb/harbor/v1/...'`            |
 | Docblock package   | `@package LiquidWeb\Harbor`             |
 
 <!-- markdownlint-enable MD060 -->
@@ -171,10 +171,10 @@ The library version starts at `0.0.1`. All `@since` tags for new code use `@sinc
 | Scope                   | Prefix             | Separator | Example                             |
 | ----------------------- | ------------------ | --------- | ----------------------------------- |
 | PHP namespace           | `LiquidWeb\Harbor` | `\`       | `LiquidWeb\Harbor\Features\Manager` |
-| Hooks                   | `lw-harbor`        | `/`       | `lw-harbor/portal/fetched`         |
+| Hooks                   | `lw-harbor`        | `/`       | `lw-harbor/portal/fetched`          |
 | Options/meta/cache/cron | `lw_harbor`        | `_`       | `lw_harbor_unified_license_key`     |
 | Container keys          | `lw-harbor`        | `.`       | `lw-harbor.admin-views.path`        |
-| REST namespace          | `liquidweb`        | `/`       | `liquidweb/harbor/v1/features`             |
+| REST namespace          | `liquidweb`        | `/`       | `liquidweb/harbor/v1/features`      |
 | Global functions        | `lw_harbor`        | `_`       | `lw_harbor_is_feature_enabled()`    |
 | WP-CLI                  | `harbor`           | ` `       | `wp harbor feature list`            |
 | Error codes (PHP)       | `lw-harbor`        | `-`       | `lw-harbor-feature-not-found`       |

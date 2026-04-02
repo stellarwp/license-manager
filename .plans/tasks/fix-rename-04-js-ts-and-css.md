@@ -39,18 +39,18 @@ Check barrel files (`errors/index.ts`) for re-exports.
 
 ### Store identifiers
 
-| Old | New | File |
-|---|---|---|
-| `STORE_NAME = 'stellarwp/uplink'` | `STORE_NAME = 'lw'` | `store/constants.ts` |
-| `registerUplinkStore` | `registerHarborStore` | `store/index.ts`, `index.tsx` |
-| `uplinkStore` (import alias) | `harborStore` | hooks, components |
+| Old                               | New                   | File                          |
+| --------------------------------- | --------------------- | ----------------------------- |
+| `STORE_NAME = 'stellarwp/uplink'` | `STORE_NAME = 'lw'`   | `store/constants.ts`          |
+| `registerUplinkStore`             | `registerHarborStore` | `store/index.ts`, `index.tsx` |
+| `uplinkStore` (import alias)      | `harborStore`         | hooks, components             |
 
 ### Window and DOM references
 
-| Old | New |
-|---|---|
-| `window.uplinkData` | `window.lwData` |
-| `'uplink-root'` | `'lw-harbor-root'` |
+| Old                 | New                |
+| ------------------- | ------------------ |
+| `window.uplinkData` | `window.lwData`    |
+| `'uplink-root'`     | `'lw-harbor-root'` |
 
 These must match what the PHP side emits (changed in Stage 3).
 
@@ -62,12 +62,12 @@ These must match what the PHP side emits (changed in Stage 3).
 
 The CSS scoping chain must stay in sync across 4 files:
 
-| File | Old | New |
-|---|---|---|
-| `resources/css/globals.css` | `.uplink-ui` (~6 occurrences) | `.lw-harbor` |
-| `postcss.config.js` | `scopeToUplinkUI`, `'postcss-scope-to-uplink-ui'`, `.uplink-ui` | `scopeToLwHarbor`, `'postcss-scope-to-lw-harbor'`, `.lw-harbor` |
-| `tailwind.config.js` | `.uplink-ui` in comments | `.lw-harbor` |
-| `Feature_Manager_Page.php` | already done in Stage 3 | |
+| File                        | Old                                                             | New                                                             |
+| --------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `resources/css/globals.css` | `.uplink-ui` (~6 occurrences)                                   | `.lw-harbor`                                                    |
+| `postcss.config.js`         | `scopeToUplinkUI`, `'postcss-scope-to-uplink-ui'`, `.uplink-ui` | `scopeToLwHarbor`, `'postcss-scope-to-lw-harbor'`, `.lw-harbor` |
+| `tailwind.config.js`        | `.uplink-ui` in comments                                        | `.lw-harbor`                                                    |
+| `Feature_Manager_Page.php`  | already done in Stage 3                                         |                                                                 |
 
 ### Docblocks and comments
 

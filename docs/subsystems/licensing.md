@@ -58,8 +58,8 @@ When the site calls `validate()` for a single product, Licensing returns a more 
 
 ```json
 {
-  "key": "LWSW-...",
-  "status": "active"
+ "key": "LWSW-...",
+ "status": "active"
 }
 ```
 
@@ -67,11 +67,11 @@ When the site calls `validate()` for a single product, Licensing returns a more 
 
 ```json
 {
-  "product_slug": "give",
-  "tier": "give-pro",
-  "site_limit": 3,
-  "expiration_date": "2026-12-31 23:59:59",
-  "status": "active"
+ "product_slug": "give",
+ "tier": "give-pro",
+ "site_limit": 3,
+ "expiration_date": "2026-12-31 23:59:59",
+ "status": "active"
 }
 ```
 
@@ -79,8 +79,8 @@ When the site calls `validate()` for a single product, Licensing returns a more 
 
 ```json
 {
-  "domain": "example.com",
-  "activated_at": "2024-03-04 12:34:56"
+ "domain": "example.com",
+ "activated_at": "2024-03-04 12:34:56"
 }
 ```
 
@@ -162,12 +162,12 @@ The fixture set covers the common scenarios:
 
 All errors use `WP_Error` with these codes:
 
-| Code                          | Constant            | Meaning                                            |
-| ----------------------------- | ------------------- | -------------------------------------------------- |
-| `lw-harbor-invalid-key`       | `INVALID_KEY`       | Key not recognized by the API                      |
-| `lw-harbor-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be decoded                   |
+| Code                          | Constant            | Meaning                                           |
+| ----------------------------- | ------------------- | ------------------------------------------------- |
+| `lw-harbor-invalid-key`       | `INVALID_KEY`       | Key not recognized by the API                     |
+| `lw-harbor-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be decoded                  |
 | `lw-harbor-product-not-found` | `PRODUCT_NOT_FOUND` | Product slug not found in the portal for this key |
-| `lw-harbor-store-failed`      | `STORE_FAILED`      | Key couldn't be persisted to the database          |
+| `lw-harbor-store-failed`      | `STORE_FAILED`      | Key couldn't be persisted to the database         |
 
 ## HTTP Infrastructure
 

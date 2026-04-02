@@ -23,11 +23,11 @@ Each feature type has a strategy that defines how enable, disable, and active-st
 
 An installable WordPress plugin. The portal provides `plugin_file`, `download_url`/`wporg_slug`.
 
-| Aspect              | Behavior                                                                               |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| **Source of truth** | Live WordPress plugin activation state — no DB option stored                           |
-| **Enable**          | Installs (if needed) and activates the plugin                                          |
-| **Disable**         | Deactivates the plugin but never deletes files                                         |
+| Aspect              | Behavior                                                     |
+| ------------------- | ------------------------------------------------------------ |
+| **Source of truth** | Live WordPress plugin activation state — no DB option stored |
+| **Enable**          | Installs (if needed) and activates the plugin                |
+| **Disable**         | Deactivates the plugin but never deletes files               |
 
 ### Theme
 
@@ -95,7 +95,7 @@ The `Manager` is the public interface for all feature operations.
 | ---------------------------- | ------------------------------ | -------------------------------------------------- |
 | `get_all()`                  | `Feature_Collection\|WP_Error` | Get all resolved features with live is_enabled     |
 | `get(string $slug)`          | `Feature\|null`                | Look up a single feature with live is_enabled      |
-| `exists(string $slug)`       | `bool\|WP_Error`               | Check if the feature is in the portal             |
+| `exists(string $slug)`       | `bool\|WP_Error`               | Check if the feature is in the portal              |
 | `is_available(string $slug)` | `bool\|WP_Error`               | Check if the customer's tier includes this feature |
 | `is_enabled(string $slug)`   | `bool\|WP_Error`               | Check if the feature is active locally             |
 | `enable(string $slug)`       | `Feature\|WP_Error`            | Enable a feature, return updated Feature           |
@@ -155,35 +155,35 @@ For how the React frontend consumes these endpoints to render the feature list a
 
 ## Error Codes
 
-| Constant                         | HTTP | Meaning                                            |
-| -------------------------------- | ---- | -------------------------------------------------- |
+| Constant                         | HTTP | Meaning                                           |
+| -------------------------------- | ---- | ------------------------------------------------- |
 | `FEATURE_NOT_FOUND`              | 404  | Slug doesn't exist in the resolved portal         |
-| `FEATURE_TYPE_MISMATCH`          | 400  | Type doesn't match the strategy                    |
+| `FEATURE_TYPE_MISMATCH`          | 400  | Type doesn't match the strategy                   |
 | `FEATURE_REQUEST_FAILED`         | 502  | Resolution failed (portal or licensing API error) |
-| `FEATURE_CHECK_FAILED`           | 502  | Unexpected error during availability check         |
-| `FEATURE_ENABLE_FAILED`          | 422  | Strategy threw an exception during enable          |
-| `FEATURE_DISABLE_FAILED`         | 422  | Strategy threw an exception during disable         |
-| `FEATURE_NOT_ACTIVE`             | 422  | Feature is not installed or active                 |
-| `UPDATE_NOT_SUPPORTED`           | 422  | Feature type does not support updates              |
-| `NO_UPDATE_AVAILABLE`            | 422  | No update available for the feature                |
-| `UPDATE_FAILED`                  | 422  | The update operation failed                        |
+| `FEATURE_CHECK_FAILED`           | 502  | Unexpected error during availability check        |
+| `FEATURE_ENABLE_FAILED`          | 422  | Strategy threw an exception during enable         |
+| `FEATURE_DISABLE_FAILED`         | 422  | Strategy threw an exception during disable        |
+| `FEATURE_NOT_ACTIVE`             | 422  | Feature is not installed or active                |
+| `UPDATE_NOT_SUPPORTED`           | 422  | Feature type does not support updates             |
+| `NO_UPDATE_AVAILABLE`            | 422  | No update available for the feature               |
+| `UPDATE_FAILED`                  | 422  | The update operation failed                       |
 | `INVALID_RESPONSE`               | 502  | Portal response couldn't be parsed                |
 | `UNKNOWN_FEATURE_TYPE`           | 422  | No Feature subclass for the portal type           |
-| `INSTALL_LOCKED`                 | 409  | Another install already in progress                |
-| `REQUIREMENTS_NOT_MET`           | 422  | PHP or WordPress version requirements not met      |
-| **Plugin-specific**              |      |                                                    |
-| `DEACTIVATION_FAILED`            | 409  | Plugin stayed active after deactivation            |
-| `INSTALL_FAILED`                 | 422  | `Plugin_Upgrader::install()` failed                |
-| `ACTIVATION_FATAL`               | 422  | Fatal error during plugin activation               |
-| `ACTIVATION_FAILED`              | 422  | `activate_plugin()` returned an error              |
-| `PLUGIN_NOT_FOUND_AFTER_INSTALL` | 422  | Plugin file missing after ZIP extraction           |
-| `DOWNLOAD_LINK_MISSING`          | 422  | `plugins_api()` returned no download link          |
-| `PLUGINS_API_FAILED`             | 502  | `plugins_api()` call failed                        |
-| **Theme-specific**               |      |                                                    |
-| `THEME_IS_ACTIVE`                | 409  | Active theme cannot be disabled                    |
-| `THEME_DELETE_REQUIRED`          | 409  | Theme on disk; user must delete manually           |
-| `THEME_NOT_FOUND_AFTER_INSTALL`  | 422  | Theme directory missing after ZIP extraction       |
-| `THEMES_API_FAILED`              | 502  | `themes_api()` call failed                         |
+| `INSTALL_LOCKED`                 | 409  | Another install already in progress               |
+| `REQUIREMENTS_NOT_MET`           | 422  | PHP or WordPress version requirements not met     |
+| **Plugin-specific**              |      |                                                   |
+| `DEACTIVATION_FAILED`            | 409  | Plugin stayed active after deactivation           |
+| `INSTALL_FAILED`                 | 422  | `Plugin_Upgrader::install()` failed               |
+| `ACTIVATION_FATAL`               | 422  | Fatal error during plugin activation              |
+| `ACTIVATION_FAILED`              | 422  | `activate_plugin()` returned an error             |
+| `PLUGIN_NOT_FOUND_AFTER_INSTALL` | 422  | Plugin file missing after ZIP extraction          |
+| `DOWNLOAD_LINK_MISSING`          | 422  | `plugins_api()` returned no download link         |
+| `PLUGINS_API_FAILED`             | 502  | `plugins_api()` call failed                       |
+| **Theme-specific**               |      |                                                   |
+| `THEME_IS_ACTIVE`                | 409  | Active theme cannot be disabled                   |
+| `THEME_DELETE_REQUIRED`          | 409  | Theme on disk; user must delete manually          |
+| `THEME_NOT_FOUND_AFTER_INSTALL`  | 422  | Theme directory missing after ZIP extraction      |
+| `THEMES_API_FAILED`              | 502  | `themes_api()` call failed                        |
 
 ## Resolved Feature Shape
 
@@ -198,7 +198,7 @@ Every resolved feature includes these fields:
 | `tier`              | string  | Minimum tier required                                             |
 | `type`              | string  | `plugin` or `theme`                                               |
 | `is_available`      | boolean | Whether the current license covers this feature                   |
-| `in_portal_tier`   | boolean | Whether the licensed tier meets or exceeds the feature's min tier |
+| `in_portal_tier`    | boolean | Whether the licensed tier meets or exceeds the feature's min tier |
 | `is_enabled`        | boolean | Whether the feature is currently enabled on this site             |
 | `documentation_url` | string  | URL to the feature's documentation                                |
 
@@ -207,7 +207,7 @@ Installable features (`plugin` and `theme`) also include:
 | Field               | Type         | Description                                           |
 | ------------------- | ------------ | ----------------------------------------------------- |
 | `release_date`      | string\|null | Release date of the latest version (ISO 8601)         |
-| `version`           | string\|null | Latest available version from the portal             |
+| `version`           | string\|null | Latest available version from the portal              |
 | `changelog`         | string\|null | Changelog HTML for the latest version                 |
 | `wporg_slug`        | string\|null | WordPress.org slug, or null if not on WordPress.org   |
 | `installed_version` | string\|null | Currently installed version, or null if not installed |
@@ -222,14 +222,14 @@ Plugin features also include:
 
 ## Data Sources
 
-| Data                                                    | Source                                                                                                                                                                              |
-| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Feature exists, minimum tier, delivery type, tier ranks | Portal                                                                                                                                                                             |
-| Latest version, release date, changelog                 | Portal (`version`, `release_date`, `changelog`)                                                                                                                                    |
-| Customer's tier, key validity                           | Licensing                                                                                                                                                                           |
-| **Whether available** (`is_available`)                  | **Licensing capabilities array** — feature slug present in `Product_Entry::get_capabilities()`. Falls back to portal tier rank 0 when unlicensed.                                  |
-| **Whether enabled** (`is_enabled`)                      | Live WordPress state (plugin activation / theme disk), stamped by Manager                                                                                                           |
-| **Installed version** (`installed_version`)             | Read from disk during resolution via `Installable`. Null for uninstalled extensions                                                                                                 |
+| Data                                                    | Source                                                                                                                                                                            |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Feature exists, minimum tier, delivery type, tier ranks | Portal                                                                                                                                                                            |
+| Latest version, release date, changelog                 | Portal (`version`, `release_date`, `changelog`)                                                                                                                                   |
+| Customer's tier, key validity                           | Licensing                                                                                                                                                                         |
+| **Whether available** (`is_available`)                  | **Licensing capabilities array** — feature slug present in `Product_Entry::get_capabilities()`. Falls back to portal tier rank 0 when unlicensed.                                 |
+| **Whether enabled** (`is_enabled`)                      | Live WordPress state (plugin activation / theme disk), stamped by Manager                                                                                                         |
+| **Installed version** (`installed_version`)             | Read from disk during resolution via `Installable`. Null for uninstalled extensions                                                                                               |
 | **Update available** (`has_update`)                     | Computed by `Installable::has_update()`: `version_compare( portal_version, installed_version, '>' )`. False when not installed or portal version is absent. Plugin and Theme only |
 
 ## Related Subsystems

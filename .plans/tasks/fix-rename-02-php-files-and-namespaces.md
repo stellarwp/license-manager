@@ -33,13 +33,13 @@ The package name changes from `stellarwp/uplink` to `stellarwp/harbor`.
 
 All 5 PSR-4 entries update:
 
-| Old | New |
-|---|---|
-| `"StellarWP\\Uplink\\": "src/Uplink/"` | `"LiquidWeb\\Harbor\\": "src/Harbor/"` |
-| `"StellarWP\\Uplink\\Views\\": "src/views/"` | `"LiquidWeb\\Harbor\\Views\\": "src/views/"` |
-| `"StellarWP\\Uplink\\Build_Dir\\": "build/"` | `"LiquidWeb\\Harbor\\Build_Dir\\": "build/"` |
+| Old                                                  | New                                                  |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| `"StellarWP\\Uplink\\": "src/Uplink/"`               | `"LiquidWeb\\Harbor\\": "src/Harbor/"`               |
+| `"StellarWP\\Uplink\\Views\\": "src/views/"`         | `"LiquidWeb\\Harbor\\Views\\": "src/views/"`         |
+| `"StellarWP\\Uplink\\Build_Dir\\": "build/"`         | `"LiquidWeb\\Harbor\\Build_Dir\\": "build/"`         |
 | `"StellarWP\\Uplink\\Build_Dev_Dir\\": "build-dev/"` | `"LiquidWeb\\Harbor\\Build_Dev_Dir\\": "build-dev/"` |
-| `"StellarWP\\Uplink\\Tests\\": [...]` (autoload-dev) | `"LiquidWeb\\Harbor\\Tests\\": [...]` |
+| `"StellarWP\\Uplink\\Tests\\": [...]` (autoload-dev) | `"LiquidWeb\\Harbor\\Tests\\": [...]`                |
 
 The bin entry changes from `bin/stellar-uplink` to `bin/stellar-harbor`.
 

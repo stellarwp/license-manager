@@ -18,13 +18,13 @@ The v4 service already has a complete generic credit system (separate `GET /api/
 
 ## Decisions made
 
-| Decision                          | Answer                                                                                                              |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Generic or Kadence-specific?      | **Generic.** Any StellarWP product can use credits. Pools scoped per-product or per-tier (exact TBD).               |
-| Part of validation or separate?   | **Separate.** `GET /credits` is its own endpoint.                                                                   |
-| Source of truth?                  | **V4 licensing service** (today it's `startertemplatecloud.com` → v3, migrating to v4).                             |
-| Data shape?                       | V4 returns `[{ credit_type, product_slug, allocated, used, remaining, period }]`. Uplink can pass through or adapt. |
-| Credit exhaustion handling?       | **Deferred.** Each product handles 423 errors on its own today. Uplink helpers possible later.                      |
+| Decision                        | Answer                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Generic or Kadence-specific?    | **Generic.** Any StellarWP product can use credits. Pools scoped per-product or per-tier (exact TBD).               |
+| Part of validation or separate? | **Separate.** `GET /credits` is its own endpoint.                                                                   |
+| Source of truth?                | **V4 licensing service** (today it's `startertemplatecloud.com` → v3, migrating to v4).                             |
+| Data shape?                     | V4 returns `[{ credit_type, product_slug, allocated, used, remaining, period }]`. Uplink can pass through or adapt. |
+| Credit exhaustion handling?     | **Deferred.** Each product handles 423 errors on its own today. Uplink helpers possible later.                      |
 
 ## MUST do
 
@@ -44,13 +44,13 @@ No urgency — products can call the v4 credits endpoint directly, or Uplink can
 
 ## What Uplink already provides that credits depend on
 
-| Function                           | Purpose                                           |
-| ---------------------------------- | ------------------------------------------------- |
-| `get_license_key($slug)`           | License key for Prophecy token and credit API     |
-| `get_license_domain()`             | `site` param in credit balance API calls          |
-| `get_original_domain()` [1]        | `domain` field in the Prophecy token              |
-| `is_authorized()`                  | Gates event tracking                              |
-| `get_authorization_token($slug)`   | Token for authorization check (not Prophecy auth) |
+| Function                         | Purpose                                           |
+| -------------------------------- | ------------------------------------------------- |
+| `get_license_key($slug)`         | License key for Prophecy token and credit API     |
+| `get_license_domain()`           | `site` param in credit balance API calls          |
+| `get_original_domain()` [1]      | `domain` field in the Prophecy token              |
+| `is_authorized()`                | Gates event tracking                              |
+| `get_authorization_token($slug)` | Token for authorization check (not Prophecy auth) |
 
 **[1]** Only on Uplink's `bugfix/multisite-token-logic` branch, not `main`. Kadence pins this branch via Composer.
 

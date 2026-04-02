@@ -4,7 +4,6 @@ url: https://stellarwp.atlassian.net/browse/SCON-428
 status: todo
 ---
 
-
 # Add `has_update` flag to installable features
 
 ## Problem

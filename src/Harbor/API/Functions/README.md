@@ -121,9 +121,9 @@ Strauss rewrites class references at parse time. `License_Repository::class` ins
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | `lw_harbor_has_unified_license_key()`                                | Whether any unified license key is stored locally (no API call)                               |
 | `lw_harbor_get_unified_license_key()`                                | Returns the unified license key string, or null if not found                                  |
-| `lw_harbor_is_product_license_active( $product )`                    | Whether a product slug has `validation_status: valid` in the cached portal                   |
-| `lw_harbor_is_feature_enabled( $slug )`                              | Whether a feature is in the portal AND currently enabled/active                              |
-| `lw_harbor_is_feature_available( $slug )`                            | Whether a feature exists in the portal, regardless of enabled state                          |
+| `lw_harbor_is_product_license_active( $product )`                    | Whether a product slug has `validation_status: valid` in the cached portal                    |
+| `lw_harbor_is_feature_enabled( $slug )`                              | Whether a feature is in the portal AND currently enabled/active                               |
+| `lw_harbor_is_feature_available( $slug )`                            | Whether a feature exists in the portal, regardless of enabled state                           |
 | `lw_harbor_get_license_page_url()`                                   | Returns the admin URL for the Harbor Feature Manager page                                     |
 | `lw_harbor_get_licensed_domain()`                                    | Returns the domain Harbor uses for licensing on the current site                              |
 | `lw_harbor_register_submenu( $parent_slug )`                         | Appends a Licensing submenu item under a plugin's top-level admin menu                        |

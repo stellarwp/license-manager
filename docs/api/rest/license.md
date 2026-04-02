@@ -12,25 +12,25 @@ Returns the stored unified license key and its associated products. Products com
 
 ```json
 {
-  "key": "LWSW-...",
-  "products": [
-    {
-      "product_slug": "give",
-      "tier": "give-pro",
-      "status": "active",
-      "expires": "2026-12-31 00:00:00",
-      "activations": {
-        "site_limit": 0,
-        "active_count": 1,
-        "over_limit": false,
-        "domains": ["example.com"]
-      },
-      "capabilities": ["give-recurring", "give-fee-recovery"],
-      "activated_here": true,
-      "validation_status": "valid",
-      "is_valid": true
-    }
-  ]
+ "key": "LWSW-...",
+ "products": [
+  {
+   "product_slug": "give",
+   "tier": "give-pro",
+   "status": "active",
+   "expires": "2026-12-31 00:00:00",
+   "activations": {
+    "site_limit": 0,
+    "active_count": 1,
+    "over_limit": false,
+    "domains": ["example.com"]
+   },
+   "capabilities": ["give-recurring", "give-fee-recovery"],
+   "activated_here": true,
+   "validation_status": "valid",
+   "is_valid": true
+  }
+ ]
 }
 ```
 
@@ -48,11 +48,11 @@ Same shape as `GET /license` above, using the provided key instead of the stored
 
 ### Errors
 
-| HTTP | Code                          | Meaning                            |
-| ---- | ----------------------------- | ---------------------------------- |
-| 400  | (validation)                  | Key format invalid (no `LWSW-`)    |
-| 400  | `lw-harbor-invalid-key`       | Key not recognized by API          |
-| 502  | `lw-harbor-invalid-response`  | Upstream API returned bad response |
+| HTTP | Code                         | Meaning                            |
+| ---- | ---------------------------- | ---------------------------------- |
+| 400  | (validation)                 | Key format invalid (no `LWSW-`)    |
+| 400  | `lw-harbor-invalid-key`      | Key not recognized by API          |
+| 502  | `lw-harbor-invalid-response` | Upstream API returned bad response |
 
 ## POST /liquidweb/harbor/v1/license
 
@@ -71,12 +71,12 @@ Returns the same `{ key, products }` shape as `GET /license`.
 
 ### Errors
 
-| HTTP | Code                          | Meaning                            |
-| ---- | ----------------------------- | ---------------------------------- |
-| 400  | (validation)                  | Missing key or invalid format      |
-| 400  | `lw-harbor-invalid-key`       | Key not recognized by API          |
-| 500  | `lw-harbor-store-failed`      | Key could not be persisted         |
-| 502  | `lw-harbor-invalid-response`  | Upstream API returned bad response |
+| HTTP | Code                         | Meaning                            |
+| ---- | ---------------------------- | ---------------------------------- |
+| 400  | (validation)                 | Missing key or invalid format      |
+| 400  | `lw-harbor-invalid-key`      | Key not recognized by API          |
+| 500  | `lw-harbor-store-failed`     | Key could not be persisted         |
+| 502  | `lw-harbor-invalid-response` | Upstream API returned bad response |
 
 ## POST /liquidweb/harbor/v1/license/refresh
 

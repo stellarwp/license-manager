@@ -18,7 +18,7 @@ The mount point is rendered by `Feature_Manager_Page::render()` in PHP:
 
 ```html
 <div class="wrap">
-    <div id="lw-harbor-root" class="lw-harbor-ui"></div>
+ <div id="lw-harbor-root" class="lw-harbor-ui"></div>
 </div>
 ```
 
@@ -58,25 +58,25 @@ The store uses `@wordpress/data` with the Redux pattern, not Zustand.
 
 ```typescript
 interface State {
-    features: {
-        bySlug:      Record<string, Feature>;
-        toggling:    Record<string, boolean>;
-        updating:    Record<string, boolean>;
-        errorBySlug: Record<string, HarborError>;
-    };
-    license: {
-        license:     License;      // { key, products[] }
-        isStoring:   boolean;
-        isDeleting:  boolean;
-        storeError:  HarborError | null;
-        deleteError: HarborError | null;
-    };
-    portal: {
-        byProductSlug: Record<string, ProductPortal>;
-    };
-    legacyLicenses: {
-        bySlug: Record<string, LegacyLicense>;
-    };
+ features: {
+  bySlug: Record<string, Feature>;
+  toggling: Record<string, boolean>;
+  updating: Record<string, boolean>;
+  errorBySlug: Record<string, HarborError>;
+ };
+ license: {
+  license: License; // { key, products[] }
+  isStoring: boolean;
+  isDeleting: boolean;
+  storeError: HarborError | null;
+  deleteError: HarborError | null;
+ };
+ portal: {
+  byProductSlug: Record<string, ProductPortal>;
+ };
+ legacyLicenses: {
+  bySlug: Record<string, LegacyLicense>;
+ };
 }
 ```
 
@@ -88,7 +88,7 @@ Resolvers fetch data from the REST API the first time a selector is called, then
 | ------------------- | ------------------------------------------ | ----------------------- |
 | `getFeatures`       | `GET /liquidweb/harbor/v1/features`        | `features.bySlug`       |
 | `getLicenseKey`     | `GET /liquidweb/harbor/v1/license`         | `license.license`       |
-| `getPortal`        | `GET /liquidweb/harbor/v1/portal`         | `portal.byProductSlug` |
+| `getPortal`         | `GET /liquidweb/harbor/v1/portal`          | `portal.byProductSlug`  |
 | `getLegacyLicenses` | `GET /liquidweb/harbor/v1/legacy-licenses` | `legacyLicenses.bySlug` |
 
 Derived selectors (e.g. `getFeature(slug)`, `getProductPortal(slug)`) use `forwardResolver` / `forwardResolverWithoutArgs` to delegate to the parent resolver without re-fetching.
@@ -99,13 +99,13 @@ Plain action creators (`receiveFeatures`, `receiveLicense`, `receivePortal`, `re
 
 Thunk action creators handle mutations:
 
-| Action            | Endpoint                               | Effect                                    |
-| ----------------- | -------------------------------------- | ----------------------------------------- |
-| `enableFeature`   | `POST /features/{slug}/enable`         | Toggles a feature on                      |
-| `disableFeature`  | `POST /features/{slug}/disable`        | Toggles a feature off                     |
-| `updateFeature`   | `POST /features/{slug}/update`         | Updates to latest version                 |
-| `storeLicense`    | `POST /license`                        | Activates a key, invalidates features     |
-| `deleteLicense`   | `DELETE /license`                      | Removes the key, invalidates features     |
+| Action           | Endpoint                        | Effect                                |
+| ---------------- | ------------------------------- | ------------------------------------- |
+| `enableFeature`  | `POST /features/{slug}/enable`  | Toggles a feature on                  |
+| `disableFeature` | `POST /features/{slug}/disable` | Toggles a feature off                 |
+| `updateFeature`  | `POST /features/{slug}/update`  | Updates to latest version             |
+| `storeLicense`   | `POST /license`                 | Activates a key, invalidates features |
+| `deleteLicense`  | `DELETE /license`               | Removes the key, invalidates features |
 
 After `storeLicense` and `deleteLicense` succeed, the thunk calls `dispatch.invalidateResolution('getFeatures', [])` so the feature list refreshes with updated entitlements.
 
@@ -123,7 +123,8 @@ Selectors are memoized with `createSelector` from `@wordpress/data`. Key selecto
 `useResolvableSelect` wraps `useSelect` to return resolution metadata alongside data. Instead of calling a selector and separately checking `hasFinishedResolution`, consumers get a single object:
 
 ```typescript
-const { data, status, isResolving, hasResolved, error } = resolve(store).getFeatures();
+const { data, status, isResolving, hasResolved, error } =
+ resolve(store).getFeatures();
 ```
 
 `HarborDataProvider` uses this to fire all four resolvers and derive `isLoading` and error states in one place.
@@ -180,8 +181,8 @@ PHP injects a `window.harborData` object containing:
 
 ```typescript
 interface HarborData {
-    restUrl: string;   // rest_url('liquidweb/harbor/v1/')
-    nonce:   string;   // wp_create_nonce('wp_rest')
+ restUrl: string; // rest_url('liquidweb/harbor/v1/')
+ nonce: string; // wp_create_nonce('wp_rest')
 }
 ```
 
@@ -191,13 +192,13 @@ The `@wordpress/api-fetch` package handles nonce headers automatically via its b
 
 The webpack config defines path aliases for clean imports:
 
-| Alias          | Path                        |
-| -------------- | --------------------------- |
-| `@`            | `resources/js/`             |
-| `@components`  | `resources/js/components/`  |
-| `@lib`         | `resources/js/lib/`         |
-| `@css`         | `resources/css/`            |
-| `@img`         | `resources/img/`            |
+| Alias         | Path                       |
+| ------------- | -------------------------- |
+| `@`           | `resources/js/`            |
+| `@components` | `resources/js/components/` |
+| `@lib`        | `resources/js/lib/`        |
+| `@css`        | `resources/css/`           |
+| `@img`        | `resources/img/`           |
 
 ## CSS Scoping
 
@@ -238,10 +239,10 @@ Product metadata (slug, display name, tagline) is defined in `resources/js/data/
 
 ```typescript
 const PRODUCTS: Product[] = [
-    { slug: 'give',                name: 'GiveWP',              tagline: '...' },
-    { slug: 'the-events-calendar', name: 'The Events Calendar', tagline: '...' },
-    { slug: 'learndash',           name: 'LearnDash',           tagline: '...' },
-    { slug: 'kadence',             name: 'Kadence',             tagline: '...' },
+ { slug: "give", name: "GiveWP", tagline: "..." },
+ { slug: "the-events-calendar", name: "The Events Calendar", tagline: "..." },
+ { slug: "learndash", name: "LearnDash", tagline: "..." },
+ { slug: "kadence", name: "Kadence", tagline: "..." },
 ];
 ```
 

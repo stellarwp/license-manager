@@ -10,36 +10,36 @@ Lists all resolved features with optional filters.
 
 ### Parameters
 
-| Parameter   | Type    | Required | Description                                      |
-| ----------- | ------- | -------- | ------------------------------------------------ |
-| `product`   | string  | no       | Filter by product slug                           |
-| `tier`      | string  | no       | Filter by tier slug                              |
-| `available` | boolean | no       | Filter by availability                           |
-| `type`      | string  | no       | Filter by feature type (`plugin`/`theme`)        |
+| Parameter   | Type    | Required | Description                               |
+| ----------- | ------- | -------- | ----------------------------------------- |
+| `product`   | string  | no       | Filter by product slug                    |
+| `tier`      | string  | no       | Filter by tier slug                       |
+| `available` | boolean | no       | Filter by availability                    |
+| `type`      | string  | no       | Filter by feature type (`plugin`/`theme`) |
 
 ### Response (200)
 
 ```json
 [
-  {
-    "slug": "kadence-blocks-pro",
-    "name": "Kadence Blocks Pro",
-    "description": "Premium blocks for the WordPress editor.",
-    "product": "kadence",
-    "tier": "kadence-basic",
-    "type": "plugin",
-    "is_available": true,
-    "in_portal_tier": true,
-    "is_enabled": true,
-    "documentation_url": "https://...",
-    "plugin_file": "kadence-blocks-pro/kadence-blocks-pro.php",
-    "release_date": "2026-01-15T00:00:00Z",
-    "version": "2.6.1",
-    "changelog": "<p>Bug fixes and improvements.</p>",
-    "wporg_slug": null,
-    "installed_version": "2.6.0",
-    "update_version": "2.6.1"
-  }
+ {
+  "slug": "kadence-blocks-pro",
+  "name": "Kadence Blocks Pro",
+  "description": "Premium blocks for the WordPress editor.",
+  "product": "kadence",
+  "tier": "kadence-basic",
+  "type": "plugin",
+  "is_available": true,
+  "in_portal_tier": true,
+  "is_enabled": true,
+  "documentation_url": "https://...",
+  "plugin_file": "kadence-blocks-pro/kadence-blocks-pro.php",
+  "release_date": "2026-01-15T00:00:00Z",
+  "version": "2.6.1",
+  "changelog": "<p>Bug fixes and improvements.</p>",
+  "wporg_slug": null,
+  "installed_version": "2.6.0",
+  "update_version": "2.6.1"
+ }
 ]
 ```
 
@@ -112,9 +112,9 @@ Returns the updated feature object.
 
 ### Errors
 
-| HTTP | Code                              | Meaning                              |
-| ---- | --------------------------------- | ------------------------------------ |
-| 422  | `lw-harbor-feature-not-active`    | Feature is not currently installed   |
-| 422  | `lw-harbor-update-not-supported`  | Feature type doesn't support updates |
-| 422  | `lw-harbor-no-update-available`   | No pending update for this feature   |
-| 422  | `lw-harbor-update-failed`         | Update failed                        |
+| HTTP | Code                             | Meaning                              |
+| ---- | -------------------------------- | ------------------------------------ |
+| 422  | `lw-harbor-feature-not-active`   | Feature is not currently installed   |
+| 422  | `lw-harbor-update-not-supported` | Feature type doesn't support updates |
+| 422  | `lw-harbor-no-update-available`  | No pending update for this feature   |
+| 422  | `lw-harbor-update-failed`        | Update failed                        |

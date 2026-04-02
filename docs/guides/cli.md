@@ -8,40 +8,40 @@ Harbor registers WP-CLI commands automatically when WP-CLI is present. No additi
 
 Manage the unified license key.
 
-| Command    | Usage                                | Description                                               |
-| ---------- | ------------------------------------ | --------------------------------------------------------- |
-| `get`      | `wp harbor license get`              | Show the current license key and associated products      |
-| `set`      | `wp harbor license set <key>`        | Validate and store a license key                          |
-| `lookup`   | `wp harbor license lookup <key>`     | Look up products for a key without storing it             |
-| `validate` | `wp harbor license validate <slug>`  | Validate a product on this domain (may consume a seat)    |
-| `delete`   | `wp harbor license delete`           | Delete the stored unified license key                     |
-| `legacy`   | `wp harbor license legacy`           | List legacy per-plugin licenses from all Harbor instances |
+| Command    | Usage                               | Description                                               |
+| ---------- | ----------------------------------- | --------------------------------------------------------- |
+| `get`      | `wp harbor license get`             | Show the current license key and associated products      |
+| `set`      | `wp harbor license set <key>`       | Validate and store a license key                          |
+| `lookup`   | `wp harbor license lookup <key>`    | Look up products for a key without storing it             |
+| `validate` | `wp harbor license validate <slug>` | Validate a product on this domain (may consume a seat)    |
+| `delete`   | `wp harbor license delete`          | Delete the stored unified license key                     |
+| `legacy`   | `wp harbor license legacy`          | List legacy per-plugin licenses from all Harbor instances |
 
 ### `wp harbor portal`
 
 Manage the product portal.
 
-| Command    | Usage                                  | Description                                       |
-| ---------- | -------------------------------------- | ------------------------------------------------- |
-| `list`     | `wp harbor portal list`               | List all products in the portal                  |
-| `tiers`    | `wp harbor portal tiers <slug>`       | Show tiers for a specific product                 |
-| `features` | `wp harbor portal features <slug>`    | Show features for a specific product              |
-| `refresh`  | `wp harbor portal refresh`            | Force refresh the portal from the API            |
-| `status`   | `wp harbor portal status`             | Show when the portal was last fetched and errors |
-| `delete`   | `wp harbor portal delete`             | Delete the cached portal                         |
+| Command    | Usage                              | Description                                      |
+| ---------- | ---------------------------------- | ------------------------------------------------ |
+| `list`     | `wp harbor portal list`            | List all products in the portal                  |
+| `tiers`    | `wp harbor portal tiers <slug>`    | Show tiers for a specific product                |
+| `features` | `wp harbor portal features <slug>` | Show features for a specific product             |
+| `refresh`  | `wp harbor portal refresh`         | Force refresh the portal from the API            |
+| `status`   | `wp harbor portal status`          | Show when the portal was last fetched and errors |
+| `delete`   | `wp harbor portal delete`          | Delete the cached portal                         |
 
 ### `wp harbor feature`
 
 Manage Harbor features.
 
-| Command      | Usage                                    | Description                                       |
-| ------------ | ---------------------------------------- | ------------------------------------------------- |
-| `list`       | `wp harbor feature list`                 | List features with optional filters               |
-| `get`        | `wp harbor feature get <slug>`           | Show detailed information for a single feature    |
-| `is-enabled` | `wp harbor feature is-enabled <slug>`    | Check if a feature is enabled (exit code 0 = yes) |
-| `enable`     | `wp harbor feature enable <slug>`        | Enable a feature                                  |
-| `disable`    | `wp harbor feature disable <slug>`       | Disable a feature                                 |
-| `update`     | `wp harbor feature update <slug>`        | Update a feature to the latest version            |
+| Command      | Usage                                 | Description                                       |
+| ------------ | ------------------------------------- | ------------------------------------------------- |
+| `list`       | `wp harbor feature list`              | List features with optional filters               |
+| `get`        | `wp harbor feature get <slug>`        | Show detailed information for a single feature    |
+| `is-enabled` | `wp harbor feature is-enabled <slug>` | Check if a feature is enabled (exit code 0 = yes) |
+| `enable`     | `wp harbor feature enable <slug>`     | Enable a feature                                  |
+| `disable`    | `wp harbor feature disable <slug>`    | Disable a feature                                 |
+| `update`     | `wp harbor feature update <slug>`     | Update a feature to the latest version            |
 
 ## License Commands
 

@@ -4,7 +4,6 @@ url: https://stellarwp.atlassian.net/browse/SCON-430
 status: todo
 ---
 
-
 # Add feature update UI to the feature manager
 
 ## Problem

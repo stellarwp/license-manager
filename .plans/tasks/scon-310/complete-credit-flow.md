@@ -138,12 +138,12 @@ Browser JS
 
 ```javascript
 const token = {
-    domain:          window.kadence_blocks_params.proData.domain || url.hostname,
-    key:             window.kadence_blocks_params.proData.api_key || '',
-    site_name:       window.kadence_blocks_params.site_name || '',
-    product_slug:    window.kadence_blocks_params.pSlug || '',
-    product_version: window.kadence_blocks_params.pVersion || '',
-    env:             window.kadence_blocks_params.env || '',
+	domain: window.kadence_blocks_params.proData.domain || url.hostname,
+	key: window.kadence_blocks_params.proData.api_key || "",
+	site_name: window.kadence_blocks_params.site_name || "",
+	product_slug: window.kadence_blocks_params.pSlug || "",
+	product_version: window.kadence_blocks_params.pVersion || "",
+	env: window.kadence_blocks_params.env || "",
 };
 // Header value: btoa(JSON.stringify(token))
 ```
@@ -315,13 +315,13 @@ Uses three Uplink functions: `get_authorization_token()`, `is_authorized()`, `ge
 
 ## 7. All Uplink Functions Used by Kadence Credits
 
-| Uplink Function                    | Used In                                                                                                                                                                                                                                                                                                                                                                                                                                          | Purpose                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `get_license_key($slug)`           | [`helper-functions.php:14`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L14), [`:155`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L155), [`:159`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L159), [`:163`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L163) | Resolve license key with fallback chain |
-| `get_license_domain()`             | [`REST API:18`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L18), [`:2521`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L2521), [`ai-events.php:106`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L106)                            | Domain for credit API `site` param      |
-| `get_original_domain()` [1]        | [`REST API:19`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L19), [`:3019`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L3019), [`ai-events.php:146`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L146)                            | Domain for Prophecy token               |
-| `is_authorized()`                  | [`ai-events.php:106`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L106)                                                                                                                                                                                                                                                                                                                | Gate event tracking                     |
-| `get_authorization_token($slug)`   | [`ai-events.php:102`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L102)                                                                                                                                                                                                                                                                                                                | Token for authorization check           |
+| Uplink Function                  | Used In                                                                                                                                                                                                                                                                                                                                                                                                                                          | Purpose                                 |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `get_license_key($slug)`         | [`helper-functions.php:14`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L14), [`:155`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L155), [`:159`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L159), [`:163`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/helper-functions.php#L163) | Resolve license key with fallback chain |
+| `get_license_domain()`           | [`REST API:18`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L18), [`:2521`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L2521), [`ai-events.php:106`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L106)                            | Domain for credit API `site` param      |
+| `get_original_domain()` [1]      | [`REST API:19`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L19), [`:3019`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-prebuilt-library-rest-api.php#L3019), [`ai-events.php:146`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L146)                            | Domain for Prophecy token               |
+| `is_authorized()`                | [`ai-events.php:106`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L106)                                                                                                                                                                                                                                                                                                                | Gate event tracking                     |
+| `get_authorization_token($slug)` | [`ai-events.php:102`](https://github.com/stellarwp/kadence-blocks/blob/7a88d8bd/includes/class-kadence-blocks-ai-events.php#L102)                                                                                                                                                                                                                                                                                                                | Token for authorization check           |
 
 **[1] Branch note:** `get_original_domain()` exists only on Uplink's `bugfix/multisite-token-logic` branch (line 277 of `functions.php`), which Kadence pins via Composer (`"stellarwp/uplink": "dev-bugfix/multisite-token-logic"`). It is **not on Uplink `main`**. It returns the site domain without any hash suffix via `Data::get_domain( true )`.
 
@@ -395,16 +395,16 @@ Credit Pool  (license-level)     ──  total credits for a license/product/typ
 
 ```json
 {
-  "credits": [
-    {
-      "credit_type": "ai",
-      "product_slug": "kadence",
-      "allocated": 5000,
-      "used": 1200,
-      "remaining": 3800,
-      "period": "month"
-    }
-  ]
+	"credits": [
+		{
+			"credit_type": "ai",
+			"product_slug": "kadence",
+			"allocated": 5000,
+			"used": 1200,
+			"remaining": 3800,
+			"period": "month"
+		}
+	]
 }
 ```
 

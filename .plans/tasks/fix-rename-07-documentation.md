@@ -26,7 +26,7 @@ git mv docs/uplink-v3-fat-leader-thin-instance.md docs/harbor-fat-leader-thin-in
 
 **README.md** needs the title, composer require command, code examples, and any identifier references updated.
 
-**All docs/*.md files** need namespace references, hook names, error codes, function names, directory paths, cross-references to renamed doc files, and prose updated.
+**All docs/\*.md files** need namespace references, hook names, error codes, function names, directory paths, cross-references to renamed doc files, and prose updated.
 
 **`src/Harbor/API/Functions/README.md`** has function name examples that need updating.
 
@@ -34,16 +34,16 @@ git mv docs/uplink-v3-fat-leader-thin-instance.md docs/harbor-fat-leader-thin-in
 
 Bulk replace patterns across documentation:
 
-| Old | New |
-|---|---|
-| `StellarWP\Uplink` | `LiquidWeb\Harbor` |
-| `stellarwp/uplink/` | `lw-harbor/` |
-| `stellarwp_uplink_*` | `lw_harbor_*` (for options, functions) |
-| `stellarwp-uplink-*` | `lw-harbor-*` (for error codes) |
-| `src/Uplink/` | `src/Harbor/` |
-| `docs/uplink-v3` | `docs/harbor` (in cross-references) |
-| Prose "Uplink" | "Harbor" |
-| Prose "StellarWP" | "LiquidWeb" or "Liquid Web" as appropriate |
+| Old                  | New                                        |
+| -------------------- | ------------------------------------------ |
+| `StellarWP\Uplink`   | `LiquidWeb\Harbor`                         |
+| `stellarwp/uplink/`  | `lw-harbor/`                               |
+| `stellarwp_uplink_*` | `lw_harbor_*` (for options, functions)     |
+| `stellarwp-uplink-*` | `lw-harbor-*` (for error codes)            |
+| `src/Uplink/`        | `src/Harbor/`                              |
+| `docs/uplink-v3`     | `docs/harbor` (in cross-references)        |
+| Prose "Uplink"       | "Harbor"                                   |
+| Prose "StellarWP"    | "LiquidWeb" or "Liquid Web" as appropriate |
 
 Do not touch `.plans/liquid-web-harbor-naming.md`. That document intentionally references old names as part of the rename mapping.
 

@@ -28,28 +28,28 @@ Everything with `stellarwp_uplink_` becomes `lw_harbor_`. This hits constants an
 
 Key option names:
 
-| Old | New |
-|---|---|
-| `stellarwp_uplink_unified_license_key` | `lw_harbor_unified_license_key` |
-| `stellarwp_uplink_licensing_products_state` | `lw_harbor_licensing_products_state` |
+| Old                                                     | New                                              |
+| ------------------------------------------------------- | ------------------------------------------------ |
+| `stellarwp_uplink_unified_license_key`                  | `lw_harbor_unified_license_key`                  |
+| `stellarwp_uplink_licensing_products_state`             | `lw_harbor_licensing_products_state`             |
 | `stellarwp_uplink_licensing_products_last_active_dates` | `lw_harbor_licensing_products_last_active_dates` |
-| `stellarwp_uplink_portal_state` | `lw_harbor_portal_state` |
-| `stellarwp_uplink_dismissed_notices` (user meta) | `lw_harbor_dismissed_notices` |
-| `stellarwp_uplink_domain` (cache key) | `lw_harbor_domain` |
-| `stellarwp_uplink_multisite_active_sites` (cache key) | `lw_harbor_multisite_active_sites` |
-| `stellarwp_uplink_timezone` (cache key) | `lw_harbor_timezone` |
-| `stellarwp_uplink_totals` (cache key) | `lw_harbor_totals` |
-| `stellarwp_uplink_is_public` (cache key) | `lw_harbor_is_public` |
+| `stellarwp_uplink_portal_state`                         | `lw_harbor_portal_state`                         |
+| `stellarwp_uplink_dismissed_notices` (user meta)        | `lw_harbor_dismissed_notices`                    |
+| `stellarwp_uplink_domain` (cache key)                   | `lw_harbor_domain`                               |
+| `stellarwp_uplink_multisite_active_sites` (cache key)   | `lw_harbor_multisite_active_sites`               |
+| `stellarwp_uplink_timezone` (cache key)                 | `lw_harbor_timezone`                             |
+| `stellarwp_uplink_totals` (cache key)                   | `lw_harbor_totals`                               |
+| `stellarwp_uplink_is_public` (cache key)                | `lw_harbor_is_public`                            |
 
 ### Container key values
 
 Verify these still exist after v2 code removal. If they survived:
 
-| Old | New |
-|---|---|
+| Old                         | New                            |
+| --------------------------- | ------------------------------ |
 | `'uplink.admin-views.path'` | `'lw-harbor.admin-views.path'` |
-| `'uplink.assets.uri'` | `'lw-harbor.assets.uri'` |
-| `'uplink.token_prefix'` | `'lw-harbor.token_prefix'` |
+| `'uplink.assets.uri'`       | `'lw-harbor.assets.uri'`       |
+| `'uplink.token_prefix'`     | `'lw-harbor.token_prefix'`     |
 
 ### Error codes
 
@@ -69,16 +69,16 @@ This is the trickiest part. Each function in `global-functions.php` has three re
 
 Missing any one breaks cross-instance negotiation between Strauss-prefixed copies.
 
-| Old | New |
-|---|---|
-| `_stellarwp_uplink_instance_registry` | `_lw_harbor_instance_registry` |
+| Old                                          | New                                   |
+| -------------------------------------------- | ------------------------------------- |
+| `_stellarwp_uplink_instance_registry`        | `_lw_harbor_instance_registry`        |
 | `_stellarwp_uplink_global_function_registry` | `_lw_harbor_global_function_registry` |
-| `stellarwp_uplink_has_unified_license_key` | `lw_harbor_has_unified_license_key` |
-| `stellarwp_uplink_get_unified_license_key` | `lw_harbor_get_unified_license_key` |
+| `stellarwp_uplink_has_unified_license_key`   | `lw_harbor_has_unified_license_key`   |
+| `stellarwp_uplink_get_unified_license_key`   | `lw_harbor_get_unified_license_key`   |
 | `stellarwp_uplink_is_product_license_active` | `lw_harbor_is_product_license_active` |
-| `stellarwp_uplink_is_feature_enabled` | `lw_harbor_is_feature_enabled` |
-| `stellarwp_uplink_is_feature_available` | `lw_harbor_is_feature_available` |
-| `stellarwp_uplink_get_license_page_url` | `lw_harbor_get_license_page_url` |
+| `stellarwp_uplink_is_feature_enabled`        | `lw_harbor_is_feature_enabled`        |
+| `stellarwp_uplink_is_feature_available`      | `lw_harbor_is_feature_available`      |
+| `stellarwp_uplink_get_license_page_url`      | `lw_harbor_get_license_page_url`      |
 
 All callers outside `global-functions.php` need updating too: `Harbor.php`, `Utils/Version.php`, `API/Functions/Global_Function_Registry.php`, `Legacy/Notices/License_Notice_Handler.php`, and test files.
 
@@ -86,19 +86,19 @@ All callers outside `global-functions.php` need updating too: `Harbor.php`, `Uti
 
 `Feature_Manager_Page.php`:
 
-| Old | New |
-|---|---|
-| `'stellarwp-uplink-ui'` (script handle) | `'lw-harbor-ui'` |
-| `'uplink-root'` (DOM id) | `'lw-harbor-root'` |
-| `'uplink-ui'` (CSS class) | `'lw-harbor'` |
-| `'uplinkData'` (localized var) | `'lwData'` (dead code, but rename for now) |
+| Old                                     | New                                        |
+| --------------------------------------- | ------------------------------------------ |
+| `'stellarwp-uplink-ui'` (script handle) | `'lw-harbor-ui'`                           |
+| `'uplink-root'` (DOM id)                | `'lw-harbor-root'`                         |
+| `'uplink-ui'` (CSS class)               | `'lw-harbor'`                              |
+| `'uplinkData'` (localized var)          | `'lwData'` (dead code, but rename for now) |
 
 `License_Notice_Handler.php`:
 
-| Old | New |
-|---|---|
+| Old                                                 | New                          |
+| --------------------------------------------------- | ---------------------------- |
 | `'stellarwp-uplink-notice-dismiss'` (script handle) | `'lw-harbor-notice-dismiss'` |
-| `'uplinkNoticeDismiss'` (localized var) | `'lwNoticeDismiss'` |
+| `'uplinkNoticeDismiss'` (localized var)             | `'lwNoticeDismiss'`          |
 
 ### Cron hook
 

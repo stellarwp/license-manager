@@ -15,6 +15,7 @@ The key indicator is `Uplink::init()`: everything inside the `is_enabled()` cond
 Remove all V2 code that is not referenced by the V3 providers registered outside the `is_enabled()` block in `Uplink::init()`. The V3 providers are: `Legacy`, `Features`, `Http`, `Licensing`, `Portal`, `API\REST\V1`, `API\Functions`, `CLI`, and `Cron`.
 
 ### Full directory deletions (no V3 dependencies)
+
 - `src/Uplink/Pipeline/`
 - `src/Uplink/Exceptions/`
 - `src/Uplink/Messages/`
@@ -31,10 +32,12 @@ Remove all V2 code that is not referenced by the V3 providers registered outside
 `src/Uplink/Admin/` -- keep `Feature_Manager_Page.php`, `Asset_Manager.php`, `Fields/`, and a gutted `Provider.php`. Delete `Notice.php`, `Plugins_Page.php`, `License_Field.php`, `Package_Handler.php`, `Update_Prevention.php`, `Field.php`, `Ajax.php`, `Group.php`.
 
 ### File deletions
+
 - `src/Uplink/Register.php` (V2 plugin/service resource factory, no V3 equivalent needed)
 - `src/Uplink/Functions/functions.php` (global helpers that wrap V2 Resources)
 
 ### Uplink.php changes
+
 - Remove the `is_enabled()` block and its contents
 - Remove `is_enabled()` and `is_disabled()` methods
 - Gut `register_cross_instance_hooks()` -- keep the `_stellarwp_uplink_instance_registry()` call and `Version::register_debug_info()`, remove the three filters that delegate to Resources (`validate_license`, `set_license_key`, `delete_license_key`)
@@ -42,7 +45,9 @@ Remove all V2 code that is not referenced by the V3 providers registered outside
 - Remove the `functions.php` require
 
 ### Admin\Provider.php changes
+
 Gut it down to registering only `Feature_Manager_Page` and `Asset_Manager`, and hooking only `admin_menu` (for `register_unified_feature_manager_page`) and `admin_enqueue_scripts` (for `register_assets`).
 
 ### Test cleanup
+
 Delete all tests for removed classes. Update any tests for kept classes that previously set up V2 fixtures (Resources, Auth, etc.).

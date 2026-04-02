@@ -8,23 +8,23 @@ A `Notice` is a simple DTO representing a single WordPress admin notice. It requ
 
 ### Types
 
-| Constant          | Value       | WordPress class    |
-| ----------------- | ----------- | ------------------ |
-| `Notice::INFO`    | `'info'`    | `notice-info`      |
-| `Notice::SUCCESS` | `'success'` | `notice-success`   |
-| `Notice::WARNING` | `'warning'` | `notice-warning`   |
-| `Notice::ERROR`   | `'error'`   | `notice-error`     |
+| Constant          | Value       | WordPress class  |
+| ----------------- | ----------- | ---------------- |
+| `Notice::INFO`    | `'info'`    | `notice-info`    |
+| `Notice::SUCCESS` | `'success'` | `notice-success` |
+| `Notice::WARNING` | `'warning'` | `notice-warning` |
+| `Notice::ERROR`   | `'error'`   | `notice-error`   |
 
 ### Properties
 
-| Property       | Type   | Default | Purpose                                                    |
-| -------------- | ------ | ------- | ---------------------------------------------------------- |
-| `$type`        | string | —       | One of the four type constants (required)                  |
-| `$message`     | string | —       | Already-translated message to display (required, non-empty)|
-| `$dismissible` | bool   | false   | Adds `is-dismissible` class and a dismiss button           |
-| `$alt`         | bool   | false   | Adds `notice-alt` class for alternate styling              |
-| `$large`       | bool   | false   | Adds `notice-large` class for larger text                  |
-| `$id`          | string | `''`    | Unique ID for persistent dismissal tracking                |
+| Property       | Type   | Default | Purpose                                                     |
+| -------------- | ------ | ------- | ----------------------------------------------------------- |
+| `$type`        | string | —       | One of the four type constants (required)                   |
+| `$message`     | string | —       | Already-translated message to display (required, non-empty) |
+| `$dismissible` | bool   | false   | Adds `is-dismissible` class and a dismiss button            |
+| `$alt`         | bool   | false   | Adds `notice-alt` class for alternate styling               |
+| `$large`       | bool   | false   | Adds `notice-large` class for larger text                   |
+| `$id`          | string | `''`    | Unique ID for persistent dismissal tracking                 |
 
 The constructor validates that `$type` is one of the allowed types and that `$message` is non-empty, throwing `InvalidArgumentException` otherwise.
 
@@ -36,15 +36,15 @@ The constructor validates that `$type` is one of the allowed types and that `$me
 
 Messages can contain these elements and nothing else:
 
-| Element    | Allowed attributes              |
-| ---------- | ------------------------------- |
-| `<a>`      | `href`, `title`, `target`, `rel`|
-| `<br>`     | —                               |
-| `<code>`   | —                               |
-| `<em>`     | —                               |
-| `<pre>`    | —                               |
-| `<span>`   | —                               |
-| `<strong>` | —                               |
+| Element    | Allowed attributes               |
+| ---------- | -------------------------------- |
+| `<a>`      | `href`, `title`, `target`, `rel` |
+| `<br>`     | —                                |
+| `<code>`   | —                                |
+| `<em>`     | —                                |
+| `<pre>`    | —                                |
+| `<span>`   | —                                |
+| `<strong>` | —                                |
 
 Allowed URL protocols: `http`, `https`, `mailto`.
 
@@ -53,9 +53,11 @@ Allowed URL protocols: `http`, `https`, `mailto`.
 The template (`src/views/admin/notice.php`) produces:
 
 ```html
-<div class="notice notice-{type} [is-dismissible] [notice-alt] [notice-large]"
-     [data-lw-harbor-notice-id="{id}"]>
-    <p>{sanitized message}</p>
+<div
+ class="notice notice-{type} [is-dismissible] [notice-alt] [notice-large]"
+ [data-lw-harbor-notice-id="{id}"]
+>
+ <p>{sanitized message}</p>
 </div>
 ```
 

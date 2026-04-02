@@ -4,7 +4,6 @@ url: https://stellarwp.atlassian.net/browse/SCON-429
 status: todo
 ---
 
-
 # Wire feature update action into the frontend datastore
 
 ## Problem
