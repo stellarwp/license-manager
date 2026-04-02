@@ -120,7 +120,7 @@ lw_harbor_display_legacy_license_page_notice();
 
 This outputs a standard WordPress info notice:
 
-> As of 2026, GiveWP is now part of Liquid Web's software offerings. This page is still available for managing legacy licenses purchased prior to 2026. Newer licenses are managed through the Liquid Web Software Manager.
+> GiveWP iss now part of Liquid Web\'s software offerings. This page is still available for managing legacy licenses from your previous GiveWP account. If you purchased a new plan through Liquid Web, your products are managed through the Liquid Web Software Manager.
 
 Call this function directly in the render callback for your legacy license page. Because it echoes immediately when called, no hook registration is needed — it renders wherever you place it.
 
