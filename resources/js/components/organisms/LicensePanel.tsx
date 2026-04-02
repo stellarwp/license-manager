@@ -21,7 +21,7 @@ import { HarborError } from '@/errors';
  */
 export function LicensePanel() {
     const { addToast }      = useToast();
-    const { deleteLicense, refreshLicense } = useDispatch( harborStore );
+    const { deleteLicense, refreshLicense, refreshCatalog } = useDispatch( harborStore );
 
     const { licenseKey, licenseProducts, catalogs, isRefreshing, isLicenseLoading } = useSelect(
         ( select ) => ({
@@ -70,9 +70,13 @@ export function LicensePanel() {
     };
 
     const handleRefresh = async () => {
-        const result = await refreshLicense();
-        if ( result instanceof HarborError ) {
-            addToast( result.message, 'error' );
+        const [ licenseResult, catalogResult ] = await Promise.all( [
+            refreshLicense(),
+            refreshCatalog(),
+        ] );
+        const error = licenseResult ?? catalogResult;
+        if ( error instanceof HarborError ) {
+            addToast( error.message, 'error' );
         } else {
             addToast( __( 'License refreshed.', '%TEXTDOMAIN%' ), 'success' );
         }
