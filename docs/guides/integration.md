@@ -154,6 +154,14 @@ if (lw_harbor_has_unified_license_key()) {
 $key = lw_harbor_get_unified_license_key(); // string|null
 ```
 
+### Get the licensed domain
+
+```php
+$domain = lw_harbor_get_licensed_domain(); // string
+```
+
+This returns the domain that Harbor uses for licensing on the current site (the host portion of the WordPress `siteurl`, lowercased). Useful when your plugin needs to display or transmit the licensed domain to an external service.
+
 ### Check feature availability
 
 ```php
@@ -176,13 +184,27 @@ $url = lw_harbor_get_license_page_url(); // string (empty string if Harbor is no
 
 ---
 
-## 5. Embedded / Bundled License Keys
+## 5. Registering a Submenu Link
+
+If your plugin has its own top-level admin menu, call `lw_harbor_register_submenu()` to append a **Licensing** item that links directly to the Harbor Feature Manager page. This lets users reach the unified license UI without leaving your plugin's menu area.
+
+```php
+lw_harbor_register_submenu('my-plugin-menu-slug');
+```
+
+Call this during or after `plugins_loaded`, before the `admin_menu` hook fires. The item is always appended last in the submenu so it does not disrupt your plugin's own menu order.
+
+The function always delegates to the highest-version Harbor instance on the site, so it is safe to call even when multiple plugins bundle Harbor.
+
+---
+
+## 6. Embedded / Bundled License Keys
 
 See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely through `LWSW_KEY.php` — no additional wiring is needed.
 
 ---
 
-## 6. Quick Reference
+## 7. Quick Reference
 
 ### Filters
 
@@ -200,4 +222,6 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 | `lw_harbor_is_feature_enabled`                 | `(string $slug): bool`              | Check if a feature is currently active locally on this site.                    |
 | `lw_harbor_is_feature_available`               | `(string $slug): bool`              | Check if the customer's license/tier includes this feature.                     |
 | `lw_harbor_get_license_page_url`               | `(): string`                        | Get the admin URL for the Feature Manager page (empty string if inactive).      |
+| `lw_harbor_get_licensed_domain`                | `(): string`                        | Get the domain Harbor uses for licensing on this site.                          |
+| `lw_harbor_register_submenu`                   | `(string $parent_slug): void`       | Append a Licensing submenu item to a plugin's top-level admin menu.             |
 | `lw_harbor_display_legacy_license_page_notice` | `(string $product_name = ''): void` | Display a notice on a legacy license page pointing users to the unified system. |
