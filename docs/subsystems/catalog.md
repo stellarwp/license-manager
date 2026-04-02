@@ -35,7 +35,7 @@ Each product defines an ordered set of tiers that represent subscription levels.
 
 Tiers are always sorted by rank. This ordering drives feature availability. A feature that requires `kadence-pro` (rank 2) is available to anyone on `kadence-pro` or `kadence-agency` (rank 3), but not to someone on `kadence-basic` (rank 1).
 
-Products that have free offerings include a free tier at rank 0 (e.g., `kadence-free`). The free tier is the entry point to the tier hierarchy. Features gated at the free tier are available without a license key — an unlicensed user resolves to rank 0, and `0 >= 0` satisfies the availability check.
+Products that have free offerings include a free tier at rank 0 (e.g., `kadence-free`). The free tier is the entry point to the tier hierarchy. Features gated at the free tier are available without a license key — an unlicensed user resolves to rank 0, and `0 >= 0` satisfies the availability check. The `purchase_url` on the free tier points to the first paid tier, providing the upgrade path.
 
 A product's tiers are its own. Tier slugs are namespaced to the product (`kadence-basic`, `give-basic`) so there's no collision across product families.
 
@@ -135,7 +135,7 @@ graph LR
     Product --> Features["Features (33)"]
 
     subgraph Tiers
-        T0["kadence-free\nrank 0, Free"]
+        T0["kadence-free\nrank 0, Free\npurchase_url → kadence-basic"]
         T1["kadence-basic\nrank 1, Basic"]
         T2["kadence-pro\nrank 2, Pro"]
         T3["kadence-agency\nrank 3, Agency"]

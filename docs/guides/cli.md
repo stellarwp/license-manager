@@ -177,7 +177,9 @@ Shows tiers for a specific product.
 wp harbor catalog tiers <product_slug> [--fields=<fields>] [--format=<format>]
 ```
 
-**Default fields:** `slug, name, rank, price, currency`
+**Default fields:** `slug, name, rank, price, currency, purchase_url`
+
+**Available fields:** `slug`, `name`, `rank`, `price`, `currency`, `features`, `herald_slugs`, `purchase_url`
 
 **Examples:**
 
