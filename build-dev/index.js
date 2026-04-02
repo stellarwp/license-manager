@@ -4877,7 +4877,7 @@ const getPortal = () => async ({
 }) => {
   try {
     const portals = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-      path: '/liquidweb/harbor/v1/portal'
+      path: '/liquidweb/harbor/v1/catalog'
     });
     dispatch.receivePortal(portals);
   } catch (err) {
