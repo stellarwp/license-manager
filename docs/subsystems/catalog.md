@@ -31,6 +31,7 @@ Each product defines an ordered set of tiers that represent subscription levels.
 | `currency`      | string   | Currency code (e.g., `USD`)                                                 |
 | `features`      | string[] | Marketing feature strings for this tier                                     |
 | `herald_slugs`  | string[] | Herald slugs associated with this tier                                      |
+| `purchase_url`  | string   | Checkout URL to purchase or upgrade to this tier                            |
 
 Tiers are always sorted by rank. This ordering drives feature availability. A feature that requires `kadence-pro` (rank 2) is available to anyone on `kadence-pro` or `kadence-agency` (rank 3), but not to someone on `kadence-basic` (rank 1).
 

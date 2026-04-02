@@ -22,7 +22,8 @@ Returns the full product catalog. Each entry represents a product family with it
         "price": 14900,
         "currency": "USD",
         "features": ["Access to pro blocks", "Premium support"],
-        "herald_slugs": ["kadence-basic-herald"]
+        "herald_slugs": ["kadence-basic-herald"],
+        "purchase_url": "https://example.com/checkout/?add-to-cart=123"
       },
       {
         "slug": "kadence-pro",
@@ -31,7 +32,8 @@ Returns the full product catalog. Each entry represents a product family with it
         "price": 19900,
         "currency": "USD",
         "features": ["All Basic features", "Shop Kit", "Priority support"],
-        "herald_slugs": ["kadence-pro-herald"]
+        "herald_slugs": ["kadence-pro-herald"],
+        "purchase_url": "https://example.com/checkout/?add-to-cart=456"
       }
     ],
     "features": [

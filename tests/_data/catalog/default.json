@@ -11,7 +11,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "kadence-basic",
@@ -20,7 +21,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "kadence-pro",
@@ -29,7 +31,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "kadence-agency",
@@ -38,7 +41,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       }
     ],
     "features": [
@@ -615,7 +619,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "learndash-pro",
@@ -624,7 +629,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "learndash-elite",
@@ -633,7 +639,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       }
     ],
     "features": [
@@ -1201,7 +1208,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "give-basic",
@@ -1210,7 +1218,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "give-pro",
@@ -1219,7 +1228,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "give-agency",
@@ -1228,7 +1238,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       }
     ],
     "features": [
@@ -1834,7 +1845,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "the-events-calendar-basic",
@@ -1843,7 +1855,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "the-events-calendar-pro",
@@ -1852,7 +1865,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       },
       {
         "slug": "the-events-calendar-agency",
@@ -1861,7 +1875,8 @@
         "price": 0,
         "currency": "USD",
         "features": [],
-        "herald_slugs": []
+        "herald_slugs": [],
+        "purchase_url": ""
       }
     ],
     "features": [

@@ -19,6 +19,7 @@ use LiquidWeb\Harbor\Utils\Cast;
  *     currency: string,
  *     features: list<string>,
  *     herald_slugs: list<string>,
+ *     purchase_url: string,
  * }
  */
 final class Catalog_Tier {
@@ -38,6 +39,7 @@ final class Catalog_Tier {
 		'currency'      => '',
 		'features'      => [],
 		'herald_slugs'  => [],
+		'purchase_url'  => '',
 	];
 
 	/**
@@ -78,6 +80,7 @@ final class Catalog_Tier {
 				'herald_slugs' => isset( $data['herald_slugs'] ) && is_array( $data['herald_slugs'] )
 					? array_map( [ Cast::class, 'to_string' ], array_values( $data['herald_slugs'] ) )
 					: [],
+				'purchase_url' => Cast::to_string( $data['purchase_url'] ?? '' ),
 			]
 		);
 	}
@@ -171,5 +174,16 @@ final class Catalog_Tier {
 	 */
 	public function get_herald_slugs(): array {
 		return $this->attributes['herald_slugs'];
+	}
+
+	/**
+	 * Gets the purchase URL for this tier.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function get_purchase_url(): string {
+		return $this->attributes['purchase_url'];
 	}
 }
