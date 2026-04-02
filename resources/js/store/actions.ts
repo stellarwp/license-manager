@@ -219,6 +219,34 @@ export const refreshLicense =
 	};
 
 /**
+ * Refresh the product catalog from the upstream service via the REST API.
+ *
+ * @since 1.0.0
+ */
+export const refreshCatalog =
+	(): Thunk<HarborError | null> =>
+	async ({ dispatch }) => {
+		try {
+			const result = await apiFetch<ProductCatalog[]>({
+				path: '/liquidweb/harbor/v1/catalog/refresh',
+				method: 'POST',
+			});
+			dispatch.receiveCatalog(result);
+			return null;
+		} catch (err) {
+			const error = await HarborError.wrap(
+				err,
+				ErrorCode.CatalogRefreshFailed,
+				__(
+					'Liquid Web Software Manager failed to refresh the product catalog.',
+					'%TEXTDOMAIN%'
+				)
+			);
+			return error;
+		}
+	};
+
+/**
  * Delete the stored license key via the REST API, then invalidate the
  * features resolver so the UI refreshes.
  *
