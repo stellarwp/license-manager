@@ -6,7 +6,7 @@ See [Portal](../../subsystems/portal.md) for the product, tier, and feature data
 
 ## GET /liquidweb/harbor/v1/catalog
 
-Returns the full product portal. Each entry represents a product family with its tiers and features. The portal is not license-specific — it describes everything available regardless of entitlements.
+Returns the full product catalog. Each entry represents a product family with its tiers and features. The catalog is not license-specific — it describes everything available regardless of entitlements.
 
 ### Response (200)
 

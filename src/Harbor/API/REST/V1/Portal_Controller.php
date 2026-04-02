@@ -9,7 +9,7 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * WP REST API controller for reading the product portal.
+ * WP REST API controller for the product catalog endpoint.
  *
  * @since 1.0.0
  */
@@ -102,7 +102,7 @@ final class Portal_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Returns all product portals.
+	 * Returns the product catalog.
 	 *
 	 * @since 1.0.0
 	 *
@@ -121,7 +121,7 @@ final class Portal_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Force refreshes the portal from the upstream API and returns the result.
+	 * Force-refreshes the catalog from the Commerce Portal and returns it.
 	 *
 	 * @since 1.0.0
 	 *
