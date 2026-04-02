@@ -80,7 +80,7 @@ export const getPortal =
 	async ({ dispatch }) => {
 		try {
 			const portals = await apiFetch<ProductPortal[]>({
-				path: '/liquidweb/harbor/v1/portal',
+				path: '/liquidweb/harbor/v1/catalog',
 			});
 			dispatch.receivePortal(portals);
 		} catch (err) {

@@ -31,7 +31,7 @@ final class Portal_Controller extends WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = 'portal';
+	protected $rest_base = 'catalog';
 
 	/**
 	 * The portal repository.
@@ -154,7 +154,7 @@ final class Portal_Controller extends WP_REST_Controller {
 
 		$this->schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'portal',
+			'title'      => 'catalog',
 			'type'       => 'object',
 			'properties' => [
 				'product_id'   => [

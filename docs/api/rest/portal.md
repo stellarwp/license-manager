@@ -4,7 +4,7 @@ All endpoints require the `manage_options` capability.
 
 See [Portal](../../subsystems/portal.md) for the product, tier, and feature data models and field definitions.
 
-## GET /liquidweb/harbor/v1/portal
+## GET /liquidweb/harbor/v1/catalog
 
 Returns the full product portal. Each entry represents a product family with its tiers and features. The portal is not license-specific — it describes everything available regardless of entitlements.
 
@@ -67,13 +67,13 @@ When the portal has not been fetched yet, returns an empty array `[]`.
 | ---- | ------------------------------------ | -------------------------------- |
 | 502  | `lw-harbor-portal-invalid-response` | Portal API response was invalid |
 
-## POST /liquidweb/harbor/v1/portal/refresh
+## POST /liquidweb/harbor/v1/catalog/refresh
 
-Force-refreshes the portal from the upstream Commerce Portal API, bypassing any cached data. Returns the freshly fetched portal in the same shape as `GET /portal`.
+Force-refreshes the portal from the upstream Commerce Portal API, bypassing any cached data. Returns the freshly fetched portal in the same shape as `GET /catalog`.
 
 ### Response (200)
 
-Same shape as `GET /portal`.
+Same shape as `GET /catalog`.
 
 ### Errors
 
