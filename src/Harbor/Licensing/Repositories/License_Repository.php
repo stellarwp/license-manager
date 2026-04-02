@@ -244,8 +244,8 @@ final class License_Repository {
 	/**
 	 * Read the stored license state and return the products portion.
 	 *
-	 * When a successful product catalog has been stored, it is returned even if
-	 * a subsequent fetch failed. When no catalog exists but a previous error was
+	 * When a successful product portal has been stored, it is returned even if
+	 * a subsequent fetch failed. When no portal exists but a previous error was
 	 * recorded, that WP_Error is returned so callers can surface it. Returns
 	 * null when nothing has been stored yet.
 	 *
@@ -271,18 +271,18 @@ final class License_Repository {
 	}
 
 	/**
-	 * Persist the product catalog or a fetch error to the license state option.
+	 * Persist the product portal or a fetch error to the license state option.
 	 *
 	 * On success (Product_Collection): updates collection and last_success_at,
 	 * clears last_error.
 	 *
 	 * On failure (WP_Error): stores last_error only. The existing collection and
 	 * last_success_at are preserved so callers can still use the last known-good
-	 * catalog.
+	 * portal.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Product_Collection|WP_Error $data The product catalog or fetch error to store.
+	 * @param Product_Collection|WP_Error $data The product portal or fetch error to store.
 	 *
 	 * @return void
 	 */
@@ -397,9 +397,9 @@ final class License_Repository {
 	}
 
 	/**
-	 * Get a specific product entry from the cached catalog.
+	 * Get a specific product entry from the cached portal.
 	 *
-	 * Returns null if no catalog is cached or the product is not found.
+	 * Returns null if no portal is cached or the product is not found.
 	 *
 	 * @since 1.0.0
 	 *
@@ -418,7 +418,7 @@ final class License_Repository {
 	}
 
 	/**
-	 * Whether a product exists in the cached catalog.
+	 * Whether a product exists in the cached portal.
 	 *
 	 * @since 1.0.0
 	 *
@@ -431,7 +431,7 @@ final class License_Repository {
 	}
 
 	/**
-	 * Whether a product has a valid license status in the cached catalog.
+	 * Whether a product has a valid license status in the cached portal.
 	 *
 	 * @since 1.0.0
 	 *
@@ -448,7 +448,7 @@ final class License_Repository {
 	/**
 	 * Whether a product has a valid, active license.
 	 *
-	 * Returns true when the cached catalog shows the product as valid, or when
+	 * Returns true when the cached portal shows the product as valid, or when
 	 * the product is within the grace period after its last confirmed active date.
 	 * This prevents platform fees from being charged immediately after a license
 	 * expires or when a network issue prevents reaching the licensing server.

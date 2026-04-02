@@ -2,8 +2,8 @@
 
 namespace LiquidWeb\Harbor\Tests\Licensing\Repositories;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client as Catalog_Fixture;
+use LiquidWeb\Harbor\Portal\Portal_Repository;
+use LiquidWeb\Harbor\Portal\Clients\Fixture_Client as Portal_Fixture;
 use LiquidWeb\Harbor\Tests\Licensing\Fixture_Client as Licensing_Fixture;
 use LiquidWeb\Harbor\Licensing\License_Manager;
 use LiquidWeb\Harbor\Licensing\Product_Collection;
@@ -22,7 +22,7 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 
 	private License_Repository $license_repository;
 	private License_Manager $license_manager;
-	private Catalog_Repository $catalog_repository;
+	private Portal_Repository $portal_repository;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -36,8 +36,8 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 			$licensing_client
 		);
 
-		$catalog_client           = new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) );
-		$this->catalog_repository = new Catalog_Repository( $catalog_client );
+		$portal_client           = new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) );
+		$this->portal_repository = new Portal_Repository( $portal_client );
 
 		// Register cache invalidation hooks that providers normally wire up.
 		add_action(
@@ -45,16 +45,16 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 			[ $this->license_repository, 'delete_products' ]
 		);
 
-		$catalog_repository = $this->catalog_repository;
+		$portal_repository = $this->portal_repository;
 		add_action(
 			'lw-harbor/unified_license_key_changed',
-			static function () use ( $catalog_repository ) {
-				$catalog_repository->delete_catalog();
+			static function () use ( $portal_repository ) {
+				$portal_repository->delete_portal();
 			}
 		);
 
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::KEY_OPTION_NAME );
 	}
 
@@ -62,7 +62,7 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 		remove_all_filters( 'lw-harbor/unified_license_key_changed' );
 
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::KEY_OPTION_NAME );
 
 		parent::tearDown();
@@ -88,8 +88,8 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 		$this->assertSame( 'give-basic', $basic_result->get( 'give' )->get_tier() );
 	}
 
-	public function test_catalog_repository_fetches_fresh_after_key_change(): void {
-		// Seed a stale catalog state with a single fake product.
+	public function test_portal_repository_fetches_fresh_after_key_change(): void {
+		// Seed a stale portal state with a single fake product.
 		$stale_state = [
 			'collection'      => [
 				[
@@ -102,18 +102,18 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 			'last_failure_at' => null,
 			'last_error'      => null,
 		];
-		update_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME, $stale_state );
+		update_option( Portal_Repository::PORTAL_STATE_OPTION_NAME, $stale_state );
 
 		// Confirm the stale cache is served.
-		$cached = $this->catalog_repository->get();
+		$cached = $this->portal_repository->get();
 		$this->assertCount( 1, $cached );
 		$this->assertNotNull( $cached->get( 'stale-product' ) );
 
-		// Change the license key — invalidates the catalog option.
+		// Change the license key — invalidates the portal option.
 		$this->license_repository->store_key( 'LWSW-UNIFIED-BASIC-2026' );
 
-		// Fresh fetch should return the real catalog, not the stale single-product one.
-		$fresh = $this->catalog_repository->get();
+		// Fresh fetch should return the real portal, not the stale single-product one.
+		$fresh = $this->portal_repository->get();
 		$this->assertGreaterThan( 1, count( $fresh ) );
 		$this->assertNull( $fresh->get( 'stale-product' ) );
 		$this->assertNotNull( $fresh->get( 'kadence' ) );
@@ -123,16 +123,16 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 		// Populate upstream caches.
 		$this->license_repository->store_key( 'LWSW-UNIFIED-PRO-2026' );
 		$this->license_manager->get_products( 'example.com' );
-		$this->catalog_repository->get();
+		$this->portal_repository->get();
 
 		$this->assertInstanceOf( Product_Collection::class, $this->license_repository->get_products() );
-		$this->assertNotFalse( get_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME ) );
+		$this->assertNotFalse( get_option( Portal_Repository::PORTAL_STATE_OPTION_NAME ) );
 
 		// Storing a new key should clear the upstream caches.
 		$this->license_repository->store_key( 'LWSW-UNIFIED-BASIC-2026' );
 
 		$this->assertNull( $this->license_repository->get_products() );
-		$this->assertFalse( get_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME ) );
+		$this->assertFalse( get_option( Portal_Repository::PORTAL_STATE_OPTION_NAME ) );
 	}
 
 	public function test_all_caches_invalidated_on_key_delete(): void {
@@ -140,16 +140,16 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 
 		// Populate upstream caches.
 		$this->license_manager->get_products( 'example.com' );
-		$this->catalog_repository->get();
+		$this->portal_repository->get();
 
 		$this->assertInstanceOf( Product_Collection::class, $this->license_repository->get_products() );
-		$this->assertNotFalse( get_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME ) );
+		$this->assertNotFalse( get_option( Portal_Repository::PORTAL_STATE_OPTION_NAME ) );
 
 		// Deleting the key should clear the upstream caches.
 		$this->license_repository->delete_key();
 
 		$this->assertNull( $this->license_repository->get_products() );
-		$this->assertFalse( get_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME ) );
+		$this->assertFalse( get_option( Portal_Repository::PORTAL_STATE_OPTION_NAME ) );
 	}
 
 	public function test_caches_not_invalidated_when_same_key_stored(): void {
@@ -157,12 +157,12 @@ final class License_Key_Cache_InvalidationTest extends HarborTestCase {
 
 		// Populate upstream caches.
 		$this->license_manager->get_products( 'example.com' );
-		$this->catalog_repository->get();
+		$this->portal_repository->get();
 
 		// Re-store the same key — caches should remain intact.
 		$this->license_repository->store_key( 'LWSW-UNIFIED-PRO-2026' );
 
 		$this->assertInstanceOf( Product_Collection::class, $this->license_repository->get_products() );
-		$this->assertNotFalse( get_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME ) );
+		$this->assertNotFalse( get_option( Portal_Repository::PORTAL_STATE_OPTION_NAME ) );
 	}
 }

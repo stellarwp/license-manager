@@ -13,7 +13,7 @@ export enum ErrorCode {
 	LicenseStoreFailed = 'license-store-failed',
 	LicenseDeleteFailed = 'license-delete-failed',
 	LicenseValidateFailed = 'license-validate-failed',
-	CatalogFetchFailed = 'catalog-fetch-failed',
+	PortalFetchFailed = 'portal-fetch-failed',
 	LegacyLicensesFetchFailed = 'legacy-licenses-fetch-failed',
 	ResolutionFailed = 'resolution-failed',
 }

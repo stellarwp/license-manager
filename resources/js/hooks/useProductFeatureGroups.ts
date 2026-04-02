@@ -1,6 +1,6 @@
 /**
  * Partitions features for a product into available and locked groups,
- * and groups locked features by catalog tier.
+ * and groups locked features by portal tier.
  *
  * @package LiquidWeb\Harbor
  */
@@ -9,13 +9,13 @@ import { useSelect } from '@wordpress/data';
 import { useFilteredFeatures } from '@/hooks/useFilteredFeatures';
 import { store as harborStore } from '@/store';
 import { isFreeFeature, getFeatureMismatch } from '@/lib/feature-utils';
-import type { CatalogTier, Feature } from '@/types/api';
+import type { PortalTier, Feature } from '@/types/api';
 
 export interface FeatureGroups {
     availableFeatures:   Feature[];
     lockedByTier:        Record<string, Feature[]>;
-    sortedCatalogTiers:  CatalogTier[];  // All tiers — used for header tier name lookup
-    upgradeCatalogTiers: CatalogTier[];  // Tiers strictly above the user's rank — used for TierGroup rendering
+    sortedPortalTiers:  PortalTier[];  // All tiers — used for header tier name lookup
+    upgradePortalTiers: PortalTier[];  // Tiers strictly above the user's rank — used for TierGroup rendering
 }
 
 /**
@@ -24,9 +24,9 @@ export interface FeatureGroups {
 export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
     const allFeatures = useFilteredFeatures( productSlug );
 
-    const { catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses } = useSelect(
+    const { portalTiers, licenseProducts, isUnifiedLicensed, legacyLicenses } = useSelect(
         ( select ) => ({
-            catalogTiers:      select( harborStore ).getProductCatalog( productSlug )?.tiers ?? [],
+            portalTiers:      select( harborStore ).getProductPortal( productSlug )?.tiers ?? [],
             licenseProducts:   select( harborStore ).getLicenseProducts(),
             isUnifiedLicensed: select( harborStore ).isProductUnifiedLicensed( productSlug ),
             legacyLicenses:    select( harborStore ).getLegacyLicenses(),
@@ -35,7 +35,7 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
     );
 
     return useMemo( () => {
-        const sorted         = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
+        const sorted         = portalTiers.slice().sort( ( a, b ) => a.rank - b.rank );
         const licenseProduct = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
         const userTier       = licenseProduct?.tier ? sorted.find( ( t ) => t.slug === licenseProduct.tier ) : null;
         const rank           = userTier?.rank ?? -1;  // -1 = unlicensed (show all tier groups)
@@ -76,8 +76,8 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
         return {
             availableFeatures,
             lockedByTier,
-            sortedCatalogTiers:  sorted,
-            upgradeCatalogTiers: upgrade,
+            sortedPortalTiers:  sorted,
+            upgradePortalTiers: upgrade,
         };
-    }, [ allFeatures, catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses, productSlug ] );
+    }, [ allFeatures, portalTiers, licenseProducts, isUnifiedLicensed, legacyLicenses, productSlug ] );
 }

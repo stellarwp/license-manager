@@ -697,7 +697,7 @@ final class License_RepositoryTest extends HarborTestCase {
 		$this->assertTrue( $this->repository->is_product_active( 'give' ) );
 	}
 
-	public function test_is_product_active_returns_false_when_no_catalog_and_no_last_active_date(): void {
+	public function test_is_product_active_returns_false_when_no_portal_and_no_last_active_date(): void {
 		$this->assertFalse( $this->repository->is_product_active( 'give' ) );
 	}
 
@@ -706,7 +706,7 @@ final class License_RepositoryTest extends HarborTestCase {
 		$one_day_ago = time() - DAY_IN_SECONDS;
 		$this->repository->set_last_active_date( 'give', $one_day_ago );
 
-		// No catalog cached — simulates an expired/unavailable license server response.
+		// No portal cached — simulates an expired/unavailable license server response.
 		$this->assertTrue( $this->repository->is_product_active( 'give' ) );
 	}
 
@@ -735,7 +735,7 @@ final class License_RepositoryTest extends HarborTestCase {
 			)
 		);
 
-		// No last active date recorded — but catalog says valid, so still active.
+		// No last active date recorded — but portal says valid, so still active.
 		$this->assertTrue( $this->repository->is_product_active( 'give' ) );
 	}
 

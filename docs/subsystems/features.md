@@ -2,26 +2,26 @@
 
 ## Summary
 
-The Features subsystem is the resolved output of combining [Catalog](catalog.md) data with [Licensing](licensing.md) data. The catalog says "Kadence includes Blocks Pro at the Basic tier." Licensing says "this key has Kadence at the Pro tier." Features joins the two and concludes: "Blocks Pro is available, and here's how to install it."
+The Features subsystem is the resolved output of combining [Portal](portal.md) data with [Licensing](licensing.md) data. The portal says "Kadence includes Blocks Pro at the Basic tier." Licensing says "this key has Kadence at the Pro tier." Features joins the two and concludes: "Blocks Pro is available, and here's how to install it."
 
-Features are not a third data source. They are the computed intersection of what exists (catalog) and what's entitled (licensing), plus local state tracking for what's actually enabled on the site.
+Features are not a third data source. They are the computed intersection of what exists (portal) and what's entitled (licensing), plus local state tracking for what's actually enabled on the site.
 
-> **Development status.** The resolution algorithm, strategy pattern, and caching approach are stable. The specific data shapes that feed into resolution (catalog features, tier slugs, licensing responses) are still being finalized.
+> **Development status.** The resolution algorithm, strategy pattern, and caching approach are stable. The specific data shapes that feed into resolution (portal features, tier slugs, licensing responses) are still being finalized.
 
 ## Feature States
 
 Every feature has two independent states:
 
-- **Available**: the feature's slug appears in the capabilities array returned by the licensing API for this product. Computed from the licensing response — the catalog defines what features exist and their metadata, but capabilities are the source of truth for access.
+- **Available**: the feature's slug appears in the capabilities array returned by the licensing API for this product. Computed from the licensing response — the portal defines what features exist and their metadata, but capabilities are the source of truth for access.
 - **Enabled**: the feature is actively turned on for this site. A feature cannot be enabled without being available.
 
 ## Feature Types
 
-Each feature type has a strategy that defines how enable, disable, and active-state checking work. The mapping from catalog delivery types to feature classes:
+Each feature type has a strategy that defines how enable, disable, and active-state checking work. The mapping from portal delivery types to feature classes:
 
 ### Plugin
 
-An installable WordPress plugin. The catalog provides `plugin_file`, `download_url`/`wporg_slug`.
+An installable WordPress plugin. The portal provides `plugin_file`, `download_url`/`wporg_slug`.
 
 | Aspect              | Behavior                                                                               |
 | ------------------- | -------------------------------------------------------------------------------------- |
@@ -31,7 +31,7 @@ An installable WordPress plugin. The catalog provides `plugin_file`, `download_u
 
 ### Theme
 
-An installable WordPress theme. The theme's `slug` is its WordPress slug (used for installation, `get_stylesheet()`, etc.). The catalog provides `download_url`/`wporg_slug`.
+An installable WordPress theme. The theme's `slug` is its WordPress slug (used for installation, `get_stylesheet()`, etc.). The portal provides `download_url`/`wporg_slug`.
 
 | Aspect              | Behavior                                                                                                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -47,7 +47,7 @@ Plugin and Theme features share a global transient lock (`lw_harbor_install_lock
 
 ```mermaid
 flowchart TD
-    Start["Catalog feature entry\n(slug, type, min_tier)"]
+    Start["Portal feature entry\n(slug, type, min_tier)"]
     Start --> HasLicense{"Licensing entry\nexists for product?"}
 
     HasLicense -->|Yes| InCaps{"Feature slug in\ncapabilities array?"}
@@ -69,23 +69,23 @@ flowchart TD
     EnabledCheck -->|Plugin| PluginState["WP plugin\nactivation state"]
     EnabledCheck -->|Theme| ThemeState["Theme disk\npresence"]
 
-    PluginState --> HasUpdate["has_update?\ncompare installed_version\nvs catalog version"]
+    PluginState --> HasUpdate["has_update?\ncompare installed_version\nvs portal version"]
     ThemeState --> HasUpdate
 ```
 
-`Resolve_Feature_Collection` joins catalog and licensing data to produce a `Feature_Collection`. Availability is determined by checking whether the feature's slug appears in the product entry's `capabilities` array from the licensing response.
+`Resolve_Feature_Collection` joins portal and licensing data to produce a `Feature_Collection`. Availability is determined by checking whether the feature's slug appears in the product entry's `capabilities` array from the licensing response.
 
-The catalog defines which features exist, their metadata (name, description, type, minimum tier for display), and which tier they belong to for UI purposes. The `capabilities` array is what decides access. This allows the licensing service to handle cases the catalog alone cannot: one-time promotional grants or individual exceptions made for a specific license.
+The portal defines which features exist, their metadata (name, description, type, minimum tier for display), and which tier they belong to for UI purposes. The `capabilities` array is what decides access. This allows the licensing service to handle cases the portal alone cannot: one-time promotional grants or individual exceptions made for a specific license.
 
-For `Installable` features (Plugin, Theme), the resolver also reads `installed_version` from disk and stores it on the resolved Feature. This is the version currently on the site, distinct from the catalog's `version` which is the latest available.
+For `Installable` features (Plugin, Theme), the resolver also reads `installed_version` from disk and stores it on the resolved Feature. This is the version currently on the site, distinct from the portal's `version` which is the latest available.
 
-`has_update()` is a computed method on the `Installable` interface that centralizes the update-available check. It returns `true` when the feature is installed on disk and `version_compare( catalog_version, installed_version, '>' )`. Both Plugin and Theme implement this method. The update handlers (`Plugin_Handler`, `Theme_Handler`) delegate to this result (via the `has_update` field in the update data array) rather than performing their own inline comparison.
+`has_update()` is a computed method on the `Installable` interface that centralizes the update-available check. It returns `true` when the feature is installed on disk and `version_compare( portal_version, installed_version, '>' )`. Both Plugin and Theme implement this method. The update handlers (`Plugin_Handler`, `Theme_Handler`) delegate to this result (via the `has_update` field in the update data array) rather than performing their own inline comparison.
 
 Edge cases:
 
 - No licensing entry for a product (unlicensed): the resolver falls back to tier rank comparison using rank 0, making only free-tier features (`minimum_tier` at rank 0) available. Paid-tier features are unavailable.
-- A feature capable but outside the catalog tier: it is available — capabilities override the catalog tier.
-- A feature in the customer's catalog tier but absent from capabilities: it is unavailable — capabilities are the authority.
+- A feature capable but outside the portal tier: it is available — capabilities override the portal tier.
+- A feature in the customer's portal tier but absent from capabilities: it is unavailable — capabilities are the authority.
 
 ## The Manager
 
@@ -95,7 +95,7 @@ The `Manager` is the public interface for all feature operations.
 | ---------------------------- | ------------------------------ | -------------------------------------------------- |
 | `get_all()`                  | `Feature_Collection\|WP_Error` | Get all resolved features with live is_enabled     |
 | `get(string $slug)`          | `Feature\|null`                | Look up a single feature with live is_enabled      |
-| `exists(string $slug)`       | `bool\|WP_Error`               | Check if the feature is in the catalog             |
+| `exists(string $slug)`       | `bool\|WP_Error`               | Check if the feature is in the portal             |
 | `is_available(string $slug)` | `bool\|WP_Error`               | Check if the customer's tier includes this feature |
 | `is_enabled(string $slug)`   | `bool\|WP_Error`               | Check if the feature is active locally             |
 | `enable(string $slug)`       | `Feature\|WP_Error`            | Enable a feature, return updated Feature           |
@@ -104,7 +104,7 @@ The `Manager` is the public interface for all feature operations.
 
 Global convenience functions in `src/Harbor/global-functions.php` (non-namespaced, always delegate to the version leader):
 
-- **`lw_harbor_is_feature_enabled(string $slug): bool|WP_Error`** — in the catalog AND active locally?
+- **`lw_harbor_is_feature_enabled(string $slug): bool|WP_Error`** — in the portal AND active locally?
 - **`lw_harbor_is_feature_available(string $slug): bool|WP_Error`** — does the customer's tier include this feature?
 
 ### WordPress Hooks
@@ -120,7 +120,7 @@ Actions fired before and after enable/disable, both globally and per-slug:
 
 ## Caching
 
-The `Feature_Repository` caches the resolved `Feature_Collection` in memory for the current request. Resolution is cheap (iterates the cached catalog and licensing arrays), so no cross-request cache is needed. Fresh requests always resolve from the upstream caches (catalog and licensing), which are the single source of truth for staleness. `refresh()` clears the in-memory cache and re-resolves.
+The `Feature_Repository` caches the resolved `Feature_Collection` in memory for the current request. Resolution is cheap (iterates the cached portal and licensing arrays), so no cross-request cache is needed. Fresh requests always resolve from the upstream caches (portal and licensing), which are the single source of truth for staleness. `refresh()` clears the in-memory cache and re-resolves.
 
 ## Feature Collection
 
@@ -157,9 +157,9 @@ For how the React frontend consumes these endpoints to render the feature list a
 
 | Constant                         | HTTP | Meaning                                            |
 | -------------------------------- | ---- | -------------------------------------------------- |
-| `FEATURE_NOT_FOUND`              | 404  | Slug doesn't exist in the resolved catalog         |
+| `FEATURE_NOT_FOUND`              | 404  | Slug doesn't exist in the resolved portal         |
 | `FEATURE_TYPE_MISMATCH`          | 400  | Type doesn't match the strategy                    |
-| `FEATURE_REQUEST_FAILED`         | 502  | Resolution failed (catalog or licensing API error) |
+| `FEATURE_REQUEST_FAILED`         | 502  | Resolution failed (portal or licensing API error) |
 | `FEATURE_CHECK_FAILED`           | 502  | Unexpected error during availability check         |
 | `FEATURE_ENABLE_FAILED`          | 422  | Strategy threw an exception during enable          |
 | `FEATURE_DISABLE_FAILED`         | 422  | Strategy threw an exception during disable         |
@@ -167,8 +167,8 @@ For how the React frontend consumes these endpoints to render the feature list a
 | `UPDATE_NOT_SUPPORTED`           | 422  | Feature type does not support updates              |
 | `NO_UPDATE_AVAILABLE`            | 422  | No update available for the feature                |
 | `UPDATE_FAILED`                  | 422  | The update operation failed                        |
-| `INVALID_RESPONSE`               | 502  | Catalog response couldn't be parsed                |
-| `UNKNOWN_FEATURE_TYPE`           | 422  | No Feature subclass for the catalog type           |
+| `INVALID_RESPONSE`               | 502  | Portal response couldn't be parsed                |
+| `UNKNOWN_FEATURE_TYPE`           | 422  | No Feature subclass for the portal type           |
 | `INSTALL_LOCKED`                 | 409  | Another install already in progress                |
 | `REQUIREMENTS_NOT_MET`           | 422  | PHP or WordPress version requirements not met      |
 | **Plugin-specific**              |      |                                                    |
@@ -198,7 +198,7 @@ Every resolved feature includes these fields:
 | `tier`              | string  | Minimum tier required                                             |
 | `type`              | string  | `plugin` or `theme`                                               |
 | `is_available`      | boolean | Whether the current license covers this feature                   |
-| `in_catalog_tier`   | boolean | Whether the licensed tier meets or exceeds the feature's min tier |
+| `in_portal_tier`   | boolean | Whether the licensed tier meets or exceeds the feature's min tier |
 | `is_enabled`        | boolean | Whether the feature is currently enabled on this site             |
 | `documentation_url` | string  | URL to the feature's documentation                                |
 
@@ -207,7 +207,7 @@ Installable features (`plugin` and `theme`) also include:
 | Field               | Type         | Description                                           |
 | ------------------- | ------------ | ----------------------------------------------------- |
 | `release_date`      | string\|null | Release date of the latest version (ISO 8601)         |
-| `version`           | string\|null | Latest available version from the catalog             |
+| `version`           | string\|null | Latest available version from the portal             |
 | `changelog`         | string\|null | Changelog HTML for the latest version                 |
 | `wporg_slug`        | string\|null | WordPress.org slug, or null if not on WordPress.org   |
 | `installed_version` | string\|null | Currently installed version, or null if not installed |
@@ -224,13 +224,13 @@ Plugin features also include:
 
 | Data                                                    | Source                                                                                                                                                                              |
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Feature exists, minimum tier, delivery type, tier ranks | Catalog                                                                                                                                                                             |
-| Latest version, release date, changelog                 | Catalog (`version`, `release_date`, `changelog`)                                                                                                                                    |
+| Feature exists, minimum tier, delivery type, tier ranks | Portal                                                                                                                                                                             |
+| Latest version, release date, changelog                 | Portal (`version`, `release_date`, `changelog`)                                                                                                                                    |
 | Customer's tier, key validity                           | Licensing                                                                                                                                                                           |
-| **Whether available** (`is_available`)                  | **Licensing capabilities array** — feature slug present in `Product_Entry::get_capabilities()`. Falls back to catalog tier rank 0 when unlicensed.                                  |
+| **Whether available** (`is_available`)                  | **Licensing capabilities array** — feature slug present in `Product_Entry::get_capabilities()`. Falls back to portal tier rank 0 when unlicensed.                                  |
 | **Whether enabled** (`is_enabled`)                      | Live WordPress state (plugin activation / theme disk), stamped by Manager                                                                                                           |
 | **Installed version** (`installed_version`)             | Read from disk during resolution via `Installable`. Null for uninstalled extensions                                                                                                 |
-| **Update available** (`has_update`)                     | Computed by `Installable::has_update()`: `version_compare( catalog_version, installed_version, '>' )`. False when not installed or catalog version is absent. Plugin and Theme only |
+| **Update available** (`has_update`)                     | Computed by `Installable::has_update()`: `version_compare( portal_version, installed_version, '>' )`. False when not installed or portal version is absent. Plugin and Theme only |
 
 ## Related Subsystems
 
@@ -238,6 +238,6 @@ Plugin features also include:
 
 ## What Features Does Not Do
 
-- **Fetch its own data** — resolved from catalog and licensing. No separate "features API."
+- **Fetch its own data** — resolved from portal and licensing. No separate "features API."
 - **Delete extensions** — plugins are deactivated, never removed. Themes require manual deletion.
 - **Manage seats** — seat consumption is in the licensing layer, not feature enable/disable.

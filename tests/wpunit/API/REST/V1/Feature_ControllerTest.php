@@ -452,11 +452,11 @@ final class Feature_ControllerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that a catalog error on get_item returns a mapped HTTP status.
+	 * Tests that a portal error on get_item returns a mapped HTTP status.
 	 *
 	 * @return void
 	 */
-	public function test_get_item_catalog_error_has_http_status(): void {
+	public function test_get_item_portal_error_has_http_status(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$repository = $this->makeEmpty(
@@ -858,7 +858,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 	 *
 	 * @return void
 	 */
-	public function test_list_catalog_error_has_http_status(): void {
+	public function test_list_portal_error_has_http_status(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$repository = $this->makeEmpty(
@@ -992,7 +992,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 		$this->assertTrue( $plugin['additionalProperties'] );
 		$this->assertSame( [ Feature::TYPE_PLUGIN ], $plugin['properties']['type']['enum'] );
 
-		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_catalog_tier', 'documentation_url', 'is_enabled', 'plugin_file', 'release_date', 'version', 'changelog', 'wporg_slug', 'installed_version', 'update_version' ];
+		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_portal_tier', 'documentation_url', 'is_enabled', 'plugin_file', 'release_date', 'version', 'changelog', 'wporg_slug', 'installed_version', 'update_version' ];
 
 		foreach ( $expected as $property ) {
 			$this->assertArrayHasKey( $property, $plugin['properties'], "Missing plugin schema property: {$property}" );
@@ -1014,7 +1014,7 @@ final class Feature_ControllerTest extends HarborTestCase {
 		$this->assertSame( 'theme', $theme['title'] );
 		$this->assertSame( [ Feature::TYPE_THEME ], $theme['properties']['type']['enum'] );
 
-		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_catalog_tier', 'documentation_url', 'is_enabled', 'release_date', 'version', 'changelog', 'wporg_slug', 'installed_version', 'update_version' ];
+		$expected = [ 'slug', 'name', 'description', 'product', 'tier', 'type', 'is_available', 'in_portal_tier', 'documentation_url', 'is_enabled', 'release_date', 'version', 'changelog', 'wporg_slug', 'installed_version', 'update_version' ];
 
 		foreach ( $expected as $property ) {
 			$this->assertArrayHasKey( $property, $theme['properties'], "Missing theme schema property: {$property}" );

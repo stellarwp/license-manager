@@ -51,7 +51,7 @@ final class FeatureTest extends HarborTestCase {
 						'description'       => $data['description'] ?? '',
 						'type'              => $data['type'] ?? 'test-type',
 						'is_available'      => $data['is_available'],
-						'in_catalog_tier'   => $data['in_catalog_tier'] ?? false,
+						'in_portal_tier'   => $data['in_portal_tier'] ?? false,
 						'is_enabled'        => $data['is_enabled'] ?? false,
 						'documentation_url' => $data['documentation_url'] ?? '',
 					]
@@ -124,25 +124,25 @@ final class FeatureTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that is_in_catalog_tier defaults to false when not set.
+	 * Tests that is_in_portal_tier defaults to false when not set.
 	 *
 	 * @return void
 	 */
-	public function test_is_in_catalog_tier_defaults_to_false(): void {
-		$this->assertFalse( $this->feature->is_in_catalog_tier() );
+	public function test_is_in_portal_tier_defaults_to_false(): void {
+		$this->assertFalse( $this->feature->is_in_portal_tier() );
 	}
 
 	/**
-	 * Tests that is_in_catalog_tier returns true when explicitly set.
+	 * Tests that is_in_portal_tier returns true when explicitly set.
 	 *
 	 * @return void
 	 */
-	public function test_is_in_catalog_tier_returns_true_when_set(): void {
+	public function test_is_in_portal_tier_returns_true_when_set(): void {
 		$feature = $this->feature::from_array(
-			array_merge( $this->feature->to_array(), [ 'in_catalog_tier' => true ] )
+			array_merge( $this->feature->to_array(), [ 'in_portal_tier' => true ] )
 		);
 
-		$this->assertTrue( $feature->is_in_catalog_tier() );
+		$this->assertTrue( $feature->is_in_portal_tier() );
 	}
 
 	/**

@@ -90,18 +90,18 @@ class Manager {
 		if ( ! $feature ) {
 			static::debug_log(
 				sprintf(
-					'Cannot enable "%s": not found in catalog.',
+					'Cannot enable "%s": not found in portal.',
 					$slug
 				)
 			);
 
 			return new WP_Error(
 				Error_Code::FEATURE_NOT_FOUND,
-				sprintf( 'Feature "%s" not found in the catalog.', $slug )
+				sprintf( 'Feature "%s" not found in the portal.', $slug )
 			);
 		}
 
-		if ( $feature->is_in_catalog_tier() && ! $feature->is_available() ) {
+		if ( $feature->is_in_portal_tier() && ! $feature->is_available() ) {
 			static::debug_log(
 				sprintf(
 					'Cannot enable "%s": capability has been revoked.',
@@ -248,14 +248,14 @@ class Manager {
 		if ( ! $feature ) {
 			static::debug_log(
 				sprintf(
-					'Cannot disable "%s": not found in catalog.',
+					'Cannot disable "%s": not found in portal.',
 					$slug
 				)
 			);
 
 			return new WP_Error(
 				Error_Code::FEATURE_NOT_FOUND,
-				sprintf( 'Feature "%s" not found in the catalog.', $slug )
+				sprintf( 'Feature "%s" not found in the portal.', $slug )
 			);
 		}
 
@@ -392,14 +392,14 @@ class Manager {
 		if ( ! $feature ) {
 			static::debug_log(
 				sprintf(
-					'Cannot update "%s": not found in catalog.',
+					'Cannot update "%s": not found in portal.',
 					$slug
 				)
 			);
 
 			return new WP_Error(
 				Error_Code::FEATURE_NOT_FOUND,
-				sprintf( 'Feature "%s" not found in the catalog.', $slug )
+				sprintf( 'Feature "%s" not found in the portal.', $slug )
 			);
 		}
 
@@ -501,7 +501,7 @@ class Manager {
 	}
 
 	/**
-	 * Checks whether a feature is in the catalog AND currently enabled/active.
+	 * Checks whether a feature is in the portal AND currently enabled/active.
 	 *
 	 * @since 1.0.0
 	 *
@@ -521,7 +521,7 @@ class Manager {
 		if ( ! $feature ) {
 			return new WP_Error(
 				Error_Code::FEATURE_NOT_FOUND,
-				sprintf( 'Feature "%s" not found in the catalog.', $slug )
+				sprintf( 'Feature "%s" not found in the portal.', $slug )
 			);
 		}
 
@@ -549,7 +549,7 @@ class Manager {
 		if ( ! $feature ) {
 			return new WP_Error(
 				Error_Code::FEATURE_NOT_FOUND,
-				sprintf( 'Feature "%s" not found in the catalog.', $slug )
+				sprintf( 'Feature "%s" not found in the portal.', $slug )
 			);
 		}
 
@@ -557,7 +557,7 @@ class Manager {
 	}
 
 	/**
-	 * Checks whether a feature exists in the catalog.
+	 * Checks whether a feature exists in the portal.
 	 *
 	 * @since 1.0.0
 	 *
@@ -576,7 +576,7 @@ class Manager {
 	}
 
 	/**
-	 * Gets the feature collection from the catalog with live enabled state.
+	 * Gets the feature collection from the portal with live enabled state.
 	 *
 	 * @since 1.0.0
 	 *
@@ -595,10 +595,10 @@ class Manager {
 	}
 
 	/**
-	 * Looks up a feature by slug from the cached catalog with live enabled state.
+	 * Looks up a feature by slug from the cached portal with live enabled state.
 	 *
 	 * Returns null when the feature is not found or when the API
-	 * request fails, since the catalog is unavailable.
+	 * request fails, since the portal is unavailable.
 	 *
 	 * @since 1.0.0
 	 *

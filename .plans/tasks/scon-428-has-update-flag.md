@@ -9,7 +9,7 @@ status: todo
 
 ## Problem
 
-The frontend currently receives `version` (latest from catalog) and `installed_version` (what's on disk) as separate fields, but has no way to know whether an update is available without doing its own semver comparison. Meanwhile, the plugin and theme update handlers (`Plugin_Handler`, `Theme_Handler`) each perform their own inline `version_compare()` calls independently. There's no single shared method that answers "does this feature have an update available?"
+The frontend currently receives `version` (latest from portal) and `installed_version` (what's on disk) as separate fields, but has no way to know whether an update is available without doing its own semver comparison. Meanwhile, the plugin and theme update handlers (`Plugin_Handler`, `Theme_Handler`) each perform their own inline `version_compare()` calls independently. There's no single shared method that answers "does this feature have an update available?"
 
 ## Proposed solution
 

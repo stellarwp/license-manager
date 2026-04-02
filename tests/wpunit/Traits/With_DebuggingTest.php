@@ -160,10 +160,10 @@ final class With_DebuggingTest extends HarborTestCase {
 
 		$exception = new RuntimeException( 'Something broke' );
 
-		$this->subject->call_debug_log_throwable( $exception, 'Catalog sync' ); // @phpstan-ignore method.notFound
+		$this->subject->call_debug_log_throwable( $exception, 'Portal sync' ); // @phpstan-ignore method.notFound
 
 		$this->assertCount( 1, $this->logged );
-		$this->assertStringStartsWith( 'Harbor: Catalog sync: Something broke', $this->logged[0] );
+		$this->assertStringStartsWith( 'Harbor: Portal sync: Something broke', $this->logged[0] );
 		$this->assertStringContainsString( $exception->getFile() . ':' . $exception->getLine(), $this->logged[0] );
 		$this->assertStringContainsString( $exception->getTraceAsString(), $this->logged[0] );
 	}

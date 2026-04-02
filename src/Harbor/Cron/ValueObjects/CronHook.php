@@ -10,7 +10,7 @@ namespace LiquidWeb\Harbor\Cron\ValueObjects;
 class CronHook {
 
 	/**
-	 * Hook for the 12-hour license and catalog data refresh.
+	 * Hook for the 12-hour license and portal data refresh.
 	 *
 	 * @since 1.0.0
 	 *

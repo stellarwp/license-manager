@@ -20,7 +20,7 @@ Returns `{ key, products[] }`. Products come from the cached `Product_Collection
 
 ### POST /license
 
-Accepts `key` (required) and `network` (optional). Fetches the product catalog from the v4 API to verify the key is recognized, then stores it. Does not activate any product or consume a seat. Returns `{ key }` on success.
+Accepts `key` (required) and `network` (optional). Fetches the product portal from the v4 API to verify the key is recognized, then stores it. Does not activate any product or consume a seat. Returns `{ key }` on success.
 
 After a successful POST, the frontend invalidates the GET `/license` resolver to refetch the product list.
 

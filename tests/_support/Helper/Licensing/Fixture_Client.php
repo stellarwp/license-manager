@@ -9,7 +9,7 @@ use LiquidWeb\LicensingApiClient\Resources\Contracts\CreditsResourceInterface;
 use LiquidWeb\LicensingApiClient\Resources\Contracts\EntitlementsResourceInterface;
 use LiquidWeb\LicensingApiClient\Resources\Contracts\LicensesResourceInterface;
 use LiquidWeb\LicensingApiClient\Resources\Contracts\ProductsResourceInterface;
-use LiquidWeb\LicensingApiClient\Responses\Product\Catalog;
+use LiquidWeb\LicensingApiClient\Responses\Product\Portal;
 use Nyholm\Psr7\Response;
 
 /**
@@ -32,11 +32,11 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 	protected string $fixture_dir;
 
 	/**
-	 * In-memory cache of parsed catalogs keyed by lowercase key.
+	 * In-memory cache of parsed portals keyed by lowercase key.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var array<string, Catalog>
+	 * @var array<string, Portal>
 	 */
 	protected array $cache = [];
 
@@ -59,7 +59,7 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 	}
 
 	/**
-	 * Fetch the product catalog for a license key from a fixture file.
+	 * Fetch the product portal for a license key from a fixture file.
 	 *
 	 * @since 1.0.0
 	 *
@@ -68,9 +68,9 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 	 *
 	 * @throws NotFoundException When no fixture file exists for the given key.
 	 *
-	 * @return Catalog
+	 * @return Portal
 	 */
-	public function catalog( string $licenseKey, ?string $domain = null ): Catalog {
+	public function portal( string $licenseKey, ?string $domain = null ): Portal {
 		$cache_key = strtolower( $licenseKey );
 
 		if ( isset( $this->cache[ $cache_key ] ) ) {
@@ -92,11 +92,11 @@ final class Fixture_Client implements LicensingClientInterface, ProductsResource
 		/** @var array{products: list<array{product_slug: string, tier: string, status: string, expires: string, capabilities: list<string>, activations: array{site_limit: int, active_count: int, over_limit: bool, domains: list<string>}, activated_here?: bool, validation_status?: string}>} $data */
 		$data = json_decode( (string) $json, true );
 
-		$catalog = Catalog::from( $data );
+		$portal = Portal::from( $data );
 
-		$this->cache[ $cache_key ] = $catalog;
+		$this->cache[ $cache_key ] = $portal;
 
-		return $catalog;
+		return $portal;
 	}
 
 	/**

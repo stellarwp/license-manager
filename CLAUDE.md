@@ -10,8 +10,8 @@ See `docs/harbor.md` for the architecture overview. Subsystem docs live in `docs
 
 The subsystems live in these directories. This is where active development happens:
 
-- `src/Harbor/Catalog/` - Product catalog from the Commerce Portal (products, tiers, features)
-- `src/Harbor/Features/` - Feature resolution (joins catalog + licensing), strategies, Manager
+- `src/Harbor/Portal/` - Product portal from the Commerce Portal (products, tiers, features)
+- `src/Harbor/Features/` - Feature resolution (joins portal + licensing), strategies, Manager
 - `src/Harbor/Licensing/` - Unified license key management, validation, product registry
 - `src/Harbor/API/REST/V1/` - WordPress REST endpoints for the above
 - `src/Harbor/Legacy/` - Adapter for reading old per-plugin license data
@@ -33,7 +33,7 @@ The subsystems live in these directories. This is where active development happe
 
 Tests use Codeception with `slic` for containerized WordPress test execution. See `docs/guides/testing.md`.
 
-Fixture data lives in `tests/_data/`. The catalog and licensing fixture files are working prototypes, not finalized API contracts.
+Fixture data lives in `tests/_data/`. The portal and licensing fixture files are working prototypes, not finalized API contracts.
 
 ## PHP version
 
@@ -79,5 +79,5 @@ $this->container->singleton(
 
 - One unified `LWSW-` license key per site, shared by all products
 - A product is a brand family (Kadence, GiveWP, etc.), not a plugin
-- Features are the resolved join of catalog + licensing data, not a third data source
-- The `Licensing_Client` and `Catalog_Client` contracts exist so the backend can be swapped without affecting the rest of the system
+- Features are the resolved join of portal + licensing data, not a third data source
+- The `Licensing_Client` and `Portal_Client` contracts exist so the backend can be swapped without affecting the rest of the system

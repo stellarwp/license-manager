@@ -70,7 +70,7 @@ class Theme_Strategy extends Installable_Strategy {
 	 * Install the theme via themes_api() and Theme_Upgrader.
 	 *
 	 * Resolves the download link through themes_api(), which is expected to
-	 * be filtered by the Features Provider to return catalog data for known
+	 * be filtered by the Features Provider to return portal data for known
 	 * feature slugs.
 	 *
 	 * @since 1.0.0

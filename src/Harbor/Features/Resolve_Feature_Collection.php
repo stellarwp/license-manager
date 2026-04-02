@@ -2,9 +2,9 @@
 
 namespace LiquidWeb\Harbor\Features;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Results\Catalog_Feature;
-use LiquidWeb\Harbor\Catalog\Results\Product_Catalog;
+use LiquidWeb\Harbor\Portal\Portal_Repository;
+use LiquidWeb\Harbor\Portal\Results\Portal_Feature;
+use LiquidWeb\Harbor\Portal\Results\Product_Portal;
 use LiquidWeb\Harbor\Features\Contracts\Installable;
 use LiquidWeb\Harbor\Features\Types\Feature;
 use LiquidWeb\Harbor\Features\Types\Plugin;
@@ -16,9 +16,9 @@ use LiquidWeb\Harbor\Traits\With_Debugging;
 use WP_Error;
 
 /**
- * Joins catalog and licensing data to produce a resolved Feature_Collection.
+ * Joins portal and licensing data to produce a resolved Feature_Collection.
  *
- * For each catalog feature, computes is_available and in_catalog_tier by checking
+ * For each portal feature, computes is_available and in_portal_tier by checking
  * the product entry's capabilities array and the user's licensed tier rank.
  * dot.org and free-tier (rank 0) features are unconditionally available regardless of capabilities.
  *
@@ -29,13 +29,13 @@ class Resolve_Feature_Collection {
 	use With_Debugging;
 
 	/**
-	 * The catalog repository.
+	 * The portal repository.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var Catalog_Repository
+	 * @var Portal_Repository
 	 */
-	private Catalog_Repository $catalog;
+	private Portal_Repository $portal;
 
 	/**
 	 * The license manager.
@@ -56,7 +56,7 @@ class Resolve_Feature_Collection {
 	private Data $site_data;
 
 	/**
-	 * Map of catalog type strings to Feature subclass names.
+	 * Map of portal type strings to Feature subclass names.
 	 *
 	 * @since 1.0.0
 	 *
@@ -72,22 +72,22 @@ class Resolve_Feature_Collection {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Repository $catalog   The catalog repository.
+	 * @param Portal_Repository $portal   The portal repository.
 	 * @param License_Manager    $licensing The license manager.
 	 * @param Data               $site_data The site data provider.
 	 */
 	public function __construct(
-		Catalog_Repository $catalog,
+		Portal_Repository $portal,
 		License_Manager $licensing,
 		Data $site_data
 	) {
-		$this->catalog   = $catalog;
+		$this->portal   = $portal;
 		$this->licensing = $licensing;
 		$this->site_data = $site_data;
 	}
 
 	/**
-	 * Registers a Feature subclass for a given catalog type string.
+	 * Registers a Feature subclass for a given portal type string.
 	 *
 	 * @since 1.0.0
 	 *
@@ -101,9 +101,9 @@ class Resolve_Feature_Collection {
 	}
 
 	/**
-	 * Fetches catalog and licensing data and resolves them into a Feature_Collection.
+	 * Fetches portal and licensing data and resolves them into a Feature_Collection.
 	 *
-	 * Iterates each catalog product, finds the matching license entry,
+	 * Iterates each portal product, finds the matching license entry,
 	 * and hydrates Feature objects with computed is_available values.
 	 *
 	 * @since 1.0.0
@@ -111,15 +111,15 @@ class Resolve_Feature_Collection {
 	 * @return Feature_Collection|WP_Error
 	 */
 	public function __invoke() {
-		$catalog = $this->catalog->get();
+		$portal = $this->portal->get();
 
-		if ( is_wp_error( $catalog ) ) {
+		if ( is_wp_error( $portal ) ) {
 			static::debug_log_wp_error(
-				$catalog,
-				'Catalog fetch failed during feature resolution'
+				$portal,
+				'Portal fetch failed during feature resolution'
 			);
 
-			return $catalog;
+			return $portal;
 		}
 
 		$products = $this->licensing->get_products( $this->site_data->get_domain() );
@@ -139,16 +139,16 @@ class Resolve_Feature_Collection {
 
 		$collection = new Feature_Collection();
 
-		foreach ( $catalog as $product ) {
-			if ( ! $product instanceof Product_Catalog ) {
+		foreach ( $portal as $product ) {
+			if ( ! $product instanceof Product_Portal ) {
 				continue;
 			}
 
 			$capabilities      = $this->resolve_capabilities( $product, $products );
 			$license_tier_rank = $this->resolve_license_tier_rank( $product, $products );
 
-			foreach ( $product->get_features() as $catalog_feature ) {
-				$feature = $this->hydrate_feature( $catalog_feature, $product, $capabilities, $license_tier_rank );
+			foreach ( $product->get_features() as $portal_feature ) {
+				$feature = $this->hydrate_feature( $portal_feature, $product, $capabilities, $license_tier_rank );
 
 				if ( is_wp_error( $feature ) ) {
 					static::debug_log( $feature->get_error_message() );
@@ -170,12 +170,12 @@ class Resolve_Feature_Collection {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Product_Catalog    $product  The catalog product.
+	 * @param Product_Portal    $product  The portal product.
 	 * @param Product_Collection $products The licensing product collection.
 	 *
 	 * @return string[]|null The capabilities array, or null if the product has no license.
 	 */
-	private function resolve_capabilities( Product_Catalog $product, Product_Collection $products ): ?array {
+	private function resolve_capabilities( Product_Portal $product, Product_Collection $products ): ?array {
 		$license = $products->get( $product->get_product_slug() );
 
 		if ( null === $license ) {
@@ -188,18 +188,18 @@ class Resolve_Feature_Collection {
 	/**
 	 * Returns the rank of the user's licensed tier for a product, or -1 if unlicensed.
 	 *
-	 * Used alongside resolve_capabilities() to compute in_catalog_tier for each feature.
+	 * Used alongside resolve_capabilities() to compute in_portal_tier for each feature.
 	 * A rank of -1 means no license covers this product, so no paid-tier features are
 	 * considered "in tier".
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Product_Catalog    $product  The catalog product.
+	 * @param Product_Portal    $product  The portal product.
 	 * @param Product_Collection $products The licensing product collection.
 	 *
 	 * @return int The license tier rank, or -1 if no license covers this product.
 	 */
-	private function resolve_license_tier_rank( Product_Catalog $product, Product_Collection $products ): int {
+	private function resolve_license_tier_rank( Product_Portal $product, Product_Collection $products ): int {
 		$license = $products->get( $product->get_product_slug() );
 
 		if ( null === $license ) {
@@ -212,74 +212,74 @@ class Resolve_Feature_Collection {
 	}
 
 	/**
-	 * Hydrates a Feature object from a catalog feature entry.
+	 * Hydrates a Feature object from a portal feature entry.
 	 *
-	 * Maps catalog types (plugin, theme) to Feature subclasses
-	 * and computes is_available and in_catalog_tier.
+	 * Maps portal types (plugin, theme) to Feature subclasses
+	 * and computes is_available and in_portal_tier.
 	 *
 	 * dot.org and free-tier (rank 0) features are unconditionally available regardless of capabilities.
 	 * When capabilities is null (no license), all paid-tier features are unavailable and not in tier.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Feature $catalog_feature   The catalog feature entry.
-	 * @param Product_Catalog $product           The parent catalog product.
+	 * @param Portal_Feature $portal_feature   The portal feature entry.
+	 * @param Product_Portal $product           The parent portal product.
 	 * @param string[]|null   $capabilities      The license capabilities, or null if unlicensed.
 	 * @param int             $license_tier_rank The user's licensed tier rank, or -1 if unlicensed.
 	 *
 	 * @return Feature|WP_Error The hydrated feature, or WP_Error for unknown types.
 	 */
 	private function hydrate_feature(
-		Catalog_Feature $catalog_feature,
-		Product_Catalog $product,
+		Portal_Feature $portal_feature,
+		Product_Portal $product,
 		?array $capabilities,
 		int $license_tier_rank
 	) {
-		$catalog_kind = $catalog_feature->get_kind();
-		$class        = $this->type_map[ $catalog_kind ] ?? null;
+		$portal_kind = $portal_feature->get_kind();
+		$class        = $this->type_map[ $portal_kind ] ?? null;
 
 		if ( $class === null ) {
 			return new WP_Error(
 				Error_Code::UNKNOWN_FEATURE_TYPE,
 				sprintf(
-					'No Feature subclass registered for catalog kind "%s" (feature: %s).',
-					$catalog_kind,
-					$catalog_feature->get_slug()
+					'No Feature subclass registered for portal kind "%s" (feature: %s).',
+					$portal_kind,
+					$portal_feature->get_slug()
 				)
 			);
 		}
 
-		$minimum_tier = $product->get_tier_by_slug( $catalog_feature->get_minimum_tier() );
+		$minimum_tier = $product->get_tier_by_slug( $portal_feature->get_minimum_tier() );
 		$minimum_rank = $minimum_tier !== null ? $minimum_tier->get_rank() : PHP_INT_MAX;
 
-		if ( $catalog_feature->is_wporg() || $minimum_rank === 0 ) {
+		if ( $portal_feature->is_wporg() || $minimum_rank === 0 ) {
 			// WordPress.org and free-tier features are unconditionally available — capabilities and tier are irrelevant.
 			$is_available    = true;
-			$in_catalog_tier = true;
+			$in_portal_tier = true;
 		} elseif ( $capabilities === null ) {
 			// No license: paid-tier features are neither available nor in tier.
 			$is_available    = false;
-			$in_catalog_tier = false;
+			$in_portal_tier = false;
 		} else {
-			$is_available    = in_array( $catalog_feature->get_slug(), $capabilities, true );
-			$in_catalog_tier = ( $license_tier_rank >= $minimum_rank );
+			$is_available    = in_array( $portal_feature->get_slug(), $capabilities, true );
+			$in_portal_tier = ( $license_tier_rank >= $minimum_rank );
 		}
 
 		$data = [
-			'slug'              => $catalog_feature->get_slug(),
+			'slug'              => $portal_feature->get_slug(),
 			'product'           => $product->get_product_slug(),
-			'tier'              => $catalog_feature->get_minimum_tier(),
-			'name'              => $catalog_feature->get_name(),
-			'description'       => $catalog_feature->get_description(),
-			'type'              => $catalog_kind,
+			'tier'              => $portal_feature->get_minimum_tier(),
+			'name'              => $portal_feature->get_name(),
+			'description'       => $portal_feature->get_description(),
+			'type'              => $portal_kind,
 			'is_available'      => $is_available,
-			'in_catalog_tier'   => $in_catalog_tier,
-			'documentation_url' => $catalog_feature->get_documentation_url(),
-			'release_date'      => $catalog_feature->get_release_date(),
-			'plugin_file'       => $catalog_feature->get_plugin_file() ?? '',
-			'wporg_slug'        => $catalog_feature->get_wporg_slug(),
-			'version'           => $catalog_feature->get_version(),
-			'changelog'         => $catalog_feature->get_changelog(),
+			'in_portal_tier'   => $in_portal_tier,
+			'documentation_url' => $portal_feature->get_documentation_url(),
+			'release_date'      => $portal_feature->get_release_date(),
+			'plugin_file'       => $portal_feature->get_plugin_file() ?? '',
+			'wporg_slug'        => $portal_feature->get_wporg_slug(),
+			'version'           => $portal_feature->get_version(),
+			'changelog'         => $portal_feature->get_changelog(),
 		];
 
 		$feature = $class::from_array( $data );

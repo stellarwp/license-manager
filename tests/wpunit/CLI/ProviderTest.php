@@ -2,7 +2,7 @@
 
 namespace LiquidWeb\Harbor\Tests\CLI;
 
-use LiquidWeb\Harbor\CLI\Commands\Catalog;
+use LiquidWeb\Harbor\CLI\Commands\Portal;
 use LiquidWeb\Harbor\CLI\Commands\Feature;
 use LiquidWeb\Harbor\CLI\Commands\License;
 use LiquidWeb\Harbor\CLI\Provider;
@@ -32,7 +32,7 @@ final class ProviderTest extends HarborTestCase {
 
 		$this->assertFalse( $this->container->isBound( Feature::class ) );
 		$this->assertFalse( $this->container->isBound( License::class ) );
-		$this->assertFalse( $this->container->isBound( Catalog::class ) );
+		$this->assertFalse( $this->container->isBound( Portal::class ) );
 	}
 
 	/**
@@ -60,14 +60,14 @@ final class ProviderTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that register() binds the Catalog command when WP_CLI is defined and truthy.
+	 * Tests that register() binds the Portal command when WP_CLI is defined and truthy.
 	 */
-	public function test_register_binds_catalog_command_when_wp_cli_is_defined(): void {
+	public function test_register_binds_portal_command_when_wp_cli_is_defined(): void {
 		$this->set_const_value( 'WP_CLI', true );
 
 		$provider = new Provider( $this->container );
 		$provider->register();
 
-		$this->assertTrue( $this->container->isBound( Catalog::class ) );
+		$this->assertTrue( $this->container->isBound( Portal::class ) );
 	}
 }

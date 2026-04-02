@@ -93,7 +93,7 @@ class Plugin_Strategy extends Installable_Strategy {
 	 * Install the plugin via plugins_api() and Plugin_Upgrader.
 	 *
 	 * Resolves the download link through plugins_api(), which is expected to
-	 * be filtered by the Features Provider to return catalog data for known
+	 * be filtered by the Features Provider to return portal data for known
 	 * feature slugs.
 	 *
 	 * @since 1.0.0

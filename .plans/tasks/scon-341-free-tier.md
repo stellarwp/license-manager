@@ -4,7 +4,7 @@ url: https://stellarwp.atlassian.net/browse/SCON-341
 status: done
 ---
 
-# Add free tier to the catalog
+# Add free tier to the portal
 
 ## Problem
 
@@ -17,7 +17,7 @@ The Commerce Portal includes a free tier (rank 0) in a product's tier list when 
 ## Requirements
 
 - The free tier has rank 0 and sits below all paid tiers in the hierarchy.
-- The catalog fixture data must include a free tier with features gated at that tier. The fixtures define the schema the Portal implements.
+- The portal fixture data must include a free tier with features gated at that tier. The fixtures define the schema the Portal implements.
 - Features with `minimum_tier` set to the free tier are available without a license key.
 - The architecture docs describe the free tier as the entry point to the tier system.
 - Tests confirm that free-tier features resolve as available for unlicensed users.

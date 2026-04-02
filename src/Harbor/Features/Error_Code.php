@@ -13,7 +13,7 @@ namespace LiquidWeb\Harbor\Features;
 class Error_Code {
 
 	/**
-	 * A requested feature was not found in the catalog.
+	 * A requested feature was not found in the portal.
 	 *
 	 * @since 1.0.0
 	 *
@@ -40,7 +40,7 @@ class Error_Code {
 	public const FEATURE_REQUEST_FAILED = 'lw-harbor-feature-request-failed';
 
 	/**
-	 * The feature catalog response was invalid or could not be parsed.
+	 * The feature portal response was invalid or could not be parsed.
 	 *
 	 * @since 1.0.0
 	 *
@@ -229,7 +229,7 @@ class Error_Code {
 	public const FEATURE_DISABLE_FAILED = 'lw-harbor-feature-disable-failed';
 
 	/**
-	 * A catalog feature has a type with no registered Feature subclass.
+	 * A portal feature has a type with no registered Feature subclass.
 	 *
 	 * @since 1.0.0
 	 *
@@ -266,7 +266,7 @@ class Error_Code {
 			// has been individually removed from their license.
 			self::CAPABILITY_REVOKED             => 403,
 
-			// 404 Not Found — the requested feature slug does not exist in the catalog.
+			// 404 Not Found — the requested feature slug does not exist in the portal.
 			self::FEATURE_NOT_FOUND              => 404,
 
 			// 409 Conflict — a concurrent install is in progress, a deactivation

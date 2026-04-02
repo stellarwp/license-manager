@@ -8,7 +8,7 @@ status: todo
 
 ## Problem
 
-React ErrorBoundaries only catch errors thrown during the render cycle. Our `@wordpress/data` resolvers (`getFeatures`, `getCatalog`, `getLicenseKey`) throw `UplinkError` instances from async thunks, which means those errors escape into unhandled promise rejections instead of reaching the `ErrorBoundary` wrapping `AppShell`.
+React ErrorBoundaries only catch errors thrown during the render cycle. Our `@wordpress/data` resolvers (`getFeatures`, `getPortal`, `getLicenseKey`) throw `UplinkError` instances from async thunks, which means those errors escape into unhandled promise rejections instead of reaching the `ErrorBoundary` wrapping `AppShell`.
 
 The result is that when an initial data fetch fails, the user sees a loading spinner forever (or a blank state) instead of the "Something went wrong" fallback.
 

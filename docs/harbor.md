@@ -1,6 +1,6 @@
 # Harbor
 
-> **Development status.** This system is under active development. The architectural patterns described here (how the layers connect, how resolution works, how strategies operate) are stable. Specific data shapes are not. Tier slugs, tier names, catalog structure, and API response formats are all subject to change as we negotiate the final contracts with the Licensing and Portal teams.
+> **Development status.** This system is under active development. The architectural patterns described here (how the layers connect, how resolution works, how strategies operate) are stable. Specific data shapes are not. Tier slugs, tier names, portal structure, and API response formats are all subject to change as we negotiate the final contracts with the Licensing and Portal teams.
 >
 > The Liquid Web v1 Licensing API that the current implementation targets is also still in development. If it is not ready or does not meet our needs, we may fall back to the existing StellarWP v3 Licensing API, which is already plugin/theme-aware and provides most of the entitlement data we need.
 >
@@ -37,23 +37,23 @@ Harbor is organized around three data layers. Each answers a different question,
 
 The site presents its unified key to the Licensing API. The response is a list of products associated with the key, each with a tier, subscription status, seat counts, and activation state for this domain.
 
-Licensing is the authority on entitlements. It decides whether a key is valid, what tier the customer is on, and whether seats are available. It does not know what features exist within a product. That's the catalog's job.
+Licensing is the authority on entitlements. It decides whether a key is valid, what tier the customer is on, and whether seats are available. It does not know what features exist within a product. That's the portal's job.
 
 See [Licensing](subsystems/licensing.md) for the full data shapes, caching, key discovery, and validation workflows.
 
-### Catalog: "What does each product offer?"
+### Portal: "What does each product offer?"
 
-The Commerce Portal API provides the product catalog, the complete definition of every product family, its tiers, and its features. The catalog is not personalized. Every site sees the same catalog regardless of what key it has.
+The Commerce Portal API provides the product portal, the complete definition of every product family, its tiers, and its features. The portal is not personalized. Every site sees the same portal regardless of what key it has.
 
 Each product defines a ranked set of tiers (Basic, Pro, Agency) and a set of features. Each feature has a minimum tier requirement and a delivery type: `plugin` (installable WordPress plugin) or `theme` (installable WordPress theme).
 
-The catalog defines the menu. It does not know what the customer ordered.
+The portal defines the menu. It does not know what the customer ordered.
 
-See [Catalog](subsystems/catalog.md) for the product/tier/feature structure, caching, and data shapes.
+See [Portal](subsystems/portal.md) for the product/tier/feature structure, caching, and data shapes.
 
 ### Features: "What can this customer actually use?"
 
-Features are not a third data source. They are the computed join of catalog and licensing data. The resolution process walks every feature in the catalog, checks whether the feature's slug appears in the licensing product entry's capabilities array, and produces a resolved collection where each feature knows whether it's available to this customer.
+Features are not a third data source. They are the computed join of portal and licensing data. The resolution process walks every feature in the portal, checks whether the feature's slug appears in the licensing product entry's capabilities array, and produces a resolved collection where each feature knows whether it's available to this customer.
 
 Beyond availability, features track local state, specifically whether a feature is currently enabled on this site. A Plugin feature is enabled by installing and activating the plugin. A Theme feature is enabled by installing the theme. Strategies handle the mechanics of each type. Plugin/Theme features require an active license to enable.
 
@@ -63,23 +63,23 @@ See [Features](subsystems/features.md) for the resolution algorithm, strategies,
 
 ```mermaid
 flowchart TD
-    CatalogAPI["Commerce Portal\n(Catalog API)"] -->|"product families,\ntiers + ranks,\nfeatures + types,\nminimum_tier"| CatalogCache["Catalog Cache\n(wp_option)"]
+    PortalAPI["Commerce Portal\n(Portal API)"] -->|"product families,\ntiers + ranks,\nfeatures + types,\nminimum_tier"| PortalCache["Portal Cache\n(wp_option)"]
     LicensingAPI["Liquid Web Software\nv1 Licensing API"] -->|"product_slug, tier, status,\nseats, validation_status,\ncapabilities[]"| LicensingCache["Licensing Cache\n(wp_option)"]
-    CatalogCache --> Resolution["Feature Resolution\n\njoins by slug,\nchecks slug in capabilities[]"]
+    PortalCache --> Resolution["Feature Resolution\n\njoins by slug,\nchecks slug in capabilities[]"]
     LicensingCache --> Resolution
     Resolution -->|Feature_Collection| REST["REST API\n/features, /license"]
     REST -->|JSON over HTTP| UI["React UI\n(Software Manager)\n\nis_available, is_enabled,\nenable / disable"]
 ```
 
-The catalog provides structure (what features exist, their metadata, and which tier they belong to for display). Licensing provides entitlements (what the key covers and, critically, which feature slugs the license grants via the `capabilities` array). Feature resolution checks the capabilities array and produces a collection where each feature knows its availability. Strategies then handle the local mechanics of enabling and disabling.
+The portal provides structure (what features exist, their metadata, and which tier they belong to for display). Licensing provides entitlements (what the key covers and, critically, which feature slugs the license grants via the `capabilities` array). Feature resolution checks the capabilities array and produces a collection where each feature knows its availability. Strategies then handle the local mechanics of enabling and disabling.
 
 ## Tier Slugs and Capabilities
 
-Both Licensing and the Catalog use the same product-prefixed tier slug convention: `kadence-basic`, `give-pro`, `the-events-calendar-agency`. The catalog uses tier slugs to define minimum requirements per feature (for display and upsell purposes). The licensing response uses the tier slug to describe the customer's subscription level.
+Both Licensing and the Portal use the same product-prefixed tier slug convention: `kadence-basic`, `give-pro`, `the-events-calendar-agency`. The portal uses tier slugs to define minimum requirements per feature (for display and upsell purposes). The licensing response uses the tier slug to describe the customer's subscription level.
 
-Feature availability is **not** determined by comparing tier ranks. Instead, the licensing response includes a `capabilities` array — a list of feature slugs that the license actually grants. A feature is available if and only if its slug appears in this array. The catalog's tier structure is used for display (e.g., showing which tier a feature belongs to in the UI) but has no bearing on the availability decision.
+Feature availability is **not** determined by comparing tier ranks. Instead, the licensing response includes a `capabilities` array — a list of feature slugs that the license actually grants. A feature is available if and only if its slug appears in this array. The portal's tier structure is used for display (e.g., showing which tier a feature belongs to in the UI) but has no bearing on the availability decision.
 
-This design allows the licensing service to handle cases that tier rank comparison cannot: promotional grants or individual per-license exceptions. The actual tier slug format, tier names, and number of tiers per product are subject to change as the catalog and licensing contracts are finalized.
+This design allows the licensing service to handle cases that tier rank comparison cannot: promotional grants or individual per-license exceptions. The actual tier slug format, tier names, and number of tiers per product are subject to change as the portal and licensing contracts are finalized.
 
 ## One Key Per Site
 
@@ -108,7 +108,7 @@ The data layers use different caching strategies:
 | Cache             | Type      | TTL             | Key / Location                 | Invalidation                    |
 | ----------------- | --------- | --------------- | ------------------------------ | ------------------------------- |
 | Licensed products | Option    | None (persist)  | `lw_harbor_licensing_products` | `License_Repository::refresh()` |
-| Product catalog   | Option    | None (persist)  | `lw_harbor_catalog_state`      | `Catalog_Repository::refresh()` |
+| Product portal   | Option    | None (persist)  | `lw_harbor_portal_state`      | `Portal_Repository::refresh()` |
 | Resolved features | In-memory | Current request | —                              | `Feature_Repository::refresh()` |
 
 The unified key itself is stored in a WordPress option (`lw_harbor_unified_license_key`), not a transient.
@@ -125,7 +125,7 @@ There is no automatic migration from per-resource keys to unified keys.
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | [This document](harbor.md)                                                  | Architecture overview and how the layers relate                    |
 | [Licensing](subsystems/licensing.md)                                        | Key discovery, API responses, validation workflows, caching        |
-| [Catalog](subsystems/catalog.md)                                            | Product families, tiers, features, the Commerce Portal API         |
+| [Portal](subsystems/portal.md)                                            | Product families, tiers, features, the Commerce Portal API         |
 | [Features](subsystems/features.md)                                          | Feature types, resolution, strategies, Manager API, data shapes    |
 | [Cron](subsystems/cron.md)                                                  | Periodic refresh schedule, cleanup on deactivation                 |
 | [Unified License Key](architecture/unified-license-key-system-design.md)    | Key model, seat mechanics, system boundaries                       |

@@ -14,7 +14,7 @@ use LiquidWeb\LicensingApiClient\Exceptions\NotFoundException;
 use WP_Error;
 
 /**
- * Orchestrates unified license key discovery, persistence, and product catalog fetching.
+ * Orchestrates unified license key discovery, persistence, and product portal fetching.
  *
  * All keys must begin with the LWSW- prefix (see License_Key::is_valid_format()).
  * store() returns false and does not write to the repository when the
@@ -132,7 +132,7 @@ class License_Manager {
 	/**
 	 * Verify a license key is recognized by the remote API and store it.
 	 *
-	 * Fetches the product catalog to confirm the key exists, then persists it.
+	 * Fetches the product portal to confirm the key exists, then persists it.
 	 * Does not activate any products or consume seats.
 	 *
 	 * @since 1.0.0
@@ -254,9 +254,9 @@ class License_Manager {
 	}
 
 	/**
-	 * Get the licensed product catalog for the stored key.
+	 * Get the licensed product portal for the stored key.
 	 *
-	 * Returns the cached catalog if available; otherwise fetches from the
+	 * Returns the cached portal if available; otherwise fetches from the
 	 * licensing API and primes the cache.
 	 *
 	 * @since 1.0.0
@@ -299,7 +299,7 @@ class License_Manager {
 	}
 
 	/**
-	 * Flush the cached product catalog and re-fetch from the API.
+	 * Flush the cached product portal and re-fetch from the API.
 	 *
 	 * @since 1.0.0
 	 *
@@ -385,7 +385,7 @@ class License_Manager {
 	}
 
 	/**
-	 * Fetch the product catalog from the API and cache the result.
+	 * Fetch the product portal from the API and cache the result.
 	 *
 	 * After a successful fetch, the last active date is updated for every
 	 * product that reports a valid license. This anchors the grace period
@@ -433,7 +433,7 @@ class License_Manager {
 	}
 
 	/**
-	 * Call the licensing API and return the product catalog as Product_Entry objects.
+	 * Call the licensing API and return the product portal as Product_Entry objects.
 	 *
 	 * Converts package exceptions to WP_Error so callers can use is_wp_error().
 	 *
@@ -446,8 +446,8 @@ class License_Manager {
 	 */
 	private function call_products_api( string $key, string $domain ) {
 		try {
-			$catalog = $this->client->products()->catalog( $key, $domain );
-			return array_map( [ Product_Entry::class, 'from_catalog_entry' ], $catalog->products->all() );
+			$portal = $this->client->products()->portal( $key, $domain );
+			return array_map( [ Product_Entry::class, 'from_portal_entry' ], $portal->products->all() );
 		} catch ( NotFoundException $e ) {
 			return new WP_Error( Error_Code::INVALID_KEY, $e->getMessage(), [ 'status' => Error_Code::http_status( Error_Code::INVALID_KEY ) ] );
 		} catch ( ApiErrorExceptionInterface $e ) {

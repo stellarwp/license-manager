@@ -4,7 +4,7 @@ namespace LiquidWeb\Harbor\Cron;
 
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Cron\Actions\Handle_Unschedule_Cron_Data_Refresh;
-use LiquidWeb\Harbor\Cron\Jobs\Refresh_Catalog_Job;
+use LiquidWeb\Harbor\Cron\Jobs\Refresh_Portal_Job;
 use LiquidWeb\Harbor\Cron\Jobs\Refresh_License_Job;
 use LiquidWeb\Harbor\Cron\ValueObjects\CronHook;
 use LiquidWeb\Harbor\Utils\Version;
@@ -20,7 +20,7 @@ final class Provider extends Abstract_Provider {
 	 * @inheritDoc
 	 */
 	public function register(): void {
-		$this->container->singleton( Refresh_Catalog_Job::class );
+		$this->container->singleton( Refresh_Portal_Job::class );
 		$this->container->singleton( Refresh_License_Job::class );
 		$this->container->singleton( Handle_Unschedule_Cron_Data_Refresh::class );
 
@@ -31,7 +31,7 @@ final class Provider extends Abstract_Provider {
 		add_action(
 			CronHook::DATA_REFRESH,
 			function () {
-				$this->container->get( Refresh_Catalog_Job::class )->run();
+				$this->container->get( Refresh_Portal_Job::class )->run();
 				$this->container->get( Refresh_License_Job::class )->run();
 			}
 		);

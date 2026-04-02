@@ -44,23 +44,23 @@ During development the [sample plugin](https://github.com/lw-harbor-sample-plugi
 - **Fixture Key** — select which fixture set to use.
 - **API Base URL** — override the real API endpoint (ignored when fixture mode is on).
 
-For how catalog and licensing data join to produce features, see [Data Sources in features.md](../subsystems/features.md#data-sources).
+For how portal and licensing data join to produce features, see [Data Sources in features.md](../subsystems/features.md#data-sources).
 
 ### What happens when you switch the fixture key
 
-Each fixture key maps to JSON files in two directories — one for catalog, one for licensing:
+Each fixture key maps to JSON files in two directories — one for portal, one for licensing:
 
 1. The **licensing** client loads `licensing/{key}.json`. Each file represents a different license scenario (basic tier, pro tier, expired, etc.).
-2. The **catalog** client looks for `catalog/{key}.json`. If no key-specific file exists, it falls back to `catalog/default.json` — the full product catalog.
+2. The **portal** client looks for `portal/{key}.json`. If no key-specific file exists, it falls back to `portal/default.json` — the full product portal.
 
-Most fixture keys only have a licensing file. They share the same `default.json` catalog because the catalog doesn't change per customer — only licensing does. This means you'll see features from **all** products in the output. The `is_available` column shows which ones the fixture key actually entitles.
+Most fixture keys only have a licensing file. They share the same `default.json` portal because the portal doesn't change per customer — only licensing does. This means you'll see features from **all** products in the output. The `is_available` column shows which ones the fixture key actually entitles.
 
-For example, with the full `default.json` catalog:
+For example, with the full `default.json` portal:
 
 - **`lwsw-unified-give-basic-2026`** — licensing says "GiveWP at basic tier." Features from all products appear, but only basic-tier GiveWP features have `is_available: true`. Kadence features have `is_available: false` (no license entry).
 - **`lwsw-unified-pro-2026`** — licensing says "pro tier across multiple products." More features become available.
 
-Some fixture keys (like `lwsw-unified-test-fixtures`) ship a dedicated catalog file with a curated subset of products. When that file exists, it replaces the full catalog entirely — so fewer features appear in the output.
+Some fixture keys (like `lwsw-unified-test-fixtures`) ship a dedicated portal file with a curated subset of products. When that file exists, it replaces the full portal entirely — so fewer features appear in the output.
 
 ### File resolution order
 
@@ -69,8 +69,8 @@ The sample plugin resolves fixture files from two directories, in order:
 1. `fixtures/` inside the sample plugin — custom or one-off files
 2. `WP_PLUGIN_DIR/harbor/tests/_data/` — shared Harbor test fixtures
 
-The first match wins. For the catalog, if no key-specific file is found in either location, it falls back to `default.json` in the same order.
+The first match wins. For the portal, if no key-specific file is found in either location, it falls back to `default.json` in the same order.
 
 ### Adding custom fixtures
 
-Drop JSON files into the sample plugin's `fixtures/catalog/` and `fixtures/licensing/` directories. The filename (without `.json`) becomes a selectable key in the settings dropdown. See the existing fixture files for the expected format.
+Drop JSON files into the sample plugin's `fixtures/portal/` and `fixtures/licensing/` directories. The filename (without `.json`) becomes a selectable key in the settings dropdown. See the existing fixture files for the expected format.

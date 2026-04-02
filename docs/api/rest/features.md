@@ -2,7 +2,7 @@
 
 All endpoints require the `manage_options` capability.
 
-Features are the resolved join of [Catalog](../../subsystems/catalog.md) and [Licensing](../../subsystems/licensing.md) data. The response shape varies by feature type (`plugin`, `theme`). See [Features: Resolved Feature Shape](../../subsystems/features.md#resolved-feature-shape) for the complete field reference.
+Features are the resolved join of [Portal](../../subsystems/portal.md) and [Licensing](../../subsystems/licensing.md) data. The response shape varies by feature type (`plugin`, `theme`). See [Features: Resolved Feature Shape](../../subsystems/features.md#resolved-feature-shape) for the complete field reference.
 
 ## GET /liquidweb/harbor/v1/features
 
@@ -29,7 +29,7 @@ Lists all resolved features with optional filters.
     "tier": "kadence-basic",
     "type": "plugin",
     "is_available": true,
-    "in_catalog_tier": true,
+    "in_portal_tier": true,
     "is_enabled": true,
     "documentation_url": "https://...",
     "plugin_file": "kadence-blocks-pro/kadence-blocks-pro.php",

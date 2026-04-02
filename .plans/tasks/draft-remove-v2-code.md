@@ -6,13 +6,13 @@ status: draft
 
 ## Problem
 
-This repo was forked from Uplink V2 and still carries most of that codebase. The V3 subsystems (Catalog, Features, Licensing, REST API) are complete and self-contained, but large portions of V2 code remain and create confusion about what is active, add dead code to maintain, and obscure the V3 architecture.
+This repo was forked from Uplink V2 and still carries most of that codebase. The V3 subsystems (Portal, Features, Licensing, REST API) are complete and self-contained, but large portions of V2 code remain and create confusion about what is active, add dead code to maintain, and obscure the V3 architecture.
 
 The key indicator is `Uplink::init()`: everything inside the `is_enabled()` conditional block is V2 infrastructure (Storage provider, API/V3 provider, Notice provider, Admin provider, Auth provider). Everything outside it is V3 and should be kept.
 
 ## Proposed solution
 
-Remove all V2 code that is not referenced by the V3 providers registered outside the `is_enabled()` block in `Uplink::init()`. The V3 providers are: `Legacy`, `Features`, `Http`, `Licensing`, `Catalog`, `API\REST\V1`, `API\Functions`, `CLI`, and `Cron`.
+Remove all V2 code that is not referenced by the V3 providers registered outside the `is_enabled()` block in `Uplink::init()`. The V3 providers are: `Legacy`, `Features`, `Http`, `Licensing`, `Portal`, `API\REST\V1`, `API\Functions`, `CLI`, and `Cron`.
 
 ### Full directory deletions (no V3 dependencies)
 - `src/Uplink/Pipeline/`

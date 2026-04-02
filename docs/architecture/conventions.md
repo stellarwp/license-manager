@@ -35,7 +35,7 @@ build-dev/            Development assets (committed)
 Prefix: `lw-harbor/`
 
 ```php
-apply_filters( 'lw-harbor/catalog/fetched', $catalog );
+apply_filters( 'lw-harbor/portal/fetched', $portal );
 do_action( 'lw-harbor/licensing/key_stored', $key );
 ```
 
@@ -71,7 +71,7 @@ Namespace: `liquidweb/harbor/v1`
 ```
 /wp-json/liquidweb/harbor/v1/features
 /wp-json/liquidweb/harbor/v1/license
-/wp-json/liquidweb/harbor/v1/catalog
+/wp-json/liquidweb/harbor/v1/portal
 /wp-json/liquidweb/harbor/v1/legacy-licenses
 ```
 
@@ -95,7 +95,7 @@ Parent command: `wp harbor`
 ```
 wp harbor feature list
 wp harbor license validate
-wp harbor catalog refresh
+wp harbor portal refresh
 ```
 
 The `harbor` parent command is project-specific, following WP-CLI convention of namespacing under the project name.
@@ -171,7 +171,7 @@ The library version starts at `0.0.1`. All `@since` tags for new code use `@sinc
 | Scope                   | Prefix             | Separator | Example                             |
 | ----------------------- | ------------------ | --------- | ----------------------------------- |
 | PHP namespace           | `LiquidWeb\Harbor` | `\`       | `LiquidWeb\Harbor\Features\Manager` |
-| Hooks                   | `lw-harbor`        | `/`       | `lw-harbor/catalog/fetched`         |
+| Hooks                   | `lw-harbor`        | `/`       | `lw-harbor/portal/fetched`         |
 | Options/meta/cache/cron | `lw_harbor`        | `_`       | `lw_harbor_unified_license_key`     |
 | Container keys          | `lw-harbor`        | `.`       | `lw-harbor.admin-views.path`        |
 | REST namespace          | `liquidweb`        | `/`       | `liquidweb/harbor/v1/features`             |

@@ -1,7 +1,7 @@
 /**
  * License sidebar panel.
  *
- * Always visible. Fetches license and catalog data from the store and passes
+ * Always visible. Fetches license and portal data from the store and passes
  * it to LicenseSection and UpsellSection.
  *
  * @package LiquidWeb\Harbor
@@ -23,37 +23,37 @@ export function LicensePanel() {
     const { addToast }      = useToast();
     const { deleteLicense } = useDispatch( harborStore );
 
-    const { licenseKey, licenseProducts, catalogs } = useSelect(
+    const { licenseKey, licenseProducts, portals } = useSelect(
         ( select ) => ({
             licenseKey:      select( harborStore ).getLicenseKey(),
             licenseProducts: select( harborStore ).getLicenseProducts(),
-            catalogs:        select( harborStore ).getCatalog(),
+            portals:        select( harborStore ).getPortal(),
         }),
         []
     );
 
-    // Flat tier slug → display name lookup from all catalog tiers.
+    // Flat tier slug → display name lookup from all portal tiers.
     const tierNameMap = useMemo( () => {
         const map: Record<string, string> = {};
-        catalogs.forEach( ( catalog ) => {
-            catalog.tiers.forEach( ( t ) => {
+        portals.forEach( ( portal ) => {
+            portal.tiers.forEach( ( t ) => {
                 map[ t.slug ] = t.name;
             } );
         } );
         return map;
-    }, [ catalogs ] );
+    }, [ portals ] );
 
-    // Product slug → lowest-tier purchase URL map from the catalog.
+    // Product slug → lowest-tier purchase URL map from the portal.
     const upsellUrlMap = useMemo( () => {
         const map: Record<string, string> = {};
-        catalogs.forEach( ( catalog ) => {
-            const sorted = catalog.tiers.slice().sort( ( a, b ) => a.rank - b.rank );
+        portals.forEach( ( portal ) => {
+            const sorted = portal.tiers.slice().sort( ( a, b ) => a.rank - b.rank );
             if ( sorted[ 0 ]?.purchase_url ) {
-                map[ catalog.product_slug ] = sorted[ 0 ].purchase_url;
+                map[ portal.product_slug ] = sorted[ 0 ].purchase_url;
             }
         } );
         return map;
-    }, [ catalogs ] );
+    }, [ portals ] );
 
     const licensedSlugs  = new Set( licenseProducts.map( ( lp ) => lp.product_slug ) );
     const upsellProducts = PRODUCTS.filter( ( p ) => ! licensedSlugs.has( p.slug ) );

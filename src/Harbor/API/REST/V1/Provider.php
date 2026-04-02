@@ -18,7 +18,7 @@ final class Provider extends Abstract_Provider {
 	public function register(): void {
 		$this->container->singleton( Feature_Controller::class );
 		$this->container->singleton( License_Controller::class );
-		$this->container->singleton( Catalog_Controller::class );
+		$this->container->singleton( Portal_Controller::class );
 		$this->container->singleton( Legacy_License_Controller::class );
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ] );
 	}
@@ -34,7 +34,7 @@ final class Provider extends Abstract_Provider {
 		if ( Version::should_handle( 'register_rest_routes_v1' ) ) {
 			$this->container->get( Feature_Controller::class )->register_routes();
 			$this->container->get( License_Controller::class )->register_routes();
-			$this->container->get( Catalog_Controller::class )->register_routes();
+			$this->container->get( Portal_Controller::class )->register_routes();
 			$this->container->get( Legacy_License_Controller::class )->register_routes();
 		}
 	}

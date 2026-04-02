@@ -2,7 +2,7 @@
 
 namespace LiquidWeb\Harbor\Features\Contracts;
 
-use LiquidWeb\Harbor\Catalog\Results\Catalog_Feature;
+use LiquidWeb\Harbor\Portal\Results\Portal_Feature;
 
 /**
  * Contract for feature types that can be installed as WordPress extensions.
@@ -58,9 +58,9 @@ interface Installable {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Feature $catalog_feature The catalog entry providing version and download URL.
+	 * @param Portal_Feature $portal_feature The portal entry providing version and download URL.
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function get_update_data( Catalog_Feature $catalog_feature ): array;
+	public function get_update_data( Portal_Feature $portal_feature ): array;
 }

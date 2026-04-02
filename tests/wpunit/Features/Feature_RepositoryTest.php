@@ -3,12 +3,12 @@
 namespace LiquidWeb\Harbor\Tests\Features;
 
 use ReflectionMethod;
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client as Catalog_Fixture;
-use LiquidWeb\Harbor\Catalog\Results\Catalog_Feature;
-use LiquidWeb\Harbor\Catalog\Results\Catalog_Tier;
-use LiquidWeb\Harbor\Catalog\Results\Product_Catalog;
-use LiquidWeb\Harbor\Catalog\Results\Tier_Collection;
+use LiquidWeb\Harbor\Portal\Portal_Repository;
+use LiquidWeb\Harbor\Portal\Clients\Fixture_Client as Portal_Fixture;
+use LiquidWeb\Harbor\Portal\Results\Portal_Feature;
+use LiquidWeb\Harbor\Portal\Results\Portal_Tier;
+use LiquidWeb\Harbor\Portal\Results\Product_Portal;
+use LiquidWeb\Harbor\Portal\Results\Tier_Collection;
 use LiquidWeb\Harbor\Features\Error_Code;
 use LiquidWeb\Harbor\Features\Feature_Collection;
 use LiquidWeb\Harbor\Features\Feature_Repository;
@@ -31,7 +31,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
 	}
 
@@ -41,7 +41,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 * @return void
 	 */
 	protected function tearDown(): void {
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
 
 		parent::tearDown();
@@ -50,17 +50,17 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	/**
 	 * Creates a Resolve_Feature_Collection with the given repository dependencies.
 	 *
-	 * @param Catalog_Repository $catalog  The catalog repository.
+	 * @param Portal_Repository $portal  The portal repository.
 	 * @param License_Manager    $licensing The licensing manager.
 	 *
 	 * @return Resolve_Feature_Collection
 	 */
 	private function make_resolver(
-		Catalog_Repository $catalog,
+		Portal_Repository $portal,
 		License_Manager $licensing
 	): Resolve_Feature_Collection {
 		$site_data = $this->makeEmpty( \LiquidWeb\Harbor\Site\Data::class, [ 'get_domain' => 'example.com' ] );
-		$resolver  = new Resolve_Feature_Collection( $catalog, $licensing, $site_data );
+		$resolver  = new Resolve_Feature_Collection( $portal, $licensing, $site_data );
 
 		$resolver->register_type( 'plugin', Plugin::class );
 		$resolver->register_type( 'theme', Plugin::class );
@@ -77,10 +77,10 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 * @return Feature_Repository
 	 */
 	private function make_repository( ?string $licensing_override = null ): Feature_Repository {
-		$catalog_client   = new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) );
+		$portal_client   = new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) );
 		$licensing_client = new Licensing_Fixture( codecept_data_dir( 'licensing' ) );
 
-		$catalog   = new Catalog_Repository( $catalog_client );
+		$portal   = new Portal_Repository( $portal_client );
 		$licensing = new License_Manager( new License_Repository(), new Product_Registry(), $licensing_client );
 
 		if ( $licensing_override !== null ) {
@@ -88,7 +88,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		}
 
 		return new Feature_Repository(
-			$this->make_resolver( $catalog, $licensing )
+			$this->make_resolver( $portal, $licensing )
 		);
 	}
 
@@ -98,20 +98,20 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 * @return Feature_Repository
 	 */
 	private function make_error_repository(): Feature_Repository {
-		$catalog_client   = new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) );
+		$portal_client   = new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) );
 		$licensing_client = new Licensing_Fixture( codecept_data_dir( 'licensing' ) );
 
-		$catalog   = new Catalog_Repository( $catalog_client );
+		$portal   = new Portal_Repository( $portal_client );
 		$licensing = new License_Manager( new License_Repository(), new Product_Registry(), $licensing_client );
 		$licensing->store_key( 'LWSW-test-error-key' );
 
 		return new Feature_Repository(
-			$this->make_resolver( $catalog, $licensing )
+			$this->make_resolver( $portal, $licensing )
 		);
 	}
 
 	/**
-	 * Tests get returns a Feature_Collection when catalog and licensing succeed.
+	 * Tests get returns a Feature_Collection when portal and licensing succeed.
 	 *
 	 * @return void
 	 */
@@ -125,7 +125,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that catalog plugin type maps to the Plugin Feature subclass.
+	 * Tests that portal plugin type maps to the Plugin Feature subclass.
 	 *
 	 * @return void
 	 */
@@ -192,7 +192,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 *
 	 * @return void
 	 */
-	public function test_it_resolves_catalog_without_license_key(): void {
+	public function test_it_resolves_portal_without_license_key(): void {
 		$repository = $this->make_repository();
 
 		$result = $repository->get();
@@ -249,21 +249,21 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that a catalog error returns a WP_Error.
+	 * Tests that a portal error returns a WP_Error.
 	 *
 	 * @return void
 	 */
-	public function test_catalog_error_returns_wp_error(): void {
-		$catalog_client = new Catalog_Fixture( '/tmp/does-not-exist-' . uniqid() . '.json' );
+	public function test_portal_error_returns_wp_error(): void {
+		$portal_client = new Portal_Fixture( '/tmp/does-not-exist-' . uniqid() . '.json' );
 
 		$licensing_client = new Licensing_Fixture( codecept_data_dir( 'licensing' ) );
 
-		$catalog   = new Catalog_Repository( $catalog_client );
+		$portal   = new Portal_Repository( $portal_client );
 		$licensing = new License_Manager( new License_Repository(), new Product_Registry(), $licensing_client );
 		$licensing->store_key( 'lwsw-unified-kad-pro-2026' );
 
 		$repository = new Feature_Repository(
-			$this->make_resolver( $catalog, $licensing )
+			$this->make_resolver( $portal, $licensing )
 		);
 
 		$result = $repository->get();
@@ -302,18 +302,18 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that hydrate_feature returns a WP_Error for unregistered catalog types.
+	 * Tests that hydrate_feature returns a WP_Error for unregistered portal types.
 	 *
 	 * @return void
 	 */
 	public function test_hydrate_feature_returns_wp_error_for_unknown_type(): void {
 		$resolver = $this->make_resolver(
-			new Catalog_Repository( new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) ) ),
+			new Portal_Repository( new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) ) ),
 			new License_Manager( new License_Repository(), new Product_Registry(), new Licensing_Fixture( codecept_data_dir( 'licensing' ) ) )
 		);
 
 		// Do NOT register 'unknown_type' — only plugin/theme are registered.
-		$catalog_feature = Catalog_Feature::from_array(
+		$portal_feature = Portal_Feature::from_array(
 			[
 				'slug'              => 'test-feature',
 				'kind'              => 'unknown_type',
@@ -326,7 +326,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$tiers = new Tier_Collection();
 		$tiers->add(
-			Catalog_Tier::from_array(
+			Portal_Tier::from_array(
 				[
 					'slug' => 'kadence-basic',
 					'rank' => 1,
@@ -334,12 +334,12 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			)
 		);
 
-		$product = new Product_Catalog( 'kadence', 'kadence', 'Kadence', $tiers, [ $catalog_feature ] );
+		$product = new Product_Portal( 'kadence', 'kadence', 'Kadence', $tiers, [ $portal_feature ] );
 
 		$method = new ReflectionMethod( Resolve_Feature_Collection::class, 'hydrate_feature' );
 		$method->setAccessible( true ); // Required for PHP < 8.1.
 
-		$result = $method->invoke( $resolver, $catalog_feature, $product, null, -1 );
+		$result = $method->invoke( $resolver, $portal_feature, $product, null, -1 );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( Error_Code::UNKNOWN_FEATURE_TYPE, $result->get_error_code() );
@@ -354,11 +354,11 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 */
 	public function test_hydrate_feature_returns_feature_for_known_type(): void {
 		$resolver = $this->make_resolver(
-			new Catalog_Repository( new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) ) ),
+			new Portal_Repository( new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) ) ),
 			new License_Manager( new License_Repository(), new Product_Registry(), new Licensing_Fixture( codecept_data_dir( 'licensing' ) ) )
 		);
 
-		$catalog_feature = Catalog_Feature::from_array(
+		$portal_feature = Portal_Feature::from_array(
 			[
 				'slug'              => 'test-plugin',
 				'kind'              => 'plugin',
@@ -372,7 +372,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$tiers = new Tier_Collection();
 		$tiers->add(
-			Catalog_Tier::from_array(
+			Portal_Tier::from_array(
 				[
 					'slug' => 'kadence-basic',
 					'rank' => 1,
@@ -380,12 +380,12 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			)
 		);
 
-		$product = new Product_Catalog( 'kadence', 'kadence', 'Kadence', $tiers, [ $catalog_feature ] );
+		$product = new Product_Portal( 'kadence', 'kadence', 'Kadence', $tiers, [ $portal_feature ] );
 
 		$method = new ReflectionMethod( Resolve_Feature_Collection::class, 'hydrate_feature' );
 		$method->setAccessible( true ); // Required for PHP < 8.1.
 
-		$result = $method->invoke( $resolver, $catalog_feature, $product, [ 'test-plugin' ], 1 );
+		$result = $method->invoke( $resolver, $portal_feature, $product, [ 'test-plugin' ], 1 );
 
 		$this->assertInstanceOf( Plugin::class, $result );
 		$this->assertSame( 'test-plugin', $result->get_slug() );
@@ -401,11 +401,11 @@ final class Feature_RepositoryTest extends HarborTestCase {
 	 */
 	public function test_free_tier_feature_available_for_licensed_user_regardless_of_capabilities(): void {
 		$resolver = $this->make_resolver(
-			new Catalog_Repository( new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) ) ),
+			new Portal_Repository( new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) ) ),
 			new License_Manager( new License_Repository(), new Product_Registry(), new Licensing_Fixture( codecept_data_dir( 'licensing' ) ) )
 		);
 
-		$catalog_feature = Catalog_Feature::from_array(
+		$portal_feature = Portal_Feature::from_array(
 			[
 				'slug'              => 'test-free-plugin',
 				'kind'              => 'plugin',
@@ -419,7 +419,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$tiers = new Tier_Collection();
 		$tiers->add(
-			Catalog_Tier::from_array(
+			Portal_Tier::from_array(
 				[
 					'slug' => 'kadence-free',
 					'rank' => 0,
@@ -427,7 +427,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			) 
 		);
 		$tiers->add(
-			Catalog_Tier::from_array(
+			Portal_Tier::from_array(
 				[
 					'slug' => 'kadence-basic',
 					'rank' => 1,
@@ -435,60 +435,60 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			) 
 		);
 
-		$product = new Product_Catalog( 'kadence', 'kadence', 'Kadence', $tiers, [ $catalog_feature ] );
+		$product = new Product_Portal( 'kadence', 'kadence', 'Kadence', $tiers, [ $portal_feature ] );
 
 		$method = new ReflectionMethod( Resolve_Feature_Collection::class, 'hydrate_feature' );
 		$method->setAccessible( true ); // Required for PHP < 8.1.
 
 		// Omit the free feature from capabilities, simulating a Commerce Portal that only
 		// lists paid features. The resolver must still mark it available and in tier.
-		$result = $method->invoke( $resolver, $catalog_feature, $product, [ 'some-paid-feature' ], 1 );
+		$result = $method->invoke( $resolver, $portal_feature, $product, [ 'some-paid-feature' ], 1 );
 
 		$this->assertInstanceOf( Plugin::class, $result );
 		$this->assertTrue( $result->is_available(), 'Free-tier feature must be available regardless of capabilities.' );
-		$this->assertTrue( $result->is_in_catalog_tier(), 'Free-tier feature must be in catalog tier regardless of capabilities.' );
+		$this->assertTrue( $result->is_in_portal_tier(), 'Free-tier feature must be in portal tier regardless of capabilities.' );
 	}
 
 	/**
-	 * Tests that a bonus feature resolves as available but not in catalog tier.
+	 * Tests that a bonus feature resolves as available but not in portal tier.
 	 *
 	 * give-peer-to-peer (Pro tier) is granted in capabilities despite the give-basic license.
 	 *
 	 * @return void
 	 */
-	public function test_bonus_feature_is_available_but_not_in_catalog_tier(): void {
+	public function test_bonus_feature_is_available_but_not_in_portal_tier(): void {
 		$repository = $this->make_repository( 'lwsw-unified-capability-mismatch' );
 		$result     = $repository->get();
 		$feature    = $result->get( 'give-peer-to-peer' );
 
 		$this->assertNotNull( $feature, 'give-peer-to-peer must exist in the resolved collection.' );
 		$this->assertTrue( $feature->is_available(), 'Bonus feature must be available (it is in capabilities).' );
-		$this->assertFalse( $feature->is_in_catalog_tier(), 'Bonus feature must not be in catalog tier (Pro > Basic).' );
+		$this->assertFalse( $feature->is_in_portal_tier(), 'Bonus feature must not be in portal tier (Pro > Basic).' );
 	}
 
 	/**
-	 * Tests that a revoked feature resolves as in catalog tier but not available.
+	 * Tests that a revoked feature resolves as in portal tier but not available.
 	 *
 	 * give-fee-recovery (Basic tier) is omitted from capabilities in the give-basic fixture.
 	 *
 	 * @return void
 	 */
-	public function test_revoked_feature_is_in_catalog_tier_but_not_available(): void {
+	public function test_revoked_feature_is_in_portal_tier_but_not_available(): void {
 		$repository = $this->make_repository( 'lwsw-unified-capability-mismatch' );
 		$result     = $repository->get();
 		$feature    = $result->get( 'give-fee-recovery' );
 
 		$this->assertNotNull( $feature, 'give-fee-recovery must exist in the resolved collection.' );
 		$this->assertFalse( $feature->is_available(), 'Revoked feature must not be available (not in capabilities).' );
-		$this->assertTrue( $feature->is_in_catalog_tier(), 'Revoked feature must be in catalog tier (Basic = Basic).' );
+		$this->assertTrue( $feature->is_in_portal_tier(), 'Revoked feature must be in portal tier (Basic = Basic).' );
 	}
 
 	/**
-	 * Tests that a dot.org feature always resolves with in_catalog_tier true regardless of license.
+	 * Tests that a dot.org feature always resolves with in_portal_tier true regardless of license.
 	 *
 	 * @return void
 	 */
-	public function test_dot_org_feature_always_has_in_catalog_tier_true(): void {
+	public function test_dot_org_feature_always_has_in_portal_tier_true(): void {
 		$repository = $this->make_repository();
 
 		$result  = $repository->get();
@@ -496,32 +496,32 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$this->assertNotNull( $feature );
 		$this->assertTrue( $feature->is_available(), 'dot.org feature must always be available.' );
-		$this->assertTrue( $feature->is_in_catalog_tier(), 'dot.org feature must always be in catalog tier.' );
+		$this->assertTrue( $feature->is_in_portal_tier(), 'dot.org feature must always be in portal tier.' );
 	}
 
 	/**
-	 * Tests that in_catalog_tier is true for free-tier features and false for paid-tier features when unlicensed.
+	 * Tests that in_portal_tier is true for free-tier features and false for paid-tier features when unlicensed.
 	 *
 	 * Free features (rank 0) are unconditionally in tier. Paid features require a license.
 	 *
 	 * @return void
 	 */
-	public function test_in_catalog_tier_reflects_tier_rank_when_unlicensed(): void {
+	public function test_in_portal_tier_reflects_tier_rank_when_unlicensed(): void {
 		$repository = $this->make_repository();
 		$result     = $repository->get();
 
 		$this->assertTrue(
-			$result->get( 'kadence-blocks' )->is_in_catalog_tier(),
-			'Free-tier feature must have in_catalog_tier = true when unlicensed.'
+			$result->get( 'kadence-blocks' )->is_in_portal_tier(),
+			'Free-tier feature must have in_portal_tier = true when unlicensed.'
 		);
 		$this->assertFalse(
-			$result->get( 'kad-blocks-pro' )->is_in_catalog_tier(),
-			'Paid-tier feature must have in_catalog_tier = false when unlicensed.'
+			$result->get( 'kad-blocks-pro' )->is_in_portal_tier(),
+			'Paid-tier feature must have in_portal_tier = false when unlicensed.'
 		);
 	}
 
 	/**
-	 * Tests that feature data fields are correctly mapped from catalog to feature.
+	 * Tests that feature data fields are correctly mapped from portal to feature.
 	 *
 	 * @return void
 	 */

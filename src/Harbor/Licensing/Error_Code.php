@@ -28,7 +28,7 @@ final class Error_Code {
 	public const INVALID_RESPONSE = 'lw-harbor-invalid-response';
 
 	/**
-	 * The requested product slug was not found in the catalog.
+	 * The requested product slug was not found in the portal.
 	 *
 	 * @since 1.0.0
 	 *

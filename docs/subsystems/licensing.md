@@ -6,7 +6,7 @@ The Licensing subsystem is how a WordPress site learns what a unified license ke
 
 This document describes the data the site gets from Licensing, how it stores that data, and the workflows that drive key discovery and validation.
 
-> **Development status.** The architectural patterns here (key discovery, caching, repository structure) are stable. The upstream API is not. The current implementation targets a Liquid Web v1 Licensing API that is still in development. If it does not ship in time or does not meet our needs, we may fall back to the existing StellarWP v3 Licensing API. The StellarWP v3 API is already plugin/theme-aware and gives us most of the entitlement data we need, though it lacks some catalog-style information like upsell data. Specific data shapes, tier slugs, and response formats are all subject to change. Fixture data in `tests/_data/licensing/` reflects our current working assumptions, not a finalized spec.
+> **Development status.** The architectural patterns here (key discovery, caching, repository structure) are stable. The upstream API is not. The current implementation targets a Liquid Web v1 Licensing API that is still in development. If it does not ship in time or does not meet our needs, we may fall back to the existing StellarWP v3 Licensing API. The StellarWP v3 API is already plugin/theme-aware and gives us most of the entitlement data we need, though it lacks some portal-style information like upsell data. Specific data shapes, tier slugs, and response formats are all subject to change. Fixture data in `tests/_data/licensing/` reflects our current working assumptions, not a finalized spec.
 
 ## The Unified Key
 
@@ -111,7 +111,7 @@ The unified key is stored in a WordPress option (`lw_harbor_unified_license_key`
 
 ### License State Storage
 
-The full product catalog and related metadata are stored in a WordPress option (`lw_harbor_licensing_products_state`) as a state envelope with four keys:
+The full product portal and related metadata are stored in a WordPress option (`lw_harbor_licensing_products_state`) as a state envelope with four keys:
 
 | Key               | Type                 | Description                                                                                 |
 | ----------------- | -------------------- | ------------------------------------------------------------------------------------------- |
@@ -122,7 +122,7 @@ The full product catalog and related metadata are stored in a WordPress option (
 
 Unlike a transient, this option has no TTL — product data persists indefinitely. Re-validation frequency (how often the API is called to refresh) is a separate concern from data persistence.
 
-On a successful fetch, `collection` and `last_success_at` are updated and `last_error` is cleared. `last_failure_at` is not touched so callers can always see when the last failure occurred. On a failed fetch, `last_error` and `last_failure_at` are updated; the existing `collection` and `last_success_at` are preserved so the last known-good catalog remains available even when the licensing server is unreachable.
+On a successful fetch, `collection` and `last_success_at` are updated and `last_error` is cleared. `last_failure_at` is not touched so callers can always see when the last failure occurred. On a failed fetch, `last_error` and `last_failure_at` are updated; the existing `collection` and `last_success_at` are preserved so the last known-good portal remains available even when the licensing server is unreachable.
 
 Since there is only one unified key per site, there is only one state entry. Invalidation is simple: `delete_products()` removes the option entirely, causing the next read to return `null` and trigger a fresh API call.
 
@@ -140,13 +140,13 @@ The presence of this file is the signal that a product belongs to the Harbor uni
 
 ## API Client
 
-Harbor uses `stellarwp/licensing-api-client-wordpress` for all communication with the Liquid Web v1 licensing API. `License_Manager` depends on `LicensingClientInterface` from the package and calls `$client->products()->catalog($key, $domain)` to fetch the product catalog. The package handles HTTP transport (via WordPress's HTTP API), request building, response parsing, and error handling.
+Harbor uses `stellarwp/licensing-api-client-wordpress` for all communication with the Liquid Web v1 licensing API. `License_Manager` depends on `LicensingClientInterface` from the package and calls `$client->products()->portal($key, $domain)` to fetch the product portal. The package handles HTTP transport (via WordPress's HTTP API), request building, response parsing, and error handling.
 
 `Licensing\Provider` wires the client using `WordPressApiFactory` with the base URL from `Config::get_licensing_base_url()`.
 
-The `Clients\Fixture_Client` implements `LicensingClientInterface` for use in tests. It reads JSON fixture files from `tests/_data/licensing/`, mapping key values to filenames (e.g., `LWSW-unified-pro-2026` reads from `lwsw-unified-pro-2026.json`), and returns `Catalog` objects. Unrecognized keys throw `NotFoundException`.
+The `Clients\Fixture_Client` implements `LicensingClientInterface` for use in tests. It reads JSON fixture files from `tests/_data/licensing/`, mapping key values to filenames (e.g., `LWSW-unified-pro-2026` reads from `lwsw-unified-pro-2026.json`), and returns `Portal` objects. Unrecognized keys throw `NotFoundException`.
 
-`Product_Entry` remains Harbor's own DTO. It is hydrated from the package's `CatalogEntry` type via `Product_Entry::from_catalog_entry()`.
+`Product_Entry` remains Harbor's own DTO. It is hydrated from the package's `PortalEntry` type via `Product_Entry::from_portal_entry()`.
 
 The fixture set covers the common scenarios:
 
@@ -166,14 +166,14 @@ All errors use `WP_Error` with these codes:
 | ----------------------------- | ------------------- | -------------------------------------------------- |
 | `lw-harbor-invalid-key`       | `INVALID_KEY`       | Key not recognized by the API                      |
 | `lw-harbor-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be decoded                   |
-| `lw-harbor-product-not-found` | `PRODUCT_NOT_FOUND` | Product slug not found in the catalog for this key |
+| `lw-harbor-product-not-found` | `PRODUCT_NOT_FOUND` | Product slug not found in the portal for this key |
 | `lw-harbor-store-failed`      | `STORE_FAILED`      | Key couldn't be persisted to the database          |
 
 ## HTTP Infrastructure
 
-Both the Licensing and Catalog subsystems use `WordPressHttpClient` from `stellarwp/licensing-api-client-wordpress` as their HTTP transport. This wraps WordPress's `wp_remote_request()` and implements the PSR-18 interface, so no Symfony dependency is required.
+Both the Licensing and Portal subsystems use `WordPressHttpClient` from `stellarwp/licensing-api-client-wordpress` as their HTTP transport. This wraps WordPress's `wp_remote_request()` and implements the PSR-18 interface, so no Symfony dependency is required.
 
-The base URL for licensing API requests comes from `Config::get_licensing_base_url()`, which defaults to `https://licensing.stellarwp.com`. It can be overridden via `Config::set_licensing_base_url()`. The catalog uses `Config::get_portal_base_url()` separately.
+The base URL for licensing API requests comes from `Config::get_licensing_base_url()`, which defaults to `https://licensing.stellarwp.com`. It can be overridden via `Config::set_licensing_base_url()`. The portal uses `Config::get_portal_base_url()` separately.
 
 ## Workflows
 
@@ -204,7 +204,7 @@ flowchart TD
 flowchart TD
     Start["License_Manager::validate_and_store($key, $domain)"]
     Start --> Validate["Validate LWSW- prefix format"]
-    Validate --> API["LicensingClientInterface\n::products()->catalog($key, $domain)"]
+    Validate --> API["LicensingClientInterface\n::products()->portal($key, $domain)"]
     API --> Check{"API error?"}
     Check -->|Yes| Error(["Return WP_Error"])
     Check -->|No| Persist["Persist Product_Collection\nto license state option"]
@@ -238,7 +238,7 @@ flowchart TD
     GetKey -->|Yes| Read["License_Repository::get_products()\nread license state option"]
     Read --> Cached{"Product_Collection\npresent?"}
     Cached -->|Yes| ReturnCached(["Return cached collection"])
-    Cached -->|No| Fetch["fetch_and_cache($key, $domain)\nLicensingClientInterface::products()->catalog()"]
+    Cached -->|No| Fetch["fetch_and_cache($key, $domain)\nLicensingClientInterface::products()->portal()"]
     Fetch --> Result{"Success?"}
     Result -->|Yes| Persist["Persist Product_Collection\nupdate last_active dates"]
     Result -->|No| PersistErr["Persist WP_Error"]
@@ -250,20 +250,20 @@ flowchart TD
 
 See [REST: License](../api/rest/license.md) for the endpoint reference.
 
-## Relationship to Catalog and Features
+## Relationship to Portal and Features
 
-Licensing answers "what does this key cover?" but not "what can the customer do with it?" That second question requires the [Catalog](catalog.md) and the [Features](features.md) layer.
+Licensing answers "what does this key cover?" but not "what can the customer do with it?" That second question requires the [Portal](portal.md) and the [Features](features.md) layer.
 
 ### Tier Slugs
 
-Both Licensing and the Catalog use the same product-prefixed tier slug convention (e.g., `give-pro`, `kadence-agency`). This means tier values from a licensing response can be looked up directly in the catalog's tier collection without transformation.
+Both Licensing and the Portal use the same product-prefixed tier slug convention (e.g., `give-pro`, `kadence-agency`). This means tier values from a licensing response can be looked up directly in the portal's tier collection without transformation.
 
 ### How Licensing Data Feeds Feature Resolution
 
-The `Resolve_Feature_Collection` class consumes the `Product_Collection` from the licensing `License_Repository` alongside the `Catalog_Collection` from the catalog `Catalog_Repository`. For each product in the catalog, it looks up the matching licensing entry to determine `is_available` for each feature:
+The `Resolve_Feature_Collection` class consumes the `Product_Collection` from the licensing `License_Repository` alongside the `Portal_Collection` from the portal `Portal_Repository`. For each product in the portal, it looks up the matching licensing entry to determine `is_available` for each feature:
 
-- **If a product entry exists**: a feature is available if its slug appears in the entry's `capabilities` array. This is the source of truth for access — it handles promotional grants and individual exceptions that the catalog's tier structure alone cannot express.
-- **If no product entry exists** (unlicensed): the resolver falls back to the catalog's tier rank structure, making only free-tier features (minimum tier rank 0) available.
+- **If a product entry exists**: a feature is available if its slug appears in the entry's `capabilities` array. This is the source of truth for access — it handles promotional grants and individual exceptions that the portal's tier structure alone cannot express.
+- **If no product entry exists** (unlicensed): the resolver falls back to the portal's tier rank structure, making only free-tier features (minimum tier rank 0) available.
 
 ### Cache Invalidation
 

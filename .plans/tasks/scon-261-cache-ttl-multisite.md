@@ -8,7 +8,7 @@ status: todo
 
 ## Problem
 
-Product_Repository, Catalog_Repository, and Feature_Repository all cache `WP_Error` responses for the full 12-hour TTL, meaning a temporary network blip locks the management UI into an error state for half a day. Separately, all three use `set_transient()` (per-site), but the unified license key is stored at the network level via `get_network_option()`. On multisite, each subsite independently fetches and caches the same data, and cache invalidation on key change only clears the current site's transient.
+Product_Repository, Portal_Repository, and Feature_Repository all cache `WP_Error` responses for the full 12-hour TTL, meaning a temporary network blip locks the management UI into an error state for half a day. Separately, all three use `set_transient()` (per-site), but the unified license key is stored at the network level via `get_network_option()`. On multisite, each subsite independently fetches and caches the same data, and cache invalidation on key change only clears the current site's transient.
 
 ## Proposed solution
 

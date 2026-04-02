@@ -2,7 +2,7 @@
 
 namespace LiquidWeb\Harbor\CLI;
 
-use LiquidWeb\Harbor\CLI\Commands\Catalog;
+use LiquidWeb\Harbor\CLI\Commands\Portal;
 use LiquidWeb\Harbor\CLI\Commands\Feature;
 use LiquidWeb\Harbor\CLI\Commands\License;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
@@ -29,7 +29,7 @@ final class Provider extends Abstract_Provider {
 
 		$this->container->singleton( Feature::class );
 		$this->container->singleton( License::class );
-		$this->container->singleton( Catalog::class );
+		$this->container->singleton( Portal::class );
 
 		WP_CLI::add_hook( 'after_wp_load', [ $this, 'register_commands' ] );
 	}
@@ -51,6 +51,6 @@ final class Provider extends Abstract_Provider {
 
 		WP_CLI::add_command( 'harbor feature', $this->container->get( Feature::class ) );
 		WP_CLI::add_command( 'harbor license', $this->container->get( License::class ) );
-		WP_CLI::add_command( 'harbor catalog', $this->container->get( Catalog::class ) );
+		WP_CLI::add_command( 'harbor portal', $this->container->get( Portal::class ) );
 	}
 }

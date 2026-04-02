@@ -6,12 +6,12 @@
 import { createSelector } from '@wordpress/data';
 import type { State } from './types';
 import type {
-	CatalogTier,
+	PortalTier,
 	Feature,
 	FeatureMismatchType,
 	LegacyLicense,
 	LicenseProduct,
-	ProductCatalog,
+	ProductPortal,
 } from '@/types/api';
 import type HarborError from '@/errors/harbor-error';
 import { getFeatureMismatch } from '@/lib/feature-utils';
@@ -137,37 +137,37 @@ export const hasActiveLegacyLicenseForProduct = createSelector(
 );
 
 // ---------------------------------------------------------------------------
-// Catalog
+// Portal
 // ---------------------------------------------------------------------------
 
-export const getCatalog = createSelector(
-	(state: State): ProductCatalog[] =>
-		Object.values(state.catalog.byProductSlug),
-	(state: State) => [state.catalog.byProductSlug]
+export const getPortal = createSelector(
+	(state: State): ProductPortal[] =>
+		Object.values(state.portal.byProductSlug),
+	(state: State) => [state.portal.byProductSlug]
 );
 
-export const getProductCatalog = (
+export const getProductPortal = (
 	state: State,
 	slug: string
-): ProductCatalog | null => state.catalog.byProductSlug[slug] ?? null;
+): ProductPortal | null => state.portal.byProductSlug[slug] ?? null;
 
 export const getProductTiers = createSelector(
-	(state: State, slug: string): CatalogTier[] =>
-		state.catalog.byProductSlug[slug]?.tiers ?? [],
-	(state: State, slug: string) => [state.catalog.byProductSlug, slug]
+	(state: State, slug: string): PortalTier[] =>
+		state.portal.byProductSlug[slug]?.tiers ?? [],
+	(state: State, slug: string) => [state.portal.byProductSlug, slug]
 );
 
 /**
- * Returns a single CatalogTier by product slug and tier slug, or null.
+ * Returns a single PortalTier by product slug and tier slug, or null.
  *
  * Returns the full tier object so callers can read price, currency, etc.
  */
-export const getCatalogTier = (
+export const getPortalTier = (
 	state: State,
 	productSlug: string,
 	tierSlug: string
-): CatalogTier | null =>
-	state.catalog.byProductSlug[productSlug]?.tiers.find(
+): PortalTier | null =>
+	state.portal.byProductSlug[productSlug]?.tiers.find(
 		(t) => t.slug === tierSlug
 	) ?? null;
 

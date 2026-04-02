@@ -1,0 +1,82 @@
+# Portal Endpoints
+
+All endpoints require the `manage_options` capability.
+
+See [Portal](../../subsystems/portal.md) for the product, tier, and feature data models and field definitions.
+
+## GET /liquidweb/harbor/v1/portal
+
+Returns the full product portal. Each entry represents a product family with its tiers and features. The portal is not license-specific — it describes everything available regardless of entitlements.
+
+### Response (200)
+
+```json
+[
+  {
+    "product_slug": "kadence",
+    "tiers": [
+      {
+        "slug": "kadence-basic",
+        "name": "Basic",
+        "rank": 1,
+        "price": 14900,
+        "currency": "USD",
+        "features": ["Access to pro blocks", "Premium support"],
+        "herald_slugs": ["kadence-basic-herald"],
+        "purchase_url": "https://example.com/checkout/?add-to-cart=123"
+      },
+      {
+        "slug": "kadence-pro",
+        "name": "Pro",
+        "rank": 2,
+        "price": 19900,
+        "currency": "USD",
+        "features": ["All Basic features", "Shop Kit", "Priority support"],
+        "herald_slugs": ["kadence-pro-herald"],
+        "purchase_url": "https://example.com/checkout/?add-to-cart=456"
+      }
+    ],
+    "features": [
+      {
+        "slug": "kadence-blocks-pro",
+        "kind": "plugin",
+        "minimum_tier": "kadence-basic",
+        "plugin_file": "kadence-blocks-pro/kadence-blocks-pro.php",
+        "wporg_slug": null,
+        "download_url": "https://...",
+        "version": "2.6.1",
+        "release_date": "2026-01-15T00:00:00Z",
+        "changelog": "<p>Bug fixes and improvements.</p>",
+        "name": "Kadence Blocks Pro",
+        "description": "Premium blocks for the WordPress editor.",
+        "category": "design",
+        "authors": ["Suspended Starter Fish"],
+        "documentation_url": "https://...",
+        "homepage": null
+      }
+    ]
+  }
+]
+```
+
+When the portal has not been fetched yet, returns an empty array `[]`.
+
+### Errors
+
+| HTTP | Code                                 | Meaning                          |
+| ---- | ------------------------------------ | -------------------------------- |
+| 502  | `lw-harbor-portal-invalid-response` | Portal API response was invalid |
+
+## POST /liquidweb/harbor/v1/portal/refresh
+
+Force-refreshes the portal from the upstream Commerce Portal API, bypassing any cached data. Returns the freshly fetched portal in the same shape as `GET /portal`.
+
+### Response (200)
+
+Same shape as `GET /portal`.
+
+### Errors
+
+| HTTP | Code                                 | Meaning                          |
+| ---- | ------------------------------------ | -------------------------------- |
+| 502  | `lw-harbor-portal-invalid-response` | Portal API response was invalid |

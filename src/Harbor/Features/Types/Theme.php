@@ -2,7 +2,7 @@
 
 namespace LiquidWeb\Harbor\Features\Types;
 
-use LiquidWeb\Harbor\Catalog\Results\Catalog_Feature;
+use LiquidWeb\Harbor\Portal\Results\Portal_Feature;
 use LiquidWeb\Harbor\Features\Contracts\Installable;
 use LiquidWeb\Harbor\Utils\Cast;
 
@@ -84,26 +84,26 @@ final class Theme extends Feature implements Installable {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Feature $catalog_feature The catalog entry providing version and download URL.
+	 * @param Portal_Feature $portal_feature The portal entry providing version and download URL.
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function get_update_data( Catalog_Feature $catalog_feature ): array {
+	public function get_update_data( Portal_Feature $portal_feature ): array {
 		$installed_version = $this->get_installed_version() ?? '';
-		$catalog_version   = $catalog_feature->get_version() ?? '';
+		$portal_version   = $portal_feature->get_version() ?? '';
 
 		return [
 			'name'              => $this->get_name(),
 			'slug'              => $this->get_slug(),
-			'version'           => $catalog_version,
-			'package'           => $catalog_feature->get_download_url() ?? '',
+			'version'           => $portal_version,
+			'package'           => $portal_feature->get_download_url() ?? '',
 			'url'               => $this->get_documentation_url(),
 			'author'            => '',
 			'sections'          => [
 				'description' => $this->get_description(),
 			],
 			'installed_version' => $installed_version,
-			'has_update'        => $installed_version !== '' && $catalog_version !== '' && version_compare( $catalog_version, $installed_version, '>' ),
+			'has_update'        => $installed_version !== '' && $portal_version !== '' && version_compare( $portal_version, $installed_version, '>' ),
 		];
 	}
 

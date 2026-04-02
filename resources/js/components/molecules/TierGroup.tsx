@@ -12,10 +12,10 @@ import { ChevronRight, ChevronDown, Lock, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { FeatureRow } from '@/components/molecules/FeatureRow';
-import type { CatalogTier, Feature } from '@/types/api';
+import type { PortalTier, Feature } from '@/types/api';
 
 interface TierGroupProps {
-    tier:       CatalogTier;
+    tier:       PortalTier;
     features:   Feature[];
     forceOpen?: boolean;
 }

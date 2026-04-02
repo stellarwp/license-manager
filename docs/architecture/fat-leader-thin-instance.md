@@ -4,7 +4,7 @@
 
 Harbor introduces **unified licensing** with `LWSW-`-prefixed keys. This changes the relationship between Harbor instances: one instance becomes the **fat leader** (owns all unified licensing concerns) and every other instance becomes a **thin instance** (declares itself to the leader, then gets out of the way).
 
-In per-resource licensing (StellarWP Uplink v2/v3), every instance was self-sufficient. It stored its own key, validated against the licensing APIs, rendered admin fields, and managed its own state. The leader was just a tiebreaker for shared UI. Unified licensing inverts this: the leader takes over key storage, API delegation, feature catalogs, and the admin page. Individual instances become thin shells.
+In per-resource licensing (StellarWP Uplink v2/v3), every instance was self-sufficient. It stored its own key, validated against the licensing APIs, rendered admin fields, and managed its own state. The leader was just a tiebreaker for shared UI. Unified licensing inverts this: the leader takes over key storage, API delegation, feature portals, and the admin page. Individual instances become thin shells.
 
 For the unified key model itself: how the key relates to Licensing, Portal, and the WordPress site, how seats work, and what happens in various key change scenarios. See [Unified License Key: System Design](unified-license-key-system-design.md).
 
@@ -19,7 +19,7 @@ flowchart TD
 
         Registry -->|"Version::is_highest()"| Leader
 
-        Leader["Fat Leader (GiveWP copy)\n\n✓ Key storage & validation\n✓ Licensing & Catalog API calls\n✓ Feature resolution\n✓ REST endpoints\n✓ Admin page (Software Manager)"]
+        Leader["Fat Leader (GiveWP copy)\n\n✓ Key storage & validation\n✓ Licensing & Portal API calls\n✓ Feature resolution\n✓ REST endpoints\n✓ Admin page (Software Manager)"]
 
         Leader --> ThinKadence["Thin: Kadence\n\n✗ No API calls\n✗ No admin UI\n✓ Queries leader"]
         Leader --> ThinGiveWP["Thin: GiveWP\n\n✗ No API calls\n✗ No admin UI\n✓ Queries leader"]
@@ -37,17 +37,17 @@ Multiple vendor-prefixed copies negotiate leadership through a shared global fun
 
 ### Key and License State
 
-The leader stores the site's unified key and the full product catalog response from the Liquid Web v1 licensing API. The key is the site's identity to Licensing; the catalog response is the source of truth for what products are entitled, what tiers they're on, and whether seats are available. See [Key Management](unified-license-key-system-design.md#the-unified-key) in the system design doc for how keys enter a site and the one-key-per-site rule.
+The leader stores the site's unified key and the full product portal response from the Liquid Web v1 licensing API. The key is the site's identity to Licensing; the portal response is the source of truth for what products are entitled, what tiers they're on, and whether seats are available. See [Key Management](unified-license-key-system-design.md#the-unified-key) in the system design doc for how keys enter a site and the one-key-per-site rule.
 
 ### Licensing Lifecycle
 
-The leader delegates to the Liquid Web v1 licensing client via `LicensingClientInterface` from `stellarwp/licensing-api-client`. `products()->catalog($key, $domain)` is a read-only bulk fetch that returns the status of all products under the key without consuming seats.
+The leader delegates to the Liquid Web v1 licensing client via `LicensingClientInterface` from `stellarwp/licensing-api-client`. `products()->portal($key, $domain)` is a read-only bulk fetch that returns the status of all products under the key without consuming seats.
 
 The production implementation uses `WordPressApiFactory` from `stellarwp/licensing-api-client-wordpress`, which routes requests through WordPress's HTTP API. `License_Repository` wraps the client with option-based state storage so the rest of Harbor never touches the client directly. `Fixture_Client` (`src/Harbor/Licensing/Clients/Fixture_Client.php`) implements `LicensingClientInterface` for testing by reading from JSON fixture files.
 
-### Feature Catalog
+### Feature Portal
 
-The leader fetches a feature catalog from the Commerce Portal API using the unified key. Products query features through global functions defined in `src/Harbor/functions.php` — `is_feature_enabled()` and `is_feature_available()`. Today the catalog fetch has no key to authenticate with; the unified key is what unblocks this.
+The leader fetches a feature portal from the Commerce Portal API using the unified key. Products query features through global functions defined in `src/Harbor/functions.php` — `is_feature_enabled()` and `is_feature_available()`. Today the portal fetch has no key to authenticate with; the unified key is what unblocks this.
 
 ### Admin UI
 

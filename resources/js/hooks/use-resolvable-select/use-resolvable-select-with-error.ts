@@ -48,10 +48,10 @@ function findError( results: ResolvableRecord ): HarborError | null {
  *
  * @example
  * ```ts
- * const { features, catalog } = useResolvableSelectWithError(
+ * const { features, portal } = useResolvableSelectWithError(
  *     ( resolve ) => ( {
  *         features: resolve( harborStore ).getFeatures(),
- *         catalog: resolve( harborStore ).getCatalog(),
+ *         portal: resolve( harborStore ).getPortal(),
  *     } ),
  *     [],
  * );

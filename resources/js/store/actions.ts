@@ -7,7 +7,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { HarborError, ErrorCode } from '@/errors';
-import type { Feature, LegacyLicense, License, ProductCatalog } from '@/types/api';
+import type { Feature, LegacyLicense, License, ProductPortal } from '@/types/api';
 import type { Action, Thunk } from './types';
 
 // ---------------------------------------------------------------------------
@@ -24,9 +24,9 @@ export const receiveLicense = (license: License): Action => ({
 	license,
 });
 
-export const receiveCatalog = (catalogs: ProductCatalog[]): Action => ({
-	type: 'RECEIVE_CATALOG',
-	catalogs,
+export const receivePortal = (portals: ProductPortal[]): Action => ({
+	type: 'RECEIVE_PORTAL',
+	portals,
 });
 
 export const receiveLegacyLicenses = (licenses: LegacyLicense[]): Action => ({

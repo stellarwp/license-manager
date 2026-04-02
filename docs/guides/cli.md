@@ -17,18 +17,18 @@ Manage the unified license key.
 | `delete`   | `wp harbor license delete`           | Delete the stored unified license key                     |
 | `legacy`   | `wp harbor license legacy`           | List legacy per-plugin licenses from all Harbor instances |
 
-### `wp harbor catalog`
+### `wp harbor portal`
 
-Manage the product catalog.
+Manage the product portal.
 
 | Command    | Usage                                  | Description                                       |
 | ---------- | -------------------------------------- | ------------------------------------------------- |
-| `list`     | `wp harbor catalog list`               | List all products in the catalog                  |
-| `tiers`    | `wp harbor catalog tiers <slug>`       | Show tiers for a specific product                 |
-| `features` | `wp harbor catalog features <slug>`    | Show features for a specific product              |
-| `refresh`  | `wp harbor catalog refresh`            | Force refresh the catalog from the API            |
-| `status`   | `wp harbor catalog status`             | Show when the catalog was last fetched and errors |
-| `delete`   | `wp harbor catalog delete`             | Delete the cached catalog                         |
+| `list`     | `wp harbor portal list`               | List all products in the portal                  |
+| `tiers`    | `wp harbor portal tiers <slug>`       | Show tiers for a specific product                 |
+| `features` | `wp harbor portal features <slug>`    | Show features for a specific product              |
+| `refresh`  | `wp harbor portal refresh`            | Force refresh the portal from the API            |
+| `status`   | `wp harbor portal status`             | Show when the portal was last fetched and errors |
+| `delete`   | `wp harbor portal delete`             | Delete the cached portal                         |
 
 ### `wp harbor feature`
 
@@ -150,14 +150,14 @@ wp harbor license legacy
 wp harbor license legacy --format=json
 ```
 
-## Catalog Commands
+## Portal Commands
 
 ### list
 
-Lists all products in the catalog.
+Lists all products in the portal.
 
 ```bash
-wp harbor catalog list [--format=<format>]
+wp harbor portal list [--format=<format>]
 ```
 
 **Default fields:** `product_slug, tiers, features`
@@ -165,8 +165,8 @@ wp harbor catalog list [--format=<format>]
 **Examples:**
 
 ```bash
-wp harbor catalog list
-wp harbor catalog list --format=json
+wp harbor portal list
+wp harbor portal list --format=json
 ```
 
 ### tiers
@@ -174,7 +174,7 @@ wp harbor catalog list --format=json
 Shows tiers for a specific product.
 
 ```bash
-wp harbor catalog tiers <product_slug> [--fields=<fields>] [--format=<format>]
+wp harbor portal tiers <product_slug> [--fields=<fields>] [--format=<format>]
 ```
 
 **Default fields:** `slug, name, rank, price, currency, purchase_url`
@@ -184,8 +184,8 @@ wp harbor catalog tiers <product_slug> [--fields=<fields>] [--format=<format>]
 **Examples:**
 
 ```bash
-wp harbor catalog tiers kadence
-wp harbor catalog tiers kadence --format=json
+wp harbor portal tiers kadence
+wp harbor portal tiers kadence --format=json
 ```
 
 ### features
@@ -193,7 +193,7 @@ wp harbor catalog tiers kadence --format=json
 Shows features for a specific product.
 
 ```bash
-wp harbor catalog features <product_slug> [--fields=<fields>] [--format=<format>]
+wp harbor portal features <product_slug> [--fields=<fields>] [--format=<format>]
 ```
 
 **Default fields:** `slug, kind, minimum_tier, name, category`
@@ -203,50 +203,50 @@ wp harbor catalog features <product_slug> [--fields=<fields>] [--format=<format>
 **Examples:**
 
 ```bash
-wp harbor catalog features kadence
-wp harbor catalog features kadence --format=json
+wp harbor portal features kadence
+wp harbor portal features kadence --format=json
 ```
 
 ### refresh
 
-Force refreshes the catalog from the API, then displays the resulting product list.
+Force refreshes the portal from the API, then displays the resulting product list.
 
 ```bash
-wp harbor catalog refresh [--format=<format>]
+wp harbor portal refresh [--format=<format>]
 ```
 
 **Examples:**
 
 ```bash
-wp harbor catalog refresh
+wp harbor portal refresh
 ```
 
 ### status
 
-Shows when the catalog was last fetched and any errors.
+Shows when the portal was last fetched and any errors.
 
 ```bash
-wp harbor catalog status
+wp harbor portal status
 ```
 
 **Examples:**
 
 ```bash
-wp harbor catalog status
+wp harbor portal status
 ```
 
 ### delete
 
-Deletes the cached catalog. The next request for the catalog will fetch fresh data from the API.
+Deletes the cached portal. The next request for the portal will fetch fresh data from the API.
 
 ```bash
-wp harbor catalog delete
+wp harbor portal delete
 ```
 
 **Examples:**
 
 ```bash
-wp harbor catalog delete
+wp harbor portal delete
 ```
 
 ## Feature Commands

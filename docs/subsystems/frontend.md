@@ -43,7 +43,7 @@ The order matters:
 - **ToastProvider** — toast notifications, consumed anywhere.
 - **FilterProvider** — search query and product filter state for the feature list.
 - **ErrorModalProvider** — collects `HarborError` instances; the `ErrorModal` renders them.
-- **HarborDataProvider** — fires the four core resolvers (license, features, catalog, legacy licenses) and pushes resolver errors into the error modal. Exposes `isLoading` to gate the UI.
+- **HarborDataProvider** — fires the four core resolvers (license, features, portal, legacy licenses) and pushes resolver errors into the error modal. Exposes `isLoading` to gate the UI.
 - **ErrorBoundary** — catches render crashes. `ErrorModal` sits outside it so a crash doesn't prevent the modal from opening.
 
 ## State Management
@@ -71,8 +71,8 @@ interface State {
         storeError:  HarborError | null;
         deleteError: HarborError | null;
     };
-    catalog: {
-        byProductSlug: Record<string, ProductCatalog>;
+    portal: {
+        byProductSlug: Record<string, ProductPortal>;
     };
     legacyLicenses: {
         bySlug: Record<string, LegacyLicense>;
@@ -88,14 +88,14 @@ Resolvers fetch data from the REST API the first time a selector is called, then
 | ------------------- | ------------------------------------------ | ----------------------- |
 | `getFeatures`       | `GET /liquidweb/harbor/v1/features`        | `features.bySlug`       |
 | `getLicenseKey`     | `GET /liquidweb/harbor/v1/license`         | `license.license`       |
-| `getCatalog`        | `GET /liquidweb/harbor/v1/catalog`         | `catalog.byProductSlug` |
+| `getPortal`        | `GET /liquidweb/harbor/v1/portal`         | `portal.byProductSlug` |
 | `getLegacyLicenses` | `GET /liquidweb/harbor/v1/legacy-licenses` | `legacyLicenses.bySlug` |
 
-Derived selectors (e.g. `getFeature(slug)`, `getProductCatalog(slug)`) use `forwardResolver` / `forwardResolverWithoutArgs` to delegate to the parent resolver without re-fetching.
+Derived selectors (e.g. `getFeature(slug)`, `getProductPortal(slug)`) use `forwardResolver` / `forwardResolverWithoutArgs` to delegate to the parent resolver without re-fetching.
 
 ### Actions
 
-Plain action creators (`receiveFeatures`, `receiveLicense`, `receiveCatalog`, `receiveLegacyLicenses`) populate the store from resolver responses.
+Plain action creators (`receiveFeatures`, `receiveLicense`, `receivePortal`, `receiveLegacyLicenses`) populate the store from resolver responses.
 
 Thunk action creators handle mutations:
 
@@ -115,7 +115,7 @@ Selectors are memoized with `createSelector` from `@wordpress/data`. Key selecto
 
 - **Features** — `getFeatures`, `getFeaturesByProduct`, `getFeature`, `isFeatureEnabled`, `isFeatureToggling`, `isFeatureUpdating`, `getFeatureError`, `getFeatureMismatchType`, `isAnyInstallableBusy`
 - **License** — `getLicenseKey`, `hasLicense`, `getLicenseProducts`, `isLicenseStoring`, `isLicenseDeleting`, `canModifyLicense`, `getStoreLicenseError`, `getDeleteLicenseError`
-- **Catalog** — `getCatalog`, `getProductCatalog`, `getProductTiers`, `getCatalogTier`
+- **Portal** — `getPortal`, `getProductPortal`, `getProductTiers`, `getPortalTier`
 - **Legacy** — `getLegacyLicenses`, `getLegacyLicenseBySlug`, `hasLegacyLicense`, `hasLegacyLicenses`, `getActiveLegacyLicense`, `isProductUnifiedLicensed`, `hasActiveLegacyLicenseForProduct`
 
 ### useResolvableSelect
@@ -234,7 +234,7 @@ Error codes are defined in `ErrorCode` enum (`resources/js/errors/error-code.ts`
 
 ## Product Registry
 
-Product metadata (slug, display name, tagline) is defined in `resources/js/data/products.ts`. This is display-layer data only — tier definitions and feature lists come from the catalog and features REST endpoints.
+Product metadata (slug, display name, tagline) is defined in `resources/js/data/products.ts`. This is display-layer data only — tier definitions and feature lists come from the portal and features REST endpoints.
 
 ```typescript
 const PRODUCTS: Product[] = [

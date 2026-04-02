@@ -2,8 +2,8 @@
 
 namespace LiquidWeb\Harbor\Tests\Cron\Actions;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Collection;
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
+use LiquidWeb\Harbor\Portal\Portal_Collection;
+use LiquidWeb\Harbor\Portal\Portal_Repository;
 use LiquidWeb\Harbor\Cron\Actions\Handle_Unschedule_Cron_Data_Refresh;
 use LiquidWeb\Harbor\Cron\ValueObjects\CronHook;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
@@ -16,146 +16,146 @@ use LiquidWeb\Harbor\Tests\HarborTestCase;
 final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 
 	/**
-	 * Test that the action does not unschedule when no catalog is cached (e.g. never fetched or error).
+	 * Test that the action does not unschedule when no portal is cached (e.g. never fetched or error).
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_does_not_unschedule_when_no_catalog_cached(): void {
+	public function test_does_not_unschedule_when_no_portal_cached(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
 			[ 'get_cached' => null ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertNotFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Test that the action does not unschedule when the catalog has no installable features.
+	 * Test that the action does not unschedule when the portal has no installable features.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_does_not_unschedule_when_catalog_has_no_installable_features(): void {
+	public function test_does_not_unschedule_when_portal_has_no_installable_features(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
-			[ 'get_cached' => Catalog_Collection::from_array( [] ) ]
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
+			[ 'get_cached' => Portal_Collection::from_array( [] ) ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertNotFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Test that the action does not unschedule when the catalog plugin is active.
+	 * Test that the action does not unschedule when the portal plugin is active.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_does_not_unschedule_when_catalog_plugin_is_active(): void {
+	public function test_does_not_unschedule_when_portal_plugin_is_active(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 		update_option( 'active_plugins', [ 'give/give.php' ] );
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_plugin( 'give/give.php' ) ]
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
+			[ 'get_cached' => $this->make_portal_with_plugin( 'give/give.php' ) ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertNotFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Test that the action unschedules when all catalog plugins are inactive.
+	 * Test that the action unschedules when all portal plugins are inactive.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_unschedules_when_all_catalog_plugins_inactive(): void {
+	public function test_unschedules_when_all_portal_plugins_inactive(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 		update_option( 'active_plugins', [] );
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_plugin( 'give/give.php' ) ]
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
+			[ 'get_cached' => $this->make_portal_with_plugin( 'give/give.php' ) ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Test that the action does not unschedule when the catalog theme is active.
+	 * Test that the action does not unschedule when the portal theme is active.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_does_not_unschedule_when_catalog_theme_is_active(): void {
+	public function test_does_not_unschedule_when_portal_theme_is_active(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
 		$active_theme_slug = get_stylesheet();
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_theme( $active_theme_slug ) ]
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
+			[ 'get_cached' => $this->make_portal_with_theme( $active_theme_slug ) ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertNotFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Test that the action unschedules when the catalog theme is not active.
+	 * Test that the action unschedules when the portal theme is not active.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
-	public function test_unschedules_when_catalog_theme_is_inactive(): void {
+	public function test_unschedules_when_portal_theme_is_inactive(): void {
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
-		$catalog = $this->makeEmpty(
-			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_theme( 'some-inactive-theme' ) ]
+		$portal = $this->makeEmpty(
+			Portal_Repository::class,
+			[ 'get_cached' => $this->make_portal_with_theme( 'some-inactive-theme' ) ]
 		);
 
-		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
+		$action = new Handle_Unschedule_Cron_Data_Refresh( $portal );
 		( $action )();
 
 		$this->assertFalse( wp_next_scheduled( CronHook::DATA_REFRESH ) );
 	}
 
 	/**
-	 * Build a minimal catalog collection containing one plugin feature.
+	 * Build a minimal portal collection containing one plugin feature.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $plugin_file Plugin basename, e.g. 'give/give.php'.
 	 *
-	 * @return Catalog_Collection
+	 * @return Portal_Collection
 	 */
-	private function make_catalog_with_plugin( string $plugin_file ): Catalog_Collection {
-		return Catalog_Collection::from_array(
+	private function make_portal_with_plugin( string $plugin_file ): Portal_Collection {
+		return Portal_Collection::from_array(
 			[
 				[
 					'product_slug' => 'test-product',
@@ -179,16 +179,16 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 	}
 
 	/**
-	 * Build a minimal catalog collection containing one theme feature.
+	 * Build a minimal portal collection containing one theme feature.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $theme_slug Theme stylesheet slug, e.g. 'twentytwentyfour'.
 	 *
-	 * @return Catalog_Collection
+	 * @return Portal_Collection
 	 */
-	private function make_catalog_with_theme( string $theme_slug ): Catalog_Collection {
-		return Catalog_Collection::from_array(
+	private function make_portal_with_theme( string $theme_slug ): Portal_Collection {
+		return Portal_Collection::from_array(
 			[
 				[
 					'product_slug' => 'test-product',

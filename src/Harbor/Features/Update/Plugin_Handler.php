@@ -73,7 +73,7 @@ class Plugin_Handler {
 	/**
 	 * Filters the plugins_api response for Plugin features.
 	 *
-	 * Resolves update data by joining the Feature_Repository and Catalog.
+	 * Resolves update data by joining the Feature_Repository and Portal.
 	 *
 	 * @since 1.0.0
 	 *

@@ -70,7 +70,7 @@ final class FunctionsTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests is_feature_enabled returns true for an active feature in the catalog.
+	 * Tests is_feature_enabled returns true for an active feature in the portal.
 	 *
 	 * @return void
 	 */
@@ -79,7 +79,7 @@ final class FunctionsTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests is_feature_enabled returns false for a feature not in the catalog.
+	 * Tests is_feature_enabled returns false for a feature not in the portal.
 	 *
 	 * @return void
 	 */
@@ -151,7 +151,7 @@ final class FunctionsTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests is_feature_available returns false for a feature not in the catalog.
+	 * Tests is_feature_available returns false for a feature not in the portal.
 	 *
 	 * @return void
 	 */
@@ -160,11 +160,11 @@ final class FunctionsTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that is_feature_enabled returns false when the catalog returns a WP_Error.
+	 * Tests that is_feature_enabled returns false when the portal returns a WP_Error.
 	 *
 	 * @return void
 	 */
-	public function test_is_feature_enabled_returns_false_when_catalog_errors(): void {
+	public function test_is_feature_enabled_returns_false_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -189,11 +189,11 @@ final class FunctionsTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that is_feature_available returns false when the catalog returns a WP_Error.
+	 * Tests that is_feature_available returns false when the portal returns a WP_Error.
 	 *
 	 * @return void
 	 */
-	public function test_is_feature_available_returns_false_when_catalog_errors(): void {
+	public function test_is_feature_available_returns_false_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(

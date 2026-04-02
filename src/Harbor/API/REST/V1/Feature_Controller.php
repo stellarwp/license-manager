@@ -351,7 +351,7 @@ class Feature_Controller extends WP_REST_Controller {
 				'readonly'    => true,
 				'context'     => [ 'view' ],
 			],
-			'in_catalog_tier'   => [
+			'in_portal_tier'   => [
 				'description' => __( "True when the user's licensed tier covers this feature's minimum tier.", '%TEXTDOMAIN%' ),
 				'type'        => 'boolean',
 				'readonly'    => true,
@@ -380,7 +380,7 @@ class Feature_Controller extends WP_REST_Controller {
 				'context'     => [ 'view' ],
 			],
 			'version'           => [
-				'description' => __( 'Latest available version from the catalog, or null. Only present for installable features.', '%TEXTDOMAIN%' ),
+				'description' => __( 'Latest available version from the portal, or null. Only present for installable features.', '%TEXTDOMAIN%' ),
 				'type'        => [ 'string', 'null' ],
 				'readonly'    => true,
 				'context'     => [ 'view' ],

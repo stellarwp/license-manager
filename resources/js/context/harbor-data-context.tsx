@@ -2,7 +2,7 @@
  * Harbor admin screen data context.
  *
  * Owns the four core resolvers for the Harbor admin screen (license, features,
- * catalog, legacy licenses). Errors from any resolver are pushed to the
+ * portal, legacy licenses). Errors from any resolver are pushed to the
  * ErrorModalContext so the error modal opens while the full UI stays rendered.
  * Errors are automatically cleared when all resolvers recover.
  *
@@ -56,7 +56,7 @@ export function HarborDataProvider( { children }: { children: ReactNode } ) {
         ( resolve ) => ( {
             license:        resolve( harborStore ).getLicenseKey(),
             features:       resolve( harborStore ).getFeatures(),
-            catalog:        resolve( harborStore ).getCatalog(),
+            portal:        resolve( harborStore ).getPortal(),
             legacyLicenses: resolve( harborStore ).getLegacyLicenses(),
         } ),
         [],
@@ -65,7 +65,7 @@ export function HarborDataProvider( { children }: { children: ReactNode } ) {
     const isLoading =
         result.license.isResolving ||
         result.features.isResolving ||
-        result.catalog.isResolving ||
+        result.portal.isResolving ||
         result.legacyLicenses.isResolving;
 
     useEffect( () => {

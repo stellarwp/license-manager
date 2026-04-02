@@ -331,7 +331,7 @@ class Feature extends WP_CLI_Command {
 	 * Updates a feature to the latest version.
 	 *
 	 * For plugin and theme features, this upgrades the installed version to the
-	 * latest available from the catalog.
+	 * latest available from the portal.
 	 *
 	 * ## OPTIONS
 	 *

@@ -5,7 +5,7 @@ namespace LiquidWeb\Harbor\Tests\Licensing\Results;
 use DateTimeImmutable;
 use LiquidWeb\Harbor\Licensing\Results\Product_Entry;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
-use LiquidWeb\LicensingApiClient\Responses\Product\ValueObjects\CatalogEntry;
+use LiquidWeb\LicensingApiClient\Responses\Product\ValueObjects\PortalEntry;
 
 final class Product_EntryTest extends HarborTestCase {
 
@@ -178,9 +178,9 @@ final class Product_EntryTest extends HarborTestCase {
 		$this->assertSame( [ 'site1.com', 'site2.com' ], $entry->get_activation_domains() );
 	}
 
-	public function test_from_catalog_entry_hydrates_all_fields(): void {
-		$catalog_entry = CatalogEntry::from( $this->valid_data );
-		$entry         = Product_Entry::from_catalog_entry( $catalog_entry );
+	public function test_from_portal_entry_hydrates_all_fields(): void {
+		$portal_entry = PortalEntry::from( $this->valid_data );
+		$entry         = Product_Entry::from_portal_entry( $portal_entry );
 
 		$this->assertSame( 'kadence', $entry->get_product_slug() );
 		$this->assertSame( 'professional', $entry->get_tier() );
@@ -195,9 +195,9 @@ final class Product_EntryTest extends HarborTestCase {
 		$this->assertSame( [ 'feature-a', 'feature-b' ], $entry->get_capabilities() );
 	}
 
-	public function test_from_catalog_entry_is_valid(): void {
-		$catalog_entry = CatalogEntry::from( $this->valid_data );
-		$entry         = Product_Entry::from_catalog_entry( $catalog_entry );
+	public function test_from_portal_entry_is_valid(): void {
+		$portal_entry = PortalEntry::from( $this->valid_data );
+		$entry         = Product_Entry::from_portal_entry( $portal_entry );
 
 		$this->assertTrue( $entry->is_valid() );
 	}

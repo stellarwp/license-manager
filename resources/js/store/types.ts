@@ -7,7 +7,7 @@ import type { ReduxStoreConfig, StoreDescriptor } from '@wordpress/data';
 import type { Thunk as BaseThunk } from '@/types/data';
 
 import type HarborError from '@/errors/harbor-error';
-import type { Feature, LegacyLicense, License, ProductCatalog } from '@/types/api';
+import type { Feature, LegacyLicense, License, ProductPortal } from '@/types/api';
 
 import type * as actions from './actions';
 import type * as selectors from './selectors';
@@ -16,11 +16,11 @@ import type * as selectors from './selectors';
 // State
 // ---------------------------------------------------------------------------
 
-export interface CatalogState {
+export interface PortalState {
 	/**
-	 * Product catalogs keyed by product slug, populated by the getCatalog resolver.
+	 * Product portals keyed by product slug, populated by the getPortal resolver.
 	 */
-	byProductSlug: Record<string, ProductCatalog>;
+	byProductSlug: Record<string, ProductPortal>;
 }
 
 export interface FeaturesState {
@@ -74,7 +74,7 @@ export interface LegacyLicensesState {
 export interface State {
 	features: FeaturesState;
 	license: LicenseState;
-	catalog: CatalogState;
+	portal: PortalState;
 	legacyLicenses: LegacyLicensesState;
 }
 
@@ -83,7 +83,7 @@ export interface State {
 // ---------------------------------------------------------------------------
 
 export type Action =
-	| { type: 'RECEIVE_CATALOG'; catalogs: ProductCatalog[] }
+	| { type: 'RECEIVE_PORTAL'; portals: ProductPortal[] }
 	| { type: 'RECEIVE_FEATURES'; features: Feature[] }
 	| { type: 'RECEIVE_LEGACY_LICENSES'; licenses: LegacyLicense[] }
 	| { type: 'TOGGLE_FEATURE_START'; slug: string }

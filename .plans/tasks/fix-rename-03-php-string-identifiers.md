@@ -24,7 +24,7 @@ The four REST controllers in `API/REST/V1/` all define `$namespace = 'stellarwp/
 
 ### Option, transient, and cache prefixes
 
-Everything with `stellarwp_uplink_` becomes `lw_harbor_`. This hits constants and strings in `License_Repository`, `Catalog_Repository`, `Site/Data`, `Legacy/Notices/License_Notice_Handler`, and the `CronHook` value object.
+Everything with `stellarwp_uplink_` becomes `lw_harbor_`. This hits constants and strings in `License_Repository`, `Portal_Repository`, `Site/Data`, `Legacy/Notices/License_Notice_Handler`, and the `CronHook` value object.
 
 Key option names:
 
@@ -33,7 +33,7 @@ Key option names:
 | `stellarwp_uplink_unified_license_key` | `lw_harbor_unified_license_key` |
 | `stellarwp_uplink_licensing_products_state` | `lw_harbor_licensing_products_state` |
 | `stellarwp_uplink_licensing_products_last_active_dates` | `lw_harbor_licensing_products_last_active_dates` |
-| `stellarwp_uplink_catalog_state` | `lw_harbor_catalog_state` |
+| `stellarwp_uplink_portal_state` | `lw_harbor_portal_state` |
 | `stellarwp_uplink_dismissed_notices` (user meta) | `lw_harbor_dismissed_notices` |
 | `stellarwp_uplink_domain` (cache key) | `lw_harbor_domain` |
 | `stellarwp_uplink_multisite_active_sites` (cache key) | `lw_harbor_multisite_active_sites` |
@@ -57,7 +57,7 @@ Verify these still exist after v2 code removal. If they survived:
 
 - `Licensing/Error_Code.php` (14 constants)
 - `Features/Error_Code.php` (28 constants)
-- `Catalog/Error_Code.php` (2 constants)
+- `Portal/Error_Code.php` (2 constants)
 
 ### Global functions (triple-rename)
 

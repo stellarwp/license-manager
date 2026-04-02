@@ -12,7 +12,7 @@ After the fixture client extraction (see `draft-extract-fixture-clients.md`), up
 
 ## Proposed solution
 
-Add `psr/http-client` (PSR-18) and `psr/http-message` (PSR-7) as dependencies. Define the domain client implementations (`Licensing_Client`, `Catalog_Client`) to accept a PSR-18 `ClientInterface` for their HTTP transport.
+Add `psr/http-client` (PSR-18) and `psr/http-message` (PSR-7) as dependencies. Define the domain client implementations (`Licensing_Client`, `Portal_Client`) to accept a PSR-18 `ClientInterface` for their HTTP transport.
 
 Uplink should ship a default PSR-18 implementation using the Symfony HTTP client (`symfony/http-client`). Symfony's client is lightweight, supports PSR-18 natively, and doesn't require a full framework. Consumers can swap in a different PSR-18 client (WordPress adapter, Guzzle, etc.) through the container.
 

@@ -44,13 +44,13 @@ export function ProductSection( { product }: ProductSectionProps ) {
         [ product.slug ],
     );
 
-    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers } = useProductFeatureGroups( product.slug );
+    const { availableFeatures, lockedByTier, sortedPortalTiers, upgradePortalTiers } = useProductFeatureGroups( product.slug );
 
     const activeCount      = availableFeatures.filter( ( f ) => f.is_enabled ).length;
     const deactivatedCount = availableFeatures.filter( ( f ) => ! f.is_enabled ).length;
 
     const tierName = licenseProduct
-        ? ( sortedCatalogTiers.find( ( t ) => t.slug === licenseProduct.tier )?.name ?? licenseProduct.tier )
+        ? ( sortedPortalTiers.find( ( t ) => t.slug === licenseProduct.tier )?.name ?? licenseProduct.tier )
         : null;
 
     const hasContent = availableFeatures.length > 0 || Object.values( lockedByTier ).some( ( f ) => f.length > 0 );
@@ -110,7 +110,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
                         />
                     ) ) }
 
-                    { upgradeCatalogTiers.map( ( tier ) => {
+                    { upgradePortalTiers.map( ( tier ) => {
                         const locked = lockedByTier[ tier.slug ] ?? [];
                         if ( locked.length === 0 ) return null;
                         return (

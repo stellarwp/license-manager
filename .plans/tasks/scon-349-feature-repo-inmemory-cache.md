@@ -8,9 +8,9 @@ status: todo
 
 ## Problem
 
-`Feature_Repository` caches the resolved `Feature_Collection` in a WordPress transient with a 12-hour TTL. The collection is a join of catalog and licensing data, both of which already have their own transient caches. This cache-on-cache creates a stale-data risk: if either upstream source changes (key activation, plan upgrade, catalog refresh), the feature transient can serve outdated resolved data until it expires independently. Invalidation requires coordinating three separate transient lifetimes.
+`Feature_Repository` caches the resolved `Feature_Collection` in a WordPress transient with a 12-hour TTL. The collection is a join of portal and licensing data, both of which already have their own transient caches. This cache-on-cache creates a stale-data risk: if either upstream source changes (key activation, plan upgrade, portal refresh), the feature transient can serve outdated resolved data until it expires independently. Invalidation requires coordinating three separate transient lifetimes.
 
-The resolution itself is cheap. It iterates the cached catalog and licensing arrays and compares tier ranks. No filesystem reads or API calls happen at that layer.
+The resolution itself is cheap. It iterates the cached portal and licensing arrays and compares tier ranks. No filesystem reads or API calls happen at that layer.
 
 ## Proposed solution
 

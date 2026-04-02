@@ -2,9 +2,9 @@
 
 namespace LiquidWeb\Harbor\Tests\Features;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Clients\Catalog_Client;
-use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client as Catalog_Fixture;
+use LiquidWeb\Harbor\Portal\Portal_Repository;
+use LiquidWeb\Harbor\Portal\Clients\Portal_Client;
+use LiquidWeb\Harbor\Portal\Clients\Fixture_Client as Portal_Fixture;
 use LiquidWeb\Harbor\Features\Error_Code;
 use LiquidWeb\Harbor\Features\Feature_Collection;
 use LiquidWeb\Harbor\Features\Feature_Repository;
@@ -51,7 +51,7 @@ final class ManagerTest extends HarborTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
 
 		$this->collection = new Feature_Collection();
@@ -101,7 +101,7 @@ final class ManagerTest extends HarborTestCase {
 	 */
 	protected function tearDown(): void {
 		delete_option( License_Repository::KEY_OPTION_NAME );
-		delete_option( Catalog_Repository::CATALOG_STATE_OPTION_NAME );
+		delete_option( Portal_Repository::PORTAL_STATE_OPTION_NAME );
 		delete_option( License_Repository::PRODUCTS_STATE_OPTION_NAME );
 
 		parent::tearDown();
@@ -115,9 +115,9 @@ final class ManagerTest extends HarborTestCase {
 	 */
 	private function bind_fixture_clients(): void {
 		$this->container->singleton(
-			Catalog_Client::class,
+			Portal_Client::class,
 			static function () {
-				return new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) );
+				return new Portal_Fixture( codecept_data_dir( 'portal/default.json' ) );
 			}
 		);
 
@@ -166,7 +166,7 @@ final class ManagerTest extends HarborTestCase {
 					'tier'            => 'Tier 1',
 					'name'            => 'Revoked Feature',
 					'is_available'    => false,
-					'in_catalog_tier' => true,
+					'in_portal_tier' => true,
 				]
 			)
 		);
@@ -317,11 +317,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that update returns a WP_Error when the catalog errors.
+	 * Tests that update returns a WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_update_returns_wp_error_when_catalog_errors(): void {
+	public function test_update_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -350,7 +350,7 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests is_enabled returns WP_Error for a feature not in the catalog.
+	 * Tests is_enabled returns WP_Error for a feature not in the portal.
 	 *
 	 * @return void
 	 */
@@ -362,7 +362,7 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests get_features returns the catalog collection.
+	 * Tests get_features returns the portal collection.
 	 *
 	 * @return void
 	 */
@@ -374,11 +374,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests get_feature resolves typed features from the catalog.
+	 * Tests get_feature resolves typed features from the portal.
 	 *
 	 * @return void
 	 */
-	public function test_get_feature_resolves_typed_features_from_catalog(): void {
+	public function test_get_feature_resolves_typed_features_from_portal(): void {
 		update_option( License_Repository::KEY_OPTION_NAME, 'lwsw-unified-kad-pro-2026' );
 
 		$this->bind_fixture_clients();
@@ -576,11 +576,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that get_features returns a WP_Error when the catalog errors.
+	 * Tests that get_features returns a WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_get_features_returns_wp_error_when_catalog_errors(): void {
+	public function test_get_features_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -598,11 +598,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that is_enabled returns WP_Error when the catalog returns a WP_Error.
+	 * Tests that is_enabled returns WP_Error when the portal returns a WP_Error.
 	 *
 	 * @return void
 	 */
-	public function test_is_enabled_returns_wp_error_when_catalog_errors(): void {
+	public function test_is_enabled_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -689,11 +689,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests is_available returns WP_Error when the catalog errors.
+	 * Tests is_available returns WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_is_available_returns_wp_error_when_catalog_errors(): void {
+	public function test_is_available_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -711,16 +711,16 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that exists returns true for a feature in the catalog.
+	 * Tests that exists returns true for a feature in the portal.
 	 *
 	 * @return void
 	 */
-	public function test_exists_returns_true_for_catalog_feature(): void {
+	public function test_exists_returns_true_for_portal_feature(): void {
 		$this->assertTrue( $this->manager->exists( 'test-feature' ) );
 	}
 
 	/**
-	 * Tests that exists returns false for a feature not in the catalog.
+	 * Tests that exists returns false for a feature not in the portal.
 	 *
 	 * @return void
 	 */
@@ -729,11 +729,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that exists returns WP_Error when the catalog errors.
+	 * Tests that exists returns WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_exists_returns_wp_error_when_catalog_errors(): void {
+	public function test_exists_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -751,11 +751,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that get returns null when the catalog errors.
+	 * Tests that get returns null when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_get_returns_null_when_catalog_errors(): void {
+	public function test_get_returns_null_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -821,11 +821,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that enable returns a WP_Error when the catalog errors.
+	 * Tests that enable returns a WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_enable_returns_wp_error_when_catalog_errors(): void {
+	public function test_enable_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(
@@ -845,11 +845,11 @@ final class ManagerTest extends HarborTestCase {
 	}
 
 	/**
-	 * Tests that disable returns a WP_Error when the catalog errors.
+	 * Tests that disable returns a WP_Error when the portal errors.
 	 *
 	 * @return void
 	 */
-	public function test_disable_returns_wp_error_when_catalog_errors(): void {
+	public function test_disable_returns_wp_error_when_portal_errors(): void {
 		$error = new WP_Error( 'api_error', 'Could not fetch features.' );
 
 		$repository = $this->makeEmpty(

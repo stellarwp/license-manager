@@ -5,13 +5,13 @@ namespace LiquidWeb\Harbor\Licensing\Results;
 use DateTimeImmutable;
 use LiquidWeb\Harbor\Licensing\Enums\Validation_Status;
 use LiquidWeb\Harbor\Utils\Cast;
-use LiquidWeb\LicensingApiClient\Responses\Product\ValueObjects\CatalogEntry;
+use LiquidWeb\LicensingApiClient\Responses\Product\ValueObjects\PortalEntry;
 
 /**
- * A single product entry from the Liquid Web v1 licensing catalog.
+ * A single product entry from the Liquid Web v1 licensing portal.
  *
  * Immutable value object hydrated from the GET /stellarwp/v4/products response.
- * Mirrors the licensing service's Catalog_Entry_Result API response shape.
+ * Mirrors the licensing service's Portal_Entry_Result API response shape.
  *
  * @since 1.0.0
  *
@@ -66,15 +66,15 @@ final class Product_Entry {
 	}
 
 	/**
-	 * Creates a Product_Entry from a CatalogEntry returned by the licensing API client.
+	 * Creates a Product_Entry from a PortalEntry returned by the licensing API client.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param CatalogEntry $entry The catalog entry from the API client.
+	 * @param PortalEntry $entry The portal entry from the API client.
 	 *
 	 * @return self
 	 */
-	public static function from_catalog_entry( CatalogEntry $entry ): self {
+	public static function from_portal_entry( PortalEntry $entry ): self {
 		return new self(
 			[
 				'product_slug'       => $entry->productSlug,

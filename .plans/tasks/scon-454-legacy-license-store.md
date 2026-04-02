@@ -14,7 +14,7 @@ This means legacy license data can't be refetched, doesn't participate in loadin
 
 ## Proposed solution
 
-Wire the legacy license endpoint into the existing `@wordpress/data` store following the same pattern as features, catalog, and license. This is read-only, no mutations needed.
+Wire the legacy license endpoint into the existing `@wordpress/data` store following the same pattern as features, portal, and license. This is read-only, no mutations needed.
 
 - Add a `LegacyLicense` type in `types/api.ts` matching the endpoint response shape (key, slug, name, brand, is_active, page_url, expires_at).
 - Add a `legacyLicenses` slice to the store state, with a `RECEIVE_LEGACY_LICENSES` action, reducer case, `getLegacyLicenses` selector, and `getLegacyLicenses` resolver that fetches from the REST endpoint.

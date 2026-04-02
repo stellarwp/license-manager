@@ -10,7 +10,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { HarborError, ErrorCode } from '@/errors';
-import type { Feature, LegacyLicense, ProductCatalog, License } from '@/types/api';
+import type { Feature, LegacyLicense, ProductPortal, License } from '@/types/api';
 import type { Thunk } from './types';
 import { forwardResolver, forwardResolverWithoutArgs } from '@/lib/forward-resolver';
 
@@ -68,33 +68,33 @@ export const hasLegacyLicense = forwardResolverWithoutArgs('getLegacyLicenses');
 export const hasLegacyLicenses = forwardResolver('getLegacyLicenses');
 
 // ---------------------------------------------------------------------------
-// Catalog
+// Portal
 // ---------------------------------------------------------------------------
 
 /**
- * Fetches all product catalogs from the REST API and stores them.
- * Triggered automatically when getCatalog is first called.
+ * Fetches all product portals from the REST API and stores them.
+ * Triggered automatically when getPortal is first called.
  */
-export const getCatalog =
+export const getPortal =
 	(): Thunk =>
 	async ({ dispatch }) => {
 		try {
-			const catalogs = await apiFetch<ProductCatalog[]>({
-				path: '/liquidweb/harbor/v1/catalog',
+			const portals = await apiFetch<ProductPortal[]>({
+				path: '/liquidweb/harbor/v1/portal',
 			});
-			dispatch.receiveCatalog(catalogs);
+			dispatch.receivePortal(portals);
 		} catch (err) {
 			throw await HarborError.wrap(
 				err,
-				ErrorCode.CatalogFetchFailed,
-				__('Liquid Web Software Manager failed to load the product catalog.', '%TEXTDOMAIN%')
+				ErrorCode.PortalFetchFailed,
+				__('Liquid Web Software Manager failed to load the product portal.', '%TEXTDOMAIN%')
 			);
 		}
 	};
 
-export const getProductCatalog = forwardResolverWithoutArgs('getCatalog');
-export const getProductTiers   = forwardResolverWithoutArgs('getCatalog');
-export const getCatalogTier    = forwardResolverWithoutArgs('getCatalog');
+export const getProductPortal = forwardResolverWithoutArgs('getPortal');
+export const getProductTiers   = forwardResolverWithoutArgs('getPortal');
+export const getPortalTier    = forwardResolverWithoutArgs('getPortal');
 
 // ---------------------------------------------------------------------------
 // License

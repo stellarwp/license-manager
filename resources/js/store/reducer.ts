@@ -6,32 +6,32 @@
 import { combineReducers } from '@wordpress/data';
 import type {
 	Action,
-	CatalogState,
+	PortalState,
 	FeaturesState,
 	LegacyLicensesState,
 	LicenseState,
 } from './types';
 
-export const reducer = combineReducers({ features, license, catalog, legacyLicenses });
+export const reducer = combineReducers({ features, license, portal, legacyLicenses });
 
 // ---------------------------------------------------------------------------
-// Catalog
+// Portal
 // ---------------------------------------------------------------------------
 
-const CATALOG_DEFAULT: CatalogState = {
+const PORTAL_DEFAULT: PortalState = {
 	byProductSlug: {},
 };
 
-function catalog(
-	state: CatalogState = CATALOG_DEFAULT,
+function portal(
+	state: PortalState = PORTAL_DEFAULT,
 	action: Action
-): CatalogState {
+): PortalState {
 	switch (action.type) {
-		case 'RECEIVE_CATALOG': {
+		case 'RECEIVE_PORTAL': {
 			return {
 				...state,
 				byProductSlug: Object.fromEntries(
-					action.catalogs.map((c) => [c.product_slug, c])
+					action.portals.map((c) => [c.product_slug, c])
 				),
 			};
 		}

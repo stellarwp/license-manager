@@ -16,7 +16,7 @@ class Config {
 	public const DEFAULT_LICENSING_BASE_URL = 'https://licensing.stellarwp.com';
 
 	/**
-	 * The default base URL for the Commerce Portal (catalog API).
+	 * The default base URL for the Commerce Portal (portal API).
 	 *
 	 * @since 1.0.0
 	 */
@@ -41,7 +41,7 @@ class Config {
 	protected static $licensing_base_url = self::DEFAULT_LICENSING_BASE_URL;
 
 	/**
-	 * The base URL for the Commerce Portal (catalog API).
+	 * The base URL for the Commerce Portal (portal API).
 	 *
 	 * @since 1.0.0
 	 *
@@ -135,7 +135,7 @@ class Config {
 	}
 
 	/**
-	 * Set the base URL for the Commerce Portal (catalog API).
+	 * Set the base URL for the Commerce Portal (portal API).
 	 *
 	 * @since 1.0.0
 	 *
@@ -148,7 +148,7 @@ class Config {
 	}
 
 	/**
-	 * Get the base URL for the Commerce Portal (catalog API).
+	 * Get the base URL for the Commerce Portal (portal API).
 	 *
 	 * @since 1.0.0
 	 *

@@ -48,7 +48,7 @@ interface BaseFeature {
     /**
      * Whether the user's licensed tier covers this feature's minimum tier.
      */
-    in_catalog_tier: boolean;
+    in_portal_tier: boolean;
     /**
      * URL to documentation or learn-more page.
      */
@@ -129,13 +129,13 @@ export type Feature = PluginFeature | ThemeFeature;
 export type InstallableFeature = PluginFeature | ThemeFeature;
 
 /**
- * Describes the relationship between a feature's catalog tier position
+ * Describes the relationship between a feature's portal tier position
  * and what the license's capabilities array actually grants.
  *
- * - `'bonus'`   — Available (is_available: true) but outside the user's catalog
- *                 tier (in_catalog_tier: false). Promotional access.
+ * - `'bonus'`   — Available (is_available: true) but outside the user's portal
+ *                 tier (in_portal_tier: false). Promotional access.
  *
- * - `'revoked'` — In the user's catalog tier (in_catalog_tier: true) but not
+ * - `'revoked'` — In the user's portal tier (in_portal_tier: true) but not
  *                 available (is_available: false). Access was removed or not provisioned.
  *
  * - `null`      — No mismatch. Feature state is consistent with the user's tier.
@@ -145,19 +145,19 @@ export type InstallableFeature = PluginFeature | ThemeFeature;
 export type FeatureMismatchType = 'bonus' | 'revoked' | null;
 
 // ---------------------------------------------------------------------------
-// Catalog types — GET /liquidweb/harbor/v1/catalog
+// Portal types — GET /liquidweb/harbor/v1/portal
 // ---------------------------------------------------------------------------
 
 /**
- * A raw catalog feature entry before feature resolution.
+ * A raw portal feature entry before feature resolution.
  *
- * Field names match the Catalog_Feature PHP class and the catalog REST
+ * Field names match the Portal_Feature PHP class and the portal REST
  * endpoint response. These differ from the resolved Feature types above
  * (e.g. slug + kind vs slug + type, minimum_tier vs tier).
  *
  * @since 1.0.0
  */
-export interface CatalogFeature {
+export interface PortalFeature {
     /**
      * Unique feature slug.
      */
@@ -217,11 +217,11 @@ export interface CatalogFeature {
 }
 
 /**
- * A tier entry from the product catalog.
+ * A tier entry from the product portal.
  *
  * @since 1.0.0
  */
-export interface CatalogTier {
+export interface PortalTier {
     /**
      * Tier slug identifier.
      */
@@ -257,11 +257,11 @@ export interface CatalogTier {
 }
 
 /**
- * A product catalog entry as returned by GET /liquidweb/harbor/v1/catalog.
+ * A product portal entry as returned by GET /liquidweb/harbor/v1/portal.
  *
  * @since 1.0.0
  */
-export interface ProductCatalog {
+export interface ProductPortal {
     /**
      * Product ID from the Commerce Portal.
      */
@@ -277,11 +277,11 @@ export interface ProductCatalog {
     /**
      * Available tiers ordered by rank.
      */
-    tiers: CatalogTier[];
+    tiers: PortalTier[];
     /**
-     * Raw catalog features for this product.
+     * Raw portal features for this product.
      */
-    features: CatalogFeature[];
+    features: PortalFeature[];
 }
 
 // ---------------------------------------------------------------------------
@@ -291,7 +291,7 @@ export interface ProductCatalog {
 /**
  * A product with tiered plans.
  *
- * Tier definitions come from the catalog API (CatalogTier[]) — not stored here.
+ * Tier definitions come from the portal API (PortalTier[]) — not stored here.
  *
  * @since 1.0.0
  */

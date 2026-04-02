@@ -8,7 +8,7 @@ use WP_Error;
 /**
  * Manages in-memory caching and delegates feature resolution to Resolve_Feature_Collection.
  *
- * Resolution is cheap (iterates cached catalog and licensing arrays), so this
+ * Resolution is cheap (iterates cached portal and licensing arrays), so this
  * class only caches the result for the current request. Fresh requests always
  * resolve from the upstream caches, which are the single source of truth.
  *

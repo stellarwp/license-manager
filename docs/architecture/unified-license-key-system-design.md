@@ -101,5 +101,5 @@ Validation returns that no seats are available. The site shows the customer thei
 | Releasing a seat              | Portal          | Requires authenticated user, abuse prevention   |
 | Managing key associations     | Portal          | Administrative operation                        |
 | Checking entitlement status   | Licensing       | Read-only periodic check                        |
-| Feature/addon catalog         | Commerce Portal | Maps license entitlements to available features |
+| Feature/addon portal         | Commerce Portal | Maps license entitlements to available features |
 | Product updates/releases      | TBD             | Separate concern, not covered here              |

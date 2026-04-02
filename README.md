@@ -98,9 +98,9 @@ Start with [Harbor Overview](/docs/harbor.md) for the full architecture.
 ### Subsystems
 
 - [Licensing](/docs/subsystems/licensing.md) — Key discovery, API responses, validation workflows, caching.
-- [Catalog](/docs/subsystems/catalog.md) — Product families, tiers, features, the Commerce Portal API.
+- [Portal](/docs/subsystems/portal.md) — Product families, tiers, features, the Commerce Portal API.
 - [Features](/docs/subsystems/features.md) — Feature types, resolution, strategies, Manager API.
-- [Cron](/docs/subsystems/cron.md) — Scheduled refresh of catalog and licensing data.
+- [Cron](/docs/subsystems/cron.md) — Scheduled refresh of portal and licensing data.
 - [Frontend](/docs/subsystems/frontend.md) — React app, @wordpress/data store, component hierarchy, CSS scoping.
 - [Notices](/docs/subsystems/notices.md) — Admin notices, legacy license warnings, persistent dismissal.
 
@@ -113,7 +113,7 @@ Start with [Harbor Overview](/docs/harbor.md) for the full architecture.
 ### API Reference
 
 - [REST: License](/docs/api/rest/license.md) — License endpoints.
-- [REST: Catalog](/docs/api/rest/catalog.md) — Catalog endpoints.
+- [REST: Portal](/docs/api/rest/portal.md) — Portal endpoints.
 - [REST: Features](/docs/api/rest/features.md) — Feature endpoints.
 - [REST: Legacy Licenses](/docs/api/rest/legacy-licenses.md) — Legacy license endpoints.
 - [Liquid Web Licensing v1](/docs/api/liquid-web-software-licensing-v1.md) — External licensing API consumed by Harbor.

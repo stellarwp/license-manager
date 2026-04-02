@@ -74,7 +74,7 @@ class Theme_Handler {
 	/**
 	 * Filters the themes_api response for Theme features.
 	 *
-	 * Resolves update data by joining the Feature_Repository and Catalog.
+	 * Resolves update data by joining the Feature_Repository and Portal.
 	 *
 	 * @since 1.0.0
 	 *
