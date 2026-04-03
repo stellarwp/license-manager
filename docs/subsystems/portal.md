@@ -214,7 +214,7 @@ Download URLs for exclusive (non-WordPress.org) features are not stored in the c
 {herald_base_url}/download/{slug}/latest/{license_key}/zip?site={domain}
 ```
 
-The builder reads the license key from `License_Repository` and the site domain from `Site\Data`. If either is unavailable (no key stored, or empty domain), it returns an empty string. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
+The builder reads the license key via the `License_Key_Provider` contract (satisfied by `License_Repository`) and the site domain from `Site\Data`. If either is unavailable (no key stored, or empty domain), it returns an empty string. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
 
 `Resolve_Update_Data` calls `Herald_Url_Builder::build()` after assembling each feature's update data array, overwriting the `package` field that `Plugin::get_update_data()` and `Theme::get_update_data()` intentionally leave empty.
 

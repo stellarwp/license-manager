@@ -3,7 +3,7 @@
 namespace LiquidWeb\Harbor\Tests\Portal;
 
 use LiquidWeb\Harbor\Config;
-use LiquidWeb\Harbor\Licensing\Repositories\License_Repository;
+use LiquidWeb\Harbor\Licensing\Contracts\License_Key_Provider;
 use LiquidWeb\Harbor\Portal\Herald_Url_Builder;
 use LiquidWeb\Harbor\Site\Data;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
@@ -12,7 +12,7 @@ final class Herald_Url_BuilderTest extends HarborTestCase {
 
 	private const TEST_HERALD_BASE = 'https://herald.test.example.com';
 	private const TEST_LICENSE_KEY = 'LWSW-TEST-KEY-9999';
-	private const TEST_DOMAIN      = 'mysite.example.com';
+	private const TEST_DOMAIN      = 'site.example.com';
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -26,7 +26,7 @@ final class Herald_Url_BuilderTest extends HarborTestCase {
 
 	private function make_builder( ?string $license_key, string $domain ): Herald_Url_Builder {
 		$license_repository = $this->makeEmpty(
-			License_Repository::class,
+			License_Key_Provider::class,
 			[ 'get_key' => $license_key ]
 		);
 
