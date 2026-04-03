@@ -111,8 +111,6 @@ Class names in this subsystem follow a two-layer split:
 - **`Portal_*`** names belong to the transport layer — classes that represent the external service boundary (`Portal_Client`, `Http_Client`, `Fixture_Client`). Named for where the data comes from.
 - **`Catalog_*`** names belong to the data layer — classes that represent or store catalog data (`Catalog_Repository`, `Catalog_Collection`, `Catalog_Feature`, `Catalog_Tier`). Named for what the data is.
 
-`Catalog_Repository` is named after what it manages (catalog data), not where it fetches from. This keeps the data-layer naming stable even if the upstream service or transport changes.
-
 ## API Client
 
 The `Portal_Client` contract defines the integration with the Commerce Portal API. Currently it exposes a single operation:

@@ -2,9 +2,9 @@
 
 namespace LiquidWeb\Harbor\Tests\Catalog;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Clients\Portal_Client;
-use LiquidWeb\Harbor\Catalog\Clients\Http_Client;
+use LiquidWeb\Harbor\Portal\Catalog_Repository;
+use LiquidWeb\Harbor\Portal\Clients\Portal_Client;
+use LiquidWeb\Harbor\Portal\Clients\Http_Client;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
 
 final class ProviderTest extends HarborTestCase {

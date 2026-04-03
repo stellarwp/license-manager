@@ -2,12 +2,12 @@
 
 namespace LiquidWeb\Harbor\Tests\Catalog;
 
-use LiquidWeb\Harbor\Catalog\Catalog_Collection;
-use LiquidWeb\Harbor\Catalog\Catalog_Repository;
-use LiquidWeb\Harbor\Catalog\Clients\Portal_Client;
-use LiquidWeb\Harbor\Catalog\Clients\Fixture_Client;
-use LiquidWeb\Harbor\Catalog\Results\Product_Catalog;
-use LiquidWeb\Harbor\Catalog\Error_Code;
+use LiquidWeb\Harbor\Portal\Catalog_Collection;
+use LiquidWeb\Harbor\Portal\Catalog_Repository;
+use LiquidWeb\Harbor\Portal\Clients\Portal_Client;
+use LiquidWeb\Harbor\Portal\Clients\Fixture_Client;
+use LiquidWeb\Harbor\Portal\Results\Product_Catalog;
+use LiquidWeb\Harbor\Portal\Error_Code;
 use LiquidWeb\Harbor\Tests\Traits\With_Uopz;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
 use WP_Error;
