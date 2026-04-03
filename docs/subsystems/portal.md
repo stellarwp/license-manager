@@ -50,7 +50,6 @@ Features are the individual plugins and themes that make up a product family. Ea
 | `minimum_tier`      | string         | Tier slug required to access this feature                                                                     |
 | `plugin_file`       | string\|null   | Plugin file path relative to plugins dir (e.g., `kadence-blocks-pro/kadence-blocks-pro.php`). Null for themes |
 | `wporg_slug`        | string\|null   | WordPress.org slug for `plugins_api()`. Non-null means the feature is on WordPress.org                        |
-| `download_url`      | string\|null   | Download URL for features not on WordPress.org                                                                |
 | `version`           | string\|null   | Latest available version from the Commerce Portal                                                             |
 | `release_date`      | string\|null   | Release date of the latest version (ISO 8601)                                                                 |
 | `changelog`         | string\|null   | Changelog HTML for the latest version, consistent with `plugins_api()` sections                               |
@@ -65,9 +64,9 @@ Features are the individual plugins and themes that make up a product family. Ea
 
 Features come in two types, each representing a different kind of deliverable:
 
-**`plugin`**: an installable WordPress plugin. Has a `plugin_file` (plugin file path) and either a `download_url` (for exclusive features) or is available on WordPress.org (`wporg_slug` is non-null). These are features that need to be downloaded, installed, and activated.
+**`plugin`**: an installable WordPress plugin. Has a `plugin_file` (plugin file path) and either a Herald download URL (built at runtime for exclusive features) or is available on WordPress.org (`wporg_slug` is non-null). These are features that need to be downloaded, installed, and activated.
 
-**`theme`**: an installable WordPress theme. The `slug` doubles as the theme stylesheet (directory name). Has either a `download_url` (for exclusive features) or is available on WordPress.org (`wporg_slug` is non-null).
+**`theme`**: an installable WordPress theme. The `slug` doubles as the theme stylesheet (directory name). Has either a Herald download URL (built at runtime for exclusive features) or is available on WordPress.org (`wporg_slug` is non-null).
 
 #### Tier Gating
 
@@ -206,6 +205,18 @@ The catalog describes what exists. It does not know:
 | What version is installed on this site?      | [Features](features.md) (reads from disk via Installable) |
 
 The catalog is the menu. Licensing is the receipt. Feature resolution is the waiter who checks both before serving.
+
+## Herald URL Builder
+
+Download URLs for exclusive (non-WordPress.org) features are not stored in the catalog response. Instead, `Herald_Url_Builder` constructs them at runtime using local data:
+
+```
+{herald_base_url}/download/{slug}/latest/{license_key}/zip?site={domain}
+```
+
+The builder reads the license key from `License_Repository` and the site domain from `Site\Data`. If either is unavailable (no key stored, or empty domain), it returns an empty string. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
+
+`Resolve_Update_Data` calls `Herald_Url_Builder::build()` after assembling each feature's update data array, overwriting the `package` field that `Plugin::get_update_data()` and `Theme::get_update_data()` intentionally leave empty.
 
 ## What the Portal Does Not Do
 
