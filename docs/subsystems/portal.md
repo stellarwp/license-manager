@@ -2,7 +2,7 @@
 
 ## Summary
 
-The Portal subsystem is how a WordPress site learns the full shape of a product family: what tiers exist, what features are available at each tier, and how to acquire or install those features. Where Licensing tells the site "what does this key cover?", the Portal tells the site "what does this product offer?"
+The Portal subsystem is how a WordPress site learns the full shape of a product family: what tiers exist, what features are available at each tier, and how to acquire or install those features. Where Licensing tells the site "what does this key cover?", the Portal catalog tells the site "what does this product offer?"
 
 The catalog data comes from the Commerce Portal API. It is not license-specific. It describes the complete product catalog regardless of what a particular key is entitled to. The intersection of catalog data and licensing data is what determines what a site can actually use.
 
@@ -118,10 +118,10 @@ Tests use a fixture PSR-18 client that serves local JSON from `tests/_data/catal
 
 ## Error Codes
 
-| Code                                 | Constant            | Meaning                                   |
-| ------------------------------------ | ------------------- | ----------------------------------------- |
-| `lw-harbor-portal-product-not-found` | `PRODUCT_NOT_FOUND` | Requested product slug not in the catalog |
-| `lw-harbor-portal-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be parsed           |
+| Code                                  | Constant            | Meaning                                   |
+| ------------------------------------- | ------------------- | ----------------------------------------- |
+| `lw-harbor-catalog-product-not-found` | `PRODUCT_NOT_FOUND` | Requested product slug not in the catalog |
+| `lw-harbor-catalog-invalid-response`  | `INVALID_RESPONSE`  | API response couldn't be parsed           |
 
 ## Catalog Shape
 

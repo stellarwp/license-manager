@@ -16,7 +16,7 @@ final class Error_Code {
 	 *
 	 * @var string
 	 */
-	public const PRODUCT_NOT_FOUND = 'lw-harbor-portal-product-not-found';
+	public const PRODUCT_NOT_FOUND = 'lw-harbor-catalog-product-not-found';
 
 	/**
 	 * The catalog response could not be decoded.
@@ -25,5 +25,5 @@ final class Error_Code {
 	 *
 	 * @var string
 	 */
-	public const INVALID_RESPONSE = 'lw-harbor-portal-invalid-response';
+	public const INVALID_RESPONSE = 'lw-harbor-catalog-invalid-response';
 }

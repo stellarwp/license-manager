@@ -2,9 +2,9 @@
 
 ## Summary
 
-The Features subsystem is the resolved output of combining [Portal](portal.md) data with [Licensing](licensing.md) data. The catalog says "Kadence includes Blocks Pro at the Basic tier." Licensing says "this key has Kadence at the Pro tier." Features joins the two and concludes: "Blocks Pro is available, and here's how to install it."
+The Features subsystem is the resolved output of combining [Portal](portal.md) catalog data with [Licensing](licensing.md) data. The catalog says "Kadence includes Blocks Pro at the Basic tier." Licensing says "this key has Kadence at the Pro tier." Features joins the two and concludes: "Blocks Pro is available, and here's how to install it."
 
-Features are not a third data source. They are the computed intersection of what exists (catalog) and what's entitled (licensing), plus local state tracking for what's actually enabled on the site.
+Features are not a third data source. They are the computed intersection of what exists (portal catalog) and what's entitled (licensing), plus local state tracking for what's actually enabled on the site.
 
 > **Development status.** The resolution algorithm, strategy pattern, and caching approach are stable. The specific data shapes that feed into resolution (catalog features, tier slugs, licensing responses) are still being finalized.
 

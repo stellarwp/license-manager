@@ -65,7 +65,7 @@ When the catalog has not been fetched yet, returns an empty array `[]`.
 
 | HTTP | Code                                 | Meaning                          |
 | ---- | ------------------------------------ | -------------------------------- |
-| 502  | `lw-harbor-portal-invalid-response` | Catalog API response was invalid |
+| 502  | `lw-harbor-catalog-invalid-response` | Catalog API response was invalid |
 
 ## POST /liquidweb/harbor/v1/catalog/refresh
 
@@ -79,4 +79,4 @@ Same shape as `GET /catalog`.
 
 | HTTP | Code                                 | Meaning                          |
 | ---- | ------------------------------------ | -------------------------------- |
-| 502  | `lw-harbor-portal-invalid-response` | Catalog API response was invalid |
+| 502  | `lw-harbor-catalog-invalid-response` | Catalog API response was invalid |
