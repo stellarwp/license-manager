@@ -62,11 +62,27 @@ export function HarborDataProvider( { children }: { children: ReactNode } ) {
         [],
     );
 
+    // Track which resolvers have ever completed so that background re-fetches
+    // (e.g. after invalidateResolution following a license refresh) don't
+    // re-trigger the loading state. Once a resolver has resolved, subsequent
+    // re-fetches are treated as stale-while-revalidate.
+    const hasEverResolvedRef = useRef( {
+        license:        false,
+        features:       false,
+        catalog:        false,
+        legacyLicenses: false,
+    } );
+
+    if ( result.license.hasResolved )        hasEverResolvedRef.current.license = true;
+    if ( result.features.hasResolved )       hasEverResolvedRef.current.features = true;
+    if ( result.catalog.hasResolved )        hasEverResolvedRef.current.catalog = true;
+    if ( result.legacyLicenses.hasResolved ) hasEverResolvedRef.current.legacyLicenses = true;
+
     const isLoading =
-        result.license.isResolving ||
-        result.features.isResolving ||
-        result.catalog.isResolving ||
-        result.legacyLicenses.isResolving;
+        ( result.license.isResolving        && ! hasEverResolvedRef.current.license ) ||
+        ( result.features.isResolving       && ! hasEverResolvedRef.current.features ) ||
+        ( result.catalog.isResolving        && ! hasEverResolvedRef.current.catalog ) ||
+        ( result.legacyLicenses.isResolving && ! hasEverResolvedRef.current.legacyLicenses );
 
     useEffect( () => {
         const found = findErrors( result );
