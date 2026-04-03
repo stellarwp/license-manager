@@ -2,6 +2,7 @@
 
 namespace LiquidWeb\Harbor\Features\Contracts;
 
+use LiquidWeb\Harbor\Portal\Herald_Url_Builder;
 use LiquidWeb\Harbor\Portal\Results\Catalog_Feature;
 
 /**
@@ -55,14 +56,15 @@ interface Installable {
 	 *
 	 * Each type includes common fields plus type-specific fields (e.g. plugin_file,
 	 * installed_version) so the handler does not need an extra feature lookup.
-	 * The `package` field is set to an empty string — Resolve_Update_Data overwrites
-	 * it with the Herald download URL after calling this method.
+	 * The `package` field is populated by calling Herald_Url_Builder::build() with
+	 * the feature slug.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Feature $catalog_feature The catalog entry providing version metadata.
+	 * @param Catalog_Feature    $catalog_feature The catalog entry providing version metadata.
+	 * @param Herald_Url_Builder $url_builder     Builder for Herald download URLs.
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function get_update_data( Catalog_Feature $catalog_feature ): array;
+	public function get_update_data( Catalog_Feature $catalog_feature, Herald_Url_Builder $url_builder ): array;
 }

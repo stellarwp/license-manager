@@ -70,12 +70,13 @@ final class Herald_Url_Builder {
 			return '';
 		}
 
-		return Config::get_herald_base_url()
+		$url = Config::get_herald_base_url()
 			. '/download/'
 			. rawurlencode( $slug )
 			. '/latest/'
 			. rawurlencode( $license_key )
-			. '/zip?site='
-			. rawurlencode( $domain );
+			. '/zip';
+
+		return add_query_arg( 'site', $domain, $url );
 	}
 }

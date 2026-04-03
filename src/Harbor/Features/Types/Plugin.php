@@ -2,6 +2,7 @@
 
 namespace LiquidWeb\Harbor\Features\Types;
 
+use LiquidWeb\Harbor\Portal\Herald_Url_Builder;
 use LiquidWeb\Harbor\Portal\Results\Catalog_Feature;
 use LiquidWeb\Harbor\Features\Contracts\Installable;
 use LiquidWeb\Harbor\Utils\Cast;
@@ -95,17 +96,17 @@ final class Plugin extends Feature implements Installable {
 	/**
 	 * Builds the complete update data array for this Plugin feature.
 	 *
-	 * The `package` field is intentionally left empty — the Herald download URL
-	 * is constructed by Resolve_Update_Data, which has access to the license key
-	 * and site domain required to build it.
+	 * The `package` field is populated by the Herald_Url_Builder using the feature
+	 * slug, license key, and site domain.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Feature $catalog_feature The catalog entry providing version metadata.
+	 * @param Catalog_Feature    $catalog_feature The catalog entry providing version metadata.
+	 * @param Herald_Url_Builder $url_builder     Builder for Herald download URLs.
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function get_update_data( Catalog_Feature $catalog_feature ): array {
+	public function get_update_data( Catalog_Feature $catalog_feature, Herald_Url_Builder $url_builder ): array {
 		$installed_version = $this->get_installed_version() ?? '';
 		$catalog_version   = $catalog_feature->get_version() ?? '';
 
@@ -113,7 +114,7 @@ final class Plugin extends Feature implements Installable {
 			'name'              => $this->get_name(),
 			'slug'              => $this->get_slug(),
 			'version'           => $catalog_version,
-			'package'           => '',
+			'package'           => $url_builder->build( $this->get_slug() ),
 			'url'               => $this->get_documentation_url(),
 			'author'            => '',
 			'sections'          => [

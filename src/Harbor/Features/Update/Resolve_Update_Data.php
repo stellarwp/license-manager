@@ -15,8 +15,9 @@ use WP_Error;
  * Resolves update data by joining the Feature_Repository and Catalog.
  *
  * The Feature_Repository determines which features the site is licensed for
- * (availability). The Catalog provides version metadata. The Herald download
- * URL is constructed here from the feature slug, license key, and site domain.
+ * (availability). The Catalog provides version metadata. The Herald_Url_Builder
+ * is passed through to each feature's get_update_data() so the package URL is
+ * built there, keeping the responsibility with the feature type.
  *
  * Only features where is_available() returns true are included,
  * ensuring the update API only serves updates the site is licensed for.
@@ -82,7 +83,8 @@ class Resolve_Update_Data {
 	 * Fetches available Installable features of the given type and transforms them into update data.
 	 *
 	 * Joins feature availability from the Feature_Repository with version metadata
-	 * from the Catalog_Repository, then constructs a Herald download URL for each feature.
+	 * from the Catalog_Repository. The Herald_Url_Builder is passed to each feature's
+	 * get_update_data() so the package URL is built there.
 	 *
 	 * @since 1.0.0
 	 *
@@ -129,9 +131,7 @@ class Resolve_Update_Data {
 				continue;
 			}
 
-			$update_data            = $feature->get_update_data( $catalog_feature );
-			$update_data['package'] = $this->herald_url_builder->build( $slug );
-			$updates[ $slug ]       = $update_data;
+			$updates[ $slug ] = $feature->get_update_data( $catalog_feature, $this->herald_url_builder );
 		}
 
 		return $updates;
