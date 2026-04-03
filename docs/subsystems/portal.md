@@ -6,6 +6,8 @@ The Portal subsystem is how a WordPress site learns the full shape of a product 
 
 The catalog data comes from the Commerce Portal API. It is not license-specific. It describes the complete product catalog regardless of what a particular key is entitled to. The intersection of catalog data and licensing data is what determines what a site can actually use.
 
+> **Development status.** The catalog structure described here represents the data we have identified that we need, not a finalized contract. The actual field names, tier slugs, tier names, and response shape are still being negotiated with the Portal team. Fixture data in `tests/_data/catalog.json` is a working prototype, not a spec.
+
 ## What the Catalog Contains
 
 ### Products
@@ -77,7 +79,7 @@ The catalog defines what tier a feature requires. Licensing defines what tier th
 
 ### Catalog Repository
 
-The `Catalog_Repository` wraps the portal client with option-backed caching. The cache persists until explicitly invalidated.
+The `Catalog_Repository` wraps the portal client with option-backed caching. The cache persists until explicitly invalidated. It is cleared automatically when the unified license key changes (`lw-harbor/unified_license_key_changed`), and can be force-refreshed via `refresh()`.
 
 ```
 Catalog_Repository::get()
@@ -101,6 +103,15 @@ The portal subsystem uses two typed collection classes:
 **`Tier_Collection`** holds `Catalog_Tier` objects within a product, keyed by tier slug. Tiers are automatically sorted by rank on construction.
 
 Both collections prevent duplicate keys. Adding an item with an existing key returns the existing item without overwriting.
+
+## Naming Conventions
+
+Class names in this subsystem follow a two-layer split:
+
+- **`Portal_*`** names belong to the transport layer — classes that represent the external service boundary (`Portal_Client`, `Http_Client`, `Fixture_Client`). Named for where the data comes from.
+- **`Catalog_*`** names belong to the data layer — classes that represent or store catalog data (`Catalog_Repository`, `Catalog_Collection`, `Catalog_Feature`, `Catalog_Tier`). Named for what the data is.
+
+`Catalog_Repository` is named after what it manages (catalog data), not where it fetches from. This keeps the data-layer naming stable even if the upstream service or transport changes.
 
 ## API Client
 
