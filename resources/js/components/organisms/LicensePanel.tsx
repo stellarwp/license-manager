@@ -61,13 +61,14 @@ export function LicensePanel() {
     const licensedSlugs  = new Set( licenseProducts.map( ( lp ) => lp.product_slug ) );
     const upsellProducts = PRODUCTS.filter( ( p ) => ! licensedSlugs.has( p.slug ) );
 
-    const handleRemove = async () => {
+    const handleRemove = async (): Promise<HarborError | null> => {
         const result = await deleteLicense();
         if ( result instanceof HarborError ) {
             addToast( result.message, 'error' );
-        } else {
-            addToast( __( 'License removed.', '%TEXTDOMAIN%' ), 'default' );
+            return result;
         }
+        addToast( __( 'License removed.', '%TEXTDOMAIN%' ), 'default' );
+        return null;
     };
 
     const handleRefresh = async () => {
