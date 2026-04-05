@@ -171,20 +171,20 @@ export function LicenseKeyInput( {
 				<div className="flex items-center justify-between">
 					<button
 						type="button"
-						onClick={ onCancel }
-						disabled={ ! canModifyLicense }
-						className="text-[11px] text-muted-foreground transition-colors hover:opacity-75 disabled:opacity-50"
-					>
-						{ __( 'Cancel', '%TEXTDOMAIN%' ) }
-					</button>
-					<button
-						type="button"
 						onClick={ handleRemove }
 						disabled={ ! canModifyLicense }
 						className="flex items-center gap-1 text-[11px] text-destructive transition-colors hover:opacity-75 disabled:opacity-50"
 					>
 						<Trash2 className="w-3 h-3" />
 						{ __( 'Remove license', '%TEXTDOMAIN%' ) }
+					</button>
+					<button
+						type="button"
+						onClick={ onCancel }
+						disabled={ ! canModifyLicense }
+						className="text-[11px] text-muted-foreground transition-colors hover:opacity-75 disabled:opacity-50"
+					>
+						{ __( 'Cancel', '%TEXTDOMAIN%' ) }
 					</button>
 				</div>
 				{ localError && (
