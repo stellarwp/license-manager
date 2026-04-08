@@ -32,11 +32,10 @@ export function ProductSection( { product }: ProductSectionProps ) {
     const isSearching = searchQuery.trim().length > 0;
 
     // Full unfiltered set — used only for header counts so they stay stable.
-    const { hasLicense, licenseProduct, hasActiveLegacy } = useSelect(
+    const { licenseProduct, hasActiveLegacy } = useSelect(
         ( select ) => {
             const licenseProducts = select( harborStore ).getLicenseProducts();
             return {
-                hasLicense:            select( harborStore ).hasLicense(),
                 licenseProduct:        licenseProducts.find( ( lp ) => lp.product_slug === product.slug ) ?? null,
                 hasActiveLegacy:       select( harborStore ).hasActiveLegacyLicenseForProduct( product.slug ),
             };
@@ -77,15 +76,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
                 </span>
             </div>
 
-            { ! hasLicense && (
-                <div className="border border-t-0 rounded-b-lg">
-                    <p className="px-4 py-6 text-sm text-muted-foreground text-center">
-                        { __( 'Add a license to unlock features.', '%TEXTDOMAIN%' ) }
-                    </p>
-                </div>
-            ) }
-
-            { hasLicense && isSearching && ! hasContent && (
+            { isSearching && ! hasContent && (
                 <div className="border border-t-0 rounded-b-lg">
                     <p className="px-4 py-6 text-sm text-muted-foreground text-center">
                         { __( 'No features match your search.', '%TEXTDOMAIN%' ) }
@@ -93,7 +84,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
                 </div>
             ) }
 
-            { hasLicense && ! isSearching && ! hasContent && (
+            { ! isSearching && ! hasContent && (
                 <div className="border border-t-0 rounded-b-lg">
                     <p className="px-4 py-6 text-sm text-muted-foreground text-center">
                         { __( 'No features are available for this product.', '%TEXTDOMAIN%' ) }
@@ -101,7 +92,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
                 </div>
             ) }
 
-            { hasLicense && hasContent && (
+            { hasContent && (
                 <div className="border border-t-0 rounded-b-lg overflow-hidden">
                     { availableFeatures.map( ( feature ) => (
                         <FeatureRow
