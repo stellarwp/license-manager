@@ -1570,12 +1570,6 @@
       background-color: oklch(0.9 0 0) !important;
     }
   }
-  .lw-harbor-ui .md\:text-sm {
-    @media (width >= 48rem) {
-      font-size: var(--text-sm) !important;
-      line-height: var(--lw-harbor-tw-leading, var(--text-sm--line-height)) !important;
-    }
-  }
   .lw-harbor-ui .dark\:border-input {
     .lw-harbor-ui &:is(.dark *) {
       border-color: oklch(0.9 0 0) !important;
