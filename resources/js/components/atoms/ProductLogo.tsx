@@ -6,6 +6,7 @@
  *
  * @package LiquidWeb\Harbor
  */
+import { sprintf, __ } from '@wordpress/i18n';
 import logoGive from '@img/logo-give.svg';
 import logoTheEventsCalendar from '@img/logo-tec.svg';
 import logoLearnDash from '@img/logo-learndash.svg';
@@ -30,21 +31,27 @@ const LOGOS_NOBG: Record<string, string> = {
 };
 
 interface ProductLogoProps {
-    slug:     string;
-    size:     number;
-    variant?: 'default' | 'nobg';
+    slug:        string;
+    size:        number;
+    productName: string;
+    variant?:    'default' | 'nobg';
 }
 
 /**
  * @since 1.0.0
  */
-export function ProductLogo( { slug, size, variant = 'default' }: ProductLogoProps ) {
+export function ProductLogo( { slug, size, productName, variant = 'default' }: ProductLogoProps ) {
     const src = ( variant === 'nobg' ? LOGOS_NOBG : LOGOS )[ slug ];
+
+    /* translators: %s: product name (e.g. "Kadence", "GiveWP") */
+    const alt = sprintf( __( '%s logo', '%TEXTDOMAIN%' ), productName );
 
     if ( ! src ) {
         return (
             <div
                 className="rounded bg-muted shrink-0"
+                role="img"
+                aria-label={ alt }
                 style={ { width: size, height: size } }
             />
         );
@@ -53,7 +60,7 @@ export function ProductLogo( { slug, size, variant = 'default' }: ProductLogoPro
     return (
         <img
             src={ src }
-            alt=""
+            alt={ alt }
             className="shrink-0 rounded"
             style={ { width: size, height: size } }
         />
