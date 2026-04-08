@@ -1489,7 +1489,7 @@ function LicenseKeyInput({
     } else {
       addToast((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('License activated successfully.', '%TEXTDOMAIN%'), 'success');
       setKey('');
-      onSuccess?.();
+      onSuccess();
     }
   };
   const handleRemove = async () => {
@@ -1503,7 +1503,7 @@ function LicenseKeyInput({
     className: "flex gap-2",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_input__WEBPACK_IMPORTED_MODULE_6__.Input, {
       id: "license-key-input",
-      placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('e.g. LWSW-UNIFIED-PRO-2025', '%TEXTDOMAIN%'),
+      placeholder: "LWSW-****-****-****-****-****",
       value: key,
       onChange: e => {
         setKey(e.target.value.toUpperCase());
@@ -2226,7 +2226,8 @@ function LicenseSection({
         isEditing: isEditing,
         onEdit: () => setIsEditing(true),
         onCancel: () => setIsEditing(false),
-        onRemove: handleRemove
+        onRemove: handleRemove,
+        onSuccess: () => setIsEditing(false)
       }), !hasLicense && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
         className: "text-xs text-muted-foreground leading-relaxed mt-0 mb-0",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your license key to unlock features.', '%TEXTDOMAIN%')
