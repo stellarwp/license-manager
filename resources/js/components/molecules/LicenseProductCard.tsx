@@ -24,7 +24,7 @@ export function LicenseProductCard( { lp, productName, tierName }: LicenseProduc
 	return (
 		<div className={ `rounded-lg border bg-card px-3 py-2.5 space-y-2.5 ${ expiryCardClass[ expiryStatus ] }` }>
 			<div className="flex items-center gap-2">
-				<ProductLogo slug={ lp.product_slug } size={ 24 } variant="nobg" />
+				<ProductLogo slug={ lp.product_slug } size={ 24 } variant="nobg" productName={ productName } />
 				<span className="text-sm font-medium text-foreground flex-1 min-w-0">
 					{ productName }
 				</span>

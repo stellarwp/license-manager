@@ -782,16 +782,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ProductLogo: () => (/* binding */ ProductLogo)
 /* harmony export */ });
-/* harmony import */ var _img_logo_give_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @img/logo-give.svg */ "./resources/img/logo-give.svg");
-/* harmony import */ var _img_logo_tec_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @img/logo-tec.svg */ "./resources/img/logo-tec.svg");
-/* harmony import */ var _img_logo_learndash_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @img/logo-learndash.svg */ "./resources/img/logo-learndash.svg");
-/* harmony import */ var _img_logo_kadence_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @img/logo-kadence.svg */ "./resources/img/logo-kadence.svg");
-/* harmony import */ var _img_logo_givewp_nobg_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @img/logo-givewp-nobg.svg */ "./resources/img/logo-givewp-nobg.svg");
-/* harmony import */ var _img_logo_learndash_nobg_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @img/logo-learndash-nobg.svg */ "./resources/img/logo-learndash-nobg.svg");
-/* harmony import */ var _img_logo_tec_nobg_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @img/logo-tec-nobg.svg */ "./resources/img/logo-tec-nobg.svg");
-/* harmony import */ var _img_logo_kadence_nobg_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @img/logo-kadence-nobg.svg */ "./resources/img/logo-kadence-nobg.svg");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _img_logo_give_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @img/logo-give.svg */ "./resources/img/logo-give.svg");
+/* harmony import */ var _img_logo_tec_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @img/logo-tec.svg */ "./resources/img/logo-tec.svg");
+/* harmony import */ var _img_logo_learndash_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @img/logo-learndash.svg */ "./resources/img/logo-learndash.svg");
+/* harmony import */ var _img_logo_kadence_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @img/logo-kadence.svg */ "./resources/img/logo-kadence.svg");
+/* harmony import */ var _img_logo_givewp_nobg_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @img/logo-givewp-nobg.svg */ "./resources/img/logo-givewp-nobg.svg");
+/* harmony import */ var _img_logo_learndash_nobg_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @img/logo-learndash-nobg.svg */ "./resources/img/logo-learndash-nobg.svg");
+/* harmony import */ var _img_logo_tec_nobg_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @img/logo-tec-nobg.svg */ "./resources/img/logo-tec-nobg.svg");
+/* harmony import */ var _img_logo_kadence_nobg_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @img/logo-kadence-nobg.svg */ "./resources/img/logo-kadence-nobg.svg");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * Product logo resolved from a slug-based SVG asset.
  *
@@ -809,17 +811,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const LOGOS = {
-  give: _img_logo_give_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
-  'the-events-calendar': _img_logo_tec_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
-  learndash: _img_logo_learndash_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
-  kadence: _img_logo_kadence_svg__WEBPACK_IMPORTED_MODULE_3__["default"]
+  give: _img_logo_give_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+  'the-events-calendar': _img_logo_tec_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  learndash: _img_logo_learndash_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+  kadence: _img_logo_kadence_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
 };
 const LOGOS_NOBG = {
-  give: _img_logo_givewp_nobg_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
-  'the-events-calendar': _img_logo_tec_nobg_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
-  learndash: _img_logo_learndash_nobg_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
-  kadence: _img_logo_kadence_nobg_svg__WEBPACK_IMPORTED_MODULE_7__["default"]
+  give: _img_logo_givewp_nobg_svg__WEBPACK_IMPORTED_MODULE_5__["default"],
+  'the-events-calendar': _img_logo_tec_nobg_svg__WEBPACK_IMPORTED_MODULE_7__["default"],
+  learndash: _img_logo_learndash_nobg_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
+  kadence: _img_logo_kadence_nobg_svg__WEBPACK_IMPORTED_MODULE_8__["default"]
 };
 /**
  * @since 1.0.0
@@ -827,21 +830,27 @@ const LOGOS_NOBG = {
 function ProductLogo({
   slug,
   size,
+  productName,
   variant = 'default'
 }) {
   const src = (variant === 'nobg' ? LOGOS_NOBG : LOGOS)[slug];
+
+  /* translators: %s: product name (e.g. "Kadence", "GiveWP") */
+  const alt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('%s logo', '%TEXTDOMAIN%'), productName);
   if (!src) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
       className: "rounded bg-muted shrink-0",
+      role: "img",
+      "aria-label": alt,
       style: {
         width: size,
         height: size
       }
     });
   }
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("img", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("img", {
     src: src,
-    alt: "",
+    alt: alt,
     className: "shrink-0 rounded",
     style: {
       width: size,
@@ -1513,7 +1522,8 @@ function LicenseProductCard({
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_2__.ProductLogo, {
         slug: lp.product_slug,
         size: 24,
-        variant: "nobg"
+        variant: "nobg",
+        productName: productName
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
         className: "text-sm font-medium text-foreground flex-1 min-w-0",
         children: productName
@@ -1662,7 +1672,8 @@ function UpsellCard({
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_2__.ProductLogo, {
       slug: product.slug,
       size: 32,
-      variant: "nobg"
+      variant: "nobg",
+      productName: product.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       className: "flex-1 min-w-0",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
@@ -2232,7 +2243,8 @@ function ProductSection({
       className: "flex items-center gap-3 px-4 py-3 bg-neutral-800 text-white sticky top-0 z-10 border-x border-neutral-800 transition-[border-radius] rounded-t-lg border-t",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_3__.ProductLogo, {
         slug: product.slug,
-        size: 28
+        size: 28,
+        productName: product.name
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
         className: "text-base font-semibold m-0 p-0 text-white",
         children: product.name
@@ -2344,7 +2356,8 @@ function ProductSectionSkeleton({
       className: "flex items-center gap-3 px-4 py-3 bg-neutral-800 text-white sticky top-0 z-10 border-x border-neutral-800 transition-[border-radius] rounded-t-lg border-t",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_0__.ProductLogo, {
         slug: product.slug,
-        size: 28
+        size: 28,
+        productName: product.name
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h2", {
         className: "text-base font-semibold m-0 p-0 text-white",
         children: product.name
