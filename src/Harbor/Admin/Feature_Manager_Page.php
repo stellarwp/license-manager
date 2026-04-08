@@ -133,6 +133,7 @@ class Feature_Manager_Page {
 			null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- version is content-hashed into the asset filename by the build pipeline.
 		);
 
+		wp_set_script_translations( $handle, '%TEXTDOMAIN%' );
 		wp_enqueue_script( $handle );
 		wp_enqueue_style( $handle );
 	}

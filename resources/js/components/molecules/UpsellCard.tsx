@@ -31,7 +31,7 @@ export function UpsellCard( { product, href }: UpsellCardProps ) {
 			rel="noopener noreferrer"
 			className="flex items-center gap-2.5 rounded-xl border bg-card px-4 py-3 hover:bg-muted/50 transition-colors"
 		>
-			<ProductLogo slug={ product.slug } size={ 32 } variant="nobg" />
+			<ProductLogo slug={ product.slug } size={ 32 } variant="nobg" productName={ product.name } />
 			<div className="flex-1 min-w-0">
 				<span className="text-sm font-medium text-foreground block">
 					{ product.name }
