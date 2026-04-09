@@ -1173,7 +1173,7 @@ function FeatureRow({
       className: "flex items-center gap-3 py-3 px-4",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
         onClick: () => setExpanded(!expanded),
-        className: "flex items-center gap-3 min-w-0 cursor-pointer",
+        className: "flex items-center gap-2 min-w-0 cursor-pointer",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(Chevron, {
           className: "w-4 h-4 text-muted-foreground shrink-0"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_atoms_FeatureIcon__WEBPACK_IMPORTED_MODULE_5__.FeatureIcon, {
