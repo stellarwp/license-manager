@@ -90,12 +90,12 @@ final class Product_CatalogTest extends HarborTestCase {
 		}
 
 		$basic = $tiers->get( 'kadence-basic' );
-		$this->assertSame( 'kadence-basic', $basic->get_slug() );
+		$this->assertSame( 'kadence-basic', $basic->get_tier_slug() );
 		$this->assertSame( 'Basic', $basic->get_name() );
 		$this->assertSame( 1, $basic->get_rank() );
 
 		$agency = $tiers->get( 'kadence-agency' );
-		$this->assertSame( 'kadence-agency', $agency->get_slug() );
+		$this->assertSame( 'kadence-agency', $agency->get_tier_slug() );
 		$this->assertSame( 3, $agency->get_rank() );
 	}
 
@@ -123,7 +123,7 @@ final class Product_CatalogTest extends HarborTestCase {
 		$this->assertSame( 'kadence', $result['product_slug'] );
 		$this->assertSame( 'Kadence', $result['product_name'] );
 		$this->assertCount( 3, $result['tiers'] );
-		$this->assertSame( 'kadence-basic', $result['tiers'][0]['slug'] );
+		$this->assertSame( 'kadence-basic', $result['tiers'][0]['tier_slug'] );
 		$this->assertSame( 'Basic', $result['tiers'][0]['name'] );
 		$this->assertSame( 1, $result['tiers'][0]['rank'] );
 		$this->assertSame( 0, $result['tiers'][0]['price'] );
@@ -231,7 +231,7 @@ final class Product_CatalogTest extends HarborTestCase {
 		$tier = $catalog->get_tier_by_slug( 'pro' );
 
 		$this->assertInstanceOf( Catalog_Tier::class, $tier );
-		$this->assertSame( 'pro', $tier->get_slug() );
+		$this->assertSame( 'pro', $tier->get_tier_slug() );
 		$this->assertSame( 2, $tier->get_rank() );
 	}
 

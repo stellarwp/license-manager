@@ -169,7 +169,7 @@ export const getCatalogTier = (
 	tierSlug: string
 ): CatalogTier | null =>
 	state.catalog.byProductSlug[productSlug]?.tiers.find(
-		(t) => t.slug === tierSlug
+		(t) => t.tier_slug === tierSlug
 	) ?? null;
 
 // ---------------------------------------------------------------------------

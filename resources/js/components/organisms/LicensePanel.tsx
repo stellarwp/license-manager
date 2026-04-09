@@ -42,7 +42,7 @@ export function LicensePanel() {
         const map: Record<string, string> = {};
         catalogs.forEach( ( catalog ) => {
             catalog.tiers.forEach( ( t ) => {
-                map[ t.slug ] = t.name;
+                map[ t.tier_slug ] = t.name;
             } );
         } );
         return map;

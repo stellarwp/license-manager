@@ -240,7 +240,7 @@ export interface CatalogTier {
     /**
      * Tier slug identifier.
      */
-    slug: string;
+    tier_slug: string;
     /**
      * Display name (e.g. "Pro").
      */

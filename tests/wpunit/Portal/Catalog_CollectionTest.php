@@ -140,7 +140,7 @@ final class Catalog_CollectionTest extends HarborTestCase {
 				'product_slug' => 'kadence',
 				'tiers'        => [
 					[
-						'slug'         => 'basic',
+						'tier_slug'    => 'basic',
 						'name'         => 'Basic',
 						'rank'         => 1,
 						'price'        => 0,

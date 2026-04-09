@@ -168,7 +168,7 @@ class Catalog extends WP_CLI_Command {
 
 		$formatter = new Formatter(
 			$assoc_args,
-			[ 'slug', 'name', 'rank', 'price', 'currency' ]
+			[ 'tier_slug', 'name', 'rank', 'price', 'currency' ]
 		);
 
 		$formatter->display_items( $items );

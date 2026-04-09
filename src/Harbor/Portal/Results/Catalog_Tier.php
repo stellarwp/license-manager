@@ -12,7 +12,7 @@ use LiquidWeb\Harbor\Utils\Cast;
  * @since 1.0.0
  *
  * @phpstan-type TierAttributes array{
- *     slug: string,
+ *     tier_slug: string,
  *     name: string,
  *     rank: int,
  *     price: int,
@@ -32,7 +32,7 @@ final class Catalog_Tier {
 	 * @var TierAttributes
 	 */
 	protected array $attributes = [
-		'slug'          => '',
+		'tier_slug'     => '',
 		'name'          => '',
 		'rank'          => 0,
 		'price'         => 0,
@@ -69,7 +69,7 @@ final class Catalog_Tier {
 	public static function from_array( array $data ): self {
 		return new self(
 			[
-				'slug'         => Cast::to_string( $data['tier_slug'] ?? $data['slug'] ?? '' ),
+				'tier_slug'    => Cast::to_string( $data['tier_slug'] ?? '' ),
 				'name'         => Cast::to_string( $data['name'] ?? '' ),
 				'rank'         => Cast::to_int( $data['rank'] ?? 0 ),
 				'price'        => Cast::to_int( $data['price'] ?? 0 ),
@@ -103,8 +103,8 @@ final class Catalog_Tier {
 	 *
 	 * @return string
 	 */
-	public function get_slug(): string {
-		return $this->attributes['slug'];
+	public function get_tier_slug(): string {
+		return $this->attributes['tier_slug'];
 	}
 
 	/**

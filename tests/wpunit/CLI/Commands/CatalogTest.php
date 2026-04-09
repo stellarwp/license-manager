@@ -105,10 +105,10 @@ final class CatalogTest extends HarborTestCase {
 		$items = $this->run_tiers_json( $command, 'kadence' );
 
 		$this->assertCount( 2, $items );
-		$this->assertSame( 'starter', $items[0]['slug'] );
+		$this->assertSame( 'starter', $items[0]['tier_slug'] );
 		$this->assertSame( 'Starter', $items[0]['name'] );
 		$this->assertSame( 1, $items[0]['rank'] );
-		$this->assertSame( 'pro', $items[1]['slug'] );
+		$this->assertSame( 'pro', $items[1]['tier_slug'] );
 		$this->assertSame( 2, $items[1]['rank'] );
 	}
 

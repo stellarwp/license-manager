@@ -23,11 +23,11 @@ final class Tier_Collection extends Collection {
 	 * @return Catalog_Tier
 	 */
 	public function add( Catalog_Tier $tier ): Catalog_Tier {
-		if ( ! $this->offsetExists( $tier->get_slug() ) ) {
-			$this->offsetSet( $tier->get_slug(), $tier );
+		if ( ! $this->offsetExists( $tier->get_tier_slug() ) ) {
+			$this->offsetSet( $tier->get_tier_slug(), $tier );
 		}
 
-		return $this->offsetGet( $tier->get_slug() ) ?? $tier;
+		return $this->offsetGet( $tier->get_tier_slug() ) ?? $tier;
 	}
 
 	/**
