@@ -48,7 +48,7 @@ final class Fixture_ClientTest extends HarborTestCase {
 
 			foreach ( $tiers as $tier ) {
 				$this->assertInstanceOf( Catalog_Tier::class, $tier );
-				$this->assertNotEmpty( $tier->get_slug() );
+				$this->assertNotEmpty( $tier->get_tier_slug() );
 				$this->assertGreaterThanOrEqual( 0, $tier->get_rank() );
 			}
 		}
@@ -65,7 +65,7 @@ final class Fixture_ClientTest extends HarborTestCase {
 					$this->assertGreaterThan(
 						$prev->get_rank(),
 						$tier->get_rank(),
-						sprintf( '%s: tier %s should rank higher than %s', $catalog->get_product_slug(), $tier->get_slug(), $prev->get_slug() )
+						sprintf( '%s: tier %s should rank higher than %s', $catalog->get_product_slug(), $tier->get_tier_slug(), $prev->get_tier_slug() )
 					);
 				}
 

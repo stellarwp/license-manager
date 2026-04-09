@@ -37,7 +37,7 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
     return useMemo( () => {
         const sorted         = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
         const licenseProduct = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
-        const userTier       = licenseProduct?.tier ? sorted.find( ( t ) => t.slug === licenseProduct.tier ) : null;
+        const userTier       = licenseProduct?.tier ? sorted.find( ( t ) => t.tier_slug === licenseProduct.tier ) : null;
         const rank           = userTier?.rank ?? -1;  // -1 = unlicensed (show all tier groups)
         const upgrade        = sorted.filter( ( t ) => t.rank > rank );
         const slugs          = isUnifiedLicensed
@@ -67,7 +67,7 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
 
         const lockedByTier = sorted.reduce<Record<string, Feature[]>>(
             ( acc, tier ) => {
-                acc[ tier.slug ] = lockedFeatures.filter( ( f ) => f.tier === tier.slug );
+                acc[ tier.tier_slug ] = lockedFeatures.filter( ( f ) => f.tier === tier.tier_slug );
                 return acc;
             },
             {}

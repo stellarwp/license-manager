@@ -101,9 +101,11 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$catalog_client   = new Catalog_Fixture( codecept_data_dir( 'catalog/default.json' ) );
 		$licensing_client = new Licensing_Fixture( codecept_data_dir( 'licensing' ) );
 
-		$catalog   = new Catalog_Repository( $catalog_client );
-		$licensing = new License_Manager( new License_Repository(), new Product_Registry(), $licensing_client );
-		$licensing->store_key( 'LWSW-test-error-key' );
+		$catalog    = new Catalog_Repository( $catalog_client );
+		$repository = new License_Repository();
+		$licensing  = new License_Manager( $repository, new Product_Registry(), $licensing_client );
+		$licensing->store_key( 'LWSW-UNIFIED-PRO-2026' );
+		$repository->set_products( new WP_Error( 'lw-harbor-invalid-response', 'Simulated server error' ) );
 
 		return new Feature_Repository(
 			$this->make_resolver( $catalog, $licensing )
@@ -236,7 +238,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$this->assertInstanceOf( Feature_Collection::class, $result );
 
-		$free_features = $result->filter( null, 'kadence-free' );
+		$free_features = $result->filter( null, 'free' );
 
 		$this->assertGreaterThan( 0, $free_features->count() );
 
@@ -317,7 +319,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			[
 				'slug'              => 'test-feature',
 				'kind'              => 'unknown_type',
-				'minimum_tier'      => 'kadence-basic',
+				'minimum_tier'      => 'basic',
 				'name'              => 'Test Feature',
 				'description'       => 'A feature with an unknown type.',
 				'documentation_url' => '',
@@ -328,8 +330,8 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$tiers->add(
 			Catalog_Tier::from_array(
 				[
-					'slug' => 'kadence-basic',
-					'rank' => 1,
+					'tier_slug' => 'basic',
+					'rank'      => 1,
 				]
 			)
 		);
@@ -362,7 +364,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			[
 				'slug'              => 'test-plugin',
 				'kind'              => 'plugin',
-				'minimum_tier'      => 'kadence-basic',
+				'minimum_tier'      => 'basic',
 				'name'              => 'Test Plugin',
 				'description'       => 'A plugin feature.',
 				'documentation_url' => '',
@@ -374,8 +376,8 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$tiers->add(
 			Catalog_Tier::from_array(
 				[
-					'slug' => 'kadence-basic',
-					'rank' => 1,
+					'tier_slug' => 'basic',
+					'rank'      => 1,
 				]
 			)
 		);
@@ -409,7 +411,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 			[
 				'slug'              => 'test-free-plugin',
 				'kind'              => 'plugin',
-				'minimum_tier'      => 'kadence-free',
+				'minimum_tier'      => 'free',
 				'name'              => 'Test Free Plugin',
 				'description'       => '',
 				'documentation_url' => '',
@@ -421,18 +423,18 @@ final class Feature_RepositoryTest extends HarborTestCase {
 		$tiers->add(
 			Catalog_Tier::from_array(
 				[
-					'slug' => 'kadence-free',
-					'rank' => 0,
-				] 
-			) 
+					'tier_slug' => 'free',
+					'rank'      => 0,
+				]
+			)
 		);
 		$tiers->add(
 			Catalog_Tier::from_array(
 				[
-					'slug' => 'kadence-basic',
-					'rank' => 1,
-				] 
-			) 
+					'tier_slug' => 'basic',
+					'rank'      => 1,
+				]
+			)
 		);
 
 		$product = new Product_Catalog( 'kadence', 'kadence', 'Kadence', $tiers, [ $catalog_feature ] );
@@ -532,7 +534,7 @@ final class Feature_RepositoryTest extends HarborTestCase {
 
 		$this->assertSame( 'kad-blocks-pro', $feature->get_slug() );
 		$this->assertSame( 'kadence', $feature->get_product() );
-		$this->assertSame( 'kadence-basic', $feature->get_tier() );
+		$this->assertSame( 'basic', $feature->get_tier() );
 		$this->assertSame( 'Blocks Pro', $feature->get_name() );
 		$this->assertSame( 'Premium Gutenberg blocks for advanced page building.', $feature->get_description() );
 		$this->assertSame( 'https://www.kadencewp.com/help-center/', $feature->get_documentation_url() );
