@@ -3,6 +3,7 @@
 namespace wpunit\Admin;
 
 use LiquidWeb\Harbor\Admin\Feature_Manager_Page;
+use LiquidWeb\Harbor\Site\Data;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
 
 class Feature_Manager_PageTest extends HarborTestCase {
@@ -15,7 +16,7 @@ class Feature_Manager_PageTest extends HarborTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->page = new Feature_Manager_Page();
+		$this->page = new Feature_Manager_Page( new Data() );
 	}
 
 	/**
@@ -91,8 +92,8 @@ class Feature_Manager_PageTest extends HarborTestCase {
 
 		set_current_screen( 'dashboard' );
 
-		$page_a = new Feature_Manager_Page();
-		$page_b = new Feature_Manager_Page();
+		$page_a = new Feature_Manager_Page( new Data() );
+		$page_b = new Feature_Manager_Page( new Data() );
 
 		$page_a->maybe_register_page();
 		$page_b->maybe_register_page();
