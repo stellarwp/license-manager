@@ -5,6 +5,7 @@ namespace LiquidWeb\Harbor\Features;
 use LiquidWeb\Harbor\Features\Strategy\Strategy_Factory;
 use LiquidWeb\Harbor\Features\Types\Feature;
 use LiquidWeb\Harbor\Features\Error_Code;
+use LiquidWeb\Harbor\Legacy\License_Repository as Legacy_License_Repository;
 use LiquidWeb\Harbor\Traits\With_Debugging;
 use Throwable;
 use WP_Error;
@@ -40,18 +41,33 @@ class Manager {
 	private Strategy_Factory $strategy_factory;
 
 	/**
+	 * The legacy license repository.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var Legacy_License_Repository
+	 */
+	private Legacy_License_Repository $legacy_licenses;
+
+	/**
 	 * Constructor for the central feature orchestrator.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Feature_Repository $repository       The repository for fetching available features.
-	 * @param Strategy_Factory   $strategy_factory The strategy factory.
+	 * @param Feature_Repository        $repository       The repository for fetching available features.
+	 * @param Strategy_Factory          $strategy_factory The strategy factory.
+	 * @param Legacy_License_Repository $legacy_licenses  The legacy license repository.
 	 *
 	 * @return void
 	 */
-	public function __construct( Feature_Repository $repository, Strategy_Factory $strategy_factory ) {
+	public function __construct(
+		Feature_Repository $repository,
+		Strategy_Factory $strategy_factory,
+		Legacy_License_Repository $legacy_licenses
+	) {
 		$this->repository       = $repository;
 		$this->strategy_factory = $strategy_factory;
+		$this->legacy_licenses  = $legacy_licenses;
 	}
 
 	/**
@@ -113,6 +129,24 @@ class Manager {
 				Error_Code::CAPABILITY_REVOKED,
 				__( 'This feature has been removed from your license capabilities. Contact support.', '%TEXTDOMAIN%' )
 			);
+		}
+
+		if ( ! $feature->is_available() ) {
+			$legacy = $this->legacy_licenses->find( $feature->get_slug() );
+
+			if ( ! $legacy || ! $legacy->is_active ) {
+				static::debug_log(
+					sprintf(
+						'Cannot enable "%s": not covered by unified or legacy license.',
+						$slug
+					)
+				);
+
+				return new WP_Error(
+					Error_Code::NOT_LICENSED,
+					__( 'This feature is not covered by your license.', '%TEXTDOMAIN%' )
+				);
+			}
 		}
 
 		/**
