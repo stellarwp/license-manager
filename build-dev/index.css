@@ -1147,6 +1147,9 @@
   .lw-harbor-ui .underline {
     text-decoration-line: underline !important;
   }
+  .lw-harbor-ui .underline-offset-2 {
+    text-underline-offset: 2px !important;
+  }
   .lw-harbor-ui .underline-offset-4 {
     text-underline-offset: 4px !important;
   }
@@ -1401,6 +1404,13 @@
     .lw-harbor-ui &:hover {
       @media (hover: hover) {
         color: oklch(0.145 0 0) !important;
+      }
+    }
+  }
+  .lw-harbor-ui .hover\:no-underline {
+    .lw-harbor-ui &:hover {
+      @media (hover: hover) {
+        text-decoration-line: none !important;
       }
     }
   }
