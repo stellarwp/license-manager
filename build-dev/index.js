@@ -3286,7 +3286,6 @@ function Toaster() {
     removeToast
   } = (0,_context_toast_context__WEBPACK_IMPORTED_MODULE_6__.useToast)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-    role: "status",
     "aria-live": "polite",
     className: "fixed bottom-4 right-4 z-[100001] flex flex-col gap-2 pointer-events-none",
     children: toasts.map(toast => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
