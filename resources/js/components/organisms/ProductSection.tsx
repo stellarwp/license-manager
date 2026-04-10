@@ -43,7 +43,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
         [ product.slug ],
     );
 
-    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers } = useProductFeatureGroups( product.slug );
+    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers, activationCatalogTiers } = useProductFeatureGroups( product.slug );
 
     const activeCount      = availableFeatures.filter( ( f ) => f.is_enabled ).length;
     const deactivatedCount = availableFeatures.filter( ( f ) => ! f.is_enabled ).length;
@@ -57,7 +57,8 @@ export function ProductSection( { product }: ProductSectionProps ) {
         ? ( sortedCatalogTiers.find( ( t ) => t.tier_slug === licenseProduct.tier )?.name ?? licenseProduct.tier )
         : null;
 
-    const hasContent = availableFeatures.length > 0 || Object.values( lockedByTier ).some( ( f ) => f.length > 0 );
+    const hasContent = availableFeatures.length > 0 ||
+        Object.values( lockedByTier ).some( ( f ) => f.length > 0 );
 
     return (
         <section id={ product.slug } className="scroll-mt-20">
@@ -107,6 +108,20 @@ export function ProductSection( { product }: ProductSectionProps ) {
                             feature={ feature }
                         />
                     ) ) }
+
+                    { activationCatalogTiers.map( ( tier ) => {
+                        const locked = lockedByTier[ tier.tier_slug ] ?? [];
+                        if ( locked.length === 0 ) return null;
+                        return (
+                            <TierGroup
+                                key={ tier.tier_slug }
+                                tier={ tier }
+                                features={ locked }
+                                forceOpen={ isSearching }
+                                showUpgrade={ false }
+                            />
+                        );
+                    } ) }
 
                     { upgradeCatalogTiers.map( ( tier ) => {
                         const locked = lockedByTier[ tier.tier_slug ] ?? [];

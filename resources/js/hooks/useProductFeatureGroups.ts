@@ -12,10 +12,11 @@ import { isFreeFeature, getFeatureMismatch } from '@/lib/feature-utils';
 import type { CatalogTier, Feature } from '@/types/api';
 
 export interface FeatureGroups {
-    availableFeatures:   Feature[];
-    lockedByTier:        Record<string, Feature[]>;
-    sortedCatalogTiers:  CatalogTier[];  // All tiers — used for header tier name lookup
-    upgradeCatalogTiers: CatalogTier[];  // Tiers strictly above the user's rank — used for TierGroup rendering
+    availableFeatures:      Feature[];
+    lockedByTier:           Record<string, Feature[]>;
+    sortedCatalogTiers:     CatalogTier[];  // All tiers — used for header tier name lookup
+    upgradeCatalogTiers:    CatalogTier[];  // Tiers strictly above the user's rank — upgrade CTA shown
+    activationCatalogTiers: CatalogTier[];  // Tiers within the user's rank, locked only because not activated — no upgrade CTA
 }
 
 /**
@@ -36,20 +37,31 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
 
     return useMemo( () => {
         const sorted         = catalogTiers.slice().sort( ( a, b ) => a.rank - b.rank );
-        const licenseProduct  = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
+        const licenseProduct = licenseProducts.find( ( lp ) => lp.product_slug === productSlug );
 
-        // Treat any known non-valid status as unlicensed for tier-group rendering:
-        // the raw licenseProduct.tier is still present (e.g. "elite") but the product
-        // is not usable on this domain, so all tier groups should render as locked.
+        // A license is "invalid" when a validation status is known but not 'valid'
+        // (e.g. not_activated, expired, suspended). The raw tier is still present on
+        // the product, but features are locked — the user needs to activate, not upgrade.
         const isLicenseInvalid = licenseProduct !== undefined &&
             licenseProduct.validation_status !== null &&
             licenseProduct.validation_status !== 'valid';
 
-        const userTier = ( ! isLicenseInvalid && licenseProduct?.tier )
+        // Always resolve the real licensed tier rank so upgrade tiers are computed
+        // correctly even for invalid licenses.
+        const userTier = licenseProduct?.tier
             ? sorted.find( ( t ) => t.tier_slug === licenseProduct.tier )
             : null;
         const rank     = userTier?.rank ?? -1;  // -1 = unlicensed (show all tier groups)
-        const upgrade        = sorted.filter( ( t ) => t.rank > rank );
+
+        // Tiers strictly above the user's rank: features here need an upgrade.
+        const upgrade = sorted.filter( ( t ) => t.rank > rank );
+
+        // For invalid licenses: tiers within the user's licensed rank (excluding free)
+        // are locked because the product is not activated, not because the tier is wrong.
+        // These render without an upgrade button.
+        const activationTiers = isLicenseInvalid
+            ? sorted.filter( ( t ) => t.rank <= rank && t.rank > 0 )
+            : [];
         const slugs          = isUnifiedLicensed
             ? new Set<string>()
             : new Set( legacyLicenses.filter( ( l ) => l.is_active ).map( ( l ) => l.slug ) );
@@ -86,8 +98,9 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
         return {
             availableFeatures,
             lockedByTier,
-            sortedCatalogTiers:  sorted,
-            upgradeCatalogTiers: upgrade,
+            sortedCatalogTiers:     sorted,
+            upgradeCatalogTiers:    upgrade,
+            activationCatalogTiers: activationTiers,
         };
     }, [ allFeatures, catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses, productSlug ] );
 }
