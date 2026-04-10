@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 
 type LicenseBadgeProps =
 	| { type: 'licensed';                                                                    tierName: string; className?: string; }
-	| { type: 'unlicensed' | 'legacy' | 'free' | 'bonus' | 'revoked' | 'not-activated';     tierName?: never; className?: string; };
+	| { type: 'unlicensed' | 'legacy' | 'free' | 'bonus' | 'revoked' | 'inactive';          tierName?: never; className?: string; };
 
 const variantMap = {
 	licensed:        'gradient',
@@ -21,7 +21,7 @@ const variantMap = {
 	free:            'secondary',
 	bonus:           'warning',
 	revoked:         'destructive',
-	'not-activated': 'warning',
+	inactive:        'warning',
 } as const;
 
 const labelMap = {
@@ -30,7 +30,7 @@ const labelMap = {
 	free:            () => __( 'Free',          '%TEXTDOMAIN%' ),
 	bonus:           () => __( 'Bonus',         '%TEXTDOMAIN%' ),
 	revoked:         () => __( 'Unavailable',   '%TEXTDOMAIN%' ),
-	'not-activated': () => __( 'Not Activated', '%TEXTDOMAIN%' ),
+	inactive:        () => __( 'Inactive',      '%TEXTDOMAIN%' ),
 } as const;
 
 /**
