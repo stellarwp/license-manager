@@ -25,12 +25,12 @@ export interface FeatureGroups {
 export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
     const allFeatures = useFilteredFeatures( productSlug );
 
-    const { catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses } = useSelect(
+    const { catalogTiers, licenseProducts, isLicenseValid, legacyLicenses } = useSelect(
         ( select ) => ({
-            catalogTiers:      select( harborStore ).getProductCatalog( productSlug )?.tiers ?? [],
-            licenseProducts:   select( harborStore ).getLicenseProducts(),
-            isUnifiedLicensed: select( harborStore ).isProductUnifiedLicensed( productSlug ),
-            legacyLicenses:    select( harborStore ).getLegacyLicenses(),
+            catalogTiers:    select( harborStore ).getProductCatalog( productSlug )?.tiers ?? [],
+            licenseProducts: select( harborStore ).getLicenseProducts(),
+            isLicenseValid:  select( harborStore ).isProductLicenseValid( productSlug ),
+            legacyLicenses:  select( harborStore ).getLegacyLicenses(),
         }),
         [ productSlug ]
     );
@@ -62,7 +62,7 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
         const activationTiers = isLicenseInvalid
             ? sorted.filter( ( t ) => t.rank <= rank && t.rank > 0 )
             : [];
-        const slugs          = isUnifiedLicensed
+        const slugs          = isLicenseValid
             ? new Set<string>()
             : new Set( legacyLicenses.filter( ( l ) => l.is_active ).map( ( l ) => l.slug ) );
 
@@ -102,5 +102,5 @@ export function useProductFeatureGroups( productSlug: string ): FeatureGroups {
             upgradeCatalogTiers:    upgrade,
             activationCatalogTiers: activationTiers,
         };
-    }, [ allFeatures, catalogTiers, licenseProducts, isUnifiedLicensed, legacyLicenses, productSlug ] );
+    }, [ allFeatures, catalogTiers, licenseProducts, isLicenseValid, legacyLicenses, productSlug ] );
 }
