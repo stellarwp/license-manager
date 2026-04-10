@@ -48,6 +48,13 @@ export function LicensePanel() {
         return map;
     }, [ catalogs ] );
 
+    // Portal activation URL: base is built by PHP, key is appended here so it
+    // stays reactive to license key changes without a page reload.
+    const activationUrl = useMemo( () => {
+        if ( ! licenseKey || ! window.harborData ) return null;
+        return window.harborData.activationBaseUrl + '&key=' + encodeURIComponent( licenseKey );
+    }, [ licenseKey ] );
+
     // Product slug → lowest-tier purchase URL map from the catalog.
     const upsellUrlMap = useMemo( () => {
         const map: Record<string, string> = {};
@@ -99,6 +106,7 @@ export function LicensePanel() {
                 onRefresh={ handleRefresh }
                 isRefreshing={ isRefreshing }
                 isLoading={ isLicenseLoading }
+                activationUrl={ activationUrl }
             />
             { ! isLicenseLoading && (
                 <UpsellSection

@@ -43,16 +43,22 @@ export function ProductSection( { product }: ProductSectionProps ) {
         [ product.slug ],
     );
 
-    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers } = useProductFeatureGroups( product.slug );
+    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers, activationCatalogTiers } = useProductFeatureGroups( product.slug );
 
     const activeCount      = availableFeatures.filter( ( f ) => f.is_enabled ).length;
     const deactivatedCount = availableFeatures.filter( ( f ) => ! f.is_enabled ).length;
+
+    const isNotActivated = licenseProduct !== null && (
+        licenseProduct.validation_status === 'not_activated' ||
+        licenseProduct.validation_status === 'activation_required'
+    );
 
     const tierName = licenseProduct
         ? ( sortedCatalogTiers.find( ( t ) => t.tier_slug === licenseProduct.tier )?.name ?? licenseProduct.tier )
         : null;
 
-    const hasContent = availableFeatures.length > 0 || Object.values( lockedByTier ).some( ( f ) => f.length > 0 );
+    const hasContent = availableFeatures.length > 0 ||
+        Object.values( lockedByTier ).some( ( f ) => f.length > 0 );
 
     return (
         <section id={ product.slug } className="scroll-mt-20">
@@ -62,7 +68,9 @@ export function ProductSection( { product }: ProductSectionProps ) {
                 <h2 className="text-base font-semibold m-0 p-0 text-white">
                     { product.name }
                 </h2>
-                { tierName ? (
+                { isNotActivated ? (
+                    <LicenseBadge type="unactivated" />
+                ) : tierName ? (
                     <LicenseBadge type="licensed" tierName={ tierName } />
                 ) : hasActiveLegacy ? (
                     <LicenseBadge type="legacy" />
@@ -100,6 +108,20 @@ export function ProductSection( { product }: ProductSectionProps ) {
                             feature={ feature }
                         />
                     ) ) }
+
+                    { activationCatalogTiers.map( ( tier ) => {
+                        const locked = lockedByTier[ tier.tier_slug ] ?? [];
+                        if ( locked.length === 0 ) return null;
+                        return (
+                            <TierGroup
+                                key={ tier.tier_slug }
+                                tier={ tier }
+                                features={ locked }
+                                forceOpen={ isSearching }
+                                showUpgrade={ false }
+                            />
+                        );
+                    } ) }
 
                     { upgradeCatalogTiers.map( ( tier ) => {
                         const locked = lockedByTier[ tier.tier_slug ] ?? [];

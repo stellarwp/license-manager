@@ -15,15 +15,16 @@ import { FeatureRow } from '@/components/molecules/FeatureRow';
 import type { CatalogTier, Feature } from '@/types/api';
 
 interface TierGroupProps {
-    tier:       CatalogTier;
-    features:   Feature[];
-    forceOpen?: boolean;
+    tier:          CatalogTier;
+    features:      Feature[];
+    forceOpen?:    boolean;
+    showUpgrade?:  boolean;
 }
 
 /**
  * @since 1.0.0
  */
-export function TierGroup( { tier, features, forceOpen = false }: TierGroupProps ) {
+export function TierGroup( { tier, features, forceOpen = false, showUpgrade = true }: TierGroupProps ) {
     const [ expanded, setExpanded ] = useState( false );
     const isOpen = expanded || forceOpen;
     const Chevron = isOpen ? ChevronDown : ChevronRight;
@@ -44,15 +45,17 @@ export function TierGroup( { tier, features, forceOpen = false }: TierGroupProps
                     </Badge>
                     <Lock className="w-3.5 h-3.5 text-muted-foreground ml-1" />
                 </div>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-1 text-xs h-7 ml-auto shrink-0"
-                    onClick={ () => window.open( tier.purchase_url, '_blank', 'noopener,noreferrer' ) }
-                >
-                    <ExternalLink className="w-3 h-3" />
-                    { __( 'Upgrade to', '%TEXTDOMAIN%' ) }{ ' ' }{ tier.name }
-                </Button>
+                { showUpgrade && (
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1 text-xs h-7 ml-auto shrink-0"
+                        onClick={ () => window.open( tier.purchase_url, '_blank', 'noopener,noreferrer' ) }
+                    >
+                        <ExternalLink className="w-3 h-3" />
+                        { __( 'Upgrade to', '%TEXTDOMAIN%' ) }{ ' ' }{ tier.name }
+                    </Button>
+                ) }
             </div>
 
             { isOpen && features.map( ( feature ) => (

@@ -11,6 +11,7 @@ import { Shell } from '@/components/templates/Shell';
 import { FilterBar } from '@/components/molecules/FilterBar';
 import { LicensePanel } from '@/components/organisms/LicensePanel';
 import { LegacyLicenseBanner } from '@/components/molecules/LegacyLicenseBanner';
+import { NotActivatedBanner } from '@/components/molecules/NotActivatedBanner';
 import { ProductSection } from '@/components/organisms/ProductSection';
 import { ProductSectionSkeleton } from '@/components/organisms/ProductSectionSkeleton';
 import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
@@ -38,6 +39,7 @@ export function AppShell() {
             <ErrorBoundary>
                 <div className="space-y-8">
                     <LegacyLicenseBanner />
+                    <NotActivatedBanner />
 
                     <div className="flex items-center !mt-8 !mb-6">
                         <h2 className="!text-2xl !font-normal !m-0 !p-0">{ __( 'Your Features', '%TEXTDOMAIN%' ) }</h2>

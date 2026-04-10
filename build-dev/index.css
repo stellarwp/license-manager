@@ -26,6 +26,7 @@
     --color-emerald-500: oklch(69.6% 0.17 162.48);
     --color-emerald-600: oklch(59.6% 0.145 163.225);
     --color-emerald-800: oklch(43.2% 0.095 166.913);
+    --color-blue-50: oklch(97% 0.014 254.604);
     --color-blue-100: oklch(93.2% 0.032 255.585);
     --color-blue-200: oklch(88.2% 0.059 254.128);
     --color-blue-800: oklch(42.4% 0.199 265.638);
@@ -858,6 +859,9 @@
       background-color: color-mix(in oklab, var(--color-black) 50%, transparent) !important;
     }
   }
+  .lw-harbor-ui .bg-blue-50 {
+    background-color: var(--color-blue-50) !important;
+  }
   .lw-harbor-ui .bg-blue-100 {
     background-color: var(--color-blue-100) !important;
   }
@@ -1139,6 +1143,9 @@
   }
   .lw-harbor-ui .line-through {
     text-decoration-line: line-through !important;
+  }
+  .lw-harbor-ui .underline {
+    text-decoration-line: underline !important;
   }
   .lw-harbor-ui .underline-offset-4 {
     text-underline-offset: 4px !important;

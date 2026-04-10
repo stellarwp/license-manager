@@ -22,6 +22,7 @@ interface LicenseSectionProps {
     onRefresh:       () => Promise<void>;
     isRefreshing:    boolean;
     isLoading:       boolean;
+    activationUrl:   string | null;
 }
 
 /**
@@ -52,10 +53,14 @@ function LicenseSectionSkeleton() {
 /**
  * @since 1.0.0
  */
-export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRemove, onRefresh, isRefreshing, isLoading }: LicenseSectionProps ) {
+export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRemove, onRefresh, isRefreshing, isLoading, activationUrl }: LicenseSectionProps ) {
     const [ isEditing, setIsEditing ] = useState( false );
 
     const hasLicense = licenseKey !== null;
+
+    const hasUnactivatedProducts = licenseProducts.some(
+        ( lp ) => lp.validation_status === 'not_activated' || lp.validation_status === 'activation_required'
+    );
 
     const handleRemove = async (): Promise<HarborError | null> => {
         const error = await onRemove();
@@ -122,6 +127,14 @@ export function LicenseSection( { licenseKey, licenseProducts, tierNameMap, onRe
                             tierName={ tierNameMap[ lp.tier ] ?? lp.tier }
                         />
                     ) ) }
+
+                    { hasUnactivatedProducts && activationUrl && (
+                        <p className="text-xs text-muted-foreground text-center mt-1 mb-0">
+                            <a href={ activationUrl } className="underline hover:opacity-75">
+                                { __( 'Manage license in Liquid Web', '%TEXTDOMAIN%' ) }
+                            </a>
+                        </p>
+                    ) }
                 </div>
             ) }
         </div>
