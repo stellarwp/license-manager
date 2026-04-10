@@ -3285,18 +3285,26 @@ function Toaster() {
     toasts,
     removeToast
   } = (0,_context_toast_context__WEBPACK_IMPORTED_MODULE_6__.useToast)();
-  if (toasts.length === 0) return null;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+    "aria-live": "polite",
     className: "fixed bottom-4 right-4 z-[100001] flex flex-col gap-2 pointer-events-none",
     children: toasts.map(toast => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-      role: "status",
-      "aria-live": "polite",
       className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_5__.cn)('pointer-events-auto flex items-start gap-3 rounded-lg px-4 py-3 shadow-lg text-sm max-w-xs', VARIANT_STYLES[toast.variant]),
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(ToastIcon, {
         variant: toast.variant
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-        className: "flex-1",
-        children: toast.message
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "flex-1 flex flex-col gap-1.5",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          children: toast.message
+        }), toast.action && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+          type: "button",
+          onClick: () => {
+            toast.action.onClick();
+            removeToast(toast.id);
+          },
+          className: "self-start text-xs font-medium underline underline-offset-2 hover:no-underline",
+          children: toast.action.label
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
         type: "button",
         onClick: () => removeToast(toast.id),
@@ -3641,12 +3649,15 @@ const useHarborData = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Ha
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ToastProvider: () => (/* binding */ ToastProvider),
+/* harmony export */   reloadPageAction: () => (/* binding */ reloadPageAction),
 /* harmony export */   useToast: () => (/* binding */ useToast)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 /**
  * Toast notification context — replaces Zustand toast-store.ts.
  *
@@ -3657,6 +3668,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
+
+const reloadPageAction = {
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Reload page to see changes', '%TEXTDOMAIN%'),
+  onClick: () => window.location.reload()
+};
 const ToastContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
   toasts: [],
   addToast: () => {},
@@ -3673,16 +3689,19 @@ function ToastProvider({
   const removeToast = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(id => {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
-  const addToast = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((message, variant = 'default') => {
+  const addToast = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((message, variant = 'default', action) => {
     const id = crypto.randomUUID();
     setToasts(prev => [...prev, {
       id,
       message,
-      variant
+      variant,
+      action
     }]);
-    setTimeout(() => removeToast(id), 3500);
+    if (!action) {
+      setTimeout(() => removeToast(id), 3500);
+    }
   }, [removeToast]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(ToastContext.Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(ToastContext.Provider, {
     value: {
       toasts,
       addToast,
@@ -4242,16 +4261,16 @@ function useFeatureRow(feature) {
       if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.HarborError) {
         addError(result);
       } else {
-        /* translators: %s is the name of the feature being enabled */
-        addToast((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s enabled', '%TEXTDOMAIN%'), feature.name), 'success');
+        addToast(/* translators: %s is the name of the feature being enabled */
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s enabled', '%TEXTDOMAIN%'), feature.name), 'success', _context_toast_context__WEBPACK_IMPORTED_MODULE_5__.reloadPageAction);
       }
     } else {
       const result = await disableFeature(feature.slug);
       if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.HarborError) {
         addError(result);
       } else {
-        /* translators: %s is the name of the feature being disabled */
-        addToast((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s disabled', '%TEXTDOMAIN%'), feature.name), 'default');
+        addToast(/* translators: %s is the name of the feature being disabled */
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s disabled', '%TEXTDOMAIN%'), feature.name), 'default', _context_toast_context__WEBPACK_IMPORTED_MODULE_5__.reloadPageAction);
       }
     }
     setPendingAction(null);

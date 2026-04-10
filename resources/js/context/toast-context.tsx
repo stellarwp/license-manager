@@ -7,18 +7,30 @@
  * @package LiquidWeb\Harbor
  */
 import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
+import { __ } from '@wordpress/i18n';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning';
+
+export interface ToastAction {
+    label:   string;
+    onClick: () => void;
+}
+
+export const reloadPageAction: ToastAction = {
+    label:   __( 'Reload page to see changes', '%TEXTDOMAIN%' ),
+    onClick: () => window.location.reload(),
+};
 
 export interface Toast {
     id:      string;
     message: string;
     variant: ToastVariant;
+    action?: ToastAction;
 }
 
 interface ToastContextValue {
     toasts:      Toast[];
-    addToast:    ( message: string, variant?: ToastVariant ) => void;
+    addToast:    ( message: string, variant?: ToastVariant, action?: ToastAction ) => void;
     removeToast: ( id: string ) => void;
 }
 
@@ -39,10 +51,12 @@ export function ToastProvider( { children }: { children: ReactNode } ) {
     }, [] );
 
     const addToast = useCallback(
-        ( message: string, variant: ToastVariant = 'default' ) => {
+        ( message: string, variant: ToastVariant = 'default', action?: ToastAction ) => {
             const id = crypto.randomUUID();
-            setToasts( ( prev ) => [ ...prev, { id, message, variant } ] );
-            setTimeout( () => removeToast( id ), 3500 );
+            setToasts( ( prev ) => [ ...prev, { id, message, variant, action } ] );
+            if ( ! action ) {
+                setTimeout( () => removeToast( id ), 3500 );
+            }
         },
         [ removeToast ],
     );
