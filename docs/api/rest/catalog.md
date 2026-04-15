@@ -43,6 +43,8 @@ Returns the full product catalog. Each entry represents a product family with it
         "slug": "kadence-blocks-pro",
         "kind": "plugin",
         "minimum_tier": "kadence-basic",
+        "top_dir": "kadence-blocks-pro",
+        "main_file": "kadence-blocks-pro.php",
         "plugin_file": "kadence-blocks-pro/kadence-blocks-pro.php",
         "wporg_slug": null,
         "download_url": "https://...",

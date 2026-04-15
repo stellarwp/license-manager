@@ -4,6 +4,7 @@ namespace LiquidWeb\Harbor\Tests\Catalog\Results;
 
 use LiquidWeb\Harbor\Portal\Results\Catalog_Feature;
 use LiquidWeb\Harbor\Tests\HarborTestCase;
+use Generator;
 
 final class Catalog_FeatureTest extends HarborTestCase {
 
@@ -11,7 +12,8 @@ final class Catalog_FeatureTest extends HarborTestCase {
 		'slug'              => 'kadence-security',
 		'kind'              => 'plugin',
 		'minimum_tier'      => 'pro',
-		'main_file'         => 'kadence-security-pro/kadence-security-pro.php',
+		'top_dir'           => 'kadence-security-pro',
+		'main_file'         => 'kadence-security-pro.php',
 		'wporg_slug'        => null,
 		'version'           => '2.1.0',
 		'release_date'      => '2025-11-15',
@@ -49,6 +51,8 @@ final class Catalog_FeatureTest extends HarborTestCase {
 		$this->assertSame( 'kadence-security', $result['slug'] );
 		$this->assertSame( 'plugin', $result['kind'] );
 		$this->assertSame( 'pro', $result['minimum_tier'] );
+		$this->assertSame( 'kadence-security-pro', $result['top_dir'] );
+		$this->assertSame( 'kadence-security-pro.php', $result['main_file'] );
 		$this->assertSame( 'kadence-security-pro/kadence-security-pro.php', $result['plugin_file'] );
 		$this->assertNull( $result['wporg_slug'] );
 	}
@@ -78,6 +82,60 @@ final class Catalog_FeatureTest extends HarborTestCase {
 		$this->assertNull( $feature->get_version() );
 		$this->assertNull( $feature->get_release_date() );
 		$this->assertNull( $feature->get_changelog() );
+	}
+
+	public function test_top_dir_and_main_file_accessors(): void {
+		$feature = Catalog_Feature::from_array( $this->plugin_data );
+
+		$this->assertSame( 'kadence-security-pro', $feature->get_top_dir() );
+		$this->assertSame( 'kadence-security-pro.php', $feature->get_main_file() );
+		$this->assertSame(
+			$feature->get_top_dir() . '/' . $feature->get_main_file(),
+			$feature->get_plugin_file()
+		);
+	}
+
+	/**
+	 * @dataProvider partial_plugin_file_cases
+	 *
+	 * @param array<string, mixed> $overrides
+	 */
+	public function test_plugin_file_is_null_when_either_part_is_missing_or_empty( array $overrides ): void {
+		$data = array_merge(
+			[
+				'slug'         => 'partial',
+				'kind'         => 'plugin',
+				'minimum_tier' => 'free',
+				'name'         => 'Partial',
+				'description'  => '',
+				'category'     => '',
+			],
+			$overrides
+		);
+
+		$feature = Catalog_Feature::from_array( $data );
+
+		$this->assertNull( $feature->get_plugin_file() );
+	}
+
+	/**
+	 * @return Generator<string, array{0: array<string, mixed>}>
+	 */
+	public function partial_plugin_file_cases(): Generator {
+		yield 'only top_dir'    => [ [ 'top_dir' => 'give' ] ];
+		yield 'only main_file'  => [ [ 'main_file' => 'give.php' ] ];
+		yield 'empty top_dir'   => [
+			[
+				'top_dir'   => '',
+				'main_file' => 'give.php',
+			],
+		];
+		yield 'empty main_file' => [
+			[
+				'top_dir'   => 'give',
+				'main_file' => '',
+			],
+		];
 	}
 
 	public function test_dot_org_theme(): void {

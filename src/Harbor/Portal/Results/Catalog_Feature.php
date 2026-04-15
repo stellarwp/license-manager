@@ -15,7 +15,8 @@ use LiquidWeb\Harbor\Utils\Cast;
  *     slug: string,
  *     kind: string,
  *     minimum_tier: string,
- *     plugin_file: ?string,
+ *     top_dir: ?string,
+ *     main_file: ?string,
  *     wporg_slug: ?string,
  *     version: ?string,
  *     release_date: ?string,
@@ -41,7 +42,8 @@ final class Catalog_Feature {
 		'slug'              => '',
 		'kind'              => '',
 		'minimum_tier'      => '',
-		'plugin_file'       => null,
+		'top_dir'           => null,
+		'main_file'         => null,
 		'wporg_slug'        => null,
 		'version'           => null,
 		'release_date'      => null,
@@ -72,8 +74,9 @@ final class Catalog_Feature {
 	/**
 	 * Creates a Catalog_Feature from a raw data array.
 	 *
-	 * The API sends `main_file` which is stored internally as `plugin_file`
-	 * (the standard WordPress term for plugin file paths).
+	 * The API sends `top_dir` and `main_file` as separate fields; both are stored
+	 * verbatim and `get_plugin_file()` combines them on demand into the WordPress
+	 * plugin identifier.
 	 *
 	 * @since 1.0.0
 	 *
@@ -87,7 +90,8 @@ final class Catalog_Feature {
 				'slug'              => Cast::to_string( $data['slug'] ?? '' ),
 				'kind'              => Cast::to_string( $data['kind'] ?? '' ),
 				'minimum_tier'      => Cast::to_string( $data['minimum_tier'] ?? '' ),
-				'plugin_file'       => isset( $data['main_file'] ) ? Cast::to_string( $data['main_file'] ) : ( isset( $data['plugin_file'] ) ? Cast::to_string( $data['plugin_file'] ) : null ),
+				'top_dir'           => isset( $data['top_dir'] ) ? Cast::to_string( $data['top_dir'] ) : null,
+				'main_file'         => isset( $data['main_file'] ) ? Cast::to_string( $data['main_file'] ) : null,
 				'wporg_slug'        => isset( $data['wporg_slug'] ) ? Cast::to_string( $data['wporg_slug'] ) : null,
 				'version'           => isset( $data['version'] ) ? Cast::to_string( $data['version'] ) : null,
 				'release_date'      => isset( $data['release_date'] ) ? Cast::to_string( $data['release_date'] ) : null,
@@ -112,7 +116,10 @@ final class Catalog_Feature {
 	 * @return array<string, mixed>
 	 */
 	public function to_array(): array {
-		return $this->attributes;
+		return array_merge(
+			$this->attributes,
+			[ 'plugin_file' => $this->get_plugin_file() ]
+		);
 	}
 
 	/**
@@ -149,16 +156,45 @@ final class Catalog_Feature {
 	}
 
 	/**
-	 * Gets the plugin file path relative to the plugins directory, or null if not applicable.
+	 * Gets the top-level plugin directory, or null if not applicable.
 	 *
-	 * Only present for plugin features. The API sends this as `main_file`.
+	 * @since 1.0.0
+	 *
+	 * @return string|null
+	 */
+	public function get_top_dir(): ?string {
+		return $this->attributes['top_dir'];
+	}
+
+	/**
+	 * Gets the plugin main file name (without directory), or null if not applicable.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string|null
+	 */
+	public function get_main_file(): ?string {
+		return $this->attributes['main_file'];
+	}
+
+	/**
+	 * Gets the WordPress plugin identifier — `top_dir/main_file` — or null if either is missing.
+	 *
+	 * Derived from the separate `top_dir` and `main_file` API fields.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return string|null
 	 */
 	public function get_plugin_file(): ?string {
-		return $this->attributes['plugin_file'];
+		$top_dir   = $this->attributes['top_dir'];
+		$main_file = $this->attributes['main_file'];
+
+		if ( empty( $top_dir ) || empty( $main_file ) ) {
+			return null;
+		}
+
+		return $top_dir . '/' . $main_file;
 	}
 
 	/**

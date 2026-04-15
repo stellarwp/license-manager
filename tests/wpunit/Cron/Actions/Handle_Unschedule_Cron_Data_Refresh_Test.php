@@ -70,7 +70,7 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 
 		$catalog = $this->makeEmpty(
 			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_plugin( 'give/give.php' ) ]
+			[ 'get_cached' => $this->make_catalog_with_plugin( 'give', 'give.php' ) ]
 		);
 
 		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
@@ -92,7 +92,7 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 
 		$catalog = $this->makeEmpty(
 			Catalog_Repository::class,
-			[ 'get_cached' => $this->make_catalog_with_plugin( 'give/give.php' ) ]
+			[ 'get_cached' => $this->make_catalog_with_plugin( 'give', 'give.php' ) ]
 		);
 
 		$action = new Handle_Unschedule_Cron_Data_Refresh( $catalog );
@@ -150,11 +150,12 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $plugin_file Plugin basename, e.g. 'give/give.php'.
+	 * @param string $top_dir   Top-level plugin directory, e.g. 'give'.
+	 * @param string $main_file Plugin main file, e.g. 'give.php'.
 	 *
 	 * @return Catalog_Collection
 	 */
-	private function make_catalog_with_plugin( string $plugin_file ): Catalog_Collection {
+	private function make_catalog_with_plugin( string $top_dir, string $main_file ): Catalog_Collection {
 		return Catalog_Collection::from_array(
 			[
 				[
@@ -165,7 +166,8 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 							'slug'              => 'test-feature',
 							'kind'              => 'plugin',
 							'minimum_tier'      => '',
-							'main_file'         => $plugin_file,
+							'top_dir'           => $top_dir,
+							'main_file'         => $main_file,
 							'wporg_slug'        => null,
 							'name'              => 'Test Feature',
 							'description'       => '',
@@ -198,6 +200,7 @@ final class Handle_Unschedule_Cron_Data_Refresh_Test extends HarborTestCase {
 							'slug'              => $theme_slug,
 							'kind'              => 'theme',
 							'minimum_tier'      => '',
+							'top_dir'           => null,
 							'main_file'         => null,
 							'wporg_slug'        => null,
 							'name'              => 'Test Theme',

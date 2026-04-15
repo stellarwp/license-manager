@@ -60,7 +60,8 @@
         "slug": "kadence-blocks",
         "kind": "plugin",
         "wporg_slug": "kadence-blocks",
-        "main_file": "kadence-blocks/kadence-blocks.php",
+        "top_dir": "kadence-blocks",
+        "main_file": "kadence-blocks.php",
         "release_date": "2025-11-20",
         "homepage": null
       },
@@ -95,7 +96,8 @@
         "slug": "kad-blocks-pro",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-blocks-pro/kadence-blocks-pro.php",
+        "top_dir": "kadence-blocks-pro",
+        "main_file": "kadence-blocks-pro.php",
         "release_date": "2025-11-20",
         "homepage": null
       },
@@ -113,7 +115,8 @@
         "slug": "kad-theme-kit-pro",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-pro/kadence-pro.php",
+        "top_dir": "kadence-pro",
+        "main_file": "kadence-pro.php",
         "release_date": "2025-10-30",
         "homepage": null
       },
@@ -131,7 +134,8 @@
         "slug": "kad-shop-kit",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-woo-extras/kadence-woo-extras.php",
+        "top_dir": "kadence-woo-extras",
+        "main_file": "kadence-woo-extras.php",
         "release_date": "2025-11-10",
         "homepage": null
       },
@@ -149,7 +153,8 @@
         "slug": "kad-creative-kit",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-creative-kit/kadence-creative-kit.php",
+        "top_dir": "kadence-creative-kit",
+        "main_file": "kadence-creative-kit.php",
         "release_date": "2025-09-25",
         "homepage": null
       },
@@ -167,7 +172,8 @@
         "slug": "kad-insights",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-insights/kadence-insights.php",
+        "top_dir": "kadence-insights",
+        "main_file": "kadence-insights.php",
         "release_date": "2025-10-05",
         "homepage": null
       },
@@ -183,7 +189,8 @@
         "slug": "kad-pattern-hub",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kad-pattern-hub/kad-pattern-hub.php",
+        "top_dir": "kad-pattern-hub",
+        "main_file": "kad-pattern-hub.php",
         "homepage": null
       },
       {
@@ -200,7 +207,8 @@
         "slug": "kad-conversions",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-conversions/kadence-conversions.php",
+        "top_dir": "kadence-conversions",
+        "main_file": "kadence-conversions.php",
         "release_date": "2025-11-01",
         "homepage": null
       },
@@ -218,7 +226,8 @@
         "slug": "kad-galleries",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kadence-galleries/kadence-galleries.php",
+        "top_dir": "kadence-galleries",
+        "main_file": "kadence-galleries.php",
         "release_date": "2025-10-12",
         "homepage": null
       },
@@ -234,7 +243,8 @@
         "slug": "kad-captcha",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kad-captcha/kad-captcha.php",
+        "top_dir": "kad-captcha",
+        "main_file": "kad-captcha.php",
         "homepage": null
       },
       {
@@ -249,7 +259,8 @@
         "slug": "kad-simple-share",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kad-simple-share/kad-simple-share.php",
+        "top_dir": "kad-simple-share",
+        "main_file": "kad-simple-share.php",
         "homepage": null
       },
       {
@@ -264,7 +275,8 @@
         "slug": "kad-custom-fonts",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kad-custom-fonts/kad-custom-fonts.php",
+        "top_dir": "kad-custom-fonts",
+        "main_file": "kad-custom-fonts.php",
         "homepage": null
       },
       {
@@ -279,7 +291,8 @@
         "slug": "kad-reading-time",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "kad-reading-time/kad-reading-time.php",
+        "top_dir": "kad-reading-time",
+        "main_file": "kad-reading-time.php",
         "homepage": null
       },
       {
@@ -296,7 +309,8 @@
         "slug": "ithemes-security-pro",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "ithemes-security-pro-pro/ithemes-security-pro-pro.php",
+        "top_dir": "ithemes-security-pro-pro",
+        "main_file": "ithemes-security-pro-pro.php",
         "release_date": "2025-11-18",
         "homepage": null
       },
@@ -314,7 +328,8 @@
         "slug": "solid-backups",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "solid-backups/solid-backups.php",
+        "top_dir": "solid-backups",
+        "main_file": "solid-backups.php",
         "release_date": "2025-10-28",
         "homepage": null
       },
@@ -332,7 +347,8 @@
         "slug": "solid-central",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "solid-central/solid-central.php",
+        "top_dir": "solid-central",
+        "main_file": "solid-central.php",
         "release_date": "2025-09-14",
         "homepage": null
       },
@@ -350,7 +366,8 @@
         "slug": "solid-performance",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "solid-performance/solid-performance.php",
+        "top_dir": "solid-performance",
+        "main_file": "solid-performance.php",
         "release_date": "2025-11-05",
         "homepage": null
       },
@@ -368,7 +385,8 @@
         "slug": "solid-mail",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "solid-mail/solid-mail.php",
+        "top_dir": "solid-mail",
+        "main_file": "solid-mail.php",
         "release_date": "2025-08-22",
         "homepage": null
       },
@@ -384,7 +402,8 @@
         "slug": "iconic-flux",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-flux/iconic-flux.php",
+        "top_dir": "iconic-flux",
+        "main_file": "iconic-flux.php",
         "homepage": null
       },
       {
@@ -399,7 +418,8 @@
         "slug": "iconic-delivery-slots",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-delivery-slots/iconic-delivery-slots.php",
+        "top_dir": "iconic-delivery-slots",
+        "main_file": "iconic-delivery-slots.php",
         "homepage": null
       },
       {
@@ -416,7 +436,8 @@
         "slug": "iconic-woothumbs",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-woothumbs/iconic-woothumbs.php",
+        "top_dir": "iconic-woothumbs",
+        "main_file": "iconic-woothumbs.php",
         "release_date": "2025-11-02",
         "homepage": null
       },
@@ -434,7 +455,8 @@
         "slug": "iconic-swatches",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-woo-attribute-swatches/iconic-woo-attribute-swatches.php",
+        "top_dir": "iconic-woo-attribute-swatches",
+        "main_file": "iconic-woo-attribute-swatches.php",
         "release_date": "2025-10-08",
         "homepage": null
       },
@@ -450,7 +472,8 @@
         "slug": "iconic-single-variations",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-single-variations/iconic-single-variations.php",
+        "top_dir": "iconic-single-variations",
+        "main_file": "iconic-single-variations.php",
         "homepage": null
       },
       {
@@ -465,7 +488,8 @@
         "slug": "iconic-sales-booster",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-sales-booster/iconic-sales-booster.php",
+        "top_dir": "iconic-sales-booster",
+        "main_file": "iconic-sales-booster.php",
         "homepage": null
       },
       {
@@ -480,7 +504,8 @@
         "slug": "iconic-image-swap",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-image-swap/iconic-image-swap.php",
+        "top_dir": "iconic-image-swap",
+        "main_file": "iconic-image-swap.php",
         "homepage": null
       },
       {
@@ -495,7 +520,8 @@
         "slug": "iconic-linked-variations",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-linked-variations/iconic-linked-variations.php",
+        "top_dir": "iconic-linked-variations",
+        "main_file": "iconic-linked-variations.php",
         "homepage": null
       },
       {
@@ -510,7 +536,8 @@
         "slug": "iconic-configurator",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-configurator/iconic-configurator.php",
+        "top_dir": "iconic-configurator",
+        "main_file": "iconic-configurator.php",
         "homepage": null
       },
       {
@@ -527,7 +554,8 @@
         "slug": "iconic-quickview",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-quickview/iconic-quickview.php",
+        "top_dir": "iconic-quickview",
+        "main_file": "iconic-quickview.php",
         "release_date": "2025-11-12",
         "homepage": null
       },
@@ -542,7 +570,8 @@
         "documentation_url": "https://www.kadencewp.com/help-center/",
         "slug": "iconic-wishlist",
         "kind": "plugin",
-        "main_file": "iconic-wishlist/iconic-wishlist.php",
+        "top_dir": "iconic-wishlist",
+        "main_file": "iconic-wishlist.php",
         "homepage": null
       },
       {
@@ -557,7 +586,8 @@
         "slug": "iconic-account-pages",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-account-pages/iconic-account-pages.php",
+        "top_dir": "iconic-account-pages",
+        "main_file": "iconic-account-pages.php",
         "homepage": null
       },
       {
@@ -572,7 +602,8 @@
         "slug": "iconic-custom-fields",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-custom-fields/iconic-custom-fields.php",
+        "top_dir": "iconic-custom-fields",
+        "main_file": "iconic-custom-fields.php",
         "homepage": null
       },
       {
@@ -587,7 +618,8 @@
         "slug": "iconic-bundled",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "iconic-bundled/iconic-bundled.php",
+        "top_dir": "iconic-bundled",
+        "main_file": "iconic-bundled.php",
         "homepage": null
       }
     ]
@@ -643,7 +675,8 @@
         "slug": "sfwd-lms",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "sfwd-lms/sfwd_lms.php",
+        "top_dir": "sfwd-lms",
+        "main_file": "sfwd_lms.php",
         "release_date": "2025-11-19",
         "homepage": null
       },
@@ -661,7 +694,8 @@
         "slug": "memberdash",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "memberdash/memberdash.php",
+        "top_dir": "memberdash",
+        "main_file": "memberdash.php",
         "release_date": "2025-11-08",
         "homepage": null
       },
@@ -679,7 +713,8 @@
         "slug": "learndash-gradebook",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-gradebook/learndash-gradebook.php",
+        "top_dir": "learndash-gradebook",
+        "main_file": "learndash-gradebook.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -697,7 +732,8 @@
         "slug": "learndash-groups-plus",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-groups-plus/learndash-groups-plus.php",
+        "top_dir": "learndash-groups-plus",
+        "main_file": "learndash-groups-plus.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -715,7 +751,8 @@
         "slug": "instructor-role",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "instructor-role/instructor.php",
+        "top_dir": "instructor-role",
+        "main_file": "instructor.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -733,7 +770,8 @@
         "slug": "learndash-notes",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-notes/learndash-student-notes.php",
+        "top_dir": "learndash-notes",
+        "main_file": "learndash-student-notes.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -751,7 +789,8 @@
         "slug": "learndash-propanel",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-propanel/learndash_propanel.php",
+        "top_dir": "learndash-propanel",
+        "main_file": "learndash_propanel.php",
         "release_date": "2025-11-06",
         "homepage": null
       },
@@ -769,7 +808,8 @@
         "slug": "wdm-course-review",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "wdm-course-review/wdm-course-review.php",
+        "top_dir": "wdm-course-review",
+        "main_file": "wdm-course-review.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -787,7 +827,8 @@
         "slug": "ld-group-registration",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "ld-group-registration/ld-group-registration.php",
+        "top_dir": "ld-group-registration",
+        "main_file": "ld-group-registration.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -805,7 +846,8 @@
         "slug": "learndash-achievements",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-achievements/learndash-achievements.php",
+        "top_dir": "learndash-achievements",
+        "main_file": "learndash-achievements.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -823,7 +865,8 @@
         "slug": "learndash-certificate-builder",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-certificate-builder/learndash-certificate-builder.php",
+        "top_dir": "learndash-certificate-builder",
+        "main_file": "learndash-certificate-builder.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -841,7 +884,8 @@
         "slug": "learndash-elementor",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-elementor/learndash-elementor.php",
+        "top_dir": "learndash-elementor",
+        "main_file": "learndash-elementor.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -859,7 +903,8 @@
         "slug": "learndash-notifications",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-notifications/learndash-notifications.php",
+        "top_dir": "learndash-notifications",
+        "main_file": "learndash-notifications.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -877,7 +922,8 @@
         "slug": "learndash-woocommerce",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-woocommerce/learndash_woocommerce.php",
+        "top_dir": "learndash-woocommerce",
+        "main_file": "learndash_woocommerce.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -895,7 +941,8 @@
         "slug": "learndash-integrity",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-integrity/learndash-integrity.php",
+        "top_dir": "learndash-integrity",
+        "main_file": "learndash-integrity.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -913,7 +960,8 @@
         "slug": "ld-tec",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-tec/learndash-tec.php",
+        "top_dir": "learndash-tec",
+        "main_file": "learndash-tec.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -931,7 +979,8 @@
         "slug": "learndash-zapier",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-zapier/learndash_zapier.php",
+        "top_dir": "learndash-zapier",
+        "main_file": "learndash_zapier.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -949,7 +998,8 @@
         "slug": "learndash-migration",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-migration/learndash-migration.php",
+        "top_dir": "learndash-migration",
+        "main_file": "learndash-migration.php",
         "release_date": "2024-11-06",
         "homepage": null
       },
@@ -967,7 +1017,8 @@
         "slug": "learndash-paidmemberships",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-paidmemberships/learndash-paidmemberships.php",
+        "top_dir": "learndash-paidmemberships",
+        "main_file": "learndash-paidmemberships.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -985,7 +1036,8 @@
         "slug": "learndash-edd",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-edd/learndash-edd.php",
+        "top_dir": "learndash-edd",
+        "main_file": "learndash-edd.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1003,7 +1055,8 @@
         "slug": "learndash-memberpress",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-memberpress/learndash-memberpress.php",
+        "top_dir": "learndash-memberpress",
+        "main_file": "learndash-memberpress.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1021,7 +1074,8 @@
         "slug": "learndash-gravity-forms",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-gravity-forms/learndash_gravityforms.php",
+        "top_dir": "learndash-gravity-forms",
+        "main_file": "learndash_gravityforms.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1039,7 +1093,8 @@
         "slug": "learndash-bbpress",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-bbpress/learndash-bbpress.php",
+        "top_dir": "learndash-bbpress",
+        "main_file": "learndash-bbpress.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1057,7 +1112,8 @@
         "slug": "learndash-thrivecart",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-thrivecart/learndash-thrivecart.php",
+        "top_dir": "learndash-thrivecart",
+        "main_file": "learndash-thrivecart.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1075,7 +1131,8 @@
         "slug": "learndash-2checkout",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-2checkout/sfwd-2checkout.php",
+        "top_dir": "learndash-2checkout",
+        "main_file": "sfwd-2checkout.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1093,7 +1150,8 @@
         "slug": "learndash-event-espresso",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-event-espresso/event-espresso.php",
+        "top_dir": "learndash-event-espresso",
+        "main_file": "event-espresso.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1111,7 +1169,8 @@
         "slug": "learndash-samcart",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-samcart/learndash-samcart.php",
+        "top_dir": "learndash-samcart",
+        "main_file": "learndash-samcart.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1129,7 +1188,8 @@
         "slug": "ld-multilingual",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-multilingual/ld-multilingual.php",
+        "top_dir": "learndash-multilingual",
+        "main_file": "ld-multilingual.php",
         "release_date": "2025-11-15",
         "homepage": null
       },
@@ -1147,7 +1207,8 @@
         "slug": "learndash-restrict-content-pro",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "learndash-restrict-content-pro/learndash-restrict-content-pro.php",
+        "top_dir": "learndash-restrict-content-pro",
+        "main_file": "learndash-restrict-content-pro.php",
         "release_date": "2025-11-15",
         "homepage": null
       }
@@ -1214,7 +1275,8 @@
         "slug": "give",
         "kind": "plugin",
         "wporg_slug": "give",
-        "main_file": "give/give.php",
+        "top_dir": "give",
+        "main_file": "give.php",
         "release_date": "2025-11-17",
         "homepage": null
       },
@@ -1232,7 +1294,8 @@
         "slug": "give-recurring",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-recurring/give-recurring.php",
+        "top_dir": "give-recurring",
+        "main_file": "give-recurring.php",
         "release_date": "2025-11-04",
         "homepage": null
       },
@@ -1250,7 +1313,8 @@
         "slug": "give-fee-recovery",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-fee-recovery/give-fee-recovery.php",
+        "top_dir": "give-fee-recovery",
+        "main_file": "give-fee-recovery.php",
         "release_date": "2025-10-16",
         "homepage": null
       },
@@ -1268,7 +1332,8 @@
         "slug": "give-form-field-manager",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-form-field-manager/give-form-field-manager.php",
+        "top_dir": "give-form-field-manager",
+        "main_file": "give-form-field-manager.php",
         "release_date": "2025-09-27",
         "homepage": null
       },
@@ -1286,7 +1351,8 @@
         "slug": "give-annual-receipts",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-annual-receipts/give-annual-receipts.php",
+        "top_dir": "give-annual-receipts",
+        "main_file": "give-annual-receipts.php",
         "release_date": "2025-08-15",
         "homepage": null
       },
@@ -1304,7 +1370,8 @@
         "slug": "give-funds",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-funds/give-funds.php",
+        "top_dir": "give-funds",
+        "main_file": "give-funds.php",
         "release_date": "2025-10-09",
         "homepage": null
       },
@@ -1322,7 +1389,8 @@
         "slug": "give-tributes",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-tributes/give-tributes.php",
+        "top_dir": "give-tributes",
+        "main_file": "give-tributes.php",
         "release_date": "2025-11-01",
         "homepage": null
       },
@@ -1340,7 +1408,8 @@
         "slug": "give-pdf-receipts",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-pdf-receipts/give-pdf-receipts.php",
+        "top_dir": "give-pdf-receipts",
+        "main_file": "give-pdf-receipts.php",
         "release_date": "2025-10-23",
         "homepage": null
       },
@@ -1358,7 +1427,8 @@
         "slug": "give-manual-donations",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-manual-donations/give-manual-donations.php",
+        "top_dir": "give-manual-donations",
+        "main_file": "give-manual-donations.php",
         "release_date": "2025-09-12",
         "homepage": null
       },
@@ -1376,7 +1446,8 @@
         "slug": "give-peer-to-peer",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-peer-to-peer/give-peer-to-peer.php",
+        "top_dir": "give-peer-to-peer",
+        "main_file": "give-peer-to-peer.php",
         "release_date": "2025-11-10",
         "homepage": null
       },
@@ -1394,7 +1465,8 @@
         "slug": "give-text-to-give",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-text-to-give/give-text-to-give.php",
+        "top_dir": "give-text-to-give",
+        "main_file": "give-text-to-give.php",
         "release_date": "2025-09-20",
         "homepage": null
       },
@@ -1412,7 +1484,8 @@
         "slug": "give-stripe",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-stripe/give-stripe.php",
+        "top_dir": "give-stripe",
+        "main_file": "give-stripe.php",
         "release_date": "2025-11-14",
         "homepage": null
       },
@@ -1430,7 +1503,8 @@
         "slug": "give-authorize",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-authorize-net/give-authorize-net.php",
+        "top_dir": "give-authorize-net",
+        "main_file": "give-authorize-net.php",
         "release_date": "2025-08-08",
         "homepage": null
       },
@@ -1448,7 +1522,8 @@
         "slug": "give-square",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-square/give-square.php",
+        "top_dir": "give-square",
+        "main_file": "give-square.php",
         "release_date": "2025-10-30",
         "homepage": null
       },
@@ -1466,7 +1541,8 @@
         "slug": "give-paypal",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-paypal-commerce/give-paypal-commerce.php",
+        "top_dir": "give-paypal-commerce",
+        "main_file": "give-paypal-commerce.php",
         "release_date": "2025-09-02",
         "homepage": null
       },
@@ -1484,7 +1560,8 @@
         "slug": "give-mollie",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-mollie/give-mollie.php",
+        "top_dir": "give-mollie",
+        "main_file": "give-mollie.php",
         "release_date": "2025-10-06",
         "homepage": null
       },
@@ -1502,7 +1579,8 @@
         "slug": "give-razorpay",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-razorpay/give-razorpay.php",
+        "top_dir": "give-razorpay",
+        "main_file": "give-razorpay.php",
         "release_date": "2025-08-20",
         "homepage": null
       },
@@ -1520,7 +1598,8 @@
         "slug": "give-gocardless",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-gocardless/give-gocardless.php",
+        "top_dir": "give-gocardless",
+        "main_file": "give-gocardless.php",
         "release_date": "2025-09-08",
         "homepage": null
       },
@@ -1538,7 +1617,8 @@
         "slug": "give-braintree",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-braintree/give-braintree.php",
+        "top_dir": "give-braintree",
+        "main_file": "give-braintree.php",
         "release_date": "2025-10-28",
         "homepage": null
       },
@@ -1556,7 +1636,8 @@
         "slug": "give-currency-switcher",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-currency-switcher/give-currency-switcher.php",
+        "top_dir": "give-currency-switcher",
+        "main_file": "give-currency-switcher.php",
         "release_date": "2025-11-11",
         "homepage": null
       },
@@ -1574,7 +1655,8 @@
         "slug": "give-salesforce",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-salesforce/give-salesforce.php",
+        "top_dir": "give-salesforce",
+        "main_file": "give-salesforce.php",
         "release_date": "2025-08-28",
         "homepage": null
       },
@@ -1592,7 +1674,8 @@
         "slug": "give-gift-aid",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-gift-aid/give-gift-aid.php",
+        "top_dir": "give-gift-aid",
+        "main_file": "give-gift-aid.php",
         "release_date": "2025-10-04",
         "homepage": null
       },
@@ -1610,7 +1693,8 @@
         "slug": "give-webhooks",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-webhooks/give-webhooks.php",
+        "top_dir": "give-webhooks",
+        "main_file": "give-webhooks.php",
         "release_date": "2025-09-16",
         "homepage": null
       },
@@ -1628,7 +1712,8 @@
         "slug": "give-mailchimp",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-mailchimp/give-mailchimp.php",
+        "top_dir": "give-mailchimp",
+        "main_file": "give-mailchimp.php",
         "release_date": "2025-11-13",
         "homepage": null
       },
@@ -1646,7 +1731,8 @@
         "slug": "give-activecampaign",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-activecampaign/give-activecampaign.php",
+        "top_dir": "give-activecampaign",
+        "main_file": "give-activecampaign.php",
         "release_date": "2025-10-11",
         "homepage": null
       },
@@ -1664,7 +1750,8 @@
         "slug": "give-zapier",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-zapier/give-zapier.php",
+        "top_dir": "give-zapier",
+        "main_file": "give-zapier.php",
         "release_date": "2025-09-24",
         "homepage": null
       },
@@ -1682,7 +1769,8 @@
         "slug": "give-constant-contact",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-constant-contact/give-constant-contact.php",
+        "top_dir": "give-constant-contact",
+        "main_file": "give-constant-contact.php",
         "release_date": "2025-08-12",
         "homepage": null
       },
@@ -1700,7 +1788,8 @@
         "slug": "give-convertkit",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-convertkit/give-convertkit.php",
+        "top_dir": "give-convertkit",
+        "main_file": "give-convertkit.php",
         "release_date": "2025-10-19",
         "homepage": null
       },
@@ -1718,7 +1807,8 @@
         "slug": "give-ga-tracking",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-google-analytics/give-google-analytics.php",
+        "top_dir": "give-google-analytics",
+        "main_file": "give-google-analytics.php",
         "release_date": "2025-11-09",
         "homepage": null
       },
@@ -1736,7 +1826,8 @@
         "slug": "give-woo-upsells",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-woocommerce-upsells/give-woocommerce-upsells.php",
+        "top_dir": "give-woocommerce-upsells",
+        "main_file": "give-woocommerce-upsells.php",
         "release_date": "2025-09-29",
         "homepage": null
       },
@@ -1754,7 +1845,8 @@
         "slug": "give-double-the-donations",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "give-double-the-donations/give-double-the-donations.php",
+        "top_dir": "give-double-the-donations",
+        "main_file": "give-double-the-donations.php",
         "release_date": "2025-11-16",
         "homepage": null
       }
@@ -1821,7 +1913,8 @@
         "slug": "the-events-calendar",
         "kind": "plugin",
         "wporg_slug": "the-events-calendar",
-        "main_file": "the-events-calendar/the-events-calendar.php",
+        "top_dir": "the-events-calendar",
+        "main_file": "the-events-calendar.php",
         "release_date": "2025-11-21",
         "homepage": null
       },
@@ -1837,7 +1930,8 @@
         "slug": "tec-calendar",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "tec-calendar/tec-calendar.php",
+        "top_dir": "tec-calendar",
+        "main_file": "tec-calendar.php",
         "homepage": null
       },
       {
@@ -1854,7 +1948,8 @@
         "slug": "tec-tickets-rsvp",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "event-tickets-plus/event-tickets-plus.php",
+        "top_dir": "event-tickets-plus",
+        "main_file": "event-tickets-plus.php",
         "release_date": "2025-10-25",
         "homepage": null
       },
@@ -1872,7 +1967,8 @@
         "slug": "tec-event-aggregator",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "event-aggregator/event-aggregator.php",
+        "top_dir": "event-aggregator",
+        "main_file": "event-aggregator.php",
         "release_date": "2025-11-03",
         "homepage": null
       },
@@ -1890,7 +1986,8 @@
         "slug": "tec-community",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "events-community/events-community.php",
+        "top_dir": "events-community",
+        "main_file": "events-community.php",
         "release_date": "2025-09-18",
         "homepage": null
       },
@@ -1917,7 +2014,8 @@
         "slug": "tec-seating",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "events-seating/events-seating.php",
+        "top_dir": "events-seating",
+        "main_file": "events-seating.php",
         "release_date": "2025-11-18",
         "homepage": null
       },
@@ -1935,7 +2033,8 @@
         "slug": "tec-filter-bar",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "events-filter-bar/events-filter-bar.php",
+        "top_dir": "events-filter-bar",
+        "main_file": "events-filter-bar.php",
         "release_date": "2025-10-31",
         "homepage": null
       },
@@ -1953,7 +2052,8 @@
         "slug": "tec-eventbrite",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "events-eventbrite/events-eventbrite.php",
+        "top_dir": "events-eventbrite",
+        "main_file": "events-eventbrite.php",
         "release_date": "2025-09-03",
         "homepage": null
       },
@@ -1971,7 +2071,8 @@
         "slug": "tec-schedule-manager",
         "kind": "plugin",
         "wporg_slug": null,
-        "main_file": "events-schedule-manager/events-schedule-manager.php",
+        "top_dir": "events-schedule-manager",
+        "main_file": "events-schedule-manager.php",
         "release_date": "2025-10-14",
         "homepage": null
       },
