@@ -91,7 +91,7 @@ final class ProviderTest extends HarborTestCase {
 	}
 
 	public function test_cron_unscheduled_when_no_catalog_plugins_remain_active(): void {
-		$this->store_catalog_with_plugin( 'give/give.php' );
+		$this->store_catalog_with_plugin( 'give', 'give.php' );
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
 		update_option( 'active_plugins', [] );
@@ -102,7 +102,7 @@ final class ProviderTest extends HarborTestCase {
 	}
 
 	public function test_cron_not_unscheduled_when_catalog_plugin_still_active(): void {
-		$this->store_catalog_with_plugin( 'give/give.php' );
+		$this->store_catalog_with_plugin( 'give', 'give.php' );
 		wp_schedule_event( time(), 'twicedaily', CronHook::DATA_REFRESH );
 
 		update_option( 'active_plugins', [ 'give/give.php' ] );
@@ -126,11 +126,12 @@ final class ProviderTest extends HarborTestCase {
 	/**
 	 * Store a minimal catalog containing one plugin feature with the given plugin file.
 	 *
-	 * @param string $plugin_file Plugin basename, e.g. 'give/give.php'.
+	 * @param string $top_dir   Top-level plugin directory, e.g. 'give'.
+	 * @param string $main_file Plugin main file, e.g. 'give.php'.
 	 *
 	 * @return void
 	 */
-	private function store_catalog_with_plugin( string $plugin_file ): void {
+	private function store_catalog_with_plugin( string $top_dir, string $main_file ): void {
 		$catalog = Catalog_Collection::from_array(
 			[
 				[
@@ -141,7 +142,8 @@ final class ProviderTest extends HarborTestCase {
 							'slug'              => 'test-feature',
 							'kind'              => 'plugin',
 							'minimum_tier'      => '',
-							'main_file'         => $plugin_file,
+							'top_dir'           => $top_dir,
+							'main_file'         => $main_file,
 							'wporg_slug'        => null,
 							'name'              => 'Test Feature',
 							'description'       => '',

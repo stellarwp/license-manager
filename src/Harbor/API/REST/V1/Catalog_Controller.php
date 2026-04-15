@@ -230,6 +230,12 @@ final class Catalog_Controller extends WP_REST_Controller {
 							'minimum_tier'      => [
 								'type' => 'string',
 							],
+							'top_dir'           => [
+								'type' => [ 'string', 'null' ],
+							],
+							'main_file'         => [
+								'type' => [ 'string', 'null' ],
+							],
 							'plugin_file'       => [
 								'type' => [ 'string', 'null' ],
 							],

@@ -190,7 +190,15 @@ export interface CatalogFeature {
      */
     minimum_tier: string;
     /**
-     * Plugin file path (plugin kind only), or null for non-plugin features.
+     * Top-level plugin directory (plugin kind only), or null for non-plugin features.
+     */
+    top_dir: string | null;
+    /**
+     * Plugin main file name without directory (plugin kind only), or null for non-plugin features.
+     */
+    main_file: string | null;
+    /**
+     * Derived plugin file path (`top_dir/main_file`), or null when either part is missing.
      */
     plugin_file: string | null;
     /**
