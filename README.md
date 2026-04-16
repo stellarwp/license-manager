@@ -91,6 +91,13 @@ To compile changelog entries into `changelog.txt`:
 bunx @stellarwp/changelogger write --overwrite-version <version>
 ```
 
+## Releasing
+
+1. Update the `VERSION` constant in `src/Harbor/Harbor.php` to the new version.
+2. Compile changelog entries: `bunx @stellarwp/changelogger write --overwrite-version <version>`
+3. Open a PR and merge.
+4. Create a GitHub Release with a new tag in the format `vX.X.X` targeting the merge commit.
+
 ## Documentation
 
 Start with [Harbor Overview](/docs/harbor.md) for the full architecture.
