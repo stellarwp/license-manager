@@ -2277,7 +2277,7 @@ function LicenseSection({
         className: "w-4 h-4 text-muted-foreground"
       }),
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('License', '%TEXTDOMAIN%'),
-      action: hasLicense && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("button", {
+      action: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("button", {
         type: "button",
         onClick: onRefresh,
         disabled: isRefreshing,
