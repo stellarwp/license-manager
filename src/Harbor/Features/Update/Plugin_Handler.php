@@ -117,7 +117,19 @@ class Plugin_Handler {
 			$feature instanceof Installable
 			&& $feature->is_wporg()
 		) {
-			return $result;
+			$wporg_slug = $feature->get_wporg_slug();
+
+			if ( $wporg_slug === null || $wporg_slug === $slug ) {
+				return $result;
+			}
+
+			return \plugins_api(
+				'plugin_information',
+				[
+					'slug'   => $wporg_slug,
+					'fields' => [ 'sections' => false ],
+				]
+			);
 		}
 
 		$response = ( $this->resolver )( Feature::TYPE_PLUGIN );
