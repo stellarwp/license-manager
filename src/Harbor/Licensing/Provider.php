@@ -2,6 +2,7 @@
 
 namespace LiquidWeb\Harbor\Licensing;
 
+use LiquidWeb\Harbor\Admin\Feature_Manager_Page;
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Harbor;
@@ -65,13 +66,17 @@ final class Provider extends Abstract_Provider {
 			}
 		);
 
-		// activated_plugin fires before plugins_loaded, so if the plugin
-		// containing LWSW_KEY.php is itself being activated, Harbor isn't
-		// initialized yet and the listener above never runs. This catches
-		// it on the next page load.
+		// Fallback for when the plugin containing LWSW_KEY.php is itself being
+		// activated — Harbor isn't initialized during that request so the
+		// activated_plugin listener above never runs. Scoped to the software
+		// manager page to avoid scanning on every admin request.
 		add_action(
 			'admin_init',
 			function () {
+				if ( ( sanitize_text_field( wp_unslash( $_GET['page'] ?? '' ) ) ) !== Feature_Manager_Page::PAGE_SLUG ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No nonce needed for this GET parameter.
+					return;
+				}
+
 				/** @var License_Manager $license_manager */
 				$license_manager = $this->container->get( License_Manager::class );
 				$license_manager->store_embedded_key_if_present();
