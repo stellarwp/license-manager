@@ -1518,7 +1518,7 @@ function LicenseKeyInput({
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
           className: "w-4 h-4 animate-spin"
         }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Verifying\u2026', '%TEXTDOMAIN%')]
-      }) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Activate', '%TEXTDOMAIN%')
+      }) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save', '%TEXTDOMAIN%')
     })]
   });
 
@@ -1701,7 +1701,7 @@ function NotActivatedBanner() {
   const allNotActivated = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => select(_store__WEBPACK_IMPORTED_MODULE_3__.store).areAllProductsNotActivated(), []);
   const licenseKey = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getLicenseKey(), []);
   if (!allNotActivated || !licenseKey || !window.harborData) return null;
-  const activationUrl = window.harborData.activationBaseUrl + '&key=' + encodeURIComponent(licenseKey);
+  const activationUrl = window.harborData.activationUrl;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     role: "alert",
     className: "flex items-start gap-3 rounded-lg border border-blue-200 bg-blue-50 mt-8 mb-0 px-4 py-3 text-sm text-blue-800",
@@ -1711,6 +1711,8 @@ function NotActivatedBanner() {
       className: "m-0",
       children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('None of your products are activated for this domain. Activate your license to unlock features.', '%TEXTDOMAIN%'), ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
         href: activationUrl,
+        target: "_blank",
+        rel: "noopener noreferrer",
         className: "underline font-medium",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Activate now', '%TEXTDOMAIN%')
       })]
@@ -2122,13 +2124,7 @@ function LicensePanel() {
     });
     return map;
   }, [catalogs]);
-
-  // Portal activation URL: base is built by PHP, key is appended here so it
-  // stays reactive to license key changes without a page reload.
-  const activationUrl = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    if (!licenseKey || !window.harborData) return null;
-    return window.harborData.activationBaseUrl + '&key=' + encodeURIComponent(licenseKey);
-  }, [licenseKey]);
+  const activationUrl = licenseKey && window.harborData ? window.harborData.activationUrl : null;
 
   // Product slug → lowest-tier purchase URL map from the catalog.
   const upsellUrlMap = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
@@ -2312,6 +2308,8 @@ function LicenseSection({
         className: "text-xs text-muted-foreground text-center mt-1 mb-0",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("a", {
           href: activationUrl,
+          target: "_blank",
+          rel: "noopener noreferrer",
           className: "underline hover:opacity-75",
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Manage license in Liquid Web', '%TEXTDOMAIN%')
         })
@@ -4798,7 +4796,7 @@ const storeLicense = key => async ({
   select
 }) => {
   if (!select.canModifyLicense()) {
-    return new _errors__WEBPACK_IMPORTED_MODULE_2__.HarborError(_errors__WEBPACK_IMPORTED_MODULE_2__.ErrorCode.LicenseActionInProgress, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager failed to activate your license, another action is in progress.', '%TEXTDOMAIN%'));
+    return new _errors__WEBPACK_IMPORTED_MODULE_2__.HarborError(_errors__WEBPACK_IMPORTED_MODULE_2__.ErrorCode.LicenseActionInProgress, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager failed to validate your license, another action is in progress.', '%TEXTDOMAIN%'));
   }
   dispatch({
     type: 'STORE_LICENSE_START'
@@ -4818,7 +4816,7 @@ const storeLicense = key => async ({
     dispatch.invalidateResolution('getFeatures', []);
     return null;
   } catch (err) {
-    const error = await _errors__WEBPACK_IMPORTED_MODULE_2__.HarborError.wrap(err, _errors__WEBPACK_IMPORTED_MODULE_2__.ErrorCode.LicenseStoreFailed, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager failed to activate your license.', '%TEXTDOMAIN%'));
+    const error = await _errors__WEBPACK_IMPORTED_MODULE_2__.HarborError.wrap(err, _errors__WEBPACK_IMPORTED_MODULE_2__.ErrorCode.LicenseStoreFailed, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager failed to validate your license.', '%TEXTDOMAIN%'));
     dispatch({
       type: 'STORE_LICENSE_FAILED',
       error
