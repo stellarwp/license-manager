@@ -11,8 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 type LicenseBadgeProps =
-	| { type: 'licensed';                                                                    tierName: string; className?: string; }
-	| { type: 'unlicensed' | 'legacy' | 'free' | 'bonus' | 'revoked' | 'unactivated';       tierName?: never; className?: string; };
+	| { type: 'licensed';                                                                                                                  tierName: string; className?: string; }
+	| { type: 'unlicensed' | 'legacy' | 'free' | 'bonus' | 'revoked' | 'unactivated' | 'expired' | 'cancelled' | 'suspended' | 'over_limit'; tierName?: never; className?: string; };
 
 const variantMap = {
 	licensed:        'gradient',
@@ -22,6 +22,10 @@ const variantMap = {
 	bonus:           'warning',
 	revoked:         'destructive',
 	unactivated:     'warning',
+	expired:         'destructive',
+	cancelled:       'outline',
+	suspended:       'destructive',
+	over_limit:      'warning',
 } as const;
 
 const labelMap = {
@@ -31,6 +35,10 @@ const labelMap = {
 	bonus:           () => __( 'Bonus',         '%TEXTDOMAIN%' ),
 	revoked:         () => __( 'Unavailable',   '%TEXTDOMAIN%' ),
 	unactivated:     () => __( 'Unactivated',   '%TEXTDOMAIN%' ),
+	expired:         () => __( 'Expired',       '%TEXTDOMAIN%' ),
+	cancelled:       () => __( 'Cancelled',     '%TEXTDOMAIN%' ),
+	suspended:       () => __( 'Suspended',     '%TEXTDOMAIN%' ),
+	over_limit:      () => __( 'Over limit',    '%TEXTDOMAIN%' ),
 } as const;
 
 /**
