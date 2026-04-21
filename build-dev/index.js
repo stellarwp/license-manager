@@ -1762,19 +1762,22 @@ function ReloadBanner() {
   const {
     needsReload
   } = (0,_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_2__.useReloadBanner)();
-  if (!needsReload) return null;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
-    type: "button",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     role: "status",
     "aria-live": "polite",
-    onClick: () => window.location.reload(),
-    className: "ml-auto flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-800 hover:bg-amber-100 transition-colors",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      className: "w-3.5 h-3.5 shrink-0",
-      "aria-hidden": "true"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Reload page to see changes', '%TEXTDOMAIN%')
-    })]
+    "aria-atomic": "true",
+    className: "ml-auto",
+    children: needsReload && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+      type: "button",
+      onClick: () => window.location.reload(),
+      className: "flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-800 hover:bg-amber-100 transition-colors",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        className: "w-3.5 h-3.5 shrink-0",
+        "aria-hidden": "true"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Reload page to see changes', '%TEXTDOMAIN%')
+      })]
+    })
   });
 }
 
