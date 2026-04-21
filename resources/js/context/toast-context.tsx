@@ -16,11 +16,6 @@ export interface ToastAction {
     onClick: () => void;
 }
 
-export const reloadPageAction: ToastAction = {
-    label:   __( 'Reload page to see changes', '%TEXTDOMAIN%' ),
-    onClick: () => window.location.reload(),
-};
-
 export interface Toast {
     id:      string;
     message: string;

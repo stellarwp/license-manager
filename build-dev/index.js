@@ -533,8 +533,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
 /* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
 /* harmony import */ var _context_harbor_data_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/harbor-data-context */ "./resources/js/context/harbor-data-context.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _context_reload_banner_context__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/context/reload-banner-context */ "./resources/js/context/reload-banner-context.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * @package LiquidWeb\Harbor
  */
@@ -547,14 +548,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const App = () => {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_context_toast_context__WEBPACK_IMPORTED_MODULE_4__.ToastProvider, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_context_filter_context__WEBPACK_IMPORTED_MODULE_5__.FilterProvider, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__.ErrorModalProvider, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_7__.HarborDataProvider, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_2__.ErrorBoundary, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_templates_AppShell__WEBPACK_IMPORTED_MODULE_0__.AppShell, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_ui_toast__WEBPACK_IMPORTED_MODULE_1__.Toaster, {})]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_3__.ErrorModal, {})]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_toast_context__WEBPACK_IMPORTED_MODULE_4__.ToastProvider, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_8__.ReloadBannerProvider, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_filter_context__WEBPACK_IMPORTED_MODULE_5__.FilterProvider, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__.ErrorModalProvider, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_7__.HarborDataProvider, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_2__.ErrorBoundary, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_templates_AppShell__WEBPACK_IMPORTED_MODULE_0__.AppShell, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_ui_toast__WEBPACK_IMPORTED_MODULE_1__.Toaster, {})]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_3__.ErrorModal, {})]
+          })
         })
       })
     })
@@ -1751,6 +1755,63 @@ function NotActivatedBanner() {
 
 /***/ },
 
+/***/ "./resources/js/components/molecules/ReloadBanner.tsx"
+/*!************************************************************!*\
+  !*** ./resources/js/components/molecules/ReloadBanner.tsx ***!
+  \************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ReloadBanner: () => (/* binding */ ReloadBanner)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/refresh-cw.js");
+/* harmony import */ var _context_reload_banner_context__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/context/reload-banner-context */ "./resources/js/context/reload-banner-context.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
+/**
+ * Persistent banner shown when feature toggles require a page reload.
+ *
+ * Uses role="status" + aria-live="polite" so screen readers announce it once
+ * when it appears, without interrupting the current focus.
+ *
+ * @package LiquidWeb\Harbor
+ */
+
+
+
+
+/**
+ * @since 1.0.0
+ */
+
+function ReloadBanner() {
+  const {
+    needsReload
+  } = (0,_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_2__.useReloadBanner)();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    role: "status",
+    "aria-live": "polite",
+    "aria-atomic": "true",
+    className: "ml-auto",
+    children: needsReload && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+      type: "button",
+      onClick: () => window.location.reload(),
+      className: "flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-800 hover:bg-amber-100 transition-colors",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        className: "w-3.5 h-3.5 shrink-0",
+        "aria-hidden": "true"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Reload page to see changes', '%TEXTDOMAIN%')
+      })]
+    })
+  });
+}
+
+/***/ },
+
 /***/ "./resources/js/components/molecules/TierGroup.tsx"
 /*!*********************************************************!*\
   !*** ./resources/js/components/molecules/TierGroup.tsx ***!
@@ -2655,14 +2716,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_organisms_LicensePanel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/organisms/LicensePanel */ "./resources/js/components/organisms/LicensePanel.tsx");
 /* harmony import */ var _components_molecules_LegacyLicenseBanner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/molecules/LegacyLicenseBanner */ "./resources/js/components/molecules/LegacyLicenseBanner.tsx");
 /* harmony import */ var _components_molecules_NotActivatedBanner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/molecules/NotActivatedBanner */ "./resources/js/components/molecules/NotActivatedBanner.tsx");
-/* harmony import */ var _components_organisms_ProductSection__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/organisms/ProductSection */ "./resources/js/components/organisms/ProductSection.tsx");
-/* harmony import */ var _components_organisms_ProductSectionSkeleton__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/organisms/ProductSectionSkeleton */ "./resources/js/components/organisms/ProductSectionSkeleton.tsx");
-/* harmony import */ var _components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/atoms/ErrorBoundary */ "./resources/js/components/atoms/ErrorBoundary.tsx");
-/* harmony import */ var _data_products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/data/products */ "./resources/js/data/products.ts");
-/* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
-/* harmony import */ var _context_harbor_data_context__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/context/harbor-data-context */ "./resources/js/context/harbor-data-context.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _components_molecules_ReloadBanner__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/molecules/ReloadBanner */ "./resources/js/components/molecules/ReloadBanner.tsx");
+/* harmony import */ var _components_organisms_ProductSection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/organisms/ProductSection */ "./resources/js/components/organisms/ProductSection.tsx");
+/* harmony import */ var _components_organisms_ProductSectionSkeleton__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/organisms/ProductSectionSkeleton */ "./resources/js/components/organisms/ProductSectionSkeleton.tsx");
+/* harmony import */ var _components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/components/atoms/ErrorBoundary */ "./resources/js/components/atoms/ErrorBoundary.tsx");
+/* harmony import */ var _data_products__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/data/products */ "./resources/js/data/products.ts");
+/* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
+/* harmony import */ var _context_harbor_data_context__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/context/harbor-data-context */ "./resources/js/context/harbor-data-context.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__);
 /**
  * Application shell — full-width two-column layout.
  *
@@ -2684,6 +2746,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * @since 1.0.0
  */
@@ -2691,26 +2754,28 @@ __webpack_require__.r(__webpack_exports__);
 function AppShell() {
   const {
     isLoading
-  } = (0,_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_11__.useHarborData)();
+  } = (0,_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_12__.useHarborData)();
   const {
     productFilter
-  } = (0,_context_filter_context__WEBPACK_IMPORTED_MODULE_10__.useFilter)();
-  const visibleProducts = productFilter === 'all' ? _data_products__WEBPACK_IMPORTED_MODULE_9__.PRODUCTS : _data_products__WEBPACK_IMPORTED_MODULE_9__.PRODUCTS.filter(p => p.slug === productFilter);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_templates_Shell__WEBPACK_IMPORTED_MODULE_1__.Shell, {
-    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_molecules_FilterBar__WEBPACK_IMPORTED_MODULE_2__.FilterBar, {}),
-    sideContent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_organisms_LicensePanel__WEBPACK_IMPORTED_MODULE_3__.LicensePanel, {}),
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_8__.ErrorBoundary, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+  } = (0,_context_filter_context__WEBPACK_IMPORTED_MODULE_11__.useFilter)();
+  const visibleProducts = productFilter === 'all' ? _data_products__WEBPACK_IMPORTED_MODULE_10__.PRODUCTS : _data_products__WEBPACK_IMPORTED_MODULE_10__.PRODUCTS.filter(p => p.slug === productFilter);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_templates_Shell__WEBPACK_IMPORTED_MODULE_1__.Shell, {
+    header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_molecules_FilterBar__WEBPACK_IMPORTED_MODULE_2__.FilterBar, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_molecules_ReloadBanner__WEBPACK_IMPORTED_MODULE_6__.ReloadBanner, {})]
+    }),
+    sideContent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_organisms_LicensePanel__WEBPACK_IMPORTED_MODULE_3__.LicensePanel, {}),
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_9__.ErrorBoundary, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
         className: "space-y-8",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_molecules_LegacyLicenseBanner__WEBPACK_IMPORTED_MODULE_4__.LegacyLicenseBanner, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_molecules_NotActivatedBanner__WEBPACK_IMPORTED_MODULE_5__.NotActivatedBanner, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_molecules_LegacyLicenseBanner__WEBPACK_IMPORTED_MODULE_4__.LegacyLicenseBanner, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_molecules_NotActivatedBanner__WEBPACK_IMPORTED_MODULE_5__.NotActivatedBanner, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
           className: "flex items-center !mt-8 !mb-6",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("h2", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("h2", {
             className: "!text-2xl !font-normal !m-0 !p-0",
             children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Your Features', '%TEXTDOMAIN%')
           })
-        }), isLoading ? _data_products__WEBPACK_IMPORTED_MODULE_9__.PRODUCTS.map(product => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_organisms_ProductSectionSkeleton__WEBPACK_IMPORTED_MODULE_7__.ProductSectionSkeleton, {
+        }), isLoading ? _data_products__WEBPACK_IMPORTED_MODULE_10__.PRODUCTS.map(product => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_organisms_ProductSectionSkeleton__WEBPACK_IMPORTED_MODULE_8__.ProductSectionSkeleton, {
           product: product
-        }, product.slug)) : visibleProducts.map(product => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_organisms_ProductSection__WEBPACK_IMPORTED_MODULE_6__.ProductSection, {
+        }, product.slug)) : visibleProducts.map(product => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_organisms_ProductSection__WEBPACK_IMPORTED_MODULE_7__.ProductSection, {
           product: product
         }, product.slug))]
       })
@@ -3668,6 +3733,54 @@ const useHarborData = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Ha
 
 /***/ },
 
+/***/ "./resources/js/context/reload-banner-context.tsx"
+/*!********************************************************!*\
+  !*** ./resources/js/context/reload-banner-context.tsx ***!
+  \********************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ReloadBannerProvider: () => (/* binding */ ReloadBannerProvider),
+/* harmony export */   useReloadBanner: () => (/* binding */ useReloadBanner)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/**
+ * @package LiquidWeb\Harbor
+ */
+
+
+const ReloadBannerContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
+  needsReload: false,
+  setNeedsReload: () => {}
+});
+
+/**
+ * @since 1.0.0
+ */
+function ReloadBannerProvider({
+  children
+}) {
+  const [needsReload, setNeedsReload] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(ReloadBannerContext.Provider, {
+    value: {
+      needsReload,
+      setNeedsReload
+    },
+    children: children
+  });
+}
+
+/**
+ * @since 1.0.0
+ */
+const useReloadBanner = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(ReloadBannerContext);
+
+/***/ },
+
 /***/ "./resources/js/context/toast-context.tsx"
 /*!************************************************!*\
   !*** ./resources/js/context/toast-context.tsx ***!
@@ -3677,15 +3790,12 @@ const useHarborData = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Ha
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ToastProvider: () => (/* binding */ ToastProvider),
-/* harmony export */   reloadPageAction: () => (/* binding */ reloadPageAction),
 /* harmony export */   useToast: () => (/* binding */ useToast)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * Toast notification context — replaces Zustand toast-store.ts.
  *
@@ -3696,11 +3806,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-
-const reloadPageAction = {
-  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Reload page to see changes', '%TEXTDOMAIN%'),
-  onClick: () => window.location.reload()
-};
 const ToastContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
   toasts: [],
   addToast: () => {},
@@ -3729,7 +3834,7 @@ function ToastProvider({
       setTimeout(() => removeToast(id), 3500);
     }
   }, [removeToast]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(ToastContext.Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(ToastContext.Provider, {
     value: {
       toasts,
       addToast,
@@ -4205,9 +4310,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
 /* harmony import */ var _lib_feature_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/lib/feature-utils */ "./resources/js/lib/feature-utils.ts");
 /* harmony import */ var _context_toast_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/context/toast-context */ "./resources/js/context/toast-context.tsx");
-/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
-/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/errors */ "./resources/js/errors/index.ts");
-/* harmony import */ var _types_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/types/utils */ "./resources/js/types/utils.ts");
+/* harmony import */ var _context_reload_banner_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/context/reload-banner-context */ "./resources/js/context/reload-banner-context.tsx");
+/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/errors */ "./resources/js/errors/index.ts");
+/* harmony import */ var _types_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/types/utils */ "./resources/js/types/utils.ts");
 /**
  * Behavior hook for FeatureRow.
  *
@@ -4216,6 +4322,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @package LiquidWeb\Harbor
  */
+
 
 
 
@@ -4251,14 +4358,17 @@ function useFeatureRow(feature) {
     addToast
   } = (0,_context_toast_context__WEBPACK_IMPORTED_MODULE_5__.useToast)();
   const {
+    setNeedsReload
+  } = (0,_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_6__.useReloadBanner)();
+  const {
     addError
-  } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__.useErrorModal)();
+  } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_7__.useErrorModal)();
   const {
     enableFeature,
     disableFeature,
     updateFeature
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_store__WEBPACK_IMPORTED_MODULE_3__.store);
-  const installableBusy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => (0,_types_utils__WEBPACK_IMPORTED_MODULE_8__.isInstallableFeature)(feature) && select(_store__WEBPACK_IMPORTED_MODULE_3__.store).isAnyInstallableBusy(), [feature.type]);
+  const installableBusy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => (0,_types_utils__WEBPACK_IMPORTED_MODULE_9__.isInstallableFeature)(feature) && select(_store__WEBPACK_IMPORTED_MODULE_3__.store).isAnyInstallableBusy(), [feature.type]);
   const isLegacy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
     const activeLegacy = select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getActiveLegacyLicense(feature.slug);
     if (!activeLegacy) return false;
@@ -4268,7 +4378,7 @@ function useFeatureRow(feature) {
   const [pendingAction, setPendingAction] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
 
   // Non-installable features (services) have no install/toggle/update lifecycle.
-  if (!(0,_types_utils__WEBPACK_IMPORTED_MODULE_8__.isInstallableFeature)(feature)) {
+  if (!(0,_types_utils__WEBPACK_IMPORTED_MODULE_9__.isInstallableFeature)(feature)) {
     return {
       pendingAction: null,
       installableBusy: false,
@@ -4286,19 +4396,21 @@ function useFeatureRow(feature) {
     setPendingAction(checked ? featureInstalled ? 'enabling' : 'installing' : 'disabling');
     if (checked) {
       const result = await enableFeature(feature.slug);
-      if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.HarborError) {
+      if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_8__.HarborError) {
         addError(result);
       } else {
         addToast(/* translators: %s is the name of the feature being enabled */
-        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s enabled', '%TEXTDOMAIN%'), feature.name), 'success', _context_toast_context__WEBPACK_IMPORTED_MODULE_5__.reloadPageAction);
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s enabled', '%TEXTDOMAIN%'), feature.name), 'success');
+        setNeedsReload(true);
       }
     } else {
       const result = await disableFeature(feature.slug);
-      if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.HarborError) {
+      if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_8__.HarborError) {
         addError(result);
       } else {
         addToast(/* translators: %s is the name of the feature being disabled */
-        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s disabled', '%TEXTDOMAIN%'), feature.name), 'default', _context_toast_context__WEBPACK_IMPORTED_MODULE_5__.reloadPageAction);
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s disabled', '%TEXTDOMAIN%'), feature.name), 'default');
+        setNeedsReload(true);
       }
     }
     setPendingAction(null);
@@ -4306,7 +4418,7 @@ function useFeatureRow(feature) {
   const handleUpdate = async () => {
     setPendingAction('updating');
     const result = await updateFeature(feature.slug);
-    if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_7__.HarborError) {
+    if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_8__.HarborError) {
       addError(result);
     } else {
       /* translators: %s is the name of the feature being updated */
@@ -9717,6 +9829,409 @@ const computePosition = (reference, floating, options) => {
 
 /***/ },
 
+/***/ "./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs"
+/*!****************************************************************************!*\
+  !*** ./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs ***!
+  \****************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   arrow: () => (/* binding */ arrow),
+/* harmony export */   autoPlacement: () => (/* binding */ autoPlacement),
+/* harmony export */   autoUpdate: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoUpdate),
+/* harmony export */   computePosition: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition),
+/* harmony export */   detectOverflow: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.detectOverflow),
+/* harmony export */   flip: () => (/* binding */ flip),
+/* harmony export */   getOverflowAncestors: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_1__.getOverflowAncestors),
+/* harmony export */   hide: () => (/* binding */ hide),
+/* harmony export */   inline: () => (/* binding */ inline),
+/* harmony export */   limitShift: () => (/* binding */ limitShift),
+/* harmony export */   offset: () => (/* binding */ offset),
+/* harmony export */   platform: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.platform),
+/* harmony export */   shift: () => (/* binding */ shift),
+/* harmony export */   size: () => (/* binding */ size),
+/* harmony export */   useFloating: () => (/* binding */ useFloating)
+/* harmony export */ });
+/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs");
+/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "react-dom");
+
+
+
+
+
+
+var isClient = typeof document !== 'undefined';
+
+var noop = function noop() {};
+var index = isClient ? react__WEBPACK_IMPORTED_MODULE_2__.useLayoutEffect : noop;
+
+// Fork of `fast-deep-equal` that only does the comparisons we need and compares
+// functions
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (typeof a === 'function' && a.toString() === b.toString()) {
+    return true;
+  }
+  let length;
+  let i;
+  let keys;
+  if (a && b && typeof a === 'object') {
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length !== b.length) return false;
+      for (i = length; i-- !== 0;) {
+        if (!deepEqual(a[i], b[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) {
+      return false;
+    }
+    for (i = length; i-- !== 0;) {
+      if (!{}.hasOwnProperty.call(b, keys[i])) {
+        return false;
+      }
+    }
+    for (i = length; i-- !== 0;) {
+      const key = keys[i];
+      if (key === '_owner' && a.$$typeof) {
+        continue;
+      }
+      if (!deepEqual(a[key], b[key])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return a !== a && b !== b;
+}
+
+function getDPR(element) {
+  if (typeof window === 'undefined') {
+    return 1;
+  }
+  const win = element.ownerDocument.defaultView || window;
+  return win.devicePixelRatio || 1;
+}
+
+function roundByDPR(element, value) {
+  const dpr = getDPR(element);
+  return Math.round(value * dpr) / dpr;
+}
+
+function useLatestRef(value) {
+  const ref = react__WEBPACK_IMPORTED_MODULE_2__.useRef(value);
+  index(() => {
+    ref.current = value;
+  });
+  return ref;
+}
+
+/**
+ * Provides data to position a floating element.
+ * @see https://floating-ui.com/docs/useFloating
+ */
+function useFloating(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  const {
+    placement = 'bottom',
+    strategy = 'absolute',
+    middleware = [],
+    platform,
+    elements: {
+      reference: externalReference,
+      floating: externalFloating
+    } = {},
+    transform = true,
+    whileElementsMounted,
+    open
+  } = options;
+  const [data, setData] = react__WEBPACK_IMPORTED_MODULE_2__.useState({
+    x: 0,
+    y: 0,
+    strategy,
+    placement,
+    middlewareData: {},
+    isPositioned: false
+  });
+  const [latestMiddleware, setLatestMiddleware] = react__WEBPACK_IMPORTED_MODULE_2__.useState(middleware);
+  if (!deepEqual(latestMiddleware, middleware)) {
+    setLatestMiddleware(middleware);
+  }
+  const [_reference, _setReference] = react__WEBPACK_IMPORTED_MODULE_2__.useState(null);
+  const [_floating, _setFloating] = react__WEBPACK_IMPORTED_MODULE_2__.useState(null);
+  const setReference = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(node => {
+    if (node !== referenceRef.current) {
+      referenceRef.current = node;
+      _setReference(node);
+    }
+  }, []);
+  const setFloating = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(node => {
+    if (node !== floatingRef.current) {
+      floatingRef.current = node;
+      _setFloating(node);
+    }
+  }, []);
+  const referenceEl = externalReference || _reference;
+  const floatingEl = externalFloating || _floating;
+  const referenceRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(null);
+  const floatingRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(null);
+  const dataRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(data);
+  const hasWhileElementsMounted = whileElementsMounted != null;
+  const whileElementsMountedRef = useLatestRef(whileElementsMounted);
+  const platformRef = useLatestRef(platform);
+  const openRef = useLatestRef(open);
+  const update = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(() => {
+    if (!referenceRef.current || !floatingRef.current) {
+      return;
+    }
+    const config = {
+      placement,
+      strategy,
+      middleware: latestMiddleware
+    };
+    if (platformRef.current) {
+      config.platform = platformRef.current;
+    }
+    (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition)(referenceRef.current, floatingRef.current, config).then(data => {
+      const fullData = {
+        ...data,
+        // The floating element's position may be recomputed while it's closed
+        // but still mounted (such as when transitioning out). To ensure
+        // `isPositioned` will be `false` initially on the next open, avoid
+        // setting it to `true` when `open === false` (must be specified).
+        isPositioned: openRef.current !== false
+      };
+      if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
+        dataRef.current = fullData;
+        react_dom__WEBPACK_IMPORTED_MODULE_3__.flushSync(() => {
+          setData(fullData);
+        });
+      }
+    });
+  }, [latestMiddleware, placement, strategy, platformRef, openRef]);
+  index(() => {
+    if (open === false && dataRef.current.isPositioned) {
+      dataRef.current.isPositioned = false;
+      setData(data => ({
+        ...data,
+        isPositioned: false
+      }));
+    }
+  }, [open]);
+  const isMountedRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(false);
+  index(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  index(() => {
+    if (referenceEl) referenceRef.current = referenceEl;
+    if (floatingEl) floatingRef.current = floatingEl;
+    if (referenceEl && floatingEl) {
+      if (whileElementsMountedRef.current) {
+        return whileElementsMountedRef.current(referenceEl, floatingEl, update);
+      }
+      update();
+    }
+  }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
+  const refs = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
+    reference: referenceRef,
+    floating: floatingRef,
+    setReference,
+    setFloating
+  }), [setReference, setFloating]);
+  const elements = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
+    reference: referenceEl,
+    floating: floatingEl
+  }), [referenceEl, floatingEl]);
+  const floatingStyles = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => {
+    const initialStyles = {
+      position: strategy,
+      left: 0,
+      top: 0
+    };
+    if (!elements.floating) {
+      return initialStyles;
+    }
+    const x = roundByDPR(elements.floating, data.x);
+    const y = roundByDPR(elements.floating, data.y);
+    if (transform) {
+      return {
+        ...initialStyles,
+        transform: "translate(" + x + "px, " + y + "px)",
+        ...(getDPR(elements.floating) >= 1.5 && {
+          willChange: 'transform'
+        })
+      };
+    }
+    return {
+      position: strategy,
+      left: x,
+      top: y
+    };
+  }, [strategy, transform, elements.floating, data.x, data.y]);
+  return react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
+    ...data,
+    update,
+    refs,
+    elements,
+    floatingStyles
+  }), [data, update, refs, elements, floatingStyles]);
+}
+
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * This wraps the core `arrow` middleware to allow React refs as the element.
+ * @see https://floating-ui.com/docs/arrow
+ */
+const arrow$1 = options => {
+  function isRef(value) {
+    return {}.hasOwnProperty.call(value, 'current');
+  }
+  return {
+    name: 'arrow',
+    options,
+    fn(state) {
+      const {
+        element,
+        padding
+      } = typeof options === 'function' ? options(state) : options;
+      if (element && isRef(element)) {
+        if (element.current != null) {
+          return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.arrow)({
+            element: element.current,
+            padding
+          }).fn(state);
+        }
+        return {};
+      }
+      if (element) {
+        return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.arrow)({
+          element,
+          padding
+        }).fn(state);
+      }
+      return {};
+    }
+  };
+};
+
+/**
+ * Modifies the placement by translating the floating element along the
+ * specified axes.
+ * A number (shorthand for `mainAxis` or distance), or an axes configuration
+ * object may be passed.
+ * @see https://floating-ui.com/docs/offset
+ */
+const offset = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.offset)(options),
+  options: [options, deps]
+});
+
+/**
+ * Optimizes the visibility of the floating element by shifting it in order to
+ * keep it in view when it will overflow the clipping boundary.
+ * @see https://floating-ui.com/docs/shift
+ */
+const shift = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.shift)(options),
+  options: [options, deps]
+});
+
+/**
+ * Built-in `limiter` that will stop `shift()` at a certain point.
+ */
+const limitShift = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.limitShift)(options),
+  options: [options, deps]
+});
+
+/**
+ * Optimizes the visibility of the floating element by flipping the `placement`
+ * in order to keep it in view when the preferred placement(s) will overflow the
+ * clipping boundary. Alternative to `autoPlacement`.
+ * @see https://floating-ui.com/docs/flip
+ */
+const flip = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.flip)(options),
+  options: [options, deps]
+});
+
+/**
+ * Provides data that allows you to change the size of the floating element —
+ * for instance, prevent it from overflowing the clipping boundary or match the
+ * width of the reference element.
+ * @see https://floating-ui.com/docs/size
+ */
+const size = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.size)(options),
+  options: [options, deps]
+});
+
+/**
+ * Optimizes the visibility of the floating element by choosing the placement
+ * that has the most space available automatically, without needing to specify a
+ * preferred placement. Alternative to `flip`.
+ * @see https://floating-ui.com/docs/autoPlacement
+ */
+const autoPlacement = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoPlacement)(options),
+  options: [options, deps]
+});
+
+/**
+ * Provides data to hide the floating element in applicable situations, such as
+ * when it is not in the same clipping context as the reference element.
+ * @see https://floating-ui.com/docs/hide
+ */
+const hide = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.hide)(options),
+  options: [options, deps]
+});
+
+/**
+ * Provides improved positioning for inline reference elements that can span
+ * over multiple lines, such as hyperlinks or range selections.
+ * @see https://floating-ui.com/docs/inline
+ */
+const inline = (options, deps) => ({
+  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.inline)(options),
+  options: [options, deps]
+});
+
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * This wraps the core `arrow` middleware to allow React refs as the element.
+ * @see https://floating-ui.com/docs/arrow
+ */
+const arrow = (options, deps) => ({
+  ...arrow$1(options),
+  options: [options, deps]
+});
+
+
+
+
+/***/ },
+
 /***/ "./node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs"
 /*!************************************************************************!*\
   !*** ./node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs ***!
@@ -11533,7 +12048,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createPopperScope: () => (/* binding */ createPopperScope)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@radix-ui/react-popper/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs");
+/* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs");
 /* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs");
 /* harmony import */ var _radix_ui_react_arrow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-arrow */ "./node_modules/@radix-ui/react-arrow/dist/index.mjs");
 /* harmony import */ var _radix_ui_react_compose_refs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @radix-ui/react-compose-refs */ "./node_modules/@radix-ui/react-compose-refs/dist/index.mjs");
@@ -11829,409 +12344,6 @@ var Content = PopperContent;
 var Arrow = PopperArrow;
 
 //# sourceMappingURL=index.mjs.map
-
-
-/***/ },
-
-/***/ "./node_modules/@radix-ui/react-popper/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs"
-/*!****************************************************************************************************************!*\
-  !*** ./node_modules/@radix-ui/react-popper/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs ***!
-  \****************************************************************************************************************/
-(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   arrow: () => (/* binding */ arrow),
-/* harmony export */   autoPlacement: () => (/* binding */ autoPlacement),
-/* harmony export */   autoUpdate: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoUpdate),
-/* harmony export */   computePosition: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition),
-/* harmony export */   detectOverflow: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.detectOverflow),
-/* harmony export */   flip: () => (/* binding */ flip),
-/* harmony export */   getOverflowAncestors: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_1__.getOverflowAncestors),
-/* harmony export */   hide: () => (/* binding */ hide),
-/* harmony export */   inline: () => (/* binding */ inline),
-/* harmony export */   limitShift: () => (/* binding */ limitShift),
-/* harmony export */   offset: () => (/* binding */ offset),
-/* harmony export */   platform: () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.platform),
-/* harmony export */   shift: () => (/* binding */ shift),
-/* harmony export */   size: () => (/* binding */ size),
-/* harmony export */   useFloating: () => (/* binding */ useFloating)
-/* harmony export */ });
-/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs");
-/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "react-dom");
-
-
-
-
-
-
-var isClient = typeof document !== 'undefined';
-
-var noop = function noop() {};
-var index = isClient ? react__WEBPACK_IMPORTED_MODULE_2__.useLayoutEffect : noop;
-
-// Fork of `fast-deep-equal` that only does the comparisons we need and compares
-// functions
-function deepEqual(a, b) {
-  if (a === b) {
-    return true;
-  }
-  if (typeof a !== typeof b) {
-    return false;
-  }
-  if (typeof a === 'function' && a.toString() === b.toString()) {
-    return true;
-  }
-  let length;
-  let i;
-  let keys;
-  if (a && b && typeof a === 'object') {
-    if (Array.isArray(a)) {
-      length = a.length;
-      if (length !== b.length) return false;
-      for (i = length; i-- !== 0;) {
-        if (!deepEqual(a[i], b[i])) {
-          return false;
-        }
-      }
-      return true;
-    }
-    keys = Object.keys(a);
-    length = keys.length;
-    if (length !== Object.keys(b).length) {
-      return false;
-    }
-    for (i = length; i-- !== 0;) {
-      if (!{}.hasOwnProperty.call(b, keys[i])) {
-        return false;
-      }
-    }
-    for (i = length; i-- !== 0;) {
-      const key = keys[i];
-      if (key === '_owner' && a.$$typeof) {
-        continue;
-      }
-      if (!deepEqual(a[key], b[key])) {
-        return false;
-      }
-    }
-    return true;
-  }
-  return a !== a && b !== b;
-}
-
-function getDPR(element) {
-  if (typeof window === 'undefined') {
-    return 1;
-  }
-  const win = element.ownerDocument.defaultView || window;
-  return win.devicePixelRatio || 1;
-}
-
-function roundByDPR(element, value) {
-  const dpr = getDPR(element);
-  return Math.round(value * dpr) / dpr;
-}
-
-function useLatestRef(value) {
-  const ref = react__WEBPACK_IMPORTED_MODULE_2__.useRef(value);
-  index(() => {
-    ref.current = value;
-  });
-  return ref;
-}
-
-/**
- * Provides data to position a floating element.
- * @see https://floating-ui.com/docs/useFloating
- */
-function useFloating(options) {
-  if (options === void 0) {
-    options = {};
-  }
-  const {
-    placement = 'bottom',
-    strategy = 'absolute',
-    middleware = [],
-    platform,
-    elements: {
-      reference: externalReference,
-      floating: externalFloating
-    } = {},
-    transform = true,
-    whileElementsMounted,
-    open
-  } = options;
-  const [data, setData] = react__WEBPACK_IMPORTED_MODULE_2__.useState({
-    x: 0,
-    y: 0,
-    strategy,
-    placement,
-    middlewareData: {},
-    isPositioned: false
-  });
-  const [latestMiddleware, setLatestMiddleware] = react__WEBPACK_IMPORTED_MODULE_2__.useState(middleware);
-  if (!deepEqual(latestMiddleware, middleware)) {
-    setLatestMiddleware(middleware);
-  }
-  const [_reference, _setReference] = react__WEBPACK_IMPORTED_MODULE_2__.useState(null);
-  const [_floating, _setFloating] = react__WEBPACK_IMPORTED_MODULE_2__.useState(null);
-  const setReference = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(node => {
-    if (node !== referenceRef.current) {
-      referenceRef.current = node;
-      _setReference(node);
-    }
-  }, []);
-  const setFloating = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(node => {
-    if (node !== floatingRef.current) {
-      floatingRef.current = node;
-      _setFloating(node);
-    }
-  }, []);
-  const referenceEl = externalReference || _reference;
-  const floatingEl = externalFloating || _floating;
-  const referenceRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(null);
-  const floatingRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(null);
-  const dataRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(data);
-  const hasWhileElementsMounted = whileElementsMounted != null;
-  const whileElementsMountedRef = useLatestRef(whileElementsMounted);
-  const platformRef = useLatestRef(platform);
-  const openRef = useLatestRef(open);
-  const update = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(() => {
-    if (!referenceRef.current || !floatingRef.current) {
-      return;
-    }
-    const config = {
-      placement,
-      strategy,
-      middleware: latestMiddleware
-    };
-    if (platformRef.current) {
-      config.platform = platformRef.current;
-    }
-    (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition)(referenceRef.current, floatingRef.current, config).then(data => {
-      const fullData = {
-        ...data,
-        // The floating element's position may be recomputed while it's closed
-        // but still mounted (such as when transitioning out). To ensure
-        // `isPositioned` will be `false` initially on the next open, avoid
-        // setting it to `true` when `open === false` (must be specified).
-        isPositioned: openRef.current !== false
-      };
-      if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
-        dataRef.current = fullData;
-        react_dom__WEBPACK_IMPORTED_MODULE_3__.flushSync(() => {
-          setData(fullData);
-        });
-      }
-    });
-  }, [latestMiddleware, placement, strategy, platformRef, openRef]);
-  index(() => {
-    if (open === false && dataRef.current.isPositioned) {
-      dataRef.current.isPositioned = false;
-      setData(data => ({
-        ...data,
-        isPositioned: false
-      }));
-    }
-  }, [open]);
-  const isMountedRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(false);
-  index(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-  index(() => {
-    if (referenceEl) referenceRef.current = referenceEl;
-    if (floatingEl) floatingRef.current = floatingEl;
-    if (referenceEl && floatingEl) {
-      if (whileElementsMountedRef.current) {
-        return whileElementsMountedRef.current(referenceEl, floatingEl, update);
-      }
-      update();
-    }
-  }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
-  const refs = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
-    reference: referenceRef,
-    floating: floatingRef,
-    setReference,
-    setFloating
-  }), [setReference, setFloating]);
-  const elements = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
-    reference: referenceEl,
-    floating: floatingEl
-  }), [referenceEl, floatingEl]);
-  const floatingStyles = react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => {
-    const initialStyles = {
-      position: strategy,
-      left: 0,
-      top: 0
-    };
-    if (!elements.floating) {
-      return initialStyles;
-    }
-    const x = roundByDPR(elements.floating, data.x);
-    const y = roundByDPR(elements.floating, data.y);
-    if (transform) {
-      return {
-        ...initialStyles,
-        transform: "translate(" + x + "px, " + y + "px)",
-        ...(getDPR(elements.floating) >= 1.5 && {
-          willChange: 'transform'
-        })
-      };
-    }
-    return {
-      position: strategy,
-      left: x,
-      top: y
-    };
-  }, [strategy, transform, elements.floating, data.x, data.y]);
-  return react__WEBPACK_IMPORTED_MODULE_2__.useMemo(() => ({
-    ...data,
-    update,
-    refs,
-    elements,
-    floatingStyles
-  }), [data, update, refs, elements, floatingStyles]);
-}
-
-/**
- * Provides data to position an inner element of the floating element so that it
- * appears centered to the reference element.
- * This wraps the core `arrow` middleware to allow React refs as the element.
- * @see https://floating-ui.com/docs/arrow
- */
-const arrow$1 = options => {
-  function isRef(value) {
-    return {}.hasOwnProperty.call(value, 'current');
-  }
-  return {
-    name: 'arrow',
-    options,
-    fn(state) {
-      const {
-        element,
-        padding
-      } = typeof options === 'function' ? options(state) : options;
-      if (element && isRef(element)) {
-        if (element.current != null) {
-          return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.arrow)({
-            element: element.current,
-            padding
-          }).fn(state);
-        }
-        return {};
-      }
-      if (element) {
-        return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.arrow)({
-          element,
-          padding
-        }).fn(state);
-      }
-      return {};
-    }
-  };
-};
-
-/**
- * Modifies the placement by translating the floating element along the
- * specified axes.
- * A number (shorthand for `mainAxis` or distance), or an axes configuration
- * object may be passed.
- * @see https://floating-ui.com/docs/offset
- */
-const offset = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.offset)(options),
-  options: [options, deps]
-});
-
-/**
- * Optimizes the visibility of the floating element by shifting it in order to
- * keep it in view when it will overflow the clipping boundary.
- * @see https://floating-ui.com/docs/shift
- */
-const shift = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.shift)(options),
-  options: [options, deps]
-});
-
-/**
- * Built-in `limiter` that will stop `shift()` at a certain point.
- */
-const limitShift = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.limitShift)(options),
-  options: [options, deps]
-});
-
-/**
- * Optimizes the visibility of the floating element by flipping the `placement`
- * in order to keep it in view when the preferred placement(s) will overflow the
- * clipping boundary. Alternative to `autoPlacement`.
- * @see https://floating-ui.com/docs/flip
- */
-const flip = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.flip)(options),
-  options: [options, deps]
-});
-
-/**
- * Provides data that allows you to change the size of the floating element —
- * for instance, prevent it from overflowing the clipping boundary or match the
- * width of the reference element.
- * @see https://floating-ui.com/docs/size
- */
-const size = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.size)(options),
-  options: [options, deps]
-});
-
-/**
- * Optimizes the visibility of the floating element by choosing the placement
- * that has the most space available automatically, without needing to specify a
- * preferred placement. Alternative to `flip`.
- * @see https://floating-ui.com/docs/autoPlacement
- */
-const autoPlacement = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoPlacement)(options),
-  options: [options, deps]
-});
-
-/**
- * Provides data to hide the floating element in applicable situations, such as
- * when it is not in the same clipping context as the reference element.
- * @see https://floating-ui.com/docs/hide
- */
-const hide = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.hide)(options),
-  options: [options, deps]
-});
-
-/**
- * Provides improved positioning for inline reference elements that can span
- * over multiple lines, such as hyperlinks or range selections.
- * @see https://floating-ui.com/docs/inline
- */
-const inline = (options, deps) => ({
-  ...(0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.inline)(options),
-  options: [options, deps]
-});
-
-/**
- * Provides data to position an inner element of the floating element so that it
- * appears centered to the reference element.
- * This wraps the core `arrow` middleware to allow React refs as the element.
- * @see https://floating-ui.com/docs/arrow
- */
-const arrow = (options, deps) => ({
-  ...arrow$1(options),
-  options: [options, deps]
-});
-
-
 
 
 /***/ },
