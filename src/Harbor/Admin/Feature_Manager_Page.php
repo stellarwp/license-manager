@@ -169,10 +169,11 @@ class Feature_Manager_Page {
 			[
 				'restUrl'             => rest_url( 'liquidweb/harbor/v1/' ),
 				'nonce'               => wp_create_nonce( 'wp_rest' ),
-				'activationBaseUrl'   => add_query_arg(
+				'activationUrl'       => add_query_arg(
 					[
-						'domain'   => $this->site_data->get_domain(),
-						'callback' => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&refresh=auto' ),
+						'portal-referral' => 'plugin',
+						'redirect_url'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&refresh=auto' ),
+						'domain'          => $this->site_data->get_domain(),
 					],
 					Config::get_portal_base_url() . '/license/'
 				),

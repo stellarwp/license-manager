@@ -137,7 +137,7 @@ export function LicenseKeyInput( {
 						{ __( 'Verifying\u2026', '%TEXTDOMAIN%' ) }
 					</>
 				) : (
-					__( 'Activate', '%TEXTDOMAIN%' )
+					__( 'Save', '%TEXTDOMAIN%' )
 				) }
 			</Button>
 		</div>
