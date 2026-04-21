@@ -188,12 +188,14 @@ export const getCatalogTier = (
 const UNACTIVATED_STATUSES = [ 'not_activated', 'activation_required' ] as const;
 
 /**
- * True when a license is present and every product's validation_status indicates
- * it has not been activated on this domain (not_activated or activation_required).
- * Returns false when there are no products.
+ * True when a license is present and every non-expired product's validation_status
+ * indicates it has not been activated on this domain. Expired products are excluded
+ * so they don't suppress the notice for products that can still be activated.
  */
 export const areAllProductsNotActivated = ( state: State ): boolean => {
-	const products = state.license.license.products;
+	const products = state.license.license.products.filter(
+		( p ) => p.validation_status !== 'expired'
+	);
 	return (
 		products.length > 0 &&
 		products.every(

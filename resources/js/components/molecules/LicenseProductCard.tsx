@@ -5,6 +5,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { LicenseBadge } from '@/components/atoms/LicenseBadge';
+import { Badge } from '@/components/ui/badge';
 import { ProductLogo } from '@/components/atoms/ProductLogo';
 import { formatDate, getExpiryStatus, expiryCardClass, expiryTextClass } from '@/lib/license-utils';
 import type { LicenseProduct } from '@/types/api';
@@ -37,10 +38,6 @@ export function LicenseProductCard( { lp, productName, tierName }: LicenseProduc
 	const expiryStatus    = getExpiryStatus( lp.expires );
 	const isActivatedHere = lp.is_valid && lp.activated_here === true;
 
-	const badge = isActivatedHere
-		? <LicenseBadge type="licensed" tierName={ tierName } className="text-[10px]" />
-		: <LicenseBadge type={ getStatusBadgeType( lp ) } className="text-[10px]" />;
-
 	return (
 		<div className={ `rounded-lg border bg-card px-3 py-2.5 space-y-2.5 ${ expiryCardClass[ expiryStatus ] }` }>
 			<div className="flex items-center gap-2">
@@ -48,15 +45,22 @@ export function LicenseProductCard( { lp, productName, tierName }: LicenseProduc
 				<span className="text-sm font-medium text-foreground flex-1 min-w-0">
 					{ productName }
 				</span>
-				{ badge }
+					<Badge variant={ isActivatedHere ? 'gradient' : 'secondary' } className="text-[10px] shrink-0">
+					{ tierName }
+				</Badge>
 			</div>
-			<span className={ `text-xs ${ expiryTextClass[ expiryStatus ] }` }>
-				{ expiryStatus === 'expired'
-					? __( 'Expired', '%TEXTDOMAIN%' )
-					: __( 'Expires', '%TEXTDOMAIN%' ) }
-				{ ' ' }
-				{ formatDate( lp.expires ) }
-			</span>
+			<div className="flex items-center justify-between">
+				<span className={ `text-xs ${ expiryTextClass[ expiryStatus ] }` }>
+					{ expiryStatus === 'expired'
+						? __( 'Expired', '%TEXTDOMAIN%' )
+						: __( 'Expires', '%TEXTDOMAIN%' ) }
+					{ ' ' }
+					{ formatDate( lp.expires ) }
+				</span>
+				{ ! isActivatedHere && (
+					<LicenseBadge type={ getStatusBadgeType( lp ) } className="text-[10px]" />
+				) }
+			</div>
 		</div>
 	);
 }
