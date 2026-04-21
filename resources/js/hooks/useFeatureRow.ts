@@ -12,7 +12,8 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { store as harborStore } from '@/store';
 import { getLicenseBadgeType } from '@/lib/feature-utils';
 import type { LicenseBadgeType } from '@/lib/feature-utils';
-import { useToast, reloadPageAction } from '@/context/toast-context';
+import { useToast } from '@/context/toast-context';
+import { useReloadBanner } from '@/context/reload-banner-context';
 import { useErrorModal } from '@/context/error-modal-context';
 import { HarborError } from '@/errors';
 import type { Feature } from '@/types/api';
@@ -61,6 +62,7 @@ export interface FeatureRowState {
  */
 export function useFeatureRow( feature: Feature ): FeatureRowState {
 	const { addToast } = useToast();
+	const { setNeedsReload } = useReloadBanner();
 	const { addError } = useErrorModal();
 	const { enableFeature, disableFeature, updateFeature } = useDispatch( harborStore );
 
@@ -112,8 +114,8 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 					/* translators: %s is the name of the feature being enabled */
 					sprintf( __( '%s enabled', '%TEXTDOMAIN%' ), feature.name ),
 					'success',
-					reloadPageAction,
 				);
+				setNeedsReload( true );
 			}
 		} else {
 			const result = await disableFeature( feature.slug );
@@ -124,8 +126,8 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 					/* translators: %s is the name of the feature being disabled */
 					sprintf( __( '%s disabled', '%TEXTDOMAIN%' ), feature.name ),
 					'default',
-					reloadPageAction,
 				);
+				setNeedsReload( true );
 			}
 		}
 		setPendingAction( null );
