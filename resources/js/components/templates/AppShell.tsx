@@ -12,6 +12,7 @@ import { FilterBar } from '@/components/molecules/FilterBar';
 import { LicensePanel } from '@/components/organisms/LicensePanel';
 import { LegacyLicenseBanner } from '@/components/molecules/LegacyLicenseBanner';
 import { NotActivatedBanner } from '@/components/molecules/NotActivatedBanner';
+import { ReloadBanner } from '@/components/molecules/ReloadBanner';
 import { ProductSection } from '@/components/organisms/ProductSection';
 import { ProductSectionSkeleton } from '@/components/organisms/ProductSectionSkeleton';
 import { ErrorBoundary } from '@/components/atoms/ErrorBoundary';
@@ -33,7 +34,7 @@ export function AppShell() {
 
     return (
         <Shell
-            header={ <FilterBar /> }
+            header={ <><FilterBar /><ReloadBanner /></> }
             sideContent={ <LicensePanel /> }
         >
             <ErrorBoundary>

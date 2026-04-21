@@ -9,10 +9,12 @@ import { ToastProvider } from '@/context/toast-context';
 import { FilterProvider } from '@/context/filter-context';
 import { ErrorModalProvider } from '@/context/error-modal-context';
 import { HarborDataProvider } from '@/context/harbor-data-context';
+import { ReloadBannerProvider } from '@/context/reload-banner-context';
 
 export const App = () => {
     return (
         <ToastProvider>
+            <ReloadBannerProvider>
             <FilterProvider>
                 <ErrorModalProvider>
                     <HarborDataProvider>
@@ -26,6 +28,7 @@ export const App = () => {
                     </HarborDataProvider>
                 </ErrorModalProvider>
             </FilterProvider>
+            </ReloadBannerProvider>
         </ToastProvider>
     );
 };
