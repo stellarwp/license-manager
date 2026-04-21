@@ -1365,6 +1365,13 @@
       }
     }
   }
+  .lw-harbor-ui .hover\:bg-amber-100 {
+    .lw-harbor-ui &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-amber-100) !important;
+      }
+    }
+  }
   .lw-harbor-ui .hover\:bg-destructive\/90 {
     .lw-harbor-ui &:hover {
       @media (hover: hover) {
