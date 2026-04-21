@@ -148,7 +148,7 @@ export const storeLicense =
 			return new HarborError(
 				ErrorCode.LicenseActionInProgress,
 				__(
-					'Liquid Web Software Manager failed to activate your license, another action is in progress.',
+					'Liquid Web Software Manager failed to validate your license, another action is in progress.',
 					'%TEXTDOMAIN%'
 				)
 			);
@@ -171,7 +171,7 @@ export const storeLicense =
 				err,
 				ErrorCode.LicenseStoreFailed,
 				__(
-					'Liquid Web Software Manager failed to activate your license.',
+					'Liquid Web Software Manager failed to validate your license.',
 					'%TEXTDOMAIN%'
 				)
 			);

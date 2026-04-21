@@ -27,9 +27,7 @@ export function NotActivatedBanner() {
 
 	if ( ! allNotActivated || ! licenseKey || ! window.harborData ) return null;
 
-	const activationUrl =
-		window.harborData.activationBaseUrl +
-		'&key=' + encodeURIComponent( licenseKey );
+	const activationUrl = window.harborData.activationUrl;
 
 	return (
 		<div
@@ -43,7 +41,7 @@ export function NotActivatedBanner() {
 					'%TEXTDOMAIN%'
 				) }
 				{ ' ' }
-				<a href={ activationUrl } className="underline font-medium">
+				<a href={ activationUrl } target="_blank" rel="noopener noreferrer" className="underline font-medium">
 					{ __( 'Activate now', '%TEXTDOMAIN%' ) }
 				</a>
 			</p>
