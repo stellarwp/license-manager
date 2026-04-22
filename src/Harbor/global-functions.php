@@ -19,28 +19,29 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 	 * vendor-prefixed copies share the same registry. Only currently-active
 	 * instances can register themselves, so there is no stale-version problem.
 	 *
-	 * - Register: _lw_harbor_instance_registry( '3.0.1' )
+	 * - Register: _lw_harbor_instance_registry( '3.0.1', 'givewp/give.php' )
 	 * - Read all:  _lw_harbor_instance_registry()
 	 *
 	 * @internal Not intended for direct use by plugins.
 	 *
-	 * @param string $version Version to register (omit when reading).
+	 * @param string $version     Version to register (omit when reading).
+	 * @param string $plugin_file Plugin file path relative to WP_PLUGIN_DIR (omit when reading).
 	 *
-	 * @return array<string, true> Map of registered version strings.
+	 * @return array<string, string> Map of version string to plugin file path.
 	 */
-	function _lw_harbor_instance_registry( string $version = '' ): array {
-		/** @var array<string, true> $versions */
-		static $versions = [];
+	function _lw_harbor_instance_registry( string $version = '', string $plugin_file = '' ): array {
+		/** @var array<string, string> $instances */
+		static $instances = [];
 
 		// Only accept registrations during the bootstrap window (before wp_loaded).
 		// All real Harbor instances initialize during plugins_loaded, so anything
 		// arriving after wp_loaded is outside the expected lifecycle and is ignored
 		// to prevent external code from injecting fake versions into the registry.
 		if ( $version !== '' && ! did_action( 'wp_loaded' ) ) {
-			$versions[ $version ] = true;
+			$instances[ $version ] = $plugin_file;
 		}
 
-		return $versions;
+		return $instances;
 	}
 }
 

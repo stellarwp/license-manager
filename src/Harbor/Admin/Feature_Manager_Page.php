@@ -169,6 +169,7 @@ class Feature_Manager_Page {
 			[
 				'restUrl'             => rest_url( 'liquidweb/harbor/v1/' ),
 				'nonce'               => wp_create_nonce( 'wp_rest' ),
+				'pluginsUrl'          => admin_url( 'plugins.php' ),
 				'activationUrl'       => add_query_arg(
 					[
 						'portal-referral' => 'plugin',

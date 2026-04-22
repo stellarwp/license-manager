@@ -73,7 +73,7 @@ class Harbor {
 	 * @return void
 	 */
 	protected static function register_instance_hooks(): void {
-		_lw_harbor_instance_registry( self::VERSION );
+		_lw_harbor_instance_registry( self::VERSION, Config::get_plugin_file() ?? '' );
 
 		Version::register_debug_info();
 	}
