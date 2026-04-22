@@ -142,8 +142,9 @@ class Config {
 	 * Detects the host plugin file by reflecting on the container class.
 	 *
 	 * The container is always vendor-bundled inside the host plugin, so its
-	 * file path starts with that plugin's directory. We walk active_plugins
-	 * to find the match.
+	 * file path starts with that plugin's directory. We derive the plugin slug
+	 * from the path, then confirm against active_plugins / active_sitewide_plugins,
+	 * falling back to a header scan if options aren't populated.
 	 *
 	 * @since 1.0.0
 	 *
@@ -155,24 +156,46 @@ class Config {
 		}
 
 		try {
-			$reflection = new \ReflectionClass( get_class( static::get_container() ) );
+			// e.g. ReflectionClass { name: 'MyPlugin\Container', ... }
+			$reflection = new \ReflectionClass( static::get_container() );
+			// e.g. '/var/www/html/wp-content/plugins/myplugin/src/Container.php'
 			$class_file = $reflection->getFileName();
 		} catch ( \Exception $e ) {
 			return null;
 		}
 
+		// getFileName() returns false for internal (built-in) classes.
 		if ( ! is_string( $class_file ) ) {
 			return null;
 		}
 
-		foreach ( (array) get_option( 'active_plugins', [] ) as $plugin_file ) {
-			if ( ! is_string( $plugin_file ) ) {
-				continue;
-			}
+		// e.g. '/var/www/html/wp-content/plugins/'
+		$plugins_prefix = trailingslashit( WP_PLUGIN_DIR );
 
-			$plugin_dir = trailingslashit( WP_PLUGIN_DIR ) . trailingslashit( dirname( $plugin_file ) );
+		// Bail if the container class isn't under WP_PLUGIN_DIR at all.
+		if ( strpos( $class_file, $plugins_prefix ) !== 0 ) {
+			return null;
+		}
 
-			if ( strpos( $class_file, $plugin_dir ) === 0 ) {
+		// Strip the plugins prefix, then take the first path segment.
+		// '/var/www/html/wp-content/plugins/myplugin/src/Container.php' → 'myplugin'
+		$plugin_slug = explode( '/', substr( $class_file, strlen( $plugins_prefix ) ) )[0];
+
+		if ( empty( $plugin_slug ) ) {
+			return null;
+		}
+
+		// Prefer the exact file path from options so we respect how the plugin registered itself.
+		// active_plugins: [ 'myplugin/myplugin.php', ... ]
+		// active_sitewide_plugins (multisite): [ 'myplugin/myplugin.php' => timestamp, ... ]
+		$candidates = array_merge(
+			(array) get_option( 'active_plugins', [] ),
+			array_keys( (array) get_site_option( 'active_sitewide_plugins', [] ) )
+		);
+
+		foreach ( $candidates as $plugin_file ) {
+			// dirname( 'myplugin/myplugin.php' ) === 'myplugin' ✓
+			if ( is_string( $plugin_file ) && dirname( $plugin_file ) === $plugin_slug ) {
 				return $plugin_file;
 			}
 		}
