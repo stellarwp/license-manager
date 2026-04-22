@@ -6,7 +6,7 @@
  *
  * @package LiquidWeb\Harbor
  */
-import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
 import { __ } from '@wordpress/i18n';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning';
@@ -40,6 +40,7 @@ const ToastContext = createContext<ToastContextValue>( {
  */
 export function ToastProvider( { children }: { children: ReactNode } ) {
     const [ toasts, setToasts ] = useState<Toast[]>( [] );
+    const counterRef = useRef( 0 );
 
     const removeToast = useCallback( ( id: string ) => {
         setToasts( ( prev ) => prev.filter( ( t ) => t.id !== id ) );
@@ -47,7 +48,8 @@ export function ToastProvider( { children }: { children: ReactNode } ) {
 
     const addToast = useCallback(
         ( message: string, variant: ToastVariant = 'default', action?: ToastAction ) => {
-            const id = crypto.randomUUID();
+            const id = `lw-harbor-toast-id-${ ++counterRef.current }`;
+
             setToasts( ( prev ) => [ ...prev, { id, message, variant, action } ] );
             if ( ! action ) {
                 setTimeout( () => removeToast( id ), 3500 );
