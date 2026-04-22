@@ -38,7 +38,7 @@ add_action( 'plugins_loaded', function() {
  $container = new Container();
  // Use a plugin basename constant defined in your main plugin file,
  // e.g. define( 'MY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) )
- Config::set_plugin_file( MY_PLUGIN_BASENAME );
+ Config::set_plugin_basename( MY_PLUGIN_BASENAME );
  Config::set_container( $container );
  Harbor::init();
 }, 0 );
