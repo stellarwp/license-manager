@@ -47,14 +47,17 @@ function getSwitchChecked( pendingAction: PendingAction, featureEnabled: boolean
 }
 
 export interface FeatureRowState {
-	pendingAction:    PendingAction;
-	installableBusy:  boolean;
-	badgeStatus:      FeatureStatus;
-	showSwitch:       boolean;
-	switchChecked:    boolean;
-	licenseBadgeType: LicenseBadgeType | null;
-	handleToggle:     ( checked: boolean ) => Promise<void>;
-	handleUpdate:     () => Promise<void>;
+	pendingAction:          PendingAction;
+	installableBusy:        boolean;
+	badgeStatus:            FeatureStatus;
+	showSwitch:             boolean;
+	switchChecked:          boolean;
+	licenseBadgeType:       LicenseBadgeType | null;
+	showDeactivateConfirm:  boolean;
+	handleToggle:           ( checked: boolean ) => Promise<void>;
+	handleUpdate:           () => Promise<void>;
+	handleConfirmDeactivate: () => Promise<void>;
+	handleCancelDeactivate: () => void;
 }
 
 /**
@@ -73,6 +76,11 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 		[ feature.type ]
 	);
 
+	const enabledHarborHostCount = useSelect(
+		( select ) => select( harborStore ).getEnabledHarborHostCount(),
+		[]
+	);
+
 	const isLegacy = useSelect(
 		( select ) => {
 			const activeLegacy = select( harborStore ).getActiveLegacyLicense( feature.slug );
@@ -84,26 +92,37 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 
 	const licenseBadgeType = getLicenseBadgeType( feature, isLegacy );
 
-	const [ pendingAction, setPendingAction ] = useState<PendingAction>( null );
+	const [ pendingAction, setPendingAction ]             = useState<PendingAction>( null );
+	const [ showDeactivateConfirm, setShowDeactivateConfirm ] = useState( false );
 
 	// Non-installable features (services) have no install/toggle/update lifecycle.
 	if ( ! isInstallableFeature( feature ) ) {
 		return {
-			pendingAction:    null,
-			installableBusy:  false,
-			badgeStatus:      'included' as FeatureStatus,
-			showSwitch:       false,
-			switchChecked:    false,
+			pendingAction:          null,
+			installableBusy:        false,
+			badgeStatus:            'included' as FeatureStatus,
+			showSwitch:             false,
+			switchChecked:          false,
 			licenseBadgeType,
-			handleToggle:     async () => {},
-			handleUpdate:     async () => {},
+			showDeactivateConfirm:  false,
+			handleToggle:           async () => {},
+			handleUpdate:           async () => {},
+			handleConfirmDeactivate: async () => {},
+			handleCancelDeactivate: () => {},
 		};
 	}
 
 	const featureEnabled   = feature.is_enabled;
 	const featureInstalled = feature.installed_version !== null;
+	const isHarborHost     = feature.type === 'plugin' && feature.is_harbor_host;
+	const isLastHarborHost = isHarborHost && featureEnabled && enabledHarborHostCount === 1;
 
 	const handleToggle = async ( checked: boolean ) => {
+		if ( ! checked && isLastHarborHost ) {
+			setShowDeactivateConfirm( true );
+			return;
+		}
+
 		setPendingAction( checked ? featureInstalled ? 'enabling' : 'installing' : 'disabling' );
 		if ( checked ) {
 			const result = await enableFeature( feature.slug );
@@ -133,6 +152,22 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 		setPendingAction( null );
 	};
 
+	const handleConfirmDeactivate = async () => {
+		setShowDeactivateConfirm( false );
+		setPendingAction( 'disabling' );
+		const result = await disableFeature( feature.slug );
+		if ( result instanceof HarborError ) {
+			addError( result );
+		} else {
+			window.location.href = window.harborData?.pluginsUrl ?? '/wp-admin/plugins.php';
+		}
+		setPendingAction( null );
+	};
+
+	const handleCancelDeactivate = () => {
+		setShowDeactivateConfirm( false );
+	};
+
 	const handleUpdate = async () => {
 		setPendingAction( 'updating' );
 		const result = await updateFeature( feature.slug );
@@ -156,7 +191,10 @@ export function useFeatureRow( feature: Feature ): FeatureRowState {
 		showSwitch,
 		switchChecked,
 		licenseBadgeType,
+		showDeactivateConfirm,
 		handleToggle,
 		handleUpdate,
+		handleConfirmDeactivate,
+		handleCancelDeactivate,
 	};
 }

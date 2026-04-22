@@ -66,6 +66,15 @@ class Config {
 	protected static $herald_base_url = self::DEFAULT_HERALD_BASE_URL;
 
 	/**
+	 * The plugin basename (relative to WP_PLUGIN_DIR) of the plugin hosting this Harbor instance.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string|null
+	 */
+	protected static $plugin_basename = null;
+
+	/**
 	 * Get the container.
 	 *
 	 * @since 1.0.0
@@ -103,9 +112,38 @@ class Config {
 	 * @return void
 	 */
 	public static function reset(): void {
-		static::$licensing_base_url = self::DEFAULT_LICENSING_BASE_URL;
-		static::$portal_base_url    = self::DEFAULT_PORTAL_BASE_URL;
-		static::$herald_base_url    = self::DEFAULT_HERALD_BASE_URL;
+		static::$licensing_base_url    = self::DEFAULT_LICENSING_BASE_URL;
+		static::$portal_base_url       = self::DEFAULT_PORTAL_BASE_URL;
+		static::$herald_base_url       = self::DEFAULT_HERALD_BASE_URL;
+		static::$plugin_basename       = null;
+	}
+
+	/**
+	 * Returns the plugin basename (relative to WP_PLUGIN_DIR) of the plugin
+	 * hosting this Harbor instance, or null if not set.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string|null
+	 */
+	public static function get_plugin_basename(): ?string {
+		return static::$plugin_basename;
+	}
+
+	/**
+	 * Set the plugin basename of the plugin hosting this Harbor instance.
+	 *
+	 * Pass the result of plugin_basename( __FILE__ ) from the host plugin's
+	 * main file, e.g. 'myplugin/myplugin.php'.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $plugin_basename The plugin basename (e.g. 'myplugin/myplugin.php').
+	 *
+	 * @return void
+	 */
+	public static function set_plugin_basename( string $plugin_basename ): void {
+		static::$plugin_basename = $plugin_basename;
 	}
 
 	/**

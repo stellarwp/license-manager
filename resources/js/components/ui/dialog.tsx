@@ -116,7 +116,7 @@ export function DialogContent( { children, className }: { children: ReactNode; c
 
 export function DialogFooter( { children, className }: { children: ReactNode; className?: string } ) {
     return (
-        <div className={ cn( 'flex items-center justify-end gap-2 px-6 pb-6 pt-0', className ) }>
+        <div className={ cn( 'flex items-center justify-end gap-3 px-6 pb-6 pt-4', className ) }>
             { children }
         </div>
     );

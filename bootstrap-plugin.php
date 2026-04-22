@@ -16,6 +16,7 @@ add_action(
 	static function () {
 		$container = new Container();
 		$container->singleton( ContainerInterface::class, $container );
+		Config::set_plugin_basename( plugin_basename( __FILE__ ) );
 		Config::set_container( $container );
 		Harbor::init();
 	},

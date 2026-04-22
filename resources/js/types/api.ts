@@ -95,6 +95,12 @@ export interface PluginFeature extends BaseFeature {
      * WordPress.org slug for plugins_api() lookups, or null if not on WordPress.org.
      */
     wporg_slug: string | null;
+    /**
+     * True when this plugin is a Harbor host — it called Harbor::init() and registered
+     * itself in the instance registry. Deactivating the last enabled Harbor host would
+     * take the Feature Manager offline.
+     */
+    is_harbor_host: boolean;
 }
 
 /**

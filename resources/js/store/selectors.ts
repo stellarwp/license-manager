@@ -66,6 +66,20 @@ export const isFeatureUpdating = (state: State, slug: string): boolean =>
 	state.features.updating[slug] ?? false;
 
 /**
+ * Returns the number of Harbor host plugins (is_harbor_host: true) that are currently enabled.
+ *
+ * Used to prevent deactivating the last active Harbor host — doing so would take
+ * the Feature Manager offline since Harbor is bundled inside that plugin.
+ */
+export const getEnabledHarborHostCount = createSelector(
+	(state: State): number =>
+		Object.values(state.features.bySlug).filter(
+			(f) => f.type === 'plugin' && f.is_harbor_host && f.is_enabled
+		).length,
+	(state: State) => [state.features.bySlug]
+);
+
+/**
  * True when any feature is being toggled or updated.
  *
  * Both toggle and update operations trigger WordPress install/activate/deactivate

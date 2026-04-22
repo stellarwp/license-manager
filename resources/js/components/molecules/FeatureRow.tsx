@@ -15,6 +15,8 @@ import { LicenseBadge } from '@/components/atoms/LicenseBadge';
 import { StatusBadge } from '@/components/atoms/StatusBadge';
 import { VersionDisplay } from '@/components/molecules/VersionDisplay';
 import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogHeader, DialogFooter } from '@/components/ui/dialog';
 import { useFeatureRow } from '@/hooks/useFeatureRow';
 import type { Feature } from '@/types/api';
 import { isInstallableFeature } from '@/types/utils';
@@ -37,8 +39,11 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 		showSwitch,
 		switchChecked,
 		licenseBadgeType,
+		showDeactivateConfirm,
 		handleToggle,
 		handleUpdate,
+		handleConfirmDeactivate,
+		handleCancelDeactivate,
 	} = useFeatureRow( feature );
 
 	const Chevron = expanded ? ChevronDown : ChevronRight;
@@ -123,15 +128,37 @@ export function FeatureRow( { feature, upgradeTierName }: FeatureRowProps ) {
 			</div>
 
 			{ expanded && (
-				<div className="px-4 pb-3 pl-[2.75rem]">
+				<div className="px-4 pb-3 pl-11">
 					<p className={ cn(
 						'text-sm text-muted-foreground leading-relaxed',
-						isVisuallyAvailable ? '!mt-[0.75em] !mb-0' : 'mt-2 mb-0'
+						isVisuallyAvailable ? 'mt-[0.75em]! mb-0!' : 'mt-2 mb-0'
 					) }>
 						{ feature.description }
 					</p>
 				</div>
 			) }
+
+			<Dialog open={ showDeactivateConfirm } onClose={ handleCancelDeactivate } maxWidth="max-w-md">
+				<DialogHeader
+					title={
+						/* translators: %s is the name of the feature being deactivated */
+						sprintf( __( 'Deactivate %s?', '%TEXTDOMAIN%' ), feature.name )
+					}
+					description={ __( 'This plugin powers this page. Deactivating it will make this page unavailable until it is reactivated from the WordPress Plugins page.', '%TEXTDOMAIN%' ) }
+					onClose={ handleCancelDeactivate }
+				/>
+				<DialogFooter>
+					<Button variant="outline" onClick={ handleCancelDeactivate }>
+						{ __( 'Cancel', '%TEXTDOMAIN%' ) }
+					</Button>
+					<Button variant="destructive" onClick={ handleConfirmDeactivate } disabled={ pendingAction === 'disabling' }>
+						{ pendingAction === 'disabling'
+							? __( 'Deactivating…', '%TEXTDOMAIN%' )
+							: __( 'Deactivate', '%TEXTDOMAIN%' )
+						}
+					</Button>
+				</DialogFooter>
+			</Dialog>
 		</div>
 	);
 }

@@ -24,12 +24,23 @@ class InstanceRegistryTest extends HarborTestCase {
 		$unique_version = '99.99.99';
 
 		// @phpstan-ignore function.internal
-		_lw_harbor_instance_registry( $unique_version );
+		_lw_harbor_instance_registry( $unique_version, 'some-plugin/some-plugin.php' );
 
 		// @phpstan-ignore function.internal
 		$versions = _lw_harbor_instance_registry();
 
 		$this->assertArrayNotHasKey( $unique_version, $versions );
+	}
+
+	public function test_it_returns_plugin_file_as_value_for_registered_version(): void {
+		// The bootstrap plugin registered itself before wp_loaded; its value is a plugin_file string, not true.
+		// @phpstan-ignore function.internal
+		$registry = _lw_harbor_instance_registry();
+
+		foreach ( $registry as $version => $plugin_file ) {
+			$this->assertIsString( $version );
+			$this->assertIsString( $plugin_file );
+		}
 	}
 
 	public function test_it_ignores_empty_version_string(): void {

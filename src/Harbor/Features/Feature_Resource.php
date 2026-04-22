@@ -85,16 +85,23 @@ final class Feature_Resource {
 	 * @return array<string, mixed>
 	 */
 	public function to_array(): array {
-		// Services do not support update_version.
+		// Services do not support update_version or is_harbor_host.
 
 		if ( $this->feature instanceof Service ) {
 			return $this->feature->to_array();
 		}
 
-		return array_merge(
+		$data = array_merge(
 			$this->feature->to_array(),
 			[ 'update_version' => $this->update_version ]
 		);
+
+		if ( $this->feature instanceof Plugin ) {
+			$harbor_host_files      = array_values( array_filter( _lw_harbor_instance_registry() ) );
+			$data['is_harbor_host'] = in_array( $this->feature->get_plugin_file(), $harbor_host_files, true );
+		}
+
+		return $data;
 	}
 
 	/**
