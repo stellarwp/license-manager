@@ -8,6 +8,7 @@
  */
 import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';
 import { __ } from '@wordpress/i18n';
+import { randomUUID } from '../lib/utils';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning';
 
@@ -47,7 +48,7 @@ export function ToastProvider( { children }: { children: ReactNode } ) {
 
     const addToast = useCallback(
         ( message: string, variant: ToastVariant = 'default', action?: ToastAction ) => {
-            const id = crypto.randomUUID();
+            const id = randomUUID();
             setToasts( ( prev ) => [ ...prev, { id, message, variant, action } ] );
             if ( ! action ) {
                 setTimeout( () => removeToast( id ), 3500 );
