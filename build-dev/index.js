@@ -3851,11 +3851,12 @@ function ToastProvider({
   children
 }) {
   const [toasts, setToasts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const counterRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(0);
   const removeToast = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(id => {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
   const addToast = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((message, variant = 'default', action) => {
-    const id = crypto.randomUUID();
+    const id = `lw-harbor-toast-id-${++counterRef.current}`;
     setToasts(prev => [...prev, {
       id,
       message,
