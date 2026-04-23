@@ -55,8 +55,8 @@ describe( 'buildActivationUrl', () => {
         expect( new URL( result ).searchParams.get( 'sku' ) ).toBe( 'kadence:plus' );
     } );
 
-    it( 'throws TypeError when baseUrl is not a valid URL', () => {
-        expect( () => buildActivationUrl( 'not-a-url', 'givewp', 'elite' ) ).toThrow( TypeError );
+    it( 'returns the original string unchanged when baseUrl is not a valid URL', () => {
+        expect( buildActivationUrl( 'not-a-url', 'givewp', 'elite' ) ).toBe( 'not-a-url' );
     } );
 
     it( 'percent-encodes special characters in productSlug and tier', () => {

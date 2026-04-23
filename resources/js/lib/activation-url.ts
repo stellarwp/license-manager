@@ -24,7 +24,11 @@ export function buildActivationUrl(
     productSlug: string,
     tier:        string,
 ): string {
-    const url = new URL( baseUrl );
-    url.searchParams.set( 'sku', `${ productSlug }:${ tier }` );
-    return url.toString();
+    try {
+        const url = new URL( baseUrl );
+        url.searchParams.set( 'sku', `${ productSlug }:${ tier }` );
+        return url.toString();
+    } catch {
+        return baseUrl;
+    }
 }
