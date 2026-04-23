@@ -58,7 +58,14 @@ export const enableFeature =
 				path: `/liquidweb/harbor/v1/features/${slug}/enable`,
 				method: 'POST',
 			});
+			// TOGGLE_FEATURE_FINISHED patches bySlug with the returned feature — no
+			// need to invalidate getFeatures. A background re-fetch would race the
+			// optimistic patch and could overwrite correct state with stale data,
+			// causing the toggle flicker reproduced in SCON-647.
 			dispatch({ type: 'TOGGLE_FEATURE_FINISHED', feature });
+			// Activation may have bootstrapped a new Harbor host plugin, so refresh
+			// the hosts list. RECEIVE_HARBOR_HOSTS only touches harborHosts.basenames
+			// and never overwrites bySlug, so there is no flicker risk.
 			dispatch.invalidateResolution('getHarborHosts', []);
 			return null;
 		} catch (err) {
@@ -90,6 +97,9 @@ export const disableFeature =
 				path: `/liquidweb/harbor/v1/features/${slug}/disable`,
 				method: 'POST',
 			});
+			// Same reasoning as enableFeature: patch via TOGGLE_FEATURE_FINISHED,
+			// do not invalidate getFeatures (SCON-647). No hosts invalidation needed
+			// because deactivation cannot introduce a new Harbor host.
 			dispatch({ type: 'TOGGLE_FEATURE_FINISHED', feature });
 			return null;
 		} catch (err) {

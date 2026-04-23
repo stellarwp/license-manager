@@ -19,9 +19,6 @@ use LiquidWeb\Harbor\Features\Types\Theme;
  * response object, or null when the feature has no pending update registered
  * by the handler (e.g. dot-org plugins, unlicensed, or not installed).
  *
- * is_harbor_host reflects whether this plugin registered itself in the Harbor
- * instance registry during the current request's bootstrap. Only set for plugins.
- *
  * @since 1.0.0
  */
 final class Feature_Resource {
@@ -45,25 +42,14 @@ final class Feature_Resource {
 	private ?string $update_version;
 
 	/**
-	 * Whether this plugin is registered in the Harbor instance registry, or null for non-plugins.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var bool|null
-	 */
-	private ?bool $is_harbor_host;
-
-	/**
 	 * @since 1.0.0
 	 *
 	 * @param Feature     $feature        The resolved feature.
 	 * @param string|null $update_version Version from the update transient, or null.
-	 * @param bool|null   $is_harbor_host Whether this plugin is a Harbor host, or null for non-plugins.
 	 */
-	public function __construct( Feature $feature, ?string $update_version, ?bool $is_harbor_host ) {
+	public function __construct( Feature $feature, ?string $update_version ) {
 		$this->feature        = $feature;
 		$this->update_version = $update_version;
-		$this->is_harbor_host = $is_harbor_host;
 	}
 
 	/**
@@ -80,16 +66,14 @@ final class Feature_Resource {
 	 */
 	public static function from_feature( Feature $feature ) {
 		$update_version = null;
-		$is_harbor_host = null;
 
 		if ( $feature instanceof Plugin ) {
 			$update_version = self::get_plugin_update_version( $feature );
-			$is_harbor_host = self::plugin_file_is_harbor_host( $feature->get_plugin_file() );
 		} elseif ( $feature instanceof Theme ) {
 			$update_version = self::get_theme_update_version( $feature );
 		}
 
-		return new self( $feature, $update_version, $is_harbor_host );
+		return new self( $feature, $update_version );
 	}
 
 	/**
@@ -100,21 +84,15 @@ final class Feature_Resource {
 	 * @return array<string, mixed>
 	 */
 	public function to_array(): array {
-		// Services do not support update_version or is_harbor_host.
+		// Services do not support update_version.
 		if ( $this->feature instanceof Service ) {
 			return $this->feature->to_array();
 		}
 
-		$data = array_merge(
+		return array_merge(
 			$this->feature->to_array(),
 			[ 'update_version' => $this->update_version ]
 		);
-
-		if ( $this->is_harbor_host !== null ) {
-			$data['is_harbor_host'] = $this->is_harbor_host;
-		}
-
-		return $data;
 	}
 
 	/**
@@ -137,25 +115,6 @@ final class Feature_Resource {
 	 */
 	public function get_feature(): Feature {
 		return $this->feature;
-	}
-
-	/**
-	 * Returns whether the given plugin file is registered in the Harbor instance registry.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $plugin_file The plugin file path relative to the plugins directory.
-	 *
-	 * @return bool
-	 */
-	private static function plugin_file_is_harbor_host( string $plugin_file ): bool {
-		foreach ( _lw_harbor_instance_registry() as $files ) {
-			if ( in_array( $plugin_file, $files, true ) ) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**

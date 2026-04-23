@@ -37,7 +37,7 @@ final class Feature_ResourceTest extends HarborTestCase {
 	 */
 	public function test_update_version_is_null_when_directly_constructed_with_null(): void {
 		$plugin   = $this->make_plugin();
-		$resource = new Feature_Resource( $plugin, null, null );
+		$resource = new Feature_Resource( $plugin, null );
 
 		$this->assertNull( $resource->get_update_version() );
 	}
@@ -49,22 +49,9 @@ final class Feature_ResourceTest extends HarborTestCase {
 	 */
 	public function test_get_feature_returns_decorated_feature(): void {
 		$plugin   = $this->make_plugin();
-		$resource = new Feature_Resource( $plugin, null, null );
+		$resource = new Feature_Resource( $plugin, null );
 
 		$this->assertSame( $plugin, $resource->get_feature() );
-	}
-
-	/**
-	 * to_array() includes is_harbor_host as true when directly constructed with true.
-	 *
-	 * @return void
-	 */
-	public function test_to_array_includes_is_harbor_host_true_when_constructed_with_true(): void {
-		$resource = new Feature_Resource( $this->make_plugin(), null, true );
-		$data     = $resource->to_array();
-
-		$this->assertArrayHasKey( 'is_harbor_host', $data );
-		$this->assertTrue( $data['is_harbor_host'] );
 	}
 
 	// -------------------------------------------------------------------------
@@ -160,49 +147,6 @@ final class Feature_ResourceTest extends HarborTestCase {
 	// -------------------------------------------------------------------------
 	// to_array()
 	// -------------------------------------------------------------------------
-
-	/**
-	 * to_array() includes is_harbor_host as true when the plugin file matches the registered host.
-	 *
-	 * harbor/bootstrap-plugin.php is the active test plugin (wpunit.suite.dist.yml). During
-	 * bootstrap, Config::set_plugin_file() is called with plugin_basename( __FILE__ ) so the
-	 * instance registry is populated from bootstrap-plugin.php during plugins_loaded, before
-	 * wp_loaded fires.
-	 *
-	 * @return void
-	 */
-	public function test_to_array_includes_is_harbor_host_true_for_registered_host(): void {
-		$resource = Feature_Resource::from_feature( $this->make_plugin( 'harbor/bootstrap-plugin.php' ) );
-		$data     = $resource->to_array();
-
-		$this->assertArrayHasKey( 'is_harbor_host', $data );
-		$this->assertTrue( $data['is_harbor_host'] );
-	}
-
-	/**
-	 * to_array() includes is_harbor_host as false when the plugin file is not in the instance registry.
-	 *
-	 * @return void
-	 */
-	public function test_to_array_includes_is_harbor_host_false_when_not_registered(): void {
-		$resource = Feature_Resource::from_feature( $this->make_plugin() );
-		$data     = $resource->to_array();
-
-		$this->assertArrayHasKey( 'is_harbor_host', $data );
-		$this->assertFalse( $data['is_harbor_host'] );
-	}
-
-	/**
-	 * to_array() does not include is_harbor_host for themes.
-	 *
-	 * @return void
-	 */
-	public function test_to_array_does_not_include_is_harbor_host_for_themes(): void {
-		$resource = Feature_Resource::from_feature( $this->make_theme() );
-		$data     = $resource->to_array();
-
-		$this->assertArrayNotHasKey( 'is_harbor_host', $data );
-	}
 
 	/**
 	 * to_array() includes update_version merged with all feature attributes.
