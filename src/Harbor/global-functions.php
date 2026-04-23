@@ -25,11 +25,11 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 	 * @internal Not intended for direct use by plugins.
 	 *
 	 * @param string $version     Version to register (omit when reading).
-	 * @param string $plugin_file Plugin file path relative to WP_PLUGIN_DIR (omit when reading).
+	 * @param string $plugin_basename Plugin basename relative to WP_PLUGIN_DIR (omit when reading).
 	 *
-	 * @return array<string, string[]> Map of version string to list of plugin file paths.
+	 * @return array<string, string[]> Map of version string to list of plugin basenames.
 	 */
-	function _lw_harbor_instance_registry( string $version = '', string $plugin_file = '' ): array {
+	function _lw_harbor_instance_registry( string $version = '', string $plugin_basename = '' ): array {
 		/** @var array<string, string[]> $instances */
 		static $instances = [];
 
@@ -38,7 +38,7 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 		// arriving after wp_loaded is outside the expected lifecycle and is ignored
 		// to prevent external code from injecting fake versions into the registry.
 		if ( $version !== '' && ! did_action( 'wp_loaded' ) ) {
-			$instances[ $version ][] = $plugin_file;
+			$instances[ $version ][] = $plugin_basename;
 		}
 
 		return $instances;
