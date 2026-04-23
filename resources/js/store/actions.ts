@@ -14,26 +14,56 @@ import type { Action, Thunk } from './types';
 // Plain action creators (synchronous)
 // ---------------------------------------------------------------------------
 
+/**
+ * Receives the list of features from the REST API.
+ *
+ * @param features The list of features.
+ * @since 1.0.0
+ */
 export const receiveFeatures = (features: Feature[]): Action => ({
 	type: 'RECEIVE_FEATURES',
 	features,
 });
 
+/**
+ * Receives the list of Harbor host plugin basenames from the REST API.
+ *
+ * @param basenames The list of Harbor host plugin basenames.
+ * @since 1.0.0
+ */
 export const receiveHarborHosts = (basenames: string[]): Action => ({
 	type: 'RECEIVE_HARBOR_HOSTS',
 	basenames,
 });
 
+/**
+ * Receives the license from the REST API.
+ *
+ * @param license The license.
+ * @since 1.0.0
+ */
 export const receiveLicense = (license: License): Action => ({
 	type: 'RECEIVE_LICENSE',
 	license,
 });
 
+/**
+ * Receives the product catalog from the REST API.
+ *
+ * @param catalogs The product catalog.
+ * @since 1.0.0
+ */
 export const receiveCatalog = (catalogs: ProductCatalog[]): Action => ({
 	type: 'RECEIVE_CATALOG',
 	catalogs,
 });
 
+/**
+ * Receives the legacy licenses from the REST API.
+ *
+ * @param licenses The legacy licenses.
+ * @since 1.0.0
+ */
 export const receiveLegacyLicenses = (licenses: LegacyLicense[]): Action => ({
 	type: 'RECEIVE_LEGACY_LICENSES',
 	licenses,
