@@ -29,7 +29,7 @@ export function LegacyLicenseBanner() {
         >
             <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <p className="m-0">
-                { __( 'You have one or more legacy licenses active. Legacy licenses work but do not receive automatic upgrades. Consider upgrading to a unified license for the latest features.', '%TEXTDOMAIN%' ) }
+                { __( 'You have one or more legacy licenses active. They continue to receive product updates while valid. Consider switching to a unified license to manage all your products with a single key.', '%TEXTDOMAIN%' ) }
             </p>
         </div>
     );
