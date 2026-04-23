@@ -42,8 +42,9 @@ function getStatusBadgeType( lp: LicenseProduct ): 'unactivated' | 'expired' | '
 export function LicenseProductCard( { lp, productName, tierName, activationUrl }: LicenseProductCardProps ) {
 	const expiryStatus    = getExpiryStatus( lp.expires );
 	const isActivatedHere = lp.is_valid && lp.activated_here === true;
-	const statusBadgeType = ! isActivatedHere ? getStatusBadgeType( lp ) : null;
-	const showFooter      = statusBadgeType === 'unactivated' && !! activationUrl;
+	const statusBadgeType  = ! isActivatedHere ? getStatusBadgeType( lp ) : null;
+	const showFooter       = statusBadgeType === 'unactivated' && !! activationUrl;
+	const showInlineBadge  = !! statusBadgeType && ! showFooter;
 
 	return (
 		<div className={ `rounded-lg border bg-card overflow-hidden ${ expiryCardClass[ expiryStatus ] }` }>
@@ -65,7 +66,7 @@ export function LicenseProductCard( { lp, productName, tierName, activationUrl }
 						{ ' ' }
 						{ formatDate( lp.expires ) }
 					</span>
-					{ statusBadgeType && ! showFooter && (
+					{ showInlineBadge && (
 						<LicenseBadge type={ statusBadgeType } className="text-[10px]" />
 					) }
 				</div>
