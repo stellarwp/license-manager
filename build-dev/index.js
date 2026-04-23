@@ -1405,7 +1405,7 @@ function LegacyLicenseBanner() {
       className: "w-4 h-4 shrink-0 mt-0.5"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
       className: "m-0",
-      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have one or more legacy licenses active. Legacy licenses work but do not receive automatic upgrades. Consider upgrading to a unified license for the latest features.', '%TEXTDOMAIN%')
+      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You have one or more legacy licenses active. They continue to receive product updates while valid. Consider switching to a unified license to manage all your products with a single key.', '%TEXTDOMAIN%')
     })]
   });
 }
