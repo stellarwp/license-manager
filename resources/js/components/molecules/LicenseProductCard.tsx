@@ -7,6 +7,7 @@
  * @package LiquidWeb\Harbor
  */
 import { __ } from '@wordpress/i18n';
+import { ExternalLink } from 'lucide-react';
 import { LicenseBadge } from '@/components/atoms/LicenseBadge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -82,6 +83,7 @@ export function LicenseProductCard( { lp, productName, tierName, activationUrl }
 					<Button variant="outline" size="xs" asChild>
 						<a href={ activationUrl } target="_blank" rel="noopener noreferrer">
 							{ __( 'Activate', '%TEXTDOMAIN%' ) }
+							<ExternalLink className="w-3 h-3 -translate-y-px" />
 						</a>
 					</Button>
 				</div>
