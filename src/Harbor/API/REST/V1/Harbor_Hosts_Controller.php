@@ -41,7 +41,7 @@ final class Harbor_Hosts_Controller extends WP_REST_Controller {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_items' ],
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+					'permission_callback' => [ $this, 'check_permissions' ],
 				],
 				'schema' => [ $this, 'get_public_item_schema' ],
 			]
@@ -53,7 +53,7 @@ final class Harbor_Hosts_Controller extends WP_REST_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request
+	 * @param WP_REST_Request $request The request object.
 	 *
 	 * @return WP_REST_Response
 	 */
@@ -71,14 +71,22 @@ final class Harbor_Hosts_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Checks whether the current user has permission to read the hosts list.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
 	 */
-	public function get_items_permissions_check( $request ) {
+	public function check_permissions(): bool {
 		return current_user_can( 'manage_options' );
 	}
 
 	/**
-	 * @inheritDoc
+	 * Returns the JSON schema for the hosts list response.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array<string, mixed>
 	 */
 	public function get_public_item_schema(): array {
 		return [
