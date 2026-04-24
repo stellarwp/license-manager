@@ -8,9 +8,12 @@ import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { LicenseBadge } from '@/components/atoms/LicenseBadge';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Tooltip } from '@/components/ui/tooltip';
 import { ProductLogo } from '@/components/atoms/ProductLogo';
 import { buildActivationUrl } from '@/lib/activation-url';
+import { cn } from '@/lib/utils';
 import {
     formatDate,
     getExpiryStatus,
@@ -21,7 +24,7 @@ import type { LicenseProduct, LicenseStatus } from '@/types/api';
 interface LicenseProductCardProps {
     productSlug:   string;
     productName:   string;
-    /** All tiers for this product. Must arrive pre-sorted: activated tiers first, then ascending by rank. */
+    /** All tiers for this product. Must arrive pre-sorted ascending by rank. */
     tiers:         LicenseProduct[];
     tierNameMap:   Record<string, string>;
     activationUrl: string | null;
@@ -58,11 +61,13 @@ export function LicenseProductCard( {
 
     const Chevron = isOpen ? ChevronUp : ChevronDown;
 
-    const headerBadge = hasActivatedTier
+    const topActivatedTier = activatedTiers[ activatedTiers.length - 1 ];
+
+    const headerBadge = hasActivatedTier && topActivatedTier
         ? (
             <LicenseBadge
                 type="licensed"
-                tierName={ tierNameMap[ activatedTiers[ 0 ].tier ] ?? activatedTiers[ 0 ].tier }
+                tierName={ tierNameMap[ topActivatedTier.tier ] ?? topActivatedTier.tier }
                 className="text-[10px] shrink-0"
             />
         )
@@ -102,10 +107,16 @@ export function LicenseProductCard( {
                                 className="flex items-center justify-between px-3 py-2 bg-muted/50 border-b last:border-b-0"
                             >
                                 <div className="flex flex-col gap-0.5 min-w-0">
-                                    <span className="text-xs font-medium text-foreground">
-                                        { tierNameMap[ lp.tier ] ?? lp.tier }
-                                    </span>
-                                    <span className={ `text-[11px] ${ expiryTextClass[ expiryStatus ] }` }>
+									<Tooltip label={ isActivatedHere ? __( 'Activated', '%TEXTDOMAIN%' ) : __( 'Not activated', '%TEXTDOMAIN%' ) } className="flex items-center gap-1.5">
+                                        <Badge variant="secondary" className="text-[10px] w-fit shrink-0">
+                                            { tierNameMap[ lp.tier ] ?? lp.tier }
+                                        </Badge>
+										<span
+											aria-hidden="true"
+											className={ cn( 'size-1.5 rounded-full shrink-0', isActivatedHere ? 'bg-green-500' : 'bg-amber-500' ) }
+										/>
+									</Tooltip>
+                                    <span className={ cn( 'text-[11px]', expiryTextClass[ expiryStatus ] ) }>
                                         { expiryStatus === 'expired'
                                             ? __( 'Expired', '%TEXTDOMAIN%' )
                                             : __( 'Expires', '%TEXTDOMAIN%' ) }
