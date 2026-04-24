@@ -15,6 +15,7 @@
     --color-amber-100: oklch(96.2% 0.059 95.617);
     --color-amber-200: oklch(92.4% 0.12 95.746);
     --color-amber-400: oklch(82.8% 0.189 84.429);
+    --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-amber-600: oklch(66.6% 0.179 58.318);
     --color-amber-800: oklch(47.3% 0.137 46.201);
     --color-green-50: oklch(98.2% 0.018 155.826);
@@ -450,6 +451,10 @@
   .lw-harbor-ui .table {
     display: table !important;
   }
+  .lw-harbor-ui .size-1\.5 {
+    width: calc(var(--spacing) * 1.5) !important;
+    height: calc(var(--spacing) * 1.5) !important;
+  }
   .lw-harbor-ui .size-6 {
     width: calc(var(--spacing) * 6) !important;
     height: calc(var(--spacing) * 6) !important;
@@ -853,6 +858,9 @@
   }
   .lw-harbor-ui .bg-amber-100 {
     background-color: var(--color-amber-100) !important;
+  }
+  .lw-harbor-ui .bg-amber-500 {
+    background-color: var(--color-amber-500) !important;
   }
   .lw-harbor-ui .bg-background {
     background-color: oklch(1 0 0) !important;
@@ -1611,6 +1619,11 @@
   .lw-harbor-ui .dark\:bg-input\/30 {
     .lw-harbor-ui &:is(.dark *) {
       background-color: color-mix(in oklab, oklch(0.9 0 0) 30%, transparent) !important;
+    }
+  }
+  .lw-harbor-ui .dark\:text-amber-500 {
+    .lw-harbor-ui &:is(.dark *) {
+      color: var(--color-amber-500) !important;
     }
   }
   .lw-harbor-ui .dark\:hover\:bg-accent\/50 {
