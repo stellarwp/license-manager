@@ -86,7 +86,7 @@ export function LicenseProductCard( {
                 className="w-full flex items-center gap-2 px-3 py-2.5 text-left cursor-pointer"
             >
                 <ProductLogo slug={ productSlug } size={ 24 } variant="nobg" productName={ productName } />
-                <span className="text-sm font-medium text-foreground flex-1 min-w-0 truncate">
+                <span className="text-sm font-medium text-foreground flex-1 min-w-0 truncate text-left">
                     { productName }
                 </span>
                 { headerBadge }
