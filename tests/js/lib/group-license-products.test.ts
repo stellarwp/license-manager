@@ -2,10 +2,10 @@ import { groupLicenseProducts } from '@/lib/group-license-products';
 import type { LicenseProduct } from '@/types/api';
 
 const RANK_MAP = {
-    free:  0,
-    plus:  1,
-    pro:   2,
-    elite: 3,
+    free:       0,
+    essentials: 1,
+    pro:        2,
+    elite:      3,
 };
 
 function makeTier( product_slug: string, tier: string, overrides: Partial<LicenseProduct> = {} ): LicenseProduct {
