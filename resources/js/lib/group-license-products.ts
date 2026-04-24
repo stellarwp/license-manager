@@ -30,14 +30,7 @@ export function groupLicenseProducts(
     } );
 
     Object.values( groups ).forEach( ( tiers ) => {
-        tiers.sort( ( a, b ) => {
-            const aActivated = ( a.is_valid && a.activated_here === true ) ? 0 : 1;
-            const bActivated = ( b.is_valid && b.activated_here === true ) ? 0 : 1;
-            if ( aActivated !== bActivated ) {
-                return aActivated - bActivated;
-            }
-            return ( tierRankMap[ a.tier ] ?? 0 ) - ( tierRankMap[ b.tier ] ?? 0 );
-        } );
+        tiers.sort( ( a, b ) => ( tierRankMap[ a.tier ] ?? 0 ) - ( tierRankMap[ b.tier ] ?? 0 ) );
     } );
 
     return PRODUCTS
