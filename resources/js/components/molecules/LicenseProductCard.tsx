@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { LicenseBadge } from '@/components/atoms/LicenseBadge';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tooltip } from '@/components/ui/tooltip';
 import { ProductLogo } from '@/components/atoms/ProductLogo';
@@ -107,10 +106,10 @@ export function LicenseProductCard( {
                                 className="flex items-center justify-between px-3 py-2 bg-muted/50 border-b last:border-b-0"
                             >
                                 <div className="flex flex-col gap-0.5 min-w-0">
-									<Tooltip label={ isActivatedHere ? __( 'Activated', '%TEXTDOMAIN%' ) : __( 'Not activated', '%TEXTDOMAIN%' ) } className="flex items-center gap-1.5">
-                                        <Badge variant="secondary" className="text-[10px] w-fit shrink-0">
+									<Tooltip label={ isActivatedHere ? __( 'Activated', '%TEXTDOMAIN%' ) : __( 'Not activated', '%TEXTDOMAIN%' ) } className="flex items-center gap-2">
+                                        <span className="font-bold text-[11px] w-fit whitespace-nowrap">
                                             { tierNameMap[ lp.tier ] ?? lp.tier }
-                                        </Badge>
+                                        </span>
 										<span
 											aria-hidden="true"
 											className={ cn( 'size-1.5 rounded-full shrink-0', isActivatedHere ? 'bg-green-500' : 'bg-amber-500' ) }
