@@ -1939,7 +1939,8 @@ function TierGroup({
   tier,
   features,
   forceOpen = false,
-  showUpgrade = true
+  showUpgrade = true,
+  buttonHref
 }) {
   const [expanded, setExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const isOpen = expanded || forceOpen;
@@ -1962,11 +1963,11 @@ function TierGroup({
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
           className: "w-3.5 h-3.5 text-muted-foreground ml-1"
         })]
-      }), showUpgrade && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_7__.Button, {
+      }), showUpgrade && buttonHref && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_7__.Button, {
         variant: "outline",
         size: "sm",
         className: "gap-1 text-xs h-7 ml-auto shrink-0",
-        onClick: () => window.open(tier.purchase_url, '_blank', 'noopener,noreferrer'),
+        onClick: () => window.open(buttonHref, '_blank', 'noopener,noreferrer'),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
           className: "w-3 h-3"
         }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upgrade to', '%TEXTDOMAIN%'), ' ', tier.name]
@@ -2517,8 +2518,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
 /* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
 /* harmony import */ var _hooks_useProductFeatureGroups__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/hooks/useProductFeatureGroups */ "./resources/js/hooks/useProductFeatureGroups.ts");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/change-plan-url */ "./resources/js/lib/change-plan-url.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
 /**
  * Product section: sticky dark header + feature list + tier group accordions.
  *
@@ -2530,6 +2532,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @package LiquidWeb\Harbor
  */
+
 
 
 
@@ -2575,54 +2578,54 @@ function ProductSection({
   const isNotActivated = licenseProduct !== null && (licenseProduct.validation_status === 'not_activated' || licenseProduct.validation_status === 'activation_required');
   const tierName = licenseProduct ? sortedCatalogTiers.find(t => t.tier_slug === licenseProduct.tier)?.name ?? licenseProduct.tier : null;
   const hasContent = availableFeatures.length > 0 || Object.values(lockedByTier).some(f => f.length > 0);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("section", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("section", {
     id: product.slug,
     className: "scroll-mt-20",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
       className: "h-0"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
       className: "flex items-center gap-3 px-4 py-3 bg-neutral-800 text-white sticky top-0 z-10 border-x border-neutral-800 transition-[border-radius] rounded-t-lg border-t",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_3__.ProductLogo, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_ProductLogo__WEBPACK_IMPORTED_MODULE_3__.ProductLogo, {
         slug: product.slug,
         size: 28,
         productName: product.name
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h2", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
         className: "text-base font-semibold m-0 p-0 text-white",
         children: product.name
-      }), isNotActivated ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
+      }), isNotActivated ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
         type: "unactivated"
-      }) : tierName ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
+      }) : tierName ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
         type: "licensed",
         tierName: tierName
-      }) : hasActiveLegacy ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
+      }) : hasActiveLegacy ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
         type: "legacy"
-      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_2__.LicenseBadge, {
         type: "unlicensed",
         className: "text-white border-white/40"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("span", {
         className: "ml-auto text-xs text-white/70",
         children: [activeCount, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('active', '%TEXTDOMAIN%'), ' · ', deactivatedCount, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('deactivated', '%TEXTDOMAIN%')]
       })]
-    }), isSearching && !hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    }), isSearching && !hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
       className: "border border-t-0 rounded-b-lg",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
         className: "px-4 py-6 text-sm text-muted-foreground text-center",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No features match your search.', '%TEXTDOMAIN%')
       })
-    }), !isSearching && !hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+    }), !isSearching && !hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
       className: "border border-t-0 rounded-b-lg",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("p", {
         className: "px-4 py-6 text-sm text-muted-foreground text-center",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No features are available for this product.', '%TEXTDOMAIN%')
       })
-    }), hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+    }), hasContent && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
       className: "border border-t-0 rounded-b-lg overflow-hidden",
-      children: [availableFeatures.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_4__.FeatureRow, {
+      children: [availableFeatures.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_4__.FeatureRow, {
         feature: feature
       }, feature.slug)), activationCatalogTiers.map(tier => {
         const locked = lockedByTier[tier.tier_slug] ?? [];
         if (locked.length === 0) return null;
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
           tier: tier,
           features: locked,
           forceOpen: isSearching,
@@ -2631,10 +2634,18 @@ function ProductSection({
       }), upgradeCatalogTiers.map(tier => {
         const locked = lockedByTier[tier.tier_slug] ?? [];
         if (locked.length === 0) return null;
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
+
+        // Subscribers (including those with invalid/expired licenses) get
+        // routed to the portal's change-plan flow so an upgrade modifies
+        // their existing subscription. Unlicensed visitors fall back to
+        // the catalog's purchase_url so they can buy fresh.
+        const subscriptionsUrl = window.harborData?.subscriptionsUrl;
+        const buttonHref = licenseProduct && subscriptionsUrl ? (0,_lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__.buildChangePlanUrl)(subscriptionsUrl, product.slug, tier.tier_slug) : tier.purchase_url;
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
           tier: tier,
           features: locked,
-          forceOpen: isSearching
+          forceOpen: isSearching,
+          buttonHref: buttonHref
         }, tier.tier_slug);
       })]
     })]
@@ -4737,6 +4748,52 @@ function buildActivationUrl(baseUrl, productSlug, tier) {
   try {
     const url = new URL(baseUrl);
     url.searchParams.set('sku', `${productSlug}:${tier}`);
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
+}
+
+/***/ },
+
+/***/ "./resources/js/lib/change-plan-url.ts"
+/*!*********************************************!*\
+  !*** ./resources/js/lib/change-plan-url.ts ***!
+  \*********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   buildChangePlanUrl: () => (/* binding */ buildChangePlanUrl)
+/* harmony export */ });
+/**
+ * Builds a Commerce Portal change-plan URL for an existing subscription.
+ *
+ * Used when an upgrade CTA needs to drive a licensed customer to their
+ * existing subscription's change-plan flow, rather than adding a brand-new
+ * plan to the basket via the catalog's purchase_url.
+ *
+ * The portal resolves the subscription from the authenticated session, so
+ * only the product and tier slugs appear in the path.
+ *
+ * Example:
+ *   base        = https://my.software.stellarwp.com/subscriptions/
+ *   productSlug = kadence
+ *   tierSlug    = pro
+ *   → https://my.software.stellarwp.com/subscriptions/kadence/pro/change-plan/
+ *
+ * @param baseUrl     The subscriptionsUrl string from window.harborData. May
+ *                    include a trailing slash and query string.
+ * @param productSlug e.g. "kadence"
+ * @param tierSlug    e.g. "pro"
+ *
+ * @since 1.0.0
+ */
+function buildChangePlanUrl(baseUrl, productSlug, tierSlug) {
+  try {
+    const url = new URL(baseUrl);
+    const prefix = url.pathname.endsWith('/') ? url.pathname : `${url.pathname}/`;
+    url.pathname = `${prefix}${encodeURIComponent(productSlug)}/${encodeURIComponent(tierSlug)}/change-plan/`;
     return url.toString();
   } catch {
     return baseUrl;
