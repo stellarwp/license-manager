@@ -248,6 +248,25 @@ export const areAllProductsNotActivated = ( state: State ): boolean => {
 };
 
 /**
+ * Returns the first license product for the given slug that the user owns but
+ * has not yet activated on this domain, or null when none exists.
+ *
+ * Matches entries where activated_here is not true and validation_status is
+ * not_activated or activation_required — i.e. the subscription exists but the
+ * current domain is not in the activations list.
+ */
+export const getUnactivatedLicenseProduct = (
+	state:       State,
+	productSlug: string
+): LicenseProduct | null =>
+	getWithoutCancelledProducts( state ).find(
+		( p ) =>
+			p.product_slug === productSlug &&
+			p.activated_here !== true &&
+			UNACTIVATED_STATUSES.includes( p.validation_status as typeof UNACTIVATED_STATUSES[ number ] )
+	) ?? null;
+
+/**
  * Returns the stored unified license key, or null. Triggers getLicenseKey resolver.
  * @param state
  */
