@@ -1936,9 +1936,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
 /* harmony import */ var _components_ui_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/ui/badge */ "./resources/js/components/ui/badge.tsx");
 /* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
-/* harmony import */ var _components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/molecules/FeatureRow */ "./resources/js/components/molecules/FeatureRow.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/atoms/LicenseBadge */ "./resources/js/components/atoms/LicenseBadge.tsx");
+/* harmony import */ var _components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/components/molecules/FeatureRow */ "./resources/js/components/molecules/FeatureRow.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
 /**
  * Collapsible accordion grouping locked features under a tier header.
  *
@@ -1954,6 +1955,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * @since 1.0.0
  */
@@ -1962,39 +1964,43 @@ function TierGroup({
   features,
   forceOpen = false,
   showUpgrade = true,
+  showUnactivated = false,
   buttonHref
 }) {
   const [expanded, setExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const isOpen = expanded || forceOpen;
   const Chevron = isOpen ? lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"] : lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"];
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
       className: "w-full flex items-center gap-2 px-4 py-3 bg-muted/50 border-b",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
         onClick: () => setExpanded(!expanded),
         className: "flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Chevron, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Chevron, {
           className: "w-4 h-4 shrink-0 text-muted-foreground"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("span", {
           className: "font-medium text-sm",
           children: [tier.name, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Features', '%TEXTDOMAIN%')]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_ui_badge__WEBPACK_IMPORTED_MODULE_6__.Badge, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_ui_badge__WEBPACK_IMPORTED_MODULE_6__.Badge, {
           variant: "secondary",
           className: "text-xs",
           children: features.length
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
           className: "w-3.5 h-3.5 text-muted-foreground ml-1"
         })]
-      }), showUpgrade && buttonHref && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_7__.Button, {
+      }), showUpgrade && buttonHref && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_7__.Button, {
         variant: "outline",
         size: "sm",
         className: "gap-1 text-xs h-7 ml-auto shrink-0",
         onClick: () => window.open(buttonHref, '_blank', 'noopener,noreferrer'),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
           className: "w-3 h-3"
         }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upgrade to', '%TEXTDOMAIN%'), ' ', tier.name]
+      }), showUnactivated && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_8__.LicenseBadge, {
+        type: "unactivated",
+        className: "ml-auto shrink-0 text-xs"
       })]
-    }), isOpen && features.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_8__.FeatureRow, {
+    }), isOpen && features.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_9__.FeatureRow, {
       feature: feature,
       upgradeTierName: tier.name
     }, feature.slug))]
@@ -2591,13 +2597,15 @@ function ProductSection({
   // Full unfiltered set — used only for header counts so they stay stable.
   const {
     licenseProduct,
-    hasActiveLegacy
+    hasActiveLegacy,
+    unactivatedLicenseProduct
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => {
     const licenseProducts = select(_store__WEBPACK_IMPORTED_MODULE_6__.store).getLicenseProducts();
     const forProduct = licenseProducts.filter(lp => lp.product_slug === product.slug);
     return {
       licenseProduct: forProduct.find(lp => lp.activated_here === true) ?? null,
-      hasActiveLegacy: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).hasActiveLegacyLicenseForProduct(product.slug)
+      hasActiveLegacy: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).hasActiveLegacyLicenseForProduct(product.slug),
+      unactivatedLicenseProduct: select(_store__WEBPACK_IMPORTED_MODULE_6__.store).getUnactivatedLicenseProduct(product.slug)
     };
   }, [product.slug]);
   const {
@@ -2605,11 +2613,16 @@ function ProductSection({
     lockedByTier,
     sortedCatalogTiers,
     upgradeCatalogTiers,
-    activationCatalogTiers
+    activationCatalogTiers,
+    isUnactivatedLicense
   } = (0,_hooks_useProductFeatureGroups__WEBPACK_IMPORTED_MODULE_8__.useProductFeatureGroups)(product.slug);
   const activeCount = availableFeatures.filter(f => f.is_enabled).length;
   const deactivatedCount = availableFeatures.filter(f => !f.is_enabled).length;
-  const isNotActivated = licenseProduct !== null && (licenseProduct.validation_status === 'not_activated' || licenseProduct.validation_status === 'activation_required');
+
+  // Show "Unactivated" in the header only when there is no activated product at all.
+  // An unactivated upgrade tier alongside an active lower tier (e.g. pro active + elite
+  // unactivated) should still show the active tier's name — not "Unactivated".
+  const isNotActivated = licenseProduct === null && isUnactivatedLicense || licenseProduct !== null && (licenseProduct.validation_status === 'not_activated' || licenseProduct.validation_status === 'activation_required');
   const tierName = licenseProduct ? sortedCatalogTiers.find(t => t.tier_slug === licenseProduct.tier)?.name ?? licenseProduct.tier : null;
   const hasContent = availableFeatures.length > 0 || Object.values(lockedByTier).some(f => f.length > 0);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("section", {
@@ -2663,18 +2676,20 @@ function ProductSection({
           tier: tier,
           features: locked,
           forceOpen: isSearching,
-          showUpgrade: false
+          showUpgrade: false,
+          showUnactivated: isUnactivatedLicense
         }, tier.tier_slug);
       }), upgradeCatalogTiers.map(tier => {
         const locked = lockedByTier[tier.tier_slug] ?? [];
         if (locked.length === 0) return null;
 
-        // Subscribers (including those with invalid/expired licenses) get
-        // routed to the portal's change-plan flow so an upgrade modifies
-        // their existing subscription. Unlicensed visitors fall back to
-        // the catalog's purchase_url so they can buy fresh.
+        // Any user with an existing subscription — activated or not — is
+        // routed to the portal's change-plan flow so the upgrade modifies
+        // their existing subscription. Truly unlicensed visitors fall back
+        // to the catalog's purchase_url so they can buy fresh.
         const subscriptionsUrl = window.harborData?.subscriptionsUrl;
-        const buttonHref = licenseProduct && subscriptionsUrl ? (0,_lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__.buildChangePlanUrl)(subscriptionsUrl, product.slug, tier.tier_slug) : tier.purchase_url;
+        const effectiveLicenseProduct = licenseProduct ?? unactivatedLicenseProduct;
+        const buttonHref = effectiveLicenseProduct && subscriptionsUrl ? (0,_lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__.buildChangePlanUrl)(subscriptionsUrl, product.slug, tier.tier_slug) : tier.purchase_url;
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
           tier: tier,
           features: locked,
@@ -4695,12 +4710,14 @@ function useProductFeatureGroups(productSlug) {
     catalogTiers,
     licenseProducts,
     isLicenseValid,
-    legacyLicenses
+    legacyLicenses,
+    unactivatedLicenseProduct
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => ({
     catalogTiers: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getProductCatalog(productSlug)?.tiers ?? [],
     licenseProducts: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getLicenseProducts(),
     isLicenseValid: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).isProductLicenseValid(productSlug),
-    legacyLicenses: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getLegacyLicenses()
+    legacyLicenses: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getLegacyLicenses(),
+    unactivatedLicenseProduct: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getUnactivatedLicenseProduct(productSlug)
   }), [productSlug]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
     const sorted = catalogTiers.slice().sort((a, b) => a.rank - b.rank);
@@ -4712,18 +4729,35 @@ function useProductFeatureGroups(productSlug) {
     // the product, but features are locked — the user needs to activate, not upgrade.
     const isLicenseInvalid = licenseProduct !== undefined && licenseProduct.validation_status !== null && licenseProduct.validation_status !== 'valid';
 
-    // Always resolve the real licensed tier rank so upgrade tiers are computed
-    // correctly even for invalid licenses.
-    const userTier = licenseProduct?.tier ? sorted.find(t => t.tier_slug === licenseProduct.tier) : null;
-    const rank = userTier?.rank ?? -1; // -1 = unlicensed (show all tier groups)
+    // Rank of the activated product, or -1 when none is present.
+    const activatedTier = licenseProduct?.tier ? sorted.find(t => t.tier_slug === licenseProduct.tier) : null;
+    const activatedRank = activatedTier?.rank ?? -1;
 
-    // Tiers strictly above the user's rank: features here need an upgrade.
+    // Rank of the unactivated product, if any.
+    // An unactivated product may sit above the activated tier (e.g. user purchased an
+    // upgrade to elite while pro is already active but elite not yet activated on this
+    // domain). In that case both tiers exist and only elite needs the activation badge.
+    const unactivatedTier = unactivatedLicenseProduct?.tier ? sorted.find(t => t.tier_slug === unactivatedLicenseProduct.tier) : null;
+    const unactivatedRank = unactivatedTier?.rank ?? -1;
+
+    // isUnactivatedLicense: the user owns a tier they have not activated on this domain,
+    // whether because no activated product exists at all (unactivatedRank > -1 > activatedRank)
+    // or because a higher purchased tier is not yet activated (unactivatedRank > activatedRank).
+    const isUnactivatedLicense = unactivatedLicenseProduct !== null && unactivatedRank > activatedRank;
+
+    // Effective rank = highest owned tier (activated or not).
+    const rank = Math.max(activatedRank, unactivatedRank);
+
+    // Tiers strictly above the highest owned rank: features here need an upgrade.
     const upgrade = sorted.filter(t => t.rank > rank);
 
-    // For invalid licenses: tiers within the user's licensed rank (excluding free)
-    // are locked because the product is not activated, not because the tier is wrong.
-    // These render without an upgrade button.
-    const activationTiers = isLicenseInvalid ? sorted.filter(t => t.rank <= rank && t.rank > 0) : [];
+    // activationTiers covers two cases:
+    //   1. isLicenseInvalid: tiers within the activated rank locked due to invalid status
+    //      (expired, suspended, etc.) — user needs to fix the license, not upgrade.
+    //   2. isUnactivatedLicense: tiers above the activated rank but within the unactivated
+    //      rank — user owns them but hasn't activated on this domain yet.
+    // Both render without an upgrade button.
+    const activationTiers = isLicenseInvalid ? sorted.filter(t => t.rank <= activatedRank && t.rank > 0) : isUnactivatedLicense ? sorted.filter(t => t.rank <= rank && t.rank > activatedRank) : [];
     const slugs = isLicenseValid ? new Set() : new Set(legacyLicenses.filter(l => l.is_active).map(l => l.slug));
     const isLegacyAvailable = f => slugs.has(f.slug);
 
@@ -4744,9 +4778,10 @@ function useProductFeatureGroups(productSlug) {
       lockedByTier,
       sortedCatalogTiers: sorted,
       upgradeCatalogTiers: upgrade,
-      activationCatalogTiers: activationTiers
+      activationCatalogTiers: activationTiers,
+      isUnactivatedLicense
     };
-  }, [allFeatures, catalogTiers, licenseProducts, isLicenseValid, legacyLicenses, productSlug]);
+  }, [allFeatures, catalogTiers, licenseProducts, isLicenseValid, legacyLicenses, productSlug, unactivatedLicenseProduct]);
 }
 
 /***/ },
@@ -5976,6 +6011,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getProductTiers: () => (/* binding */ getProductTiers),
 /* harmony export */   getRefreshLicenseError: () => (/* binding */ getRefreshLicenseError),
 /* harmony export */   getStoreLicenseError: () => (/* binding */ getStoreLicenseError),
+/* harmony export */   getUnactivatedLicenseProduct: () => (/* binding */ getUnactivatedLicenseProduct),
 /* harmony export */   getWithoutCancelledProducts: () => (/* binding */ getWithoutCancelledProducts),
 /* harmony export */   hasActiveLegacyLicenseForProduct: () => (/* binding */ hasActiveLegacyLicenseForProduct),
 /* harmony export */   hasLegacyLicense: () => (/* binding */ hasLegacyLicense),
@@ -6146,6 +6182,16 @@ const areAllProductsNotActivated = state => {
   const products = getWithoutCancelledProducts(state).filter(p => p.validation_status !== 'expired');
   return products.length > 0 && products.every(p => UNACTIVATED_STATUSES.includes(p.validation_status));
 };
+
+/**
+ * Returns the first license product for the given slug that the user owns but
+ * has not yet activated on this domain, or null when none exists.
+ *
+ * Matches entries where activated_here is not true and validation_status is
+ * not_activated or activation_required — i.e. the subscription exists but the
+ * current domain is not in the activations list.
+ */
+const getUnactivatedLicenseProduct = (state, productSlug) => getWithoutCancelledProducts(state).find(p => p.product_slug === productSlug && p.activated_here !== true && UNACTIVATED_STATUSES.includes(p.validation_status)) ?? null;
 
 /**
  * Returns the stored unified license key, or null. Triggers getLicenseKey resolver.
