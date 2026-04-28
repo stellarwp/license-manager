@@ -1399,7 +1399,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function LegacyLicenseBanner() {
-  const hasLegacy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select(_store__WEBPACK_IMPORTED_MODULE_4__.store).hasLegacyLicenses(), []);
+  const hasLegacy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => select(_store__WEBPACK_IMPORTED_MODULE_4__.store).hasUncoveredLegacyLicenses(), []);
   if (!hasLegacy || !window.harborData) {
     return null;
   }
@@ -5981,6 +5981,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   hasLegacyLicense: () => (/* binding */ hasLegacyLicense),
 /* harmony export */   hasLegacyLicenses: () => (/* binding */ hasLegacyLicenses),
 /* harmony export */   hasLicense: () => (/* binding */ hasLicense),
+/* harmony export */   hasUncoveredLegacyLicenses: () => (/* binding */ hasUncoveredLegacyLicenses),
 /* harmony export */   isAnyInstallableBusy: () => (/* binding */ isAnyInstallableBusy),
 /* harmony export */   isFeatureEnabled: () => (/* binding */ isFeatureEnabled),
 /* harmony export */   isFeatureToggling: () => (/* binding */ isFeatureToggling),
@@ -6071,6 +6072,13 @@ const getLegacyLicenses = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.create
 const getLegacyLicenseBySlug = (state, slug) => state.legacyLicenses.bySlug[slug] ?? null;
 const hasLegacyLicense = (state, slug) => slug in state.legacyLicenses.bySlug;
 const hasLegacyLicenses = state => Object.keys(state.legacyLicenses.bySlug).length > 0;
+
+/**
+ * True when at least one legacy license belongs to a product not already
+ * covered by the unified license. Used to suppress the banner when the
+ * unified license makes legacy notices redundant.
+ */
+const hasUncoveredLegacyLicenses = state => Object.values(state.legacyLicenses.bySlug).some(license => !isProductUnifiedLicensed(state, license.product));
 
 /**
  * Returns the legacy license for the given feature slug only if it is active,
