@@ -11,26 +11,33 @@ import { __ } from '@wordpress/i18n';
 import { ChevronRight, ChevronDown, Lock, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { LicenseBadge } from '@/components/atoms/LicenseBadge';
 import { FeatureRow } from '@/components/molecules/FeatureRow';
 import type { CatalogTier, Feature } from '@/types/api';
 
 interface TierGroupProps {
-    tier:          CatalogTier;
-    features:      Feature[];
-    forceOpen?:    boolean;
-    showUpgrade?:  boolean;
+    tier:             CatalogTier;
+    features:         Feature[];
+    forceOpen?:       boolean;
+    showUpgrade?:     boolean;
+    /**
+     * When true, renders an Unactivated badge in place of the upgrade button.
+     * Used when the user owns this tier but has not yet activated the license
+     * on the current domain.
+     */
+    showUnactivated?: boolean;
     /**
      * Target URL for the upgrade button. Resolved by the parent so the
      * component doesn't need to know whether the user has an existing
      * subscription (change-plan URL) or is purchasing fresh (purchase_url).
      */
-    buttonHref?:   string;
+    buttonHref?:      string;
 }
 
 /**
  * @since 1.0.0
  */
-export function TierGroup( { tier, features, forceOpen = false, showUpgrade = true, buttonHref }: TierGroupProps ) {
+export function TierGroup( { tier, features, forceOpen = false, showUpgrade = true, showUnactivated = false, buttonHref }: TierGroupProps ) {
     const [ expanded, setExpanded ] = useState( false );
     const isOpen = expanded || forceOpen;
     const Chevron = isOpen ? ChevronDown : ChevronRight;
@@ -61,6 +68,9 @@ export function TierGroup( { tier, features, forceOpen = false, showUpgrade = tr
                         <ExternalLink className="w-3 h-3" />
                         { __( 'Upgrade to', '%TEXTDOMAIN%' ) }{ ' ' }{ tier.name }
                     </Button>
+                ) }
+                { showUnactivated && (
+                    <LicenseBadge type="unactivated" className="ml-auto shrink-0 text-xs" />
                 ) }
             </div>
 
