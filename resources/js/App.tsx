@@ -1,7 +1,5 @@
 /**
  * @package LiquidWeb\Harbor
- *
- * Test CI build
  */
 import { AppShell } from '@/components/templates/AppShell';
 import { Toaster } from '@/components/ui/toast';
