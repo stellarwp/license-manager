@@ -20,7 +20,7 @@ class Config {
 	 *
 	 * @since 1.0.0
 	 */
-	public const DEFAULT_PORTAL_BASE_URL = 'https://my.software.stellarwp.com';
+	public const DEFAULT_PORTAL_BASE_URL = 'https://software.liquidweb.com';
 
 	/**
 	 * The default base URL for the Herald download service.
