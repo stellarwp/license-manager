@@ -33,26 +33,29 @@ export function ProductSection( { product }: ProductSectionProps ) {
     const isSearching = searchQuery.trim().length > 0;
 
     // Full unfiltered set — used only for header counts so they stay stable.
-    const { licenseProduct, hasActiveLegacy } = useSelect(
+    const { licenseProduct, hasActiveLegacy, unactivatedLicenseProduct } = useSelect(
         ( select ) => {
             const licenseProducts = select( harborStore ).getLicenseProducts();
             const forProduct      = licenseProducts.filter( ( lp ) => lp.product_slug === product.slug );
             return {
-                licenseProduct:  forProduct.find( ( lp ) => lp.activated_here === true ) ?? null,
-                hasActiveLegacy: select( harborStore ).hasActiveLegacyLicenseForProduct( product.slug ),
+                licenseProduct:            forProduct.find( ( lp ) => lp.activated_here === true ) ?? null,
+                hasActiveLegacy:           select( harborStore ).hasActiveLegacyLicenseForProduct( product.slug ),
+                unactivatedLicenseProduct: select( harborStore ).getUnactivatedLicenseProduct( product.slug ),
             };
         },
         [ product.slug ],
     );
 
-    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers, activationCatalogTiers } = useProductFeatureGroups( product.slug );
+    const { availableFeatures, lockedByTier, sortedCatalogTiers, upgradeCatalogTiers, activationCatalogTiers, isUnactivatedLicense } = useProductFeatureGroups( product.slug );
 
     const activeCount      = availableFeatures.filter( ( f ) => f.is_enabled ).length;
     const deactivatedCount = availableFeatures.filter( ( f ) => ! f.is_enabled ).length;
 
-    const isNotActivated = licenseProduct !== null && (
-        licenseProduct.validation_status === 'not_activated' ||
-        licenseProduct.validation_status === 'activation_required'
+    const isNotActivated = isUnactivatedLicense || (
+        licenseProduct !== null && (
+            licenseProduct.validation_status === 'not_activated' ||
+            licenseProduct.validation_status === 'activation_required'
+        )
     );
 
     const tierName = licenseProduct
@@ -121,6 +124,7 @@ export function ProductSection( { product }: ProductSectionProps ) {
                                 features={ locked }
                                 forceOpen={ isSearching }
                                 showUpgrade={ false }
+                                showUnactivated={ isUnactivatedLicense }
                             />
                         );
                     } ) }
@@ -129,12 +133,13 @@ export function ProductSection( { product }: ProductSectionProps ) {
                         const locked = lockedByTier[ tier.tier_slug ] ?? [];
                         if ( locked.length === 0 ) return null;
 
-                        // Subscribers (including those with invalid/expired licenses) get
-                        // routed to the portal's change-plan flow so an upgrade modifies
-                        // their existing subscription. Unlicensed visitors fall back to
-                        // the catalog's purchase_url so they can buy fresh.
-                        const subscriptionsUrl = window.harborData?.subscriptionsUrl;
-                        const buttonHref       = licenseProduct && subscriptionsUrl
+                        // Any user with an existing subscription — activated or not — is
+                        // routed to the portal's change-plan flow so the upgrade modifies
+                        // their existing subscription. Truly unlicensed visitors fall back
+                        // to the catalog's purchase_url so they can buy fresh.
+                        const subscriptionsUrl        = window.harborData?.subscriptionsUrl;
+                        const effectiveLicenseProduct = licenseProduct ?? unactivatedLicenseProduct;
+                        const buttonHref              = effectiveLicenseProduct && subscriptionsUrl
                             ? buildChangePlanUrl( subscriptionsUrl, product.slug, tier.tier_slug )
                             : tier.purchase_url;
 
