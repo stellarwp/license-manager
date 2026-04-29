@@ -1,6 +1,7 @@
 import {
 	areAllProductsNotActivated,
 	getLicenseProducts,
+	getUnactivatedLicenseProduct,
 	isProductLicenseValid,
 	isProductUnifiedLicensed,
 } from '@/store/selectors';
@@ -103,6 +104,64 @@ describe( 'getLicenseProducts', () => {
 
 		expect( result[ 0 ].product_slug ).toBe( 'givewp' );
 		expect( result[ 1 ].product_slug ).toBe( 'kadence' );
+	} );
+} );
+
+// ---------------------------------------------------------------------------
+// getUnactivatedLicenseProduct
+// ---------------------------------------------------------------------------
+
+describe( 'getUnactivatedLicenseProduct', () => {
+	it( 'returns null when no products exist', () => {
+		expect( getUnactivatedLicenseProduct( makeState( [] ), 'givewp' ) ).toBeNull();
+	} );
+
+	it( 'returns null when the product is activated here', () => {
+		const state = makeState( [
+			makeProduct( { product_slug: 'givewp', activated_here: true, validation_status: 'valid' } ),
+		] );
+		expect( getUnactivatedLicenseProduct( state, 'givewp' ) ).toBeNull();
+	} );
+
+	it( 'returns null for a different product_slug', () => {
+		const state = makeState( [
+			makeProduct( { product_slug: 'kadence', activated_here: false, validation_status: 'not_activated', is_valid: false } ),
+		] );
+		expect( getUnactivatedLicenseProduct( state, 'givewp' ) ).toBeNull();
+	} );
+
+	it( 'returns the product when activated_here is false and validation_status is not_activated', () => {
+		const product = makeProduct( {
+			product_slug:      'givewp',
+			activated_here:    false,
+			validation_status: 'not_activated',
+			is_valid:          false,
+		} );
+		expect( getUnactivatedLicenseProduct( makeState( [ product ] ), 'givewp' ) ).toEqual( product );
+	} );
+
+	it( 'returns the product when validation_status is activation_required', () => {
+		const product = makeProduct( {
+			product_slug:      'givewp',
+			activated_here:    false,
+			validation_status: 'activation_required',
+			is_valid:          false,
+		} );
+		expect( getUnactivatedLicenseProduct( makeState( [ product ] ), 'givewp' ) ).toEqual( product );
+	} );
+
+	it( 'returns null when validation_status is expired even with activated_here false', () => {
+		const state = makeState( [
+			makeProduct( { product_slug: 'givewp', activated_here: false, validation_status: 'expired', is_valid: false } ),
+		] );
+		expect( getUnactivatedLicenseProduct( state, 'givewp' ) ).toBeNull();
+	} );
+
+	it( 'ignores cancelled products', () => {
+		const state = makeState( [
+			makeProduct( { product_slug: 'givewp', activated_here: false, validation_status: 'not_activated', status: 'cancelled' } ),
+		] );
+		expect( getUnactivatedLicenseProduct( state, 'givewp' ) ).toBeNull();
 	} );
 } );
 
