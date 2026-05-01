@@ -8,10 +8,10 @@
  */
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { ChevronRight, ChevronDown, Lock, ExternalLink } from 'lucide-react';
+import { ChevronRight, ChevronDown, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { LicenseBadge } from '@/components/atoms/LicenseBadge';
+import { PurchaseLink } from '@/components/atoms/PurchaseLink';
 import { FeatureRow } from '@/components/molecules/FeatureRow';
 import type { CatalogTier, Feature } from '@/types/api';
 
@@ -60,15 +60,11 @@ export function TierGroup( { tier, features, forceOpen = false, showUpgrade = tr
                     <Lock className="w-3.5 h-3.5 text-muted-foreground ml-1" />
                 </div>
                 { showUpgrade && buttonHref && (
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="gap-1 text-xs h-7 ml-auto shrink-0"
-                        onClick={ () => window.open( buttonHref, '_blank', 'noopener,noreferrer' ) }
-                    >
-                        <ExternalLink className="w-3 h-3" />
-                        { __( 'Upgrade to', '%TEXTDOMAIN%' ) }{ ' ' }{ tier.name }
-                    </Button>
+                    <PurchaseLink
+                        tierName={ tier.name }
+                        upgradeUrl={ buttonHref }
+                        className="ml-auto shrink-0"
+                    />
                 ) }
                 { showUnactivated && (
                     <LicenseBadge type="unactivated" className="ml-auto shrink-0 text-xs" />
