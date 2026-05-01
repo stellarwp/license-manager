@@ -2585,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * @since TBD    Route upgrade CTA to catalog upgrade_url for existing subscribers, purchase_url for new subscribers.
+ * @since 1.0.2  Route upgrade CTA to catalog upgrade_url for existing subscribers, purchase_url for new subscribers.
  * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses.
  * @since 1.0.0
  */
@@ -5051,7 +5051,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param baseUrl The upgrade_url string from the catalog tier.
  * @param domain  The site domain from window.harborData.domain.
  *
- * @since TBD
+ * @since 1.0.2
  */
 function buildUpgradeUrl(baseUrl, domain) {
   if (!domain) {
