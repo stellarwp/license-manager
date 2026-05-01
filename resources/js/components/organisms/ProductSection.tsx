@@ -18,7 +18,7 @@ import { TierGroup } from '@/components/molecules/TierGroup';
 import { store as harborStore } from '@/store';
 import { useFilter } from '@/context/filter-context';
 import { useProductFeatureGroups } from '@/hooks/useProductFeatureGroups';
-import { buildChangePlanUrl } from '@/lib/change-plan-url';
+import { buildUpgradeUrl } from '@/lib/upgrade-url';
 import type { Product } from '@/types/api';
 
 interface ProductSectionProps {
@@ -26,7 +26,8 @@ interface ProductSectionProps {
 }
 
 /**
- * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses; route upgrade button to change-plan URL for existing subscribers.
+ * @since TBD    Route upgrade CTA to catalog upgrade_url for existing subscribers, purchase_url for new subscribers.
+ * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses.
  * @since 1.0.0
  */
 export function ProductSection( { product }: ProductSectionProps ) {
@@ -137,15 +138,10 @@ export function ProductSection( { product }: ProductSectionProps ) {
                         const locked = lockedByTier[ tier.tier_slug ] ?? [];
                         if ( locked.length === 0 ) return null;
 
-                        // Any user with an existing subscription — activated or not — is
-                        // routed to the portal's change-plan flow so the upgrade modifies
-                        // their existing subscription. Truly unlicensed visitors fall back
-                        // to the catalog's purchase_url so they can buy fresh.
-                        const subscriptionsUrl        = window.harborData?.subscriptionsUrl;
                         const effectiveLicenseProduct = licenseProduct ?? unactivatedLicenseProduct;
-                        const buttonHref              = effectiveLicenseProduct && subscriptionsUrl
-                            ? buildChangePlanUrl( subscriptionsUrl, product.slug, tier.tier_slug )
-                            : tier.purchase_url;
+                        const buttonHref              = effectiveLicenseProduct
+                            ? ( tier.upgrade_url ? buildUpgradeUrl( tier.upgrade_url, window.harborData?.domain ) : undefined )
+                            : ( tier.purchase_url || undefined );
 
                         return (
                             <TierGroup

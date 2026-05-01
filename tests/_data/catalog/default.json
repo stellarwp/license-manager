@@ -11,6 +11,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "free"
       },
       {
@@ -20,6 +21,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "basic"
       },
       {
@@ -29,6 +31,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "pro"
       },
       {
@@ -38,6 +41,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "agency"
       }
     ],
@@ -632,6 +636,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "basic"
       },
       {
@@ -641,6 +646,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "pro"
       },
       {
@@ -650,6 +656,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "elite"
       }
     ],
@@ -1219,6 +1226,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "free"
       },
       {
@@ -1228,6 +1236,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "basic"
       },
       {
@@ -1237,6 +1246,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "pro"
       },
       {
@@ -1246,6 +1256,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "agency"
       }
     ],
@@ -1853,6 +1864,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "free"
       },
       {
@@ -1862,6 +1874,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "basic"
       },
       {
@@ -1871,6 +1884,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "pro"
       },
       {
@@ -1880,6 +1894,7 @@
         "currency": "USD",
         "herald_slugs": [],
         "purchase_url": "",
+        "upgrade_url": "",
         "tier_slug": "agency"
       }
     ],

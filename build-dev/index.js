@@ -2559,7 +2559,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
 /* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
 /* harmony import */ var _hooks_useProductFeatureGroups__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/hooks/useProductFeatureGroups */ "./resources/js/hooks/useProductFeatureGroups.ts");
-/* harmony import */ var _lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/change-plan-url */ "./resources/js/lib/change-plan-url.ts");
+/* harmony import */ var _lib_upgrade_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/upgrade-url */ "./resources/js/lib/upgrade-url.ts");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
 /**
@@ -2585,7 +2585,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses; route upgrade button to change-plan URL for existing subscribers.
+ * @since TBD    Route upgrade CTA to catalog upgrade_url for existing subscribers, purchase_url for new subscribers.
+ * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses.
  * @since 1.0.0
  */
 function ProductSection({
@@ -2684,14 +2685,8 @@ function ProductSection({
       }), upgradeCatalogTiers.map(tier => {
         const locked = lockedByTier[tier.tier_slug] ?? [];
         if (locked.length === 0) return null;
-
-        // Any user with an existing subscription — activated or not — is
-        // routed to the portal's change-plan flow so the upgrade modifies
-        // their existing subscription. Truly unlicensed visitors fall back
-        // to the catalog's purchase_url so they can buy fresh.
-        const subscriptionsUrl = window.harborData?.subscriptionsUrl;
         const effectiveLicenseProduct = licenseProduct ?? unactivatedLicenseProduct;
-        const buttonHref = effectiveLicenseProduct && subscriptionsUrl ? (0,_lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__.buildChangePlanUrl)(subscriptionsUrl, product.slug, tier.tier_slug) : tier.purchase_url;
+        const buttonHref = effectiveLicenseProduct ? tier.upgrade_url ? (0,_lib_upgrade_url__WEBPACK_IMPORTED_MODULE_9__.buildUpgradeUrl)(tier.upgrade_url, window.harborData?.domain) : undefined : tier.purchase_url || undefined;
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
           tier: tier,
           features: locked,
@@ -4838,52 +4833,6 @@ function buildActivationUrl(baseUrl, productSlug, tier) {
 
 /***/ },
 
-/***/ "./resources/js/lib/change-plan-url.ts"
-/*!*********************************************!*\
-  !*** ./resources/js/lib/change-plan-url.ts ***!
-  \*********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   buildChangePlanUrl: () => (/* binding */ buildChangePlanUrl)
-/* harmony export */ });
-/**
- * Builds a Commerce Portal change-plan URL for an existing subscription.
- *
- * Used when an upgrade CTA needs to drive a licensed customer to their
- * existing subscription's change-plan flow, rather than adding a brand-new
- * plan to the basket via the catalog's purchase_url.
- *
- * The portal resolves the subscription from the authenticated session, so
- * only the product and tier slugs appear in the path.
- *
- * Example:
- *   base        = https://my.software.stellarwp.com/subscriptions/
- *   productSlug = kadence
- *   tierSlug    = pro
- *   → https://my.software.stellarwp.com/subscriptions/kadence/pro/change-plan/
- *
- * @param baseUrl     The subscriptionsUrl string from window.harborData. May
- *                    include a trailing slash and query string.
- * @param productSlug e.g. "kadence"
- * @param tierSlug    e.g. "pro"
- *
- * @since 1.0.0
- */
-function buildChangePlanUrl(baseUrl, productSlug, tierSlug) {
-  try {
-    const url = new URL(baseUrl);
-    const prefix = url.pathname.endsWith('/') ? url.pathname : `${url.pathname}/`;
-    url.pathname = `${prefix}${encodeURIComponent(productSlug)}/${encodeURIComponent(tierSlug)}/change-plan/`;
-    return url.toString();
-  } catch {
-    return baseUrl;
-  }
-}
-
-/***/ },
-
 /***/ "./resources/js/lib/feature-utils.ts"
 /*!*******************************************!*\
   !*** ./resources/js/lib/feature-utils.ts ***!
@@ -5074,6 +5023,49 @@ const expiryTextClass = {
   'expiring-soon': 'text-amber-600 font-medium',
   ok: 'text-muted-foreground'
 };
+
+/***/ },
+
+/***/ "./resources/js/lib/upgrade-url.ts"
+/*!*****************************************!*\
+  !*** ./resources/js/lib/upgrade-url.ts ***!
+  \*****************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   buildUpgradeUrl: () => (/* binding */ buildUpgradeUrl)
+/* harmony export */ });
+/**
+ * Appends portal tracking parameters to a catalog upgrade URL.
+ *
+ * The upgrade_url comes from the catalog tier and is a base URL without
+ * site context. This function appends domain and portal-referral so the
+ * portal can identify the originating site and entry point.
+ *
+ * Example:
+ *   baseUrl = https://my.liquidweb.com/upgrade/kadence/pro/
+ *   domain  = example.com
+ *   → https://my.liquidweb.com/upgrade/kadence/pro/?domain=example.com&portal-referral=plugin
+ *
+ * @param baseUrl The upgrade_url string from the catalog tier.
+ * @param domain  The site domain from window.harborData.domain.
+ *
+ * @since TBD
+ */
+function buildUpgradeUrl(baseUrl, domain) {
+  if (!domain) {
+    return baseUrl;
+  }
+  try {
+    const url = new URL(baseUrl);
+    url.searchParams.set('domain', domain);
+    url.searchParams.set('portal-referral', 'plugin');
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
+}
 
 /***/ },
 

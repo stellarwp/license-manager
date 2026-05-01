@@ -15,6 +15,7 @@ final class Catalog_TierTest extends HarborTestCase {
 		'currency'     => 'USD',
 		'herald_slugs' => [ 'kadence-blocks-pro' ],
 		'purchase_url' => 'https://example.com/checkout/?add-to-cart=123',
+		'upgrade_url'  => 'https://example.com/upgrade/kadence/pro/',
 	];
 
 	public function test_from_array_hydrates_all_fields(): void {
@@ -27,6 +28,7 @@ final class Catalog_TierTest extends HarborTestCase {
 		$this->assertSame( 'USD', $tier->get_currency() );
 		$this->assertSame( [ 'kadence-blocks-pro' ], $tier->get_herald_slugs() );
 		$this->assertSame( 'https://example.com/checkout/?add-to-cart=123', $tier->get_purchase_url() );
+		$this->assertSame( 'https://example.com/upgrade/kadence/pro/', $tier->get_upgrade_url() );
 	}
 
 	public function test_to_array_produces_expected_shape(): void {
@@ -40,6 +42,7 @@ final class Catalog_TierTest extends HarborTestCase {
 		$this->assertSame( 'USD', $result['currency'] );
 		$this->assertSame( [ 'kadence-blocks-pro' ], $result['herald_slugs'] );
 		$this->assertSame( 'https://example.com/checkout/?add-to-cart=123', $result['purchase_url'] );
+		$this->assertSame( 'https://example.com/upgrade/kadence/pro/', $result['upgrade_url'] );
 	}
 
 	public function test_round_trip(): void {
@@ -59,5 +62,6 @@ final class Catalog_TierTest extends HarborTestCase {
 		$this->assertSame( '', $tier->get_currency() );
 		$this->assertSame( [], $tier->get_herald_slugs() );
 		$this->assertSame( '', $tier->get_purchase_url() );
+		$this->assertSame( '', $tier->get_upgrade_url() );
 	}
 }

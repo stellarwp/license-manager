@@ -204,6 +204,12 @@ final class Catalog_Controller extends WP_REST_Controller {
 									'type' => 'string',
 								],
 							],
+							'purchase_url' => [
+								'type' => 'string',
+							],
+							'upgrade_url'  => [
+								'type' => 'string',
+							],
 						],
 					],
 				],

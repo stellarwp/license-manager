@@ -276,9 +276,14 @@ export interface CatalogTier {
      */
     herald_slugs: string[];
     /**
-     * Checkout URL to purchase or upgrade to this tier.
+     * Checkout URL to purchase this tier for new subscribers.
      */
     purchase_url: string;
+    /**
+     * URL for existing subscribers to upgrade to this tier.
+     * The site domain is appended as a query parameter before use.
+     */
+    upgrade_url: string;
 }
 
 /**
