@@ -13,7 +13,7 @@
  * @param baseUrl The upgrade_url string from the catalog tier.
  * @param domain  The site domain from window.harborData.domain.
  *
- * @since TBD
+ * @since 1.0.2
  */
 export function buildUpgradeUrl(
     baseUrl: string,
