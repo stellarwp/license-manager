@@ -909,6 +909,55 @@ function ProductLogo({
 
 /***/ },
 
+/***/ "./resources/js/components/atoms/PurchaseLink.tsx"
+/*!********************************************************!*\
+  !*** ./resources/js/components/atoms/PurchaseLink.tsx ***!
+  \********************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PurchaseLink: () => (/* binding */ PurchaseLink)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/external-link.js");
+/* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/utils */ "./resources/js/lib/utils.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+/**
+ * @since 1.0.0
+ */
+function PurchaseLink({
+  tierName,
+  upgradeUrl,
+  mode = 'upgrade',
+  className
+}) {
+  const label = mode === 'upgrade' ? /* translators: %s is the name of the license tier to upgrade to */
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Upgrade to %s', '%TEXTDOMAIN%'), tierName) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Learn more', '%TEXTDOMAIN%');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("a", {
+    href: upgradeUrl,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_3__.cn)((0,_components_ui_button__WEBPACK_IMPORTED_MODULE_2__.buttonVariants)({
+      variant: 'outline',
+      size: 'sm'
+    }), 'h-7 gap-1 text-xs', className),
+    children: [label, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      className: "w-3 h-3 -translate-y-px"
+    })]
+  });
+}
+
+/***/ },
+
 /***/ "./resources/js/components/atoms/SectionHeader.tsx"
 /*!*********************************************************!*\
   !*** ./resources/js/components/atoms/SectionHeader.tsx ***!
@@ -1932,14 +1981,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chevron-down.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/chevron-right.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/external-link.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
-/* harmony import */ var _components_ui_badge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/ui/badge */ "./resources/js/components/ui/badge.tsx");
-/* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
-/* harmony import */ var _components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/atoms/LicenseBadge */ "./resources/js/components/atoms/LicenseBadge.tsx");
-/* harmony import */ var _components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/components/molecules/FeatureRow */ "./resources/js/components/molecules/FeatureRow.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
+/* harmony import */ var _components_ui_badge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/ui/badge */ "./resources/js/components/ui/badge.tsx");
+/* harmony import */ var _components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/atoms/LicenseBadge */ "./resources/js/components/atoms/LicenseBadge.tsx");
+/* harmony import */ var _components_atoms_PurchaseLink__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/atoms/PurchaseLink */ "./resources/js/components/atoms/PurchaseLink.tsx");
+/* harmony import */ var _components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/components/molecules/FeatureRow */ "./resources/js/components/molecules/FeatureRow.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * Collapsible accordion grouping locked features under a tier header.
  *
@@ -1971,37 +2019,33 @@ function TierGroup({
   const [expanded, setExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const isOpen = expanded || forceOpen;
   const Chevron = isOpen ? lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"] : lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"];
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
       className: "w-full flex items-center gap-2 px-4 py-3 bg-muted/50 border-b",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
         onClick: () => setExpanded(!expanded),
         className: "flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Chevron, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Chevron, {
           className: "w-4 h-4 shrink-0 text-muted-foreground"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
           className: "font-medium text-sm",
           children: [tier.name, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Features', '%TEXTDOMAIN%')]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_ui_badge__WEBPACK_IMPORTED_MODULE_6__.Badge, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_ui_badge__WEBPACK_IMPORTED_MODULE_5__.Badge, {
           variant: "secondary",
           className: "text-xs",
           children: features.length
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
           className: "w-3.5 h-3.5 text-muted-foreground ml-1"
         })]
-      }), showUpgrade && buttonHref && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_7__.Button, {
-        variant: "outline",
-        size: "sm",
-        className: "gap-1 text-xs h-7 ml-auto shrink-0",
-        onClick: () => window.open(buttonHref, '_blank', 'noopener,noreferrer'),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          className: "w-3 h-3"
-        }), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upgrade to', '%TEXTDOMAIN%'), ' ', tier.name]
-      }), showUnactivated && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_8__.LicenseBadge, {
+      }), showUpgrade && buttonHref && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_PurchaseLink__WEBPACK_IMPORTED_MODULE_7__.PurchaseLink, {
+        tierName: tier.name,
+        upgradeUrl: buttonHref,
+        className: "ml-auto shrink-0"
+      }), showUnactivated && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_atoms_LicenseBadge__WEBPACK_IMPORTED_MODULE_6__.LicenseBadge, {
         type: "unactivated",
         className: "ml-auto shrink-0 text-xs"
       })]
-    }), isOpen && features.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_9__.FeatureRow, {
+    }), isOpen && features.map(feature => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_molecules_FeatureRow__WEBPACK_IMPORTED_MODULE_8__.FeatureRow, {
       feature: feature,
       upgradeTierName: tier.name
     }, feature.slug))]
@@ -2559,7 +2603,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
 /* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
 /* harmony import */ var _hooks_useProductFeatureGroups__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/hooks/useProductFeatureGroups */ "./resources/js/hooks/useProductFeatureGroups.ts");
-/* harmony import */ var _lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/change-plan-url */ "./resources/js/lib/change-plan-url.ts");
+/* harmony import */ var _lib_upgrade_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/lib/upgrade-url */ "./resources/js/lib/upgrade-url.ts");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
 /**
@@ -2585,7 +2629,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses; route upgrade button to change-plan URL for existing subscribers.
+ * @since 1.0.2  Route upgrade CTA to catalog upgrade_url for existing subscribers, purchase_url for new subscribers.
+ * @since 1.0.1  Show Unactivated badge on tier groups and product header for unactivated licenses.
  * @since 1.0.0
  */
 function ProductSection({
@@ -2684,14 +2729,8 @@ function ProductSection({
       }), upgradeCatalogTiers.map(tier => {
         const locked = lockedByTier[tier.tier_slug] ?? [];
         if (locked.length === 0) return null;
-
-        // Any user with an existing subscription — activated or not — is
-        // routed to the portal's change-plan flow so the upgrade modifies
-        // their existing subscription. Truly unlicensed visitors fall back
-        // to the catalog's purchase_url so they can buy fresh.
-        const subscriptionsUrl = window.harborData?.subscriptionsUrl;
         const effectiveLicenseProduct = licenseProduct ?? unactivatedLicenseProduct;
-        const buttonHref = effectiveLicenseProduct && subscriptionsUrl ? (0,_lib_change_plan_url__WEBPACK_IMPORTED_MODULE_9__.buildChangePlanUrl)(subscriptionsUrl, product.slug, tier.tier_slug) : tier.purchase_url;
+        const buttonHref = effectiveLicenseProduct ? tier.upgrade_url ? (0,_lib_upgrade_url__WEBPACK_IMPORTED_MODULE_9__.buildUpgradeUrl)(tier.upgrade_url, window.harborData?.domain) : undefined : tier.purchase_url || undefined;
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_molecules_TierGroup__WEBPACK_IMPORTED_MODULE_5__.TierGroup, {
           tier: tier,
           features: locked,
@@ -3070,7 +3109,7 @@ const buttonVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_1__.
     variant: {
       default: "bg-primary text-primary-foreground hover:bg-primary/90",
       destructive: "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-      outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+      outline: "border bg-background text-foreground shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
       secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
       link: "text-primary underline-offset-4 hover:underline"
@@ -4838,52 +4877,6 @@ function buildActivationUrl(baseUrl, productSlug, tier) {
 
 /***/ },
 
-/***/ "./resources/js/lib/change-plan-url.ts"
-/*!*********************************************!*\
-  !*** ./resources/js/lib/change-plan-url.ts ***!
-  \*********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   buildChangePlanUrl: () => (/* binding */ buildChangePlanUrl)
-/* harmony export */ });
-/**
- * Builds a Commerce Portal change-plan URL for an existing subscription.
- *
- * Used when an upgrade CTA needs to drive a licensed customer to their
- * existing subscription's change-plan flow, rather than adding a brand-new
- * plan to the basket via the catalog's purchase_url.
- *
- * The portal resolves the subscription from the authenticated session, so
- * only the product and tier slugs appear in the path.
- *
- * Example:
- *   base        = https://my.software.stellarwp.com/subscriptions/
- *   productSlug = kadence
- *   tierSlug    = pro
- *   → https://my.software.stellarwp.com/subscriptions/kadence/pro/change-plan/
- *
- * @param baseUrl     The subscriptionsUrl string from window.harborData. May
- *                    include a trailing slash and query string.
- * @param productSlug e.g. "kadence"
- * @param tierSlug    e.g. "pro"
- *
- * @since 1.0.0
- */
-function buildChangePlanUrl(baseUrl, productSlug, tierSlug) {
-  try {
-    const url = new URL(baseUrl);
-    const prefix = url.pathname.endsWith('/') ? url.pathname : `${url.pathname}/`;
-    url.pathname = `${prefix}${encodeURIComponent(productSlug)}/${encodeURIComponent(tierSlug)}/change-plan/`;
-    return url.toString();
-  } catch {
-    return baseUrl;
-  }
-}
-
-/***/ },
-
 /***/ "./resources/js/lib/feature-utils.ts"
 /*!*******************************************!*\
   !*** ./resources/js/lib/feature-utils.ts ***!
@@ -5074,6 +5067,49 @@ const expiryTextClass = {
   'expiring-soon': 'text-amber-600 font-medium',
   ok: 'text-muted-foreground'
 };
+
+/***/ },
+
+/***/ "./resources/js/lib/upgrade-url.ts"
+/*!*****************************************!*\
+  !*** ./resources/js/lib/upgrade-url.ts ***!
+  \*****************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   buildUpgradeUrl: () => (/* binding */ buildUpgradeUrl)
+/* harmony export */ });
+/**
+ * Appends portal tracking parameters to a catalog upgrade URL.
+ *
+ * The upgrade_url comes from the catalog tier and is a base URL without
+ * site context. This function appends domain and portal-referral so the
+ * portal can identify the originating site and entry point.
+ *
+ * Example:
+ *   baseUrl = https://my.liquidweb.com/upgrade/kadence/pro/
+ *   domain  = example.com
+ *   → https://my.liquidweb.com/upgrade/kadence/pro/?domain=example.com&portal-referral=plugin
+ *
+ * @param baseUrl The upgrade_url string from the catalog tier.
+ * @param domain  The site domain from window.harborData.domain.
+ *
+ * @since 1.0.2
+ */
+function buildUpgradeUrl(baseUrl, domain) {
+  if (!domain) {
+    return baseUrl;
+  }
+  try {
+    const url = new URL(baseUrl);
+    url.searchParams.set('domain', domain);
+    url.searchParams.set('portal-referral', 'plugin');
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
+}
 
 /***/ },
 

@@ -183,6 +183,7 @@ class Feature_Manager_Page {
 					PHP_QUERY_RFC3986
 				),
 				'subscriptionsUrl'    => Config::get_portal_base_url() . '/subscriptions/',
+				'domain'              => $this->site_data->get_domain(),
 				'version'             => Harbor::VERSION,
 			]
 		);
