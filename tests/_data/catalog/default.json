@@ -10,8 +10,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=kadence-free&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/kadence/free/",
         "tier_slug": "free"
       },
       {
@@ -20,8 +20,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=kadence-basic&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/kadence/basic/",
         "tier_slug": "basic"
       },
       {
@@ -30,8 +30,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=kadence-pro&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/kadence/pro/",
         "tier_slug": "pro"
       },
       {
@@ -40,8 +40,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=kadence-agency&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/kadence/agency/",
         "tier_slug": "agency"
       }
     ],
@@ -123,7 +123,7 @@
       {
         "minimum_tier": "pro",
         "name": "Shop Kit",
-        "description": "WooCommerce enhancements \u2014 product galleries, swatches, quick view, and more.",
+        "description": "WooCommerce enhancements — product galleries, swatches, quick view, and more.",
         "category": "woocommerce",
         "authors": [
           "KadenceWP"
@@ -635,8 +635,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=learndash-basic&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/learndash/basic/",
         "tier_slug": "basic"
       },
       {
@@ -645,8 +645,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=learndash-pro&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/learndash/pro/",
         "tier_slug": "pro"
       },
       {
@@ -655,8 +655,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=learndash-elite&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/learndash/elite/",
         "tier_slug": "elite"
       }
     ],
@@ -1225,8 +1225,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=give-free&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/give/free/",
         "tier_slug": "free"
       },
       {
@@ -1235,8 +1235,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=give-basic&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/give/basic/",
         "tier_slug": "basic"
       },
       {
@@ -1245,8 +1245,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=give-pro&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/give/pro/",
         "tier_slug": "pro"
       },
       {
@@ -1255,8 +1255,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=give-agency&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/give/agency/",
         "tier_slug": "agency"
       }
     ],
@@ -1863,8 +1863,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=the-events-calendar-free&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/the-events-calendar/free/",
         "tier_slug": "free"
       },
       {
@@ -1873,8 +1873,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=the-events-calendar-basic&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/the-events-calendar/basic/",
         "tier_slug": "basic"
       },
       {
@@ -1883,8 +1883,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=the-events-calendar-pro&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/the-events-calendar/pro/",
         "tier_slug": "pro"
       },
       {
@@ -1893,8 +1893,8 @@
         "price": 0,
         "currency": "USD",
         "herald_slugs": [],
-        "purchase_url": "",
-        "upgrade_url": "",
+        "purchase_url": "https://portal.local/checkout/?sku=the-events-calendar-agency&add-to-cart=1",
+        "upgrade_url": "https://portal.local/upgrade/the-events-calendar/agency/",
         "tier_slug": "agency"
       }
     ],
