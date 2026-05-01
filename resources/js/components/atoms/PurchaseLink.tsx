@@ -31,7 +31,7 @@ export function PurchaseLink( { tierName, upgradeUrl, mode = 'upgrade', classNam
             className={ cn( buttonVariants( { variant: 'outline', size: 'sm' } ), 'h-7 gap-1 text-xs', className ) }
         >
             { label }
-            <ExternalLink className="w-3 h-3" />
+            <ExternalLink className="w-3 h-3 -translate-y-px" />
         </a>
     );
 }
