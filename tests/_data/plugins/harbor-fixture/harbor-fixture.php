@@ -65,9 +65,17 @@ add_action(
 
 // Seed the pro fixture license key so the UI renders with licensed product data.
 // The key maps to tests/_data/licensing/lwsw-unified-pro-2026.json via strtolower().
+//
+// Also grants external API consent as the default so existing E2E specs land
+// on the Feature Manager rather than the opt-in screen.
+//
+// Both values use add_option() (a no-op when the option already exists) so
+// specs that revoke consent or change the key via the REST API don't get
+// silently overwritten on the next request.
 add_action(
 	'init',
 	static function () {
-		update_option( 'lw_harbor_unified_license_key', 'LWSW-UNIFIED-PRO-2026', false );
+		add_option( 'lw_harbor_unified_license_key', 'LWSW-UNIFIED-PRO-2026' );
+		add_option( 'lw-harbor-allowed-external-api-communications', true );
 	}
 );
