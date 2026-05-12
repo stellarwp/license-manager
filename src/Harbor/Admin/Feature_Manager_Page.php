@@ -53,7 +53,7 @@ class Feature_Manager_Page {
 	private Catalog_Repository $catalog;
 
 	/**
-	 * Hook suffix returned by add_menu_page().
+	 * Hook suffix returned by add_submenu_page().
 	 * Empty string until the page is registered.
 	 *
 	 * @since 1.0.0
@@ -89,15 +89,31 @@ class Feature_Manager_Page {
 			return;
 		}
 
-		$this->page_hook = add_menu_page(
+		$this->page_hook = (string) add_submenu_page(
+			'options-general.php',
 			__( 'Liquid Web Software Manager', '%TEXTDOMAIN%' ),
-			__( 'Liquid Web', '%TEXTDOMAIN%' ),
+			__( 'Liquid Web Products', '%TEXTDOMAIN%' ),
 			'manage_options',
 			self::PAGE_SLUG,
-			[ $this, 'render' ],
-			'dashicons-cloud',
-			3
+			[ $this, 'render' ]
 		);
+
+		/**
+		 * Filters whether to hide the Liquid Web Products item from the Settings menu.
+		 *
+		 * Hiding the menu item does not unregister the page. The Feature Manager
+		 * UI remains accessible at options-general.php?page=lw-software-manager
+		 * for users who reach it via a direct link or a product plugin's submenu.
+		 *
+		 * @since TBD
+		 *
+		 * @param bool $hide Whether to hide the menu item. Default false.
+		 *
+		 * @return bool
+		 */
+		if ( apply_filters( 'lw-harbor/hide_menu_item', false ) ) {
+			remove_submenu_page( 'options-general.php', self::PAGE_SLUG );
+		}
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'maybe_enqueue_assets' ] );
 		add_action( 'admin_init', [ $this, 'maybe_redirect_after_refresh' ] );
@@ -107,7 +123,7 @@ class Feature_Manager_Page {
 	 * Enqueues the React Feature Manager UI assets only on the lw-software-manager page.
 	 *
 	 * Called on admin_enqueue_scripts. The hook suffix is compared against
-	 * $this->page_hook — the value returned by add_menu_page() — to ensure
+	 * $this->page_hook — the value returned by add_submenu_page() — to ensure
 	 * the React bundle is loaded only on this specific admin page.
 	 *
 	 * @since 1.0.0
@@ -175,7 +191,7 @@ class Feature_Manager_Page {
 				'activationUrl'       => Config::get_portal_base_url() . '/subscriptions/?' . http_build_query(
 					[
 						'portal-referral' => 'plugin',
-						'redirect_url'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&refresh=auto' ),
+						'redirect_url'    => admin_url( 'options-general.php?page=' . self::PAGE_SLUG . '&refresh=auto' ),
 						'domain'          => $this->site_data->get_domain(),
 					],
 					'',
@@ -236,7 +252,7 @@ class Feature_Manager_Page {
 	 *
 	 * Hooked on admin_init so headers have not yet been sent, allowing
 	 * wp_safe_redirect() to issue the Location header successfully. Calling
-	 * this from render() (the add_menu_page callback) is too late — WordPress
+	 * this from render() (the add_submenu_page callback) is too late — WordPress
 	 * has already begun sending HTML output by that point.
 	 *
 	 * @since 1.0.0

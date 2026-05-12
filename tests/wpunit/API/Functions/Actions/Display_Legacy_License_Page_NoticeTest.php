@@ -42,7 +42,7 @@ final class Display_Legacy_License_Page_NoticeTest extends HarborTestCase {
 	}
 
 	public function test_generic_notice_contains_software_manager_link(): void {
-		$expected_url = admin_url( 'admin.php?page=' . Feature_Manager_Page::PAGE_SLUG );
+		$expected_url = admin_url( 'options-general.php?page=' . Feature_Manager_Page::PAGE_SLUG );
 		$output       = $this->invoke();
 
 		$this->assertStringContainsString( $expected_url, $output );
@@ -86,7 +86,7 @@ final class Display_Legacy_License_Page_NoticeTest extends HarborTestCase {
 	}
 
 	public function test_product_notice_contains_software_manager_link(): void {
-		$expected_url = admin_url( 'admin.php?page=' . Feature_Manager_Page::PAGE_SLUG );
+		$expected_url = admin_url( 'options-general.php?page=' . Feature_Manager_Page::PAGE_SLUG );
 		$output       = $this->invoke( 'GiveWP' );
 
 		$this->assertStringContainsString( $expected_url, $output );
