@@ -526,17 +526,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   App: () => (/* binding */ App)
 /* harmony export */ });
 /* harmony import */ var _components_templates_AppShell__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/templates/AppShell */ "./resources/js/components/templates/AppShell.tsx");
-/* harmony import */ var _components_templates_OptInScreen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/templates/OptInScreen */ "./resources/js/components/templates/OptInScreen.tsx");
-/* harmony import */ var _components_ui_toast__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/toast */ "./resources/js/components/ui/toast.tsx");
-/* harmony import */ var _components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/atoms/ErrorBoundary */ "./resources/js/components/atoms/ErrorBoundary.tsx");
-/* harmony import */ var _components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/organisms/ErrorModal */ "./resources/js/components/organisms/ErrorModal.tsx");
-/* harmony import */ var _context_toast_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/context/toast-context */ "./resources/js/context/toast-context.tsx");
-/* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
-/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
-/* harmony import */ var _context_harbor_data_context__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/context/harbor-data-context */ "./resources/js/context/harbor-data-context.tsx");
-/* harmony import */ var _context_reload_banner_context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/context/reload-banner-context */ "./resources/js/context/reload-banner-context.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _components_ui_toast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/ui/toast */ "./resources/js/components/ui/toast.tsx");
+/* harmony import */ var _components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/atoms/ErrorBoundary */ "./resources/js/components/atoms/ErrorBoundary.tsx");
+/* harmony import */ var _components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/organisms/ErrorModal */ "./resources/js/components/organisms/ErrorModal.tsx");
+/* harmony import */ var _context_toast_context__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/context/toast-context */ "./resources/js/context/toast-context.tsx");
+/* harmony import */ var _context_filter_context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/context/filter-context */ "./resources/js/context/filter-context.tsx");
+/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
+/* harmony import */ var _context_harbor_data_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/harbor-data-context */ "./resources/js/context/harbor-data-context.tsx");
+/* harmony import */ var _context_reload_banner_context__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/context/reload-banner-context */ "./resources/js/context/reload-banner-context.tsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * @package LiquidWeb\Harbor
  */
@@ -550,31 +549,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const App = () => {
-  // Defaults to false (show consent screen) when the field is missing, so the
-  // UI stays safe-by-default while the backend wiring lands.
-  const optedIn = window.harborData?.optedIn === true;
-  if (!optedIn) {
-    // The consent screen does not need the data providers — keeping
-    // HarborDataProvider out of this branch is what prevents the license /
-    // catalog / features resolvers from firing pre-consent.
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_toast_context__WEBPACK_IMPORTED_MODULE_5__.ToastProvider, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_context_error_modal_context__WEBPACK_IMPORTED_MODULE_7__.ErrorModalProvider, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_3__.ErrorBoundary, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_templates_OptInScreen__WEBPACK_IMPORTED_MODULE_1__.OptInScreen, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_ui_toast__WEBPACK_IMPORTED_MODULE_2__.Toaster, {})]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_4__.ErrorModal, {})]
-      })
-    });
-  }
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_toast_context__WEBPACK_IMPORTED_MODULE_5__.ToastProvider, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_9__.ReloadBannerProvider, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_filter_context__WEBPACK_IMPORTED_MODULE_6__.FilterProvider, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_context_error_modal_context__WEBPACK_IMPORTED_MODULE_7__.ErrorModalProvider, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_8__.HarborDataProvider, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_3__.ErrorBoundary, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_templates_AppShell__WEBPACK_IMPORTED_MODULE_0__.AppShell, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_ui_toast__WEBPACK_IMPORTED_MODULE_2__.Toaster, {})]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_4__.ErrorModal, {})]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_toast_context__WEBPACK_IMPORTED_MODULE_4__.ToastProvider, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_reload_banner_context__WEBPACK_IMPORTED_MODULE_8__.ReloadBannerProvider, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_filter_context__WEBPACK_IMPORTED_MODULE_5__.FilterProvider, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_context_error_modal_context__WEBPACK_IMPORTED_MODULE_6__.ErrorModalProvider, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_context_harbor_data_context__WEBPACK_IMPORTED_MODULE_7__.HarborDataProvider, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_components_atoms_ErrorBoundary__WEBPACK_IMPORTED_MODULE_2__.ErrorBoundary, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_templates_AppShell__WEBPACK_IMPORTED_MODULE_0__.AppShell, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_ui_toast__WEBPACK_IMPORTED_MODULE_1__.Toaster, {})]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_organisms_ErrorModal__WEBPACK_IMPORTED_MODULE_3__.ErrorModal, {})]
           })
         })
       })
@@ -3041,146 +3024,6 @@ function AppShell() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("p", {
           className: "text-[13px] text-gray-500 mt-8 mb-0",
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Version %s', '%TEXTDOMAIN%'), window.harborData.version)
-        })
-      })]
-    })
-  });
-}
-
-/***/ },
-
-/***/ "./resources/js/components/templates/OptInScreen.tsx"
-/*!***********************************************************!*\
-  !*** ./resources/js/components/templates/OptInScreen.tsx ***!
-  \***********************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   OptInScreen: () => (/* binding */ OptInScreen)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
-/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
-/* harmony import */ var _errors_harbor_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/errors/harbor-error */ "./resources/js/errors/harbor-error.ts");
-/* harmony import */ var _errors_error_code__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/errors/error-code */ "./resources/js/errors/error-code.ts");
-/* harmony import */ var _lib_consent_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/lib/consent-api */ "./resources/js/lib/consent-api.ts");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
-/**
- * Opt-in screen rendered when the site has not yet consented to external
- * data exchange with Liquid Web services.
- *
- * Lives outside HarborDataProvider so the license / catalog / features
- * resolvers never run pre-consent.
- *
- * @package LiquidWeb\Harbor
- */
-
-
-
-
-
-
-
-
-/**
- * @since TBD
- */
-
-function OptInScreen() {
-  const {
-    addError
-  } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_3__.useErrorModal)();
-  const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const domain = window.harborData?.domain ?? '';
-  const licensingBaseUrl = window.harborData?.licensingBaseUrl ?? '';
-  const portalBaseUrl = window.harborData?.portalBaseUrl ?? '';
-  const heraldBaseUrl = window.harborData?.heraldBaseUrl ?? '';
-  const endpoints = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Licensing service (license validation)', '%TEXTDOMAIN%'),
-    url: licensingBaseUrl
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Customer Portal (product catalog)', '%TEXTDOMAIN%'),
-    url: portalBaseUrl
-  }, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Herald (plugin download host)', '%TEXTDOMAIN%'),
-    url: heraldBaseUrl
-  }];
-  const handleOptIn = async () => {
-    setIsSubmitting(true);
-    try {
-      await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_6__.postOptIn)();
-      // Backend rebinds the page on reload: Opt_In_Page -> Feature_Manager_Page.
-      window.location.reload();
-    } catch (err) {
-      const harborError = await _errors_harbor_error__WEBPACK_IMPORTED_MODULE_4__["default"].wrap(err, _errors_error_code__WEBPACK_IMPORTED_MODULE_5__.ErrorCode.ConsentOptInFailed, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager could not record your consent. Please try again.', '%TEXTDOMAIN%'));
-      addError(harborError);
-      setIsSubmitting(false);
-    }
-  };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-    className: "min-h-[calc(100vh-32px)] flex items-start justify-center bg-neutral-50 p-8",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-      className: "w-full max-w-2xl rounded-lg border bg-background shadow-sm p-8 space-y-6",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("header", {
-        className: "space-y-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h1", {
-          className: "!text-2xl !font-semibold !m-0 !p-0",
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Connect to Liquid Web', '%TEXTDOMAIN%')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-          className: "text-sm text-muted-foreground !m-0",
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The Liquid Web Software Manager needs your permission before it contacts Liquid Web services to validate your license and load your product catalog.', '%TEXTDOMAIN%')
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("section", {
-        className: "space-y-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h2", {
-          className: "!text-base !font-semibold !m-0",
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('What is sent', '%TEXTDOMAIN%')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("ul", {
-          className: "text-sm text-foreground space-y-1 !m-0 !pl-5 list-disc",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
-            children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Your site domain', '%TEXTDOMAIN%'), domain && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-              className: "text-muted-foreground",
-              children: ` (${domain})`
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("li", {
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Your unified Liquid Web license key, when stored', '%TEXTDOMAIN%')
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("li", {
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The Liquid Web Software Manager version', '%TEXTDOMAIN%')
-          })]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("section", {
-        className: "space-y-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h2", {
-          className: "!text-base !font-semibold !m-0",
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Where it is sent', '%TEXTDOMAIN%')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("ul", {
-          className: "text-sm text-foreground space-y-1 !m-0 !pl-5 list-disc",
-          children: endpoints.map(endpoint => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
-            children: [endpoint.label, endpoint.url && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
-              className: "text-muted-foreground",
-              children: [' — ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("code", {
-                className: "text-xs",
-                children: endpoint.url
-              })]
-            })]
-          }, endpoint.label))
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
-        className: "text-sm text-muted-foreground !m-0",
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('You can revoke this permission at any time from the Software Manager sidebar.', '%TEXTDOMAIN%')
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-        className: "flex items-center justify-end gap-3 pt-2",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, {
-          type: "button",
-          variant: "default",
-          onClick: handleOptIn,
-          disabled: isSubmitting,
-          children: isSubmitting ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Opting in...', '%TEXTDOMAIN%') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Opt In', '%TEXTDOMAIN%')
         })
       })]
     })
