@@ -5106,7 +5106,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Single source of truth for the consent REST calls.
  *
- * Contract (subject to confirmation with the backend dev):
+ * Contract
  *   POST   /liquidweb/harbor/v1/consent   -> { opted_in: true }
  *   DELETE /liquidweb/harbor/v1/consent   -> { opted_in: false }
  *
