@@ -98,6 +98,23 @@ class Feature_Manager_Page {
 			[ $this, 'render' ]
 		);
 
+		/**
+		 * Filters whether to hide the Liquid Web Products item from the Settings menu.
+		 *
+		 * Hiding the menu item does not unregister the page. The Feature Manager
+		 * UI remains accessible at options-general.php?page=lw-software-manager
+		 * for users who reach it via a direct link or a product plugin's submenu.
+		 *
+		 * @since TBD
+		 *
+		 * @param bool $hide Whether to hide the menu item. Default false.
+		 *
+		 * @return bool
+		 */
+		if ( apply_filters( 'lw-harbor/hide_menu_item', false ) ) {
+			remove_submenu_page( 'options-general.php', self::PAGE_SLUG );
+		}
+
 		add_action( 'admin_enqueue_scripts', [ $this, 'maybe_enqueue_assets' ] );
 		add_action( 'admin_init', [ $this, 'maybe_redirect_after_refresh' ] );
 	}

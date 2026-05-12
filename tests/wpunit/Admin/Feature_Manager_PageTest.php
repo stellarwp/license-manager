@@ -141,6 +141,51 @@ class Feature_Manager_PageTest extends HarborTestCase {
 	/**
 	 * @test
 	 */
+	public function it_should_hide_the_menu_item_when_filter_returns_true(): void {
+		global $submenu;
+		$submenu = [];
+
+		set_current_screen( 'dashboard' );
+
+		add_filter( 'lw-harbor/hide_menu_item', '__return_true' );
+
+		try {
+			$this->page->maybe_register_page();
+		} finally {
+			remove_filter( 'lw-harbor/hide_menu_item', '__return_true' );
+		}
+
+		$this->assertNotContains( 'lw-software-manager', $this->get_settings_submenu_slugs() );
+	}
+
+	/**
+	 * @test
+	 */
+	public function it_should_keep_the_page_registered_when_menu_item_is_hidden(): void {
+		global $submenu, $_registered_pages;
+		$submenu           = [];
+		$_registered_pages = [];
+
+		set_current_screen( 'dashboard' );
+
+		add_filter( 'lw-harbor/hide_menu_item', '__return_true' );
+
+		try {
+			$this->page->maybe_register_page();
+		} finally {
+			remove_filter( 'lw-harbor/hide_menu_item', '__return_true' );
+		}
+
+		// remove_submenu_page() only modifies $submenu; the slug remains in
+		// $_registered_pages, which is what WordPress checks before serving
+		// the page when the URL is visited directly.
+		$hookname = get_plugin_page_hookname( Feature_Manager_Page::PAGE_SLUG, 'options-general.php' );
+		$this->assertTrue( isset( $_registered_pages[ $hookname ] ) );
+	}
+
+	/**
+	 * @test
+	 */
 	public function it_should_not_refresh_when_param_is_absent(): void {
 		unset( $_GET['refresh'] );
 		$_GET['page'] = Feature_Manager_Page::PAGE_SLUG;
