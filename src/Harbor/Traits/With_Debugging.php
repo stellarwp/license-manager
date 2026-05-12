@@ -36,6 +36,10 @@ trait With_Debugging {
 			return;
 		}
 
+		if ( ! defined( 'WP_DEBUG_LOG' ) || ! WP_DEBUG_LOG ) {
+			return;
+		}
+
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentionally logging debug info.
 		error_log( 'Harbor: ' . $message );
 	}
