@@ -7,6 +7,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { HarborError, ErrorCode } from '@/errors';
+import { deleteConsent } from '@/lib/consent-api';
 import type { Feature, LegacyLicense, License, ProductCatalog } from '@/types/api';
 import type { Action, Thunk } from './types';
 
@@ -338,6 +339,38 @@ export const deleteLicense =
 				)
 			);
 			dispatch({ type: 'DELETE_LICENSE_FAILED', error });
+			return error;
+		}
+	};
+
+/**
+ * Revoke the global external-requests opt-in.
+ *
+ * On success, reloads the page so the backend re-evaluates which admin page
+ * to render. Until the backend rebinding lands, the reload simply re-renders
+ * the same Feature Manager page.
+ *
+ * @param network When true on multisite, revokes the network-level opt-in.
+ * @since 1.0.0
+ */
+export const revokeConsent =
+	( network: boolean = false ): Thunk<HarborError | null> =>
+	async ( { dispatch } ) => {
+		dispatch( { type: 'REVOKE_CONSENT_START' } );
+		try {
+			await deleteConsent( network );
+			window.location.reload();
+			return null;
+		} catch ( err ) {
+			const error = await HarborError.wrap(
+				err,
+				ErrorCode.ConsentRevokeFailed,
+				__(
+					'Liquid Web Software Manager could not revoke your consent. Please try again.',
+					'%TEXTDOMAIN%'
+				)
+			);
+			dispatch( { type: 'REVOKE_CONSENT_FAILED', error } );
 			return error;
 		}
 	};
