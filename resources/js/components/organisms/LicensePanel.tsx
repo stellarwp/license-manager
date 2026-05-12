@@ -6,11 +6,13 @@
  *
  * @package LiquidWeb\Harbor
  */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { LicenseSection } from '@/components/organisms/LicenseSection';
 import { UpsellSection } from '@/components/organisms/UpsellSection';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogHeader, DialogContent, DialogFooter } from '@/components/ui/dialog';
 import { store as harborStore } from '@/store';
 import { PRODUCTS } from '@/data/products';
 import { useToast } from '@/context/toast-context';
@@ -23,9 +25,9 @@ import { HarborError } from '@/errors';
 export function LicensePanel() {
     const { addToast }      = useToast();
     const { addError }      = useErrorModal();
-    const { deleteLicense, refreshLicense, refreshCatalog } = useDispatch( harborStore );
+    const { deleteLicense, refreshLicense, refreshCatalog, revokeConsent } = useDispatch( harborStore );
 
-    const { licenseKey, licenseProducts, catalogs, isRefreshing, isLicenseLoading } = useSelect(
+    const { licenseKey, licenseProducts, catalogs, isRefreshing, isLicenseLoading, isRevoking } = useSelect(
         ( select ) => ({
             licenseKey:       select( harborStore ).getLicenseKey(),
             licenseProducts:  select( harborStore ).getLicenseProducts(),
@@ -33,11 +35,14 @@ export function LicensePanel() {
             isRefreshing:     select( harborStore ).isLicenseRefreshing(),
             // @ts-expect-error -- hasFinishedResolution is injected at runtime by @wordpress/data but absent from the store's TypeScript surface.
             isLicenseLoading: ! select( harborStore ).hasFinishedResolution( 'getLicenseKey', [] ),
+            isRevoking:       select( harborStore ).isConsentRevoking(),
         }),
         []
     );
 
-    // Flat tier slug → display name and rank lookups from all catalog tiers.
+    const [ isRevokeDialogOpen, setIsRevokeDialogOpen ] = useState( false );
+
+    // Flat tier slug -> display name and rank lookups from all catalog tiers.
     const { tierNameMap, tierRankMap } = useMemo( () => {
         const names: Record<string, string> = {};
         const ranks: Record<string, number> = {};
@@ -52,7 +57,7 @@ export function LicensePanel() {
 
     const activationUrl = licenseKey && window.harborData ? window.harborData.activationUrl : null;
 
-    // Product slug → lowest paid-tier purchase URL map from the catalog.
+    // Product slug -> lowest paid-tier purchase URL map from the catalog.
     const upsellUrlMap = useMemo( () => {
         const map: Record<string, string> = {};
         catalogs.forEach( ( catalog ) => {
@@ -94,6 +99,15 @@ export function LicensePanel() {
         }
     };
 
+    const handleConfirmRevoke = async () => {
+        const result = await revokeConsent();
+        if ( result instanceof HarborError ) {
+            addError( result );
+            setIsRevokeDialogOpen( false );
+        }
+        // On success the thunk reloads the page, so no further UI work is needed.
+    };
+
     return (
         <div className="sticky top-4 w-[280px] shrink-0 space-y-6">
             <LicenseSection
@@ -113,6 +127,59 @@ export function LicensePanel() {
                     upsellUrlMap={ upsellUrlMap }
                 />
             ) }
+
+            <div className="pt-4 border-t">
+                <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={ () => setIsRevokeDialogOpen( true ) }
+                    disabled={ isRevoking }
+                    className="w-full"
+                >
+                    { __( 'Revoke external data consent', '%TEXTDOMAIN%' ) }
+                </Button>
+            </div>
+
+            <Dialog
+                open={ isRevokeDialogOpen }
+                onClose={ () => ( ! isRevoking ) && setIsRevokeDialogOpen( false ) }
+                maxWidth="max-w-md"
+            >
+                <DialogHeader
+                    title={ __( 'Revoke external data consent?', '%TEXTDOMAIN%' ) }
+                    onClose={ () => ( ! isRevoking ) && setIsRevokeDialogOpen( false ) }
+                />
+                <DialogContent>
+                    <p className="text-sm text-foreground !m-0">
+                        { __(
+                            'Liquid Web Software Manager will stop contacting Liquid Web services until you opt in again. Cached license and product data remain on your site.',
+                            '%TEXTDOMAIN%'
+                        ) }
+                    </p>
+                </DialogContent>
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={ () => setIsRevokeDialogOpen( false ) }
+                        disabled={ isRevoking }
+                    >
+                        { __( 'Cancel', '%TEXTDOMAIN%' ) }
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={ handleConfirmRevoke }
+                        disabled={ isRevoking }
+                    >
+                        { isRevoking
+                            ? __( 'Revoking...', '%TEXTDOMAIN%' )
+                            : __( 'Revoke', '%TEXTDOMAIN%' )
+                        }
+                    </Button>
+                </DialogFooter>
+            </Dialog>
         </div>
     );
 }
