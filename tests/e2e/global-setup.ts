@@ -1,12 +1,13 @@
 import path from 'path';
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
-export const STORAGE_STATE_PATH =
+const STORAGE_STATE_PATH =
 	process.env.STORAGE_STATE_PATH ||
 	path.join( process.cwd(), 'artifacts/storage-states/admin.json' );
 
-const WP_ENV_PORT = process.env.WP_ENV_PORT ?? '8901';
-const WP_BASE_URL = process.env.WP_BASE_URL ?? `http://localhost:${ WP_ENV_PORT }`;
+// playwright.config.ts seeds process.env.WP_BASE_URL before this module is
+// loaded, so reading from the env directly here is sufficient.
+const WP_BASE_URL = process.env.WP_BASE_URL ?? 'http://localhost:8901';
 
 async function globalSetup(): Promise<void> {
 	const requestUtils = await RequestUtils.setup( {
