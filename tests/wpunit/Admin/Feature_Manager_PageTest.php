@@ -43,26 +43,35 @@ class Feature_Manager_PageTest extends HarborTestCase {
 		return new Feature_Manager_Page( $site_data, $license_manager, $catalog );
 	}
 
+	private function get_settings_submenu_slugs(): array {
+		global $submenu;
+
+		if ( ! isset( $submenu['options-general.php'] ) ) {
+			return [];
+		}
+
+		return array_column( $submenu['options-general.php'], 2 );
+	}
+
 	/**
 	 * @test
 	 */
 	public function it_should_render_when_it_has_the_highest_version(): void {
-		global $menu;
-		$menu = [];
+		global $submenu;
+		$submenu = [];
 
 		set_current_screen( 'dashboard' );
 		$this->page->maybe_register_page();
 
-		$slugs = array_column( $menu, 2 );
-		$this->assertContains( 'lw-software-manager', $slugs );
+		$this->assertContains( 'lw-software-manager', $this->get_settings_submenu_slugs() );
 	}
 
 	/**
 	 * @test
 	 */
 	public function it_should_not_render_when_a_higher_version_exists(): void {
-		global $menu;
-		$menu = [];
+		global $submenu;
+		$submenu = [];
 
 		set_current_screen( 'dashboard' );
 
@@ -72,16 +81,15 @@ class Feature_Manager_PageTest extends HarborTestCase {
 
 		$this->page->maybe_register_page();
 
-		$slugs = array_column( $menu, 2 );
-		$this->assertNotContains( 'lw-software-manager', $slugs );
+		$this->assertNotContains( 'lw-software-manager', $this->get_settings_submenu_slugs() );
 	}
 
 	/**
 	 * @test
 	 */
 	public function it_should_not_render_when_page_already_registered(): void {
-		global $menu;
-		$menu = [];
+		global $submenu;
+		$submenu = [];
 
 		set_current_screen( 'dashboard' );
 
@@ -89,30 +97,28 @@ class Feature_Manager_PageTest extends HarborTestCase {
 
 		$this->page->maybe_register_page();
 
-		$slugs = array_column( $menu, 2 );
-		$this->assertNotContains( 'lw-software-manager', $slugs );
+		$this->assertNotContains( 'lw-software-manager', $this->get_settings_submenu_slugs() );
 	}
 
 	/**
 	 * @test
 	 */
 	public function it_should_register_menu_page(): void {
-		global $menu;
-		$menu = [];
+		global $submenu;
+		$submenu = [];
 
 		set_current_screen( 'dashboard' );
 		$this->page->maybe_register_page();
 
-		$slugs = array_column( $menu, 2 );
-		$this->assertContains( 'lw-software-manager', $slugs );
+		$this->assertContains( 'lw-software-manager', $this->get_settings_submenu_slugs() );
 	}
 
 	/**
 	 * @test
 	 */
 	public function it_should_only_register_page_once(): void {
-		global $menu;
-		$menu = [];
+		global $submenu;
+		$submenu = [];
 
 		set_current_screen( 'dashboard' );
 
@@ -123,7 +129,7 @@ class Feature_Manager_PageTest extends HarborTestCase {
 		$page_b->maybe_register_page();
 
 		$slugs = array_filter(
-			array_column( $menu, 2 ),
+			$this->get_settings_submenu_slugs(),
 			static function ( $s ) {
 				return $s === 'lw-software-manager';
 			}

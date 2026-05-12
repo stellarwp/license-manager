@@ -10,7 +10,7 @@
  *
  * Example base URL from the API:
  *   https://my.liquidweb.com/subscriptions/?portal-referral=plugin
- *     &redirect_url=https%3A%2F%2Fexample.com%2Fwp-admin%2Fadmin.php%3Fpage%3Dlw-software-manager%26refresh%3Dauto
+ *     &redirect_url=https%3A%2F%2Fexample.com%2Fwp-admin%2Foptions-general.php%3Fpage%3Dlw-software-manager%26refresh%3Dauto
  *     &domain=example.com
  *
  * @param baseUrl     The raw activationUrl string from the API.

@@ -7,7 +7,7 @@ import { buildActivationUrl } from '@/lib/activation-url';
 const BASE_URL =
     'https://my.liquidweb.com/subscriptions/' +
     '?portal-referral=plugin' +
-    '&redirect_url=https%3A%2F%2Fexample.com%2Fwp-admin%2Fadmin.php%3Fpage%3Dlw-software-manager%26refresh%3Dauto' +
+    '&redirect_url=https%3A%2F%2Fexample.com%2Fwp-admin%2Foptions-general.php%3Fpage%3Dlw-software-manager%26refresh%3Dauto' +
     '&domain=example.com';
 
 describe( 'buildActivationUrl', () => {
@@ -33,7 +33,7 @@ describe( 'buildActivationUrl', () => {
         const redirectVal = new URL( result ).searchParams.get( 'redirect_url' );
 
         expect( redirectVal ).toBe(
-            'https://example.com/wp-admin/admin.php?page=lw-software-manager&refresh=auto'
+            'https://example.com/wp-admin/options-general.php?page=lw-software-manager&refresh=auto'
         );
         // and remains percent-encoded in the raw string
         expect( result ).toContain(
