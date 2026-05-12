@@ -5150,7 +5150,7 @@ const CONSENT_PATH = '/liquidweb/harbor/v1/consent';
  * Opt the site (or network, on multisite) in to external data exchange.
  *
  * @param network When true on multisite, applies the opt-in to the entire network.
- * @since 1.0.0
+ * @since TBD TBD 1.0.0
  */
 async function postOptIn(network = false) {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -5166,7 +5166,7 @@ async function postOptIn(network = false) {
  * Revoke the opt-in for the site (or network, on multisite).
  *
  * @param network When true on multisite, revokes the network-level opt-in.
- * @since 1.0.0
+ * @since TBD TBD 1.0.0
  */
 async function deleteConsent(network = false) {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
