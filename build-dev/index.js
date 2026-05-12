@@ -4963,7 +4963,7 @@ const CONSENT_PATH = '/liquidweb/harbor/v1/consent';
 /**
  * Opt the site in to external data exchange.
  *
- * @since TBD
+ * @since 1.1.0
  */
 async function postOptIn() {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -4975,7 +4975,7 @@ async function postOptIn() {
 /**
  * Revoke the opt-in for the site.
  *
- * @since TBD
+ * @since 1.1.0
  */
 async function deleteConsent() {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -5607,7 +5607,7 @@ const deleteLicense = () => async ({
  * to render. Until the backend rebinding lands, the reload simply re-renders
  * the same Feature Manager page.
  *
- * @since TBD
+ * @since 1.1.0
  */
 const revokeConsent = () => async ({
   dispatch
