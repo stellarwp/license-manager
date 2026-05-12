@@ -12,7 +12,11 @@ use WP_Error;
  */
 final class Null_Client implements Portal_Client {
 	/**
-	 * @inheritDoc
+	 * Fetches the full catalog for all products.
+	 *
+	 * @since TBD
+	 *
+	 * @return WP_Error it will always return an error because external API communications have not been permitted.
 	 */
 	public function get_catalog() {
 		return new WP_Error(

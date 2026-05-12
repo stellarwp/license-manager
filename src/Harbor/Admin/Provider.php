@@ -56,6 +56,6 @@ class Provider extends Abstract_Provider {
 		 *
 		 * @return bool
 		 */
-		return (bool) apply_filters( 'lw-harbor/allow_external_api_communications', get_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false ) );
+		return (bool) apply_filters( 'lw-harbor/allow_external_api_communications', (bool) get_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false ) );
 	}
 }
