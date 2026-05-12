@@ -143,40 +143,10 @@ final class Catalog_Controller extends WP_REST_Controller {
 		}
 
 		$this->schema = [
-			'$schema' => 'http://json-schema.org/draft-04/schema#',
-			'title'   => 'feature',
-			'oneOf'   => [
-				[
-					'title'                => 'plugin',
-					'type'                 => 'object',
-					'additionalProperties' => true,
-					'properties'           => array_merge(
-						$base_properties,
-						[ 'type' => array_merge( $base_properties['type'], [ 'enum' => [ Feature::TYPE_PLUGIN ] ] ) ],
-						$plugin_properties,
-						$installable_properties
-					),
-				],
-				[
-					'title'                => 'theme',
-					'type'                 => 'object',
-					'additionalProperties' => true,
-					'properties'           => array_merge(
-						$base_properties,
-						[ 'type' => array_merge( $base_properties['type'], [ 'enum' => [ Feature::TYPE_THEME ] ] ) ],
-						$installable_properties
-					),
-				],
-				[
-					'title'                => 'service',
-					'type'                 => 'object',
-					'additionalProperties' => true,
-					'properties'           => array_merge(
-						$base_properties,
-						[ 'type' => array_merge( $base_properties['type'], [ 'enum' => [ Feature::TYPE_SERVICE ] ] ) ]
-					),
-				],
-			],
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'consent',
+			'type'       => 'null',
+			'properties' => [],
 		];
 
 		/** @var array<string, mixed> */
