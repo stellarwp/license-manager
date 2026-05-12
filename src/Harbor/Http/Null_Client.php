@@ -8,11 +8,22 @@ use Psr\Http\Message\ResponseInterface;
 use Nyholm\Psr7\Response;
 use LiquidWeb\Harbor\Portal\Error_Code;
 
+/**
+ * Null client implementation of the PSR-18 HTTP client.
+ *
+ * @since TBD
+ */
 final class Null_Client implements ClientInterface {
 	/**
-	 * @inheritDoc
+	 * Sends a PSR-7 request and returns a PSR-7 response.
+	 *
+	 * @since TBD
+	 *
+	 * @param RequestInterface $request The request to send.
+	 *
+	 * @return ResponseInterface The response.
 	 */
-	public function sendRequest( RequestInterface $request): ResponseInterface {
+	public function sendRequest( RequestInterface $request ): ResponseInterface {
 		return new Response(
 			500,
 			[],
