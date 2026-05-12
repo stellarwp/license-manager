@@ -13,7 +13,7 @@ use WP_REST_Server;
  *
  * @since TBD
  */
-final class Catalog_Controller extends WP_REST_Controller {
+final class Consent_Controller extends WP_REST_Controller {
 
 	/**
 	 * The REST API namespace.
