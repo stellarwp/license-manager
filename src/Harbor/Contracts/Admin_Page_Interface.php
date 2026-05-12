@@ -11,7 +11,7 @@ namespace LiquidWeb\Harbor\Contracts;
  * filled by Opt_In_Page when consent is not granted, or by
  * Feature_Manager_Page once it is.
  *
- * @since TBD
+ * @since 1.1.0
  */
 interface Admin_Page_Interface {
 
@@ -21,7 +21,7 @@ interface Admin_Page_Interface {
 	 * All implementations of this interface must register themselves at this
 	 * slug so the URL stays consistent when the bound implementation flips.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
@@ -30,7 +30,7 @@ interface Admin_Page_Interface {
 	/**
 	 * Registers the admin page if this Harbor instance is the version leader.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */

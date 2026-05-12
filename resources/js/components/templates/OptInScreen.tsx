@@ -16,7 +16,7 @@ import { ErrorCode } from '@/errors/error-code';
 import { postOptIn } from '@/lib/consent-api';
 
 /**
- * @since TBD
+ * @since 1.1.0
  */
 export function OptInScreen() {
     const { addError } = useErrorModal();

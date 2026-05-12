@@ -14,7 +14,7 @@ use LiquidWeb\Harbor\Utils\Version;
  * asset enqueue behavior, and may opt in to additional hooks via
  * `register_additional_hooks()`.
  *
- * @since TBD
+ * @since 1.1.0
  */
 abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 
@@ -22,7 +22,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 	 * Hook suffix returned by add_submenu_page().
 	 * Empty string until the page is registered.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
@@ -52,7 +52,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 		 * UI remains accessible at options-general.php?page=lw-software-manager
 		 * for users who reach it via a direct link or a product plugin's submenu.
 		 *
-		 * @since TBD
+		 * @since 1.1.0
 		 *
 		 * @param bool $hide Whether to hide the menu item. Default false.
 		 *
@@ -71,7 +71,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 	 * Enqueues this page's assets only when the current admin screen matches
 	 * the hook suffix returned by add_submenu_page().
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param string $hook_suffix Current admin page hook suffix.
 	 *
@@ -91,7 +91,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 	 *
 	 * Default: no-op.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -102,7 +102,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 	/**
 	 * Registers and enqueues the page's JS and CSS bundle.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -111,7 +111,7 @@ abstract class Abstract_Admin_Page implements Admin_Page_Interface {
 	/**
 	 * Renders the page's HTML output.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */

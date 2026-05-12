@@ -350,7 +350,7 @@ export const deleteLicense =
  * to render. Until the backend rebinding lands, the reload simply re-renders
  * the same Feature Manager page.
  *
- * @since TBD
+ * @since 1.1.0
  */
 export const revokeConsent =
 	(): Thunk<HarborError | null> =>

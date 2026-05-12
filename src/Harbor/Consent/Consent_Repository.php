@@ -11,14 +11,14 @@ namespace LiquidWeb\Harbor\Consent;
  * external code can short-circuit the check (e.g. for testing or to force
  * an environment-wide override).
  *
- * @since TBD
+ * @since 1.1.0
  */
 final class Consent_Repository {
 
 	/**
 	 * Option name for the consent flag.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ final class Consent_Repository {
 	/**
 	 * Whether external API communications are permitted.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return bool
 	 */
@@ -35,7 +35,7 @@ final class Consent_Repository {
 		/**
 		 * Filters whether external API communications are permitted.
 		 *
-		 * @since TBD
+		 * @since 1.1.0
 		 *
 		 * @param bool $allowed Whether external API communications are permitted.
 		 *
@@ -50,7 +50,7 @@ final class Consent_Repository {
 	/**
 	 * Grants consent to make external API communications.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -61,7 +61,7 @@ final class Consent_Repository {
 	/**
 	 * Revokes consent to make external API communications.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */

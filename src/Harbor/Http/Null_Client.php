@@ -11,13 +11,13 @@ use LiquidWeb\Harbor\Portal\Error_Code;
 /**
  * Null client implementation of the PSR-18 HTTP client.
  *
- * @since TBD
+ * @since 1.1.0
  */
 final class Null_Client implements ClientInterface {
 	/**
 	 * Sends a PSR-7 request and returns a PSR-7 response.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param RequestInterface $request The request to send.
 	 *

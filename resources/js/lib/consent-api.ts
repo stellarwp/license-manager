@@ -21,7 +21,7 @@ interface ConsentResponse {
 /**
  * Opt the site in to external data exchange.
  *
- * @since TBD
+ * @since 1.1.0
  */
 export async function postOptIn(): Promise<void> {
     await apiFetch<ConsentResponse>( {
@@ -33,7 +33,7 @@ export async function postOptIn(): Promise<void> {
 /**
  * Revoke the opt-in for the site.
  *
- * @since TBD
+ * @since 1.1.0
  */
 export async function deleteConsent(): Promise<void> {
     await apiFetch<ConsentResponse>( {

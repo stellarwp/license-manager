@@ -236,7 +236,7 @@ if ( ! function_exists( 'lw_harbor_has_consent' ) ) {
 	 * Use this in any code path that would contact a Liquid Web service so
 	 * the operation can be short-circuited when consent has not been granted.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return bool
 	 */
