@@ -1,4 +1,0 @@
-significance: patch
-type: feature
-entry: External connections are now gated behind a per-site opt-in flow.
-timestamp: 2026-05-12T19:45:21.253Z

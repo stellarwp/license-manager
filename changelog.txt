@@ -1,7 +1,8 @@
 ### [1.1.0] 2026-05-12
 
-* Tweak - Added the `lw-harbor/hide_menu_item` to hide the Licensing Page submenu item while leaving the submenu page registered.
+* Feature - External connections are now gated behind a per-site opt-in flow.
 * Fix - Moved the Licensing Page to a submenu item under Settings.
+* Tweak - Added the `lw-harbor/hide_menu_item` to hide the Licensing Page submenu item while leaving the submenu page registered.
 
 ### [1.0.1] 2026-04-29
 
