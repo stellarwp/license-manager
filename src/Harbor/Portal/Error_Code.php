@@ -26,4 +26,13 @@ final class Error_Code {
 	 * @var string
 	 */
 	public const INVALID_RESPONSE = 'lw-harbor-catalog-invalid-response';
+
+	/**
+	 * External API communications have not been permitted.
+	 *
+	 * @since TBD
+	 *
+	 * @var string
+	 */
+	public const API_COMMUNICATIONS_NOT_PERMITTED = 'lw-harbor-api-communications-not-permitted';
 }
