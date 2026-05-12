@@ -2384,8 +2384,6 @@ function LicensePanel() {
     isRevoking: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).isConsentRevoking()
   }), []);
   const [isRevokeDialogOpen, setIsRevokeDialogOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [revokeNetwork, setRevokeNetwork] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const isMultisite = window.harborData?.isMultisite === true;
 
   // Flat tier slug -> display name and rank lookups from all catalog tiers.
   const {
@@ -2443,7 +2441,7 @@ function LicensePanel() {
     }
   };
   const handleConfirmRevoke = async () => {
-    const result = await revokeConsent(revokeNetwork);
+    const result = await revokeConsent();
     if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) {
       addError(result);
       setIsRevokeDialogOpen(false);
@@ -2471,10 +2469,7 @@ function LicensePanel() {
         type: "button",
         variant: "destructive",
         size: "sm",
-        onClick: () => {
-          setRevokeNetwork(false);
-          setIsRevokeDialogOpen(true);
-        },
+        onClick: () => setIsRevokeDialogOpen(true),
         disabled: isRevoking,
         className: "w-full",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke external data consent', '%TEXTDOMAIN%')
@@ -2486,22 +2481,11 @@ function LicensePanel() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogHeader, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke external data consent?', '%TEXTDOMAIN%'),
         onClose: () => !isRevoking && setIsRevokeDialogOpen(false)
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogContent, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogContent, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
           className: "text-sm text-foreground !m-0",
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager will stop contacting Liquid Web services until you opt in again. Cached license and product data remain on your site.', '%TEXTDOMAIN%')
-        }), isMultisite && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("label", {
-          className: "flex items-start gap-2 text-sm mt-4",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("input", {
-            type: "checkbox",
-            checked: revokeNetwork,
-            onChange: e => setRevokeNetwork(e.target.checked),
-            disabled: isRevoking,
-            className: "mt-1"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("span", {
-            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke network-wide', '%TEXTDOMAIN%')
-          })]
-        })]
+        })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogFooter, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_5__.Button, {
           type: "button",
@@ -3112,8 +3096,6 @@ function OptInScreen() {
     addError
   } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_3__.useErrorModal)();
   const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [network, setNetwork] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const isMultisite = window.harborData?.isMultisite === true;
   const domain = window.harborData?.domain ?? '';
   const licensingBaseUrl = window.harborData?.licensingBaseUrl ?? '';
   const portalBaseUrl = window.harborData?.portalBaseUrl ?? '';
@@ -3131,7 +3113,7 @@ function OptInScreen() {
   const handleOptIn = async () => {
     setIsSubmitting(true);
     try {
-      await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_6__.postOptIn)(network);
+      await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_6__.postOptIn)();
       // Backend rebinds the page on reload: Opt_In_Page -> Feature_Manager_Page.
       window.location.reload();
     } catch (err) {
@@ -3191,17 +3173,6 @@ function OptInScreen() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("p", {
         className: "text-sm text-muted-foreground !m-0",
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('You can revoke this permission at any time from the Software Manager sidebar.', '%TEXTDOMAIN%')
-      }), isMultisite && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("label", {
-        className: "flex items-start gap-2 text-sm",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
-          type: "checkbox",
-          checked: network,
-          onChange: e => setNetwork(e.target.checked),
-          disabled: isSubmitting,
-          className: "mt-1"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Apply this opt-in network-wide', '%TEXTDOMAIN%')
-        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
         className: "flex items-center justify-end gap-3 pt-2",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, {
@@ -5136,8 +5107,8 @@ __webpack_require__.r(__webpack_exports__);
  * Single source of truth for the consent REST calls.
  *
  * Contract (subject to confirmation with the backend dev):
- *   POST   /liquidweb/harbor/v1/consent  { network?: boolean }  -> { opted_in: true }
- *   DELETE /liquidweb/harbor/v1/consent  { network?: boolean }  -> { opted_in: false }
+ *   POST   /liquidweb/harbor/v1/consent   -> { opted_in: true }
+ *   DELETE /liquidweb/harbor/v1/consent   -> { opted_in: false }
  *
  * Both functions resolve on success. Any non-2xx response throws — let
  * callers translate to HarborError via HarborError.wrap().
@@ -5147,34 +5118,26 @@ __webpack_require__.r(__webpack_exports__);
 
 const CONSENT_PATH = '/liquidweb/harbor/v1/consent';
 /**
- * Opt the site (or network, on multisite) in to external data exchange.
+ * Opt the site in to external data exchange.
  *
- * @param network When true on multisite, applies the opt-in to the entire network.
- * @since TBD TBD 1.0.0
+ * @since TBD
  */
-async function postOptIn(network = false) {
+async function postOptIn() {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
     path: CONSENT_PATH,
-    method: 'POST',
-    data: {
-      network
-    }
+    method: 'POST'
   });
 }
 
 /**
- * Revoke the opt-in for the site (or network, on multisite).
+ * Revoke the opt-in for the site.
  *
- * @param network When true on multisite, revokes the network-level opt-in.
- * @since TBD TBD 1.0.0
+ * @since TBD
  */
-async function deleteConsent(network = false) {
+async function deleteConsent() {
   await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
     path: CONSENT_PATH,
-    method: 'DELETE',
-    data: {
-      network
-    }
+    method: 'DELETE'
   });
 }
 
@@ -5801,17 +5764,16 @@ const deleteLicense = () => async ({
  * to render. Until the backend rebinding lands, the reload simply re-renders
  * the same Feature Manager page.
  *
- * @param network When true on multisite, revokes the network-level opt-in.
- * @since 1.0.0
+ * @since TBD
  */
-const revokeConsent = (network = false) => async ({
+const revokeConsent = () => async ({
   dispatch
 }) => {
   dispatch({
     type: 'REVOKE_CONSENT_START'
   });
   try {
-    await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_3__.deleteConsent)(network);
+    await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_3__.deleteConsent)();
     window.location.reload();
     return null;
   } catch (err) {
