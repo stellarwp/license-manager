@@ -202,6 +202,16 @@ Call this during or after `plugins_loaded`, before the `admin_menu` hook fires. 
 
 The function always delegates to the highest-version Harbor instance on the site, so it is safe to call even when multiple plugins bundle Harbor.
 
+### Hiding the Settings menu item
+
+By default, Harbor registers a **Liquid Web Products** entry under the WordPress **Settings** menu. If your plugin surfaces the Feature Manager through its own submenu link (above) and you do not want the standalone Settings entry, hook the `lw-harbor/hide_menu_item` filter:
+
+```php
+add_filter('lw-harbor/hide_menu_item', '__return_true');
+```
+
+The Feature Manager page itself remains registered — direct URLs and submenu links from `lw_harbor_register_submenu()` continue to work. Only the visible Settings menu entry is removed.
+
 ---
 
 ## 6. Embedded / Bundled License Keys
@@ -214,9 +224,10 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 
 ### Filters
 
-| Filter                      | Purpose                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------- |
-| `lw-harbor/legacy_licenses` | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`. |
+| Filter                      | Purpose                                                                                |
+| --------------------------- | -------------------------------------------------------------------------------------- |
+| `lw-harbor/legacy_licenses` | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`.        |
+| `lw-harbor/hide_menu_item`  | Hide the **Liquid Web Products** entry under Settings without unregistering the page.  |
 
 ### Global Functions
 
