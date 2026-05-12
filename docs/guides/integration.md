@@ -224,10 +224,11 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 
 ### Filters
 
-| Filter                      | Purpose                                                                                |
-| --------------------------- | -------------------------------------------------------------------------------------- |
-| `lw-harbor/legacy_licenses` | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`.        |
-| `lw-harbor/hide_menu_item`  | Hide the **Liquid Web Products** entry under Settings without unregistering the page.  |
+| Filter                                       | Purpose                                                                                  |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `lw-harbor/legacy_licenses`                  | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`.          |
+| `lw-harbor/hide_menu_item`                   | Hide the **Liquid Web Products** entry under Settings without unregistering the page.    |
+| `lw-harbor/allow_external_api_communications`| Override the stored consent state. Receives and returns `bool $allowed`.                 |
 
 ### Global Functions
 
@@ -242,3 +243,4 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 | `lw_harbor_get_licensed_domain`                | `(): string`                        | Get the domain Harbor uses for licensing on this site.                          |
 | `lw_harbor_register_submenu`                   | `(string $parent_slug): void`       | Append a Licensing submenu item to a plugin's top-level admin menu.             |
 | `lw_harbor_display_legacy_license_page_notice` | `(string $product_name = ''): void` | Display a notice on a legacy license page pointing users to the unified system. |
+| `lw_harbor_has_consent`                        | `(): bool`                          | Whether the site owner has opted in to external Liquid Web API communications.  |

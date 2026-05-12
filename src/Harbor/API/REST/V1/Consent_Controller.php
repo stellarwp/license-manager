@@ -2,14 +2,14 @@
 
 namespace LiquidWeb\Harbor\API\REST\V1;
 
-use LiquidWeb\Harbor\Admin\Provider as Admin_Provider;
+use LiquidWeb\Harbor\Consent\Consent_Repository;
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * WP REST API controller for reading the product catalog.
+ * WP REST API controller for granting / revoking external API consent.
  *
  * @since TBD
  */
@@ -34,25 +34,25 @@ final class Consent_Controller extends WP_REST_Controller {
 	protected $rest_base = 'consent';
 
 	/**
-	 * The admin provider.
+	 * The consent repository.
 	 *
 	 * @since TBD
 	 *
-	 * @var Admin_Provider
+	 * @var Consent_Repository
 	 */
-	private Admin_Provider $admin_provider;
+	private Consent_Repository $consent;
 
 	/**
 	 * Constructor.
 	 *
 	 * @since TBD
 	 *
-	 * @param Admin_Provider $admin_provider The admin provider.
+	 * @param Consent_Repository $consent The consent repository.
 	 *
 	 * @return void
 	 */
-	public function __construct( Admin_Provider $admin_provider ) {
-		$this->admin_provider = $admin_provider;
+	public function __construct( Consent_Repository $consent ) {
+		$this->consent = $consent;
 	}
 
 	/**
@@ -72,14 +72,6 @@ final class Consent_Controller extends WP_REST_Controller {
 					'callback'            => [ $this, 'grant_consent' ],
 					'permission_callback' => [ $this, 'check_permissions' ],
 				],
-				'schema' => [ $this, 'get_public_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base,
-			[
 				[
 					'methods'             => WP_REST_Server::DELETABLE,
 					'callback'            => [ $this, 'revoke_consent' ],
@@ -91,7 +83,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Grants consent to the terms and conditions.
+	 * Grants consent to make external API communications.
 	 *
 	 * @since TBD
 	 *
@@ -100,12 +92,12 @@ final class Consent_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function grant_consent( WP_REST_Request $request ): WP_REST_Response {
-		$this->admin_provider->grant_consent();
-		return new WP_REST_Response( null, 200 );
+		$this->consent->grant_consent();
+		return new WP_REST_Response( [ 'opted_in' => true ], 200 );
 	}
 
 	/**
-	 * Revokes consent to the terms and conditions.
+	 * Revokes consent to make external API communications.
 	 *
 	 * @since TBD
 	 *
@@ -114,8 +106,8 @@ final class Consent_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function revoke_consent( WP_REST_Request $request ): WP_REST_Response {
-		$this->admin_provider->revoke_consent();
-		return new WP_REST_Response( null, 200 );
+		$this->consent->revoke_consent();
+		return new WP_REST_Response( [ 'opted_in' => false ], 200 );
 	}
 
 	/**
@@ -130,9 +122,9 @@ final class Consent_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Gets the schema for a single feature response.
+	 * Gets the schema for the consent response.
 	 *
-	 * @since 1.0.0
+	 * @since TBD
 	 *
 	 * @return array<string, mixed>
 	 */

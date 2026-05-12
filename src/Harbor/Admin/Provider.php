@@ -2,17 +2,11 @@
 
 namespace LiquidWeb\Harbor\Admin;
 
+use LiquidWeb\Harbor\Consent\Consent_Repository;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
+use LiquidWeb\Harbor\Contracts\Admin_Page_Interface;
 
 class Provider extends Abstract_Provider {
-	/**
-	 * Option name for allowed external API communications.
-	 *
-	 * @since TBD
-	 *
-	 * @var string
-	 */
-	private const OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS = 'lw-harbor-allowed-external-api-communications';
 
 	/**
 	 * Register the service provider.
@@ -23,6 +17,21 @@ class Provider extends Abstract_Provider {
 	 */
 	public function register() {
 		$this->container->singleton( Feature_Manager_Page::class );
+		$this->container->singleton( Opt_In_Page::class );
+
+		// Bind the page slot to whichever concrete page matches the current
+		// consent state. The singleton resolves once per request, which is
+		// fine because the admin_menu hook only fires once.
+		$this->container->singleton(
+			Admin_Page_Interface::class,
+			function () {
+				$consent = $this->container->get( Consent_Repository::class );
+
+				return $consent->has_consent()
+					? $this->container->get( Feature_Manager_Page::class )
+					: $this->container->get( Opt_In_Page::class );
+			}
+		);
 
 		add_action( 'admin_menu', [ $this, 'register_unified_feature_manager_page' ], 20, 0 );
 	}
@@ -36,48 +45,6 @@ class Provider extends Abstract_Provider {
 	 * @return void
 	 */
 	public function register_unified_feature_manager_page(): void {
-		$this->container->get( Feature_Manager_Page::class )->maybe_register_page();
-	}
-
-	/**
-	 * Checks if external API communications are permitted.
-	 *
-	 * @since TBD
-	 *
-	 * @return bool
-	 */
-	public function has_consent(): bool {
-		/**
-		 * Filters whether external API communications are permitted.
-		 *
-		 * @since TBD
-		 *
-		 * @param bool $allowed Whether external API communications are permitted.
-		 *
-		 * @return bool
-		 */
-		return (bool) apply_filters( 'lw-harbor/allow_external_api_communications', (bool) get_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false ) );
-	}
-
-	/**
-	 * Grants consent to the terms and conditions.
-	 *
-	 * @since TBD
-	 *
-	 * @return void
-	 */
-	public function grant_consent(): void {
-		update_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, true );
-	}
-
-	/**
-	 * Revokes consent to the terms and conditions.
-	 *
-	 * @since TBD
-	 *
-	 * @return void
-	 */
-	public function revoke_consent(): void {
-		update_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false );
+		$this->container->get( Admin_Page_Interface::class )->maybe_register_page();
 	}
 }
