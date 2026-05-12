@@ -22,7 +22,7 @@ interface ConsentResponse {
  * Opt the site (or network, on multisite) in to external data exchange.
  *
  * @param network When true on multisite, applies the opt-in to the entire network.
- * @since 1.0.0
+ * @since TBD TBD 1.0.0
  */
 export async function postOptIn( network: boolean = false ): Promise<void> {
     await apiFetch<ConsentResponse>( {
@@ -36,7 +36,7 @@ export async function postOptIn( network: boolean = false ): Promise<void> {
  * Revoke the opt-in for the site (or network, on multisite).
  *
  * @param network When true on multisite, revokes the network-level opt-in.
- * @since 1.0.0
+ * @since TBD TBD 1.0.0
  */
 export async function deleteConsent( network: boolean = false ): Promise<void> {
     await apiFetch<ConsentResponse>( {
