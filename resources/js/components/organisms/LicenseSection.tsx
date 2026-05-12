@@ -125,7 +125,7 @@ export function LicenseSection( {
                     />
                     { ! hasLicense && (
                         <p className="text-xs text-muted-foreground leading-relaxed mt-0 mb-0">
-                            { __( 'Enter your license key to unlock features.', '%TEXTDOMAIN%' ) }
+                            { __( 'Enter your license key to download and activate premium products.', '%TEXTDOMAIN%' ) }
                         </p>
                     ) }
                 </>

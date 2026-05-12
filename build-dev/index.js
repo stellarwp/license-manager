@@ -1895,7 +1895,7 @@ function NotActivatedBanner() {
       className: "w-4 h-4 shrink-0 mt-0.5"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("p", {
       className: "m-0",
-      children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('None of your products are activated for this domain. Activate your license to unlock features.', '%TEXTDOMAIN%'), ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+      children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('None of your products are activated for this domain. Activate your license to download and activate premium products.', '%TEXTDOMAIN%'), ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
         href: activationUrl,
         target: "_blank",
         rel: "noopener noreferrer",
@@ -2556,7 +2556,7 @@ function LicenseSection({
         onSuccess: () => setIsEditing(false)
       }), !hasLicense && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("p", {
         className: "text-xs text-muted-foreground leading-relaxed mt-0 mb-0",
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your license key to unlock features.', '%TEXTDOMAIN%')
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter your license key to download and activate premium products.', '%TEXTDOMAIN%')
       })]
     }), !isLoading && hasLicense && groupedProducts.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
       className: "space-y-3",

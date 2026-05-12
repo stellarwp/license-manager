@@ -37,7 +37,7 @@ export function NotActivatedBanner() {
 			<Info className="w-4 h-4 shrink-0 mt-0.5" />
 			<p className="m-0">
 				{ __(
-					'None of your products are activated for this domain. Activate your license to unlock features.',
+					'None of your products are activated for this domain. Activate your license to download and activate premium products.',
 					'%TEXTDOMAIN%'
 				) }
 				{ ' ' }
