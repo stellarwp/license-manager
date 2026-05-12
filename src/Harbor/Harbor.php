@@ -38,6 +38,7 @@ class Harbor {
 		$container->bind( ContainerInterface::class, $container );
 		$container->singleton( View\Provider::class );
 		$container->singleton( Site\Data::class );
+		$container->singleton( Consent\Provider::class );
 		$container->singleton( Admin\Provider::class );
 		$container->singleton( Legacy\Provider::class );
 		$container->singleton( Features\Provider::class );
@@ -50,6 +51,7 @@ class Harbor {
 		$container->singleton( Cron\Provider::class );
 
 		$container->get( View\Provider::class )->register();
+		$container->get( Consent\Provider::class )->register();
 		$container->get( Admin\Provider::class )->register();
 		$container->get( Legacy\Provider::class )->register();
 		$container->get( Features\Provider::class )->register();
