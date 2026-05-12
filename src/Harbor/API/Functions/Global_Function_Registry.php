@@ -126,7 +126,7 @@ class Global_Function_Registry {
 			'lw_harbor_get_license_page_url',
 			$version,
 			static function (): string {
-				return admin_url( 'admin.php?page=' . Feature_Manager_Page::PAGE_SLUG );
+				return admin_url( 'options-general.php?page=' . Feature_Manager_Page::PAGE_SLUG );
 			}
 		);
 
