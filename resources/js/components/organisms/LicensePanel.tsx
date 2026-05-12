@@ -41,9 +41,6 @@ export function LicensePanel() {
     );
 
     const [ isRevokeDialogOpen, setIsRevokeDialogOpen ] = useState( false );
-    const [ revokeNetwork, setRevokeNetwork ] = useState( false );
-
-    const isMultisite = window.harborData?.isMultisite === true;
 
     // Flat tier slug -> display name and rank lookups from all catalog tiers.
     const { tierNameMap, tierRankMap } = useMemo( () => {
@@ -103,7 +100,7 @@ export function LicensePanel() {
     };
 
     const handleConfirmRevoke = async () => {
-        const result = await revokeConsent( revokeNetwork );
+        const result = await revokeConsent();
         if ( result instanceof HarborError ) {
             addError( result );
             setIsRevokeDialogOpen( false );
@@ -136,10 +133,7 @@ export function LicensePanel() {
                     type="button"
                     variant="destructive"
                     size="sm"
-                    onClick={ () => {
-                        setRevokeNetwork( false );
-                        setIsRevokeDialogOpen( true );
-                    } }
+                    onClick={ () => setIsRevokeDialogOpen( true ) }
                     disabled={ isRevoking }
                     className="w-full"
                 >
@@ -163,20 +157,6 @@ export function LicensePanel() {
                             '%TEXTDOMAIN%'
                         ) }
                     </p>
-                    { isMultisite && (
-                        <label className="flex items-start gap-2 text-sm mt-4">
-                            <input
-                                type="checkbox"
-                                checked={ revokeNetwork }
-                                onChange={ ( e ) => setRevokeNetwork( e.target.checked ) }
-                                disabled={ isRevoking }
-                                className="mt-1"
-                            />
-                            <span>
-                                { __( 'Revoke network-wide', '%TEXTDOMAIN%' ) }
-                            </span>
-                        </label>
-                    ) }
                 </DialogContent>
                 <DialogFooter>
                     <Button

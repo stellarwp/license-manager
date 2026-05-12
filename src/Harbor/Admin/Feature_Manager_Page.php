@@ -201,7 +201,6 @@ class Feature_Manager_Page {
 				'subscriptionsUrl'    => Config::get_portal_base_url() . '/subscriptions/',
 				'domain'              => $this->site_data->get_domain(),
 				'version'             => Harbor::VERSION,
-				'isMultisite'         => is_multisite(),
 				'licensingBaseUrl'    => Config::get_licensing_base_url(),
 				'portalBaseUrl'       => Config::get_portal_base_url(),
 				'heraldBaseUrl'       => Config::get_herald_base_url(),

@@ -350,15 +350,14 @@ export const deleteLicense =
  * to render. Until the backend rebinding lands, the reload simply re-renders
  * the same Feature Manager page.
  *
- * @param network When true on multisite, revokes the network-level opt-in.
- * @since 1.0.0
+ * @since TBD
  */
 export const revokeConsent =
-	( network: boolean = false ): Thunk<HarborError | null> =>
+	(): Thunk<HarborError | null> =>
 	async ( { dispatch } ) => {
 		dispatch( { type: 'REVOKE_CONSENT_START' } );
 		try {
-			await deleteConsent( network );
+			await deleteConsent();
 			window.location.reload();
 			return null;
 		} catch ( err ) {

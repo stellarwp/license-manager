@@ -21,9 +21,7 @@ import { postOptIn } from '@/lib/consent-api';
 export function OptInScreen() {
     const { addError } = useErrorModal();
     const [ isSubmitting, setIsSubmitting ] = useState( false );
-    const [ network, setNetwork ] = useState( false );
 
-    const isMultisite      = window.harborData?.isMultisite === true;
     const domain           = window.harborData?.domain ?? '';
     const licensingBaseUrl = window.harborData?.licensingBaseUrl ?? '';
     const portalBaseUrl    = window.harborData?.portalBaseUrl ?? '';
@@ -47,7 +45,7 @@ export function OptInScreen() {
     const handleOptIn = async () => {
         setIsSubmitting( true );
         try {
-            await postOptIn( network );
+            await postOptIn();
             // Backend rebinds the page on reload: Opt_In_Page -> Feature_Manager_Page.
             window.location.reload();
         } catch ( err ) {
@@ -122,21 +120,6 @@ export function OptInScreen() {
                         '%TEXTDOMAIN%'
                     ) }
                 </p>
-
-                { isMultisite && (
-                    <label className="flex items-start gap-2 text-sm">
-                        <input
-                            type="checkbox"
-                            checked={ network }
-                            onChange={ ( e ) => setNetwork( e.target.checked ) }
-                            disabled={ isSubmitting }
-                            className="mt-1"
-                        />
-                        <span>
-                            { __( 'Apply this opt-in network-wide', '%TEXTDOMAIN%' ) }
-                        </span>
-                    </label>
-                ) }
 
                 <div className="flex items-center justify-end gap-3 pt-2">
                     <Button

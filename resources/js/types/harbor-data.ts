@@ -7,7 +7,6 @@ export interface HarborData {
     domain:            string;
     version:           string;
     optedIn:           boolean;
-    isMultisite:       boolean;
     licensingBaseUrl?: string;
     portalBaseUrl?:    string;
     heraldBaseUrl?:    string;
