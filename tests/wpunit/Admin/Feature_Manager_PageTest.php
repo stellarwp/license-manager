@@ -22,6 +22,12 @@ class Feature_Manager_PageTest extends HarborTestCase {
 			uopz_allow_exit( false );
 		}
 
+		// add_submenu_page() early-returns when the user lacks the required
+		// capability, so menu-registration tests need an administrator to be
+		// the current user before the call.
+		$admin_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+		wp_set_current_user( $admin_id );
+
 		$this->page = $this->make_page();
 	}
 
@@ -29,6 +35,8 @@ class Feature_Manager_PageTest extends HarborTestCase {
 		if ( function_exists( 'uopz_allow_exit' ) ) {
 			uopz_allow_exit( true );
 		}
+
+		wp_set_current_user( 0 );
 
 		unset( $_GET['refresh'], $_GET['page'] );
 
