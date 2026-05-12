@@ -85,6 +85,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_is_wp_debug_returns_true_when_wp_debug_is_true(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$this->assertTrue( $this->subject->call_is_wp_debug() ); // @phpstan-ignore method.notFound
 	}
@@ -99,6 +100,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_writes_to_error_log_when_wp_debug_is_true(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$this->subject->call_debug_log( 'Something happened.' ); // @phpstan-ignore method.notFound
 
@@ -116,6 +118,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_prefixes_message_with_harbor(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$this->subject->call_debug_log( 'test message' ); // @phpstan-ignore method.notFound
 
@@ -124,6 +127,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_preserves_full_message_after_prefix(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$message = 'Fatal error installing "kadence-blocks": file not found';
 		$this->subject->call_debug_log( $message ); // @phpstan-ignore method.notFound
@@ -133,6 +137,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_handles_empty_message(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$this->subject->call_debug_log( '' ); // @phpstan-ignore method.notFound
 
@@ -142,6 +147,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_multiple_calls_log_multiple_entries(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$this->subject->call_debug_log( 'first' ); // @phpstan-ignore method.notFound
 		$this->subject->call_debug_log( 'second' ); // @phpstan-ignore method.notFound
@@ -157,6 +163,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_throwable_logs_message_file_line_and_trace(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$exception = new RuntimeException( 'Something broke' );
 
@@ -180,6 +187,7 @@ final class With_DebuggingTest extends HarborTestCase {
 
 	public function test_debug_log_wp_error_logs_code_and_message(): void {
 		$this->set_const_value( 'WP_DEBUG', true );
+		$this->set_const_value( 'WP_DEBUG_LOG', true );
 
 		$error = new WP_Error( 'http_request_failed', 'Connection timed out' );
 
