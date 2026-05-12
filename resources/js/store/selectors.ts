@@ -308,3 +308,10 @@ export const getDeleteLicenseError = (state: State): HarborError | null =>
 
 export const getRefreshLicenseError = (state: State): HarborError | null =>
 	state.license.refreshError;
+
+// ---------------------------------------------------------------------------
+// Consent
+// ---------------------------------------------------------------------------
+
+export const isConsentRevoking = ( state: State ): boolean =>
+	state.consent.isRevoking;
