@@ -2,12 +2,14 @@
 
 namespace LiquidWeb\Harbor\Portal;
 
+use LiquidWeb\Harbor\Admin\Provider as Admin_Provider;
 use LiquidWeb\Harbor\Portal\Clients\Portal_Client;
 use LiquidWeb\Harbor\Portal\Clients\Http_Client;
+use LiquidWeb\Harbor\Portal\Clients\Null_Client;
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Contracts\Abstract_Provider;
 use LiquidWeb\Harbor\Portal\Contracts\Download_Url_Builder;
-use LiquidWeb\LicensingApiClientWordPress\Http\WordPressHttpClient;
+use Psr\Http\Client\ClientInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 
 /**
@@ -23,9 +25,13 @@ final class Provider extends Abstract_Provider {
 	public function register(): void {
 		$this->container->singleton(
 			Portal_Client::class,
-			function () {
+			function (): Portal_Client {
+				if ( ! $this->container->get( Admin_Provider::class )->has_consent() ) {
+					return new Null_Client();
+				}
+
 				return new Http_Client(
-					$this->container->get( WordPressHttpClient::class ),
+					$this->container->get( ClientInterface::class ),
 					$this->container->get( Psr17Factory::class ),
 					Config::get_portal_base_url()
 				);
