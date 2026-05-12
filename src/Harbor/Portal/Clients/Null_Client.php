@@ -8,13 +8,13 @@ use WP_Error;
 /**
  * Null client implementation of the catalog API client.
  *
- * @since TBD
+ * @since 1.1.0
  */
 final class Null_Client implements Portal_Client {
 	/**
 	 * Fetches the full catalog for all products.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return WP_Error it will always return an error because external API communications have not been permitted.
 	 */

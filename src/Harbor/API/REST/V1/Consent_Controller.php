@@ -11,14 +11,14 @@ use WP_REST_Server;
 /**
  * WP REST API controller for granting / revoking external API consent.
  *
- * @since TBD
+ * @since 1.1.0
  */
 final class Consent_Controller extends WP_REST_Controller {
 
 	/**
 	 * The REST API namespace.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * The REST API route base.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */
@@ -36,7 +36,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * The consent repository.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var Consent_Repository
 	 */
@@ -45,7 +45,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Constructor.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param Consent_Repository $consent The consent repository.
 	 *
@@ -58,7 +58,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Registers the routes.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -85,7 +85,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Grants consent to make external API communications.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param WP_REST_Request $request The request object.
 	 *
@@ -99,7 +99,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Revokes consent to make external API communications.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param WP_REST_Request $request The request object.
 	 *
@@ -113,7 +113,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Permission callback: require manage_options capability.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return bool
 	 */
@@ -124,7 +124,7 @@ final class Consent_Controller extends WP_REST_Controller {
 	/**
 	 * Gets the schema for the consent response.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return array<string, mixed>
 	 */

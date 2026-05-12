@@ -10,7 +10,7 @@ use LiquidWeb\Harbor\Contracts\Abstract_Provider;
  * Must be registered before any subsystem that needs to gate behavior on
  * the site owner's consent (Admin, Http, Licensing, Portal).
  *
- * @since TBD
+ * @since 1.1.0
  */
 final class Provider extends Abstract_Provider {
 

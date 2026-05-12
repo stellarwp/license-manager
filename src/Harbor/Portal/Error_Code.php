@@ -30,7 +30,7 @@ final class Error_Code {
 	/**
 	 * External API communications have not been permitted.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var string
 	 */

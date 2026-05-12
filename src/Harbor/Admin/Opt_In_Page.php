@@ -16,7 +16,7 @@ use LiquidWeb\Harbor\Site\Data;
  * the @wordpress/data resolvers — which fetch from the licensing and
  * catalog services — never run pre-consent.
  *
- * @since TBD
+ * @since 1.1.0
  *
  * @package LiquidWeb\Harbor
  */
@@ -25,7 +25,7 @@ class Opt_In_Page extends Abstract_Admin_Page {
 	/**
 	 * Site data provider.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @var Data
 	 */
@@ -34,7 +34,7 @@ class Opt_In_Page extends Abstract_Admin_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @param Data $site_data Site data provider.
 	 */
@@ -47,7 +47,7 @@ class Opt_In_Page extends Abstract_Admin_Page {
 	 *
 	 * Loads from build-dev/ when WP_DEBUG is true, build/ otherwise.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -112,7 +112,7 @@ class Opt_In_Page extends Abstract_Admin_Page {
 	 *
 	 * The .lw-harbor-ui class activates CSS scoping for Tailwind styles.
 	 *
-	 * @since TBD
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
