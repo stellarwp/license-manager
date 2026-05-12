@@ -2,7 +2,7 @@
 
 namespace LiquidWeb\Harbor\Portal;
 
-use LiquidWeb\Harbor\Admin\Provider as Admin_Provider;
+use LiquidWeb\Harbor\Consent\Consent_Repository;
 use LiquidWeb\Harbor\Portal\Clients\Portal_Client;
 use LiquidWeb\Harbor\Portal\Clients\Http_Client;
 use LiquidWeb\Harbor\Portal\Clients\Null_Client;
@@ -26,7 +26,7 @@ final class Provider extends Abstract_Provider {
 		$this->container->singleton(
 			Portal_Client::class,
 			function (): Portal_Client {
-				if ( ! $this->container->get( Admin_Provider::class )->has_consent() ) {
+				if ( ! $this->container->get( Consent_Repository::class )->has_consent() ) {
 					return new Null_Client();
 				}
 
