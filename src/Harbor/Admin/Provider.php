@@ -46,7 +46,7 @@ class Provider extends Abstract_Provider {
 	 *
 	 * @return bool
 	 */
-	public function is_external_api_communications_permitted(): bool {
+	public function has_consent(): bool {
 		/**
 		 * Filters whether external API communications are permitted.
 		 *
@@ -56,6 +56,28 @@ class Provider extends Abstract_Provider {
 		 *
 		 * @return bool
 		 */
-		return (bool) apply_filters( 'lw-harbor/allow_external_api_communications', (bool) get_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false ) );
+		return (bool) apply_filters( 'lw-harbor/allow_external_api_communications', (bool) get_site_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false ) );
+	}
+
+	/**
+	 * Grants consent to the terms and conditions.
+	 *
+	 * @since TBD
+	 *
+	 * @return void
+	 */
+	public function grant_consent(): void {
+		update_site_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, true );
+	}
+
+	/**
+	 * Revokes consent to the terms and conditions.
+	 *
+	 * @since TBD
+	 *
+	 * @return void
+	 */
+	public function revoke_consent(): void {
+		update_site_option( self::OPTION_ALLOWED_EXTERNAL_API_COMMUNICATIONS, false );
 	}
 }

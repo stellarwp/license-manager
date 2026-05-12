@@ -26,7 +26,7 @@ final class Provider extends Abstract_Provider {
 		$this->container->singleton(
 			Portal_Client::class,
 			function (): Portal_Client {
-				if ( ! $this->container->get( Admin_Provider::class )->is_external_api_communications_permitted() ) {
+				if ( ! $this->container->get( Admin_Provider::class )->has_consent() ) {
 					return new Null_Client();
 				}
 
