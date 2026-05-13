@@ -75,6 +75,15 @@ class Config {
 	protected static $plugin_basename = null;
 
 	/**
+	 * The callbacks to check if the premium plugin exists.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @var array<string, callable>
+	 */
+	private static array $premium_existence_callbacks = [];
+
+	/**
 	 * Get the container.
 	 *
 	 * @since 1.0.0
@@ -102,6 +111,41 @@ class Config {
 	 */
 	public static function has_container(): bool {
 		return self::$container !== null;
+	}
+
+	/**
+	 * Add a callback to check if the premium plugin exists.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $plugin_family The plugin family to check.
+	 * @param callable $callback The callback to check if the premium plugin exists.
+	 *
+	 * @return void
+	 */
+	public static function add_premium_existence_callback( string $plugin_family, callable $callback ): void {
+		if ( did_action( 'init' ) || doing_action( 'init' ) ) {
+			_doing_it_wrong( __FUNCTION__, 'Callbacks must be added before the init hook.', 'TBD' );
+			return;
+		}
+
+		self::$premium_existence_callbacks[ $plugin_family ] = $callback;
+	}
+
+	/**
+	 * Checks if there is at least one premium plugin.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return bool
+	 */
+	public static function is_there_at_least_one_premium_plugin(): bool {
+		return ! empty(
+			array_filter(
+				self::$premium_existence_callbacks,
+				fn( callable $callback ): bool => $callback()
+			)
+		);
 	}
 
 	/**
