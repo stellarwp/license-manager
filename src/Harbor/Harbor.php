@@ -51,30 +51,45 @@ class Harbor {
 		$container->singleton( CLI\Provider::class );
 		$container->singleton( Cron\Provider::class );
 
-		add_action(
-			'init',
-			static function () use ( $container ) {
-				if ( ! Config::is_there_at_least_one_premium_plugin() ) {
-					return;
-				}
+		// API\Functions\Provider owns loading global-functions.php and registering
+		// the user-facing global function callbacks. Run it synchronously here -
+		// before register_instance_hooks() - so _lw_harbor_instance_registry() is
+		// defined when this instance registers itself into the cross-instance registry.
+		$container->get( API\Functions\Provider::class )->register();
 
-				$container->get( View\Provider::class )->register();
-				$container->get( Consent\Provider::class )->register();
-				$container->get( Admin\Provider::class )->register();
-				$container->get( Legacy\Provider::class )->register();
-				$container->get( Features\Provider::class )->register();
-				$container->get( Http\Provider::class )->register();
-				$container->get( Licensing\Provider::class )->register();
-				$container->get( Portal\Provider::class )->register();
-				$container->get( API\REST\V1\Provider::class )->register();
-				$container->get( API\Functions\Provider::class )->register();
-				$container->get( CLI\Provider::class )->register();
-				$container->get( Cron\Provider::class )->register();
-			},
-			1
-		);
+		add_action( 'init', [ self::class, 'register_providers' ], 1 );
 
 		static::register_instance_hooks();
+	}
+
+	/**
+	 * Registers the provider hooks that depend on premium-plugin detection.
+	 *
+	 * Hooked to the init action so the lw_harbor/premium_plugin_existence_callbacks
+	 * filter is fully populated by the time the gate is checked.
+	 *
+	 * @since TBD
+	 *
+	 * @return void
+	 */
+	public static function register_providers(): void {
+		if ( ! Config::is_there_at_least_one_premium_plugin() ) {
+			return;
+		}
+
+		$container = Config::get_container();
+
+		$container->get( View\Provider::class )->register();
+		$container->get( Consent\Provider::class )->register();
+		$container->get( Admin\Provider::class )->register();
+		$container->get( Legacy\Provider::class )->register();
+		$container->get( Features\Provider::class )->register();
+		$container->get( Http\Provider::class )->register();
+		$container->get( Licensing\Provider::class )->register();
+		$container->get( Portal\Provider::class )->register();
+		$container->get( API\REST\V1\Provider::class )->register();
+		$container->get( CLI\Provider::class )->register();
+		$container->get( Cron\Provider::class )->register();
 	}
 
 	/**

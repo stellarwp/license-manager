@@ -25,6 +25,12 @@ class Provider extends Abstract_Provider {
 		$this->container->singleton( Plugin_Handler::class );
 		$this->container->singleton( Theme_Handler::class );
 
+		// Defer hook registration to a later init priority so all other providers'
+		// register() methods have bound their types first. register_hooks() resolves
+		// Plugin_Handler from the container, which transitively depends on bindings
+		// owned by Portal\Provider; that provider's register() runs in the same
+		// init priority 1 callback as ours, so we need a later priority to read
+		// its bindings safely. The default add_action priority of 10 satisfies that.
 		add_action( 'init', [ $this, 'register_hooks' ] );
 	}
 
