@@ -35,6 +35,10 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 		/** @var array<string, string[]> $instances */
 		static $instances = [];
 
+		if ( '' === $version ) {
+			return $instances;
+		}
+
 		if ( ! Lifecycle::is_bootstrap_window_open() ) {
 			_doing_it_wrong(
 				__FUNCTION__,
@@ -43,11 +47,6 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 				),
 				'TBD'
 			);
-			return $instances;
-		}
-
-		if ( '' === $version ) {
-			_doing_it_wrong( __FUNCTION__, 'Version is required.', 'TBD' );
 			return $instances;
 		}
 
