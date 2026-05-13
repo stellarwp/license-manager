@@ -39,7 +39,7 @@ class Premium_Plugin_Registry {
 	 *
 	 * @return array<callable>
 	 */
-	private function callbacks(): array {
+	private function get_callbacks(): array {
 		/**
 		 * Filters the premium plugin existence callbacks.
 		 *
