@@ -24,32 +24,13 @@ class Premium_Plugin_Registry {
 	 * @return bool
 	 */
 	public function any(): bool {
-		foreach ( $this->get_callbacks() as $callback ) {
-			if ( Cast::to_bool( $callback() ) ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns the registered existence-check callbacks.
-	 *
-	 * @since TBD
-	 *
-	 * @return array<callable>
-	 */
-	private function get_callbacks(): array {
 		/**
-		 * Filters the premium plugin existence callbacks.
+		 * Filters whether a premium plugin exists.
 		 *
 		 * @since TBD
 		 *
-		 * @param array<callable> $callbacks The callbacks to check if a premium plugin exists.
-		 *
-		 * @return array<callable>
+		 * @return bool
 		 */
-		return (array) apply_filters( 'lw_harbor/premium_plugin_existence_callbacks', [] );
+		return (bool) apply_filters( 'lw_harbor/premium_plugin_exists', false );
 	}
 }
