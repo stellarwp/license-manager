@@ -15,12 +15,13 @@ class Harbor {
 	 *
 	 * @var string
 	 */
-	public const VERSION = '1.1.0';
+	public const VERSION = '1.2.0';
 
 	/**
 	 * Initializes the service provider.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 - Moves the initialization of the container to the init hook.
 	 *
 	 * @throws RuntimeException If the container has not been configured.
 	 *
@@ -50,18 +51,28 @@ class Harbor {
 		$container->singleton( CLI\Provider::class );
 		$container->singleton( Cron\Provider::class );
 
-		$container->get( View\Provider::class )->register();
-		$container->get( Consent\Provider::class )->register();
-		$container->get( Admin\Provider::class )->register();
-		$container->get( Legacy\Provider::class )->register();
-		$container->get( Features\Provider::class )->register();
-		$container->get( Http\Provider::class )->register();
-		$container->get( Licensing\Provider::class )->register();
-		$container->get( Portal\Provider::class )->register();
-		$container->get( API\REST\V1\Provider::class )->register();
-		$container->get( API\Functions\Provider::class )->register();
-		$container->get( CLI\Provider::class )->register();
-		$container->get( Cron\Provider::class )->register();
+		add_action(
+			'init',
+			static function () use ( $container ) {
+				if ( ! Config::is_there_at_least_one_premium_plugin() ) {
+					return;
+				}
+
+				$container->get( View\Provider::class )->register();
+				$container->get( Consent\Provider::class )->register();
+				$container->get( Admin\Provider::class )->register();
+				$container->get( Legacy\Provider::class )->register();
+				$container->get( Features\Provider::class )->register();
+				$container->get( Http\Provider::class )->register();
+				$container->get( Licensing\Provider::class )->register();
+				$container->get( Portal\Provider::class )->register();
+				$container->get( API\REST\V1\Provider::class )->register();
+				$container->get( API\Functions\Provider::class )->register();
+				$container->get( CLI\Provider::class )->register();
+				$container->get( Cron\Provider::class )->register();
+			},
+			1
+		);
 
 		static::register_instance_hooks();
 	}
