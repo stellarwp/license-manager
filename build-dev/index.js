@@ -2303,15 +2303,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_organisms_LicenseSection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/organisms/LicenseSection */ "./resources/js/components/organisms/LicenseSection.tsx");
 /* harmony import */ var _components_organisms_UpsellSection__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/organisms/UpsellSection */ "./resources/js/components/organisms/UpsellSection.tsx");
-/* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/components/ui/button */ "./resources/js/components/ui/button.tsx");
-/* harmony import */ var _components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/ui/dialog */ "./resources/js/components/ui/dialog.tsx");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
-/* harmony import */ var _data_products__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/data/products */ "./resources/js/data/products.ts");
-/* harmony import */ var _context_toast_context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/context/toast-context */ "./resources/js/context/toast-context.tsx");
-/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
-/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/errors */ "./resources/js/errors/index.ts");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.ts");
+/* harmony import */ var _data_products__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/data/products */ "./resources/js/data/products.ts");
+/* harmony import */ var _context_toast_context__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/context/toast-context */ "./resources/js/context/toast-context.tsx");
+/* harmony import */ var _context_error_modal_context__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/context/error-modal-context */ "./resources/js/context/error-modal-context.tsx");
+/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/errors */ "./resources/js/errors/index.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
 /**
  * License sidebar panel.
  *
@@ -2331,8 +2329,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 /**
  * @since 1.0.0
  */
@@ -2340,35 +2336,31 @@ __webpack_require__.r(__webpack_exports__);
 function LicensePanel() {
   const {
     addToast
-  } = (0,_context_toast_context__WEBPACK_IMPORTED_MODULE_9__.useToast)();
+  } = (0,_context_toast_context__WEBPACK_IMPORTED_MODULE_7__.useToast)();
   const {
     addError
-  } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_10__.useErrorModal)();
+  } = (0,_context_error_modal_context__WEBPACK_IMPORTED_MODULE_8__.useErrorModal)();
   const {
     deleteLicense,
     refreshLicense,
-    refreshCatalog,
-    revokeConsent
-  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_store__WEBPACK_IMPORTED_MODULE_7__.store);
+    refreshCatalog
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_store__WEBPACK_IMPORTED_MODULE_5__.store);
   const {
     licenseKey,
     licenseProducts,
     catalogs,
     isRefreshing,
-    isLicenseLoading,
-    isRevoking
+    isLicenseLoading
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => ({
-    licenseKey: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).getLicenseKey(),
-    licenseProducts: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).getLicenseProducts(),
-    catalogs: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).getCatalog(),
-    isRefreshing: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).isLicenseRefreshing(),
+    licenseKey: select(_store__WEBPACK_IMPORTED_MODULE_5__.store).getLicenseKey(),
+    licenseProducts: select(_store__WEBPACK_IMPORTED_MODULE_5__.store).getLicenseProducts(),
+    catalogs: select(_store__WEBPACK_IMPORTED_MODULE_5__.store).getCatalog(),
+    isRefreshing: select(_store__WEBPACK_IMPORTED_MODULE_5__.store).isLicenseRefreshing(),
     // @ts-expect-error -- hasFinishedResolution is injected at runtime by @wordpress/data but absent from the store's TypeScript surface.
-    isLicenseLoading: !select(_store__WEBPACK_IMPORTED_MODULE_7__.store).hasFinishedResolution('getLicenseKey', []),
-    isRevoking: select(_store__WEBPACK_IMPORTED_MODULE_7__.store).isConsentRevoking()
+    isLicenseLoading: !select(_store__WEBPACK_IMPORTED_MODULE_5__.store).hasFinishedResolution('getLicenseKey', [])
   }), []);
-  const [isRevokeDialogOpen, setIsRevokeDialogOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
 
-  // Flat tier slug -> display name and rank lookups from all catalog tiers.
+  // Flat tier slug → display name and rank lookups from all catalog tiers.
   const {
     tierNameMap,
     tierRankMap
@@ -2388,7 +2380,7 @@ function LicensePanel() {
   }, [catalogs]);
   const activationUrl = licenseKey && window.harborData ? window.harborData.activationUrl : null;
 
-  // Product slug -> lowest paid-tier purchase URL map from the catalog.
+  // Product slug → lowest paid-tier purchase URL map from the catalog.
   const upsellUrlMap = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
     const map = {};
     catalogs.forEach(catalog => {
@@ -2401,10 +2393,10 @@ function LicensePanel() {
     return map;
   }, [catalogs]);
   const licensedSlugs = new Set(licenseProducts.map(lp => lp.product_slug));
-  const upsellProducts = _data_products__WEBPACK_IMPORTED_MODULE_8__.PRODUCTS.filter(p => !licensedSlugs.has(p.slug));
+  const upsellProducts = _data_products__WEBPACK_IMPORTED_MODULE_6__.PRODUCTS.filter(p => !licensedSlugs.has(p.slug));
   const handleRemove = async () => {
     const result = await deleteLicense();
-    if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) {
+    if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_9__.HarborError) {
       addError(result);
       return result;
     }
@@ -2413,27 +2405,19 @@ function LicensePanel() {
   };
   const handleRefresh = async () => {
     const [licenseResult, catalogResult] = await Promise.all([refreshLicense(), refreshCatalog()]);
-    if (licenseResult instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) {
+    if (licenseResult instanceof _errors__WEBPACK_IMPORTED_MODULE_9__.HarborError) {
       addError(licenseResult);
     }
-    if (catalogResult instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) {
+    if (catalogResult instanceof _errors__WEBPACK_IMPORTED_MODULE_9__.HarborError) {
       addError(catalogResult);
     }
-    if (!(licenseResult instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) && !(catalogResult instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError)) {
+    if (!(licenseResult instanceof _errors__WEBPACK_IMPORTED_MODULE_9__.HarborError) && !(catalogResult instanceof _errors__WEBPACK_IMPORTED_MODULE_9__.HarborError)) {
       addToast((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('License refreshed.', '%TEXTDOMAIN%'), 'success');
     }
   };
-  const handleConfirmRevoke = async () => {
-    const result = await revokeConsent();
-    if (result instanceof _errors__WEBPACK_IMPORTED_MODULE_11__.HarborError) {
-      addError(result);
-      setIsRevokeDialogOpen(false);
-    }
-    // On success the thunk reloads the page, so no further UI work is needed.
-  };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
     className: "sticky top-4 w-[280px] shrink-0 space-y-6",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_organisms_LicenseSection__WEBPACK_IMPORTED_MODULE_3__.LicenseSection, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_organisms_LicenseSection__WEBPACK_IMPORTED_MODULE_3__.LicenseSection, {
       licenseKey: licenseKey,
       licenseProducts: licenseProducts,
       tierNameMap: tierNameMap,
@@ -2443,47 +2427,9 @@ function LicensePanel() {
       isRefreshing: isRefreshing,
       isLoading: isLicenseLoading,
       activationUrl: activationUrl
-    }), !isLicenseLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_organisms_UpsellSection__WEBPACK_IMPORTED_MODULE_4__.UpsellSection, {
+    }), !isLicenseLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_organisms_UpsellSection__WEBPACK_IMPORTED_MODULE_4__.UpsellSection, {
       products: upsellProducts,
       upsellUrlMap: upsellUrlMap
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
-      className: "pt-4 border-t",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_5__.Button, {
-        type: "button",
-        variant: "destructive",
-        size: "sm",
-        onClick: () => setIsRevokeDialogOpen(true),
-        disabled: isRevoking,
-        className: "w-full",
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke external data consent', '%TEXTDOMAIN%')
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.Dialog, {
-      open: isRevokeDialogOpen,
-      onClose: () => !isRevoking && setIsRevokeDialogOpen(false),
-      maxWidth: "max-w-md",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogHeader, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke external data consent?', '%TEXTDOMAIN%'),
-        onClose: () => !isRevoking && setIsRevokeDialogOpen(false)
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogContent, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
-          className: "text-sm text-foreground !m-0",
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager will stop contacting Liquid Web services until you opt in again. Cached license and product data remain on your site.', '%TEXTDOMAIN%')
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_components_ui_dialog__WEBPACK_IMPORTED_MODULE_6__.DialogFooter, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_5__.Button, {
-          type: "button",
-          variant: "outline",
-          onClick: () => setIsRevokeDialogOpen(false),
-          disabled: isRevoking,
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', '%TEXTDOMAIN%')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_5__.Button, {
-          type: "button",
-          variant: "destructive",
-          onClick: handleConfirmRevoke,
-          disabled: isRevoking,
-          children: isRevoking ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoking...', '%TEXTDOMAIN%') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Revoke', '%TEXTDOMAIN%')
-        })]
-      })]
     })]
   });
 }
@@ -4179,8 +4125,6 @@ let ErrorCode = /*#__PURE__*/function (ErrorCode) {
   ErrorCode["CatalogRefreshFailed"] = "catalog-refresh-failed";
   ErrorCode["LegacyLicensesFetchFailed"] = "legacy-licenses-fetch-failed";
   ErrorCode["ResolutionFailed"] = "resolution-failed";
-  ErrorCode["ConsentOptInFailed"] = "consent-opt-in-failed";
-  ErrorCode["ConsentRevokeFailed"] = "consent-revoke-failed";
   return ErrorCode;
 }({});
 
@@ -4933,59 +4877,6 @@ function buildActivationUrl(baseUrl, productSlug, tier) {
 
 /***/ },
 
-/***/ "./resources/js/lib/consent-api.ts"
-/*!*****************************************!*\
-  !*** ./resources/js/lib/consent-api.ts ***!
-  \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   deleteConsent: () => (/* binding */ deleteConsent),
-/* harmony export */   postOptIn: () => (/* binding */ postOptIn)
-/* harmony export */ });
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * Single source of truth for the consent REST calls.
- *
- * Contract
- *   POST   /liquidweb/harbor/v1/consent   -> { opted_in: true }
- *   DELETE /liquidweb/harbor/v1/consent   -> { opted_in: false }
- *
- * Both functions resolve on success. Any non-2xx response throws — let
- * callers translate to HarborError via HarborError.wrap().
- *
- * @package LiquidWeb\Harbor
- */
-
-const CONSENT_PATH = '/liquidweb/harbor/v1/consent';
-/**
- * Opt the site in to external data exchange.
- *
- * @since 1.1.0
- */
-async function postOptIn() {
-  await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    path: CONSENT_PATH,
-    method: 'POST'
-  });
-}
-
-/**
- * Revoke the opt-in for the site.
- *
- * @since 1.1.0
- */
-async function deleteConsent() {
-  await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    path: CONSENT_PATH,
-    method: 'DELETE'
-  });
-}
-
-/***/ },
-
 /***/ "./resources/js/lib/feature-utils.ts"
 /*!*******************************************!*\
   !*** ./resources/js/lib/feature-utils.ts ***!
@@ -5260,7 +5151,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   receiveLicense: () => (/* binding */ receiveLicense),
 /* harmony export */   refreshCatalog: () => (/* binding */ refreshCatalog),
 /* harmony export */   refreshLicense: () => (/* binding */ refreshLicense),
-/* harmony export */   revokeConsent: () => (/* binding */ revokeConsent),
 /* harmony export */   storeLicense: () => (/* binding */ storeLicense),
 /* harmony export */   updateFeature: () => (/* binding */ updateFeature)
 /* harmony export */ });
@@ -5269,13 +5159,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/errors */ "./resources/js/errors/index.ts");
-/* harmony import */ var _lib_consent_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/lib/consent-api */ "./resources/js/lib/consent-api.ts");
 /**
  * Action creators for the lw @wordpress/data store.
  *
  * @package LiquidWeb\Harbor
  */
-
 
 
 
@@ -5600,35 +5488,6 @@ const deleteLicense = () => async ({
   }
 };
 
-/**
- * Revoke the global external-requests opt-in.
- *
- * On success, reloads the page so the backend re-evaluates which admin page
- * to render. Until the backend rebinding lands, the reload simply re-renders
- * the same Feature Manager page.
- *
- * @since 1.1.0
- */
-const revokeConsent = () => async ({
-  dispatch
-}) => {
-  dispatch({
-    type: 'REVOKE_CONSENT_START'
-  });
-  try {
-    await (0,_lib_consent_api__WEBPACK_IMPORTED_MODULE_3__.deleteConsent)();
-    window.location.reload();
-    return null;
-  } catch (err) {
-    const error = await _errors__WEBPACK_IMPORTED_MODULE_2__.HarborError.wrap(err, _errors__WEBPACK_IMPORTED_MODULE_2__.ErrorCode.ConsentRevokeFailed, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Liquid Web Software Manager could not revoke your consent. Please try again.', '%TEXTDOMAIN%'));
-    dispatch({
-      type: 'REVOKE_CONSENT_FAILED',
-      error
-    });
-    return error;
-  }
-};
-
 /***/ },
 
 /***/ "./resources/js/store/constants.ts"
@@ -5719,8 +5578,7 @@ const reducer = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.combineReducers)
   harborHosts,
   license,
   catalog,
-  legacyLicenses,
-  consent
+  legacyLicenses
 });
 
 // ---------------------------------------------------------------------------
@@ -6011,33 +5869,6 @@ function license(state = LICENSE_DEFAULT, action) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Consent
-// ---------------------------------------------------------------------------
-
-const CONSENT_DEFAULT = {
-  isRevoking: false,
-  revokeError: null
-};
-function consent(state = CONSENT_DEFAULT, action) {
-  switch (action.type) {
-    case 'REVOKE_CONSENT_START':
-      return {
-        ...state,
-        isRevoking: true,
-        revokeError: null
-      };
-    case 'REVOKE_CONSENT_FAILED':
-      return {
-        ...state,
-        isRevoking: false,
-        revokeError: action.error
-      };
-    default:
-      return state;
-  }
-}
-
 /***/ },
 
 /***/ "./resources/js/store/resolvers.ts"
@@ -6233,7 +6064,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   hasLicense: () => (/* binding */ hasLicense),
 /* harmony export */   hasUncoveredLegacyLicenses: () => (/* binding */ hasUncoveredLegacyLicenses),
 /* harmony export */   isAnyInstallableBusy: () => (/* binding */ isAnyInstallableBusy),
-/* harmony export */   isConsentRevoking: () => (/* binding */ isConsentRevoking),
 /* harmony export */   isFeatureEnabled: () => (/* binding */ isFeatureEnabled),
 /* harmony export */   isFeatureToggling: () => (/* binding */ isFeatureToggling),
 /* harmony export */   isFeatureUpdating: () => (/* binding */ isFeatureUpdating),
@@ -6425,12 +6255,6 @@ const canModifyLicense = state => !state.license.isStoring && !state.license.isD
 const getStoreLicenseError = state => state.license.storeError;
 const getDeleteLicenseError = state => state.license.deleteError;
 const getRefreshLicenseError = state => state.license.refreshError;
-
-// ---------------------------------------------------------------------------
-// Consent
-// ---------------------------------------------------------------------------
-
-const isConsentRevoking = state => state.consent.isRevoking;
 
 /***/ },
 
