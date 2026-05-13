@@ -69,7 +69,14 @@ class Harbor {
 			$container->get( CLI\Provider::class )->register();
 			$container->get( Cron\Provider::class )->register();
 
-			$container->bind( 'lw_harbor/premium_plugin_exists', static fn(): bool => true );
+			/**
+			 * Fires when Harbor is fully loaded.
+			 *
+			 * @since TBD
+			 *
+			 * @return void
+			 */
+			do_action( 'lw_harbor/fully_loaded' );
 		}
 
 		static::register_instance_hooks();
