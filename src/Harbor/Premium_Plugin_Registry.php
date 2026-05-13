@@ -11,14 +11,14 @@ use LiquidWeb\Harbor\Utils\Cast;
  * lw_harbor/premium_plugin_exists filter that returns true when
  * they should be considered active and Harbor should be initialized.
  *
- * @since TBD
+ * @since 1.2.0
  */
 class Premium_Plugin_Registry {
 
 	/**
 	 * Whether at least one registered callback reports an active premium plugin.
 	 *
-	 * @since TBD
+	 * @since 1.2.0
 	 *
 	 * @return bool
 	 */
@@ -26,7 +26,7 @@ class Premium_Plugin_Registry {
 		/**
 		 * Filters whether a premium plugin exists.
 		 *
-		 * @since TBD
+		 * @since 1.2.0
 		 *
 		 * @return bool
 		 */

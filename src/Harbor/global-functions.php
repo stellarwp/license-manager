@@ -41,7 +41,7 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 			_doing_it_wrong(
 				__FUNCTION__,
 				'Registrations are only accepted during the bootstrap window (before wp_loaded).',
-				'TBD'
+				'1.2.0'
 			);
 			return $instances;
 		}

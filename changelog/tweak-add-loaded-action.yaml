@@ -1,5 +1,0 @@
-significance: patch
-type: tweak
-entry: Added the `lw_harbor/loaded` action to indicate when Harbor is
-  loaded.
-timestamp: 2026-05-13T22:20:42.026Z

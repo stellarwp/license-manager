@@ -1,3 +1,10 @@
+### [1.2.0] 2026-05-13
+
+* Tweak - Added the `lw_harbor/premium_plugin_exists` filter to declare whether a premium plugin exists on a site.
+* Tweak - Removed opt-in as it will not be necessary now that external communications are gated behind a Premium Addon enabling Harbor.
+* Tweak - Added the `lw_harbor/loaded` action to indicate when Harbor is loaded.
+* Feature - The features page no longer shows unless a Premium Addon has been registered.
+
 ### [1.1.0] 2026-05-12
 
 * Feature - External connections are now gated behind a per-site opt-in flow.

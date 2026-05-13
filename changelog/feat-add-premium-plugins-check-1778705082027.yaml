@@ -1,4 +1,0 @@
-significance: patch
-type: tweak
-entry: Added the `lw_harbor/premium_plugin_exists` filter to declare whether a premium plugin exists on a site.
-timestamp: 2026-05-13T20:44:42.026Z

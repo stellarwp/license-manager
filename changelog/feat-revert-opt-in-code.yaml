@@ -1,5 +1,0 @@
-significance: patch
-type: tweak
-entry: Removed opt-in as it will not be necessary now that external
-  communications are gated behind a Premium Addon enabling Harbor.
-timestamp: 2026-05-13T21:36:57.568Z

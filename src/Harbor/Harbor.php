@@ -15,13 +15,13 @@ class Harbor {
 	 *
 	 * @var string
 	 */
-	public const VERSION = '1.1.0';
+	public const VERSION = '1.2.0';
 
 	/**
 	 * Initializes the service provider.
 	 *
 	 * @since 1.0.0
-	 * @since TBD - Moves the initialization of the container to the init hook.
+	 * @since 1.2.0 - Moves the initialization of the container to the init hook.
 	 *
 	 * @throws RuntimeException If the container has not been configured.
 	 *
@@ -72,7 +72,7 @@ class Harbor {
 			/**
 			 * Fires when Harbor is loaded.
 			 *
-			 * @since TBD
+			 * @since 1.2.0
 			 *
 			 * @return void
 			 */
