@@ -70,6 +70,8 @@ class Harbor {
 			$container->get( API\REST\V1\Provider::class )->register();
 			$container->get( CLI\Provider::class )->register();
 			$container->get( Cron\Provider::class )->register();
+
+			$container->bind( 'lw_harbor/premium_plugin_exists', static fn(): bool => true );
 		}
 
 		static::register_instance_hooks();
