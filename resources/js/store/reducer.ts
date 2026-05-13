@@ -7,14 +7,13 @@ import { combineReducers } from '@wordpress/data';
 import type {
 	Action,
 	CatalogState,
-	ConsentState,
 	FeaturesState,
 	HarborHostsState,
 	LegacyLicensesState,
 	LicenseState,
 } from './types';
 
-export const reducer = combineReducers({ features, harborHosts, license, catalog, legacyLicenses, consent });
+export const reducer = combineReducers({ features, harborHosts, license, catalog, legacyLicenses });
 
 // ---------------------------------------------------------------------------
 // Catalog
@@ -280,31 +279,6 @@ function license(
 				refreshError: action.error,
 			};
 		}
-
-		default:
-			return state;
-	}
-}
-
-// ---------------------------------------------------------------------------
-// Consent
-// ---------------------------------------------------------------------------
-
-const CONSENT_DEFAULT: ConsentState = {
-	isRevoking:  false,
-	revokeError: null,
-};
-
-function consent(
-	state: ConsentState = CONSENT_DEFAULT,
-	action: Action
-): ConsentState {
-	switch ( action.type ) {
-		case 'REVOKE_CONSENT_START':
-			return { ...state, isRevoking: true, revokeError: null };
-
-		case 'REVOKE_CONSENT_FAILED':
-			return { ...state, isRevoking: false, revokeError: action.error };
 
 		default:
 			return state;
