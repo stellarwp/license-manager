@@ -33,17 +33,16 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 		/** @var array<string, string[]> $instances */
 		static $instances = [];
 
+		if ( '' === $version ) {
+			return $instances;
+		}
+
 		if ( did_action( 'wp_loaded' ) ) {
 			_doing_it_wrong(
 				__FUNCTION__,
 				'Registrations are only accepted during the bootstrap window (before wp_loaded).',
 				'TBD'
 			);
-			return $instances;
-		}
-
-		if ( '' === $version ) {
-			_doing_it_wrong( __FUNCTION__, 'Version is required.', 'TBD' );
 			return $instances;
 		}
 

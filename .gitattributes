@@ -9,6 +9,7 @@ phpcs*.xml               export-ignore
 codeception.*.yml        export-ignore
 composer.json            export-ignore
 composer.lock            export-ignore
+bootstrap-plugin.php     export-ignore
 
 # JS build tooling
 bun.lock                 export-ignore
@@ -19,12 +20,16 @@ tsconfig.json            export-ignore
 tailwind.config.js       export-ignore
 postcss.config.js        export-ignore
 components.json          export-ignore
+jest-unit.config.js      export-ignore
+playwright.config.ts     export-ignore
 
 # Directories not needed at runtime
 tests/                   export-ignore
 dev_scripts/             export-ignore
 docs/                    export-ignore
 resources/js/            export-ignore
+_plugins/                export-ignore
+changelog/               export-ignore
 
 # AI & meta files
 CLAUDE.md                export-ignore
