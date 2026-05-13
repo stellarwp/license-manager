@@ -24,12 +24,13 @@ class Premium_Plugin_Registry {
 	 * @return bool
 	 */
 	public function any(): bool {
-		return ! empty(
-			array_filter(
-				$this->callbacks(),
-				static fn( callable $callback ): bool => Cast::to_bool( $callback() )
-			)
-		);
+		foreach ( $this->get_callbacks() as $callback ) {
+			if ( Cast::to_bool( $callback() ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
