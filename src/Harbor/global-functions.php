@@ -82,9 +82,7 @@ if ( ! function_exists( '_lw_harbor_global_function_registry' ) ) {
 			// Mirror the instance registry's registration window: only accept
 			// writes before wp_loaded so callbacks can't be injected after bootstrap.
 			if ( ! did_action( 'wp_loaded' ) ) {
-				$registry[ $key ][ $version ] = static function ( ...$args ) use ( $callback ) {
-					return $callback( ...$args );
-				};
+				$registry[ $key ][ $version ] = $callback;
 			}
 			return null;
 		}
