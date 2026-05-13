@@ -1,4 +1,6 @@
-# LiquidWeb Harbor
+# Harbor
+
+Bundled library that handles licensing, updates, and feature gating for WordPress plugins and themes.
 
 [![PHP Compatibility](https://github.com/stellarwp/harbor/actions/workflows/compatibility.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/compatibility.yml)
 [![PHP Tests](https://github.com/stellarwp/harbor/actions/workflows/tests-php.yml/badge.svg)](https://github.com/stellarwp/harbor/actions/workflows/tests-php.yml)
