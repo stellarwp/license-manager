@@ -14,7 +14,7 @@ use LiquidWeb\Harbor\Harbor;
  * _lw_harbor_instance_registry() function as the cross-copy registry.
  *
  * @since 1.0.0
- * @since 1.2.0 - Restricted API access.
+ * @since TBD - Restricted API access.
  */
 class Version {
 

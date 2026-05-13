@@ -107,7 +107,7 @@ class Config {
 	/**
 	 * Checks if there is at least one premium plugin.
 	 *
-	 * @since 1.2.0
+	 * @since TBD
 	 *
 	 * @return bool
 	 */
@@ -117,7 +117,7 @@ class Config {
 				/**
 				 * Filters the premium plugin existence callbacks.
 				 *
-				 * @since 1.2.0
+				 * @since TBD
 				 *
 				 * @param array<callable> $callbacks The callbacks to check if the premium plugin exists.
 				 *
