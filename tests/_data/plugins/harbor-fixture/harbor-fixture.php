@@ -30,6 +30,18 @@ use StellarWP\ContainerContract\ContainerInterface;
 // Satisfies both DI52 and StellarWP's ContainerInterface.
 class Harbor_E2E_Container extends DI52Container implements ContainerInterface {}
 
+// Mock a premium plugin so Config::is_there_at_least_one_premium_plugin() returns
+// true and Harbor::register_providers() actually registers providers during init.
+// Without this the deferred registration short-circuits and the UI loads with no
+// product data.
+add_filter(
+	'lw_harbor/premium_plugin_existence_callbacks',
+	static function ( array $callbacks ): array {
+		$callbacks[] = static fn(): bool => true;
+		return $callbacks;
+	}
+);
+
 add_action(
 	'plugins_loaded',
 	static function () {

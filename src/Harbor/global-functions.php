@@ -79,15 +79,8 @@ if ( ! function_exists( '_lw_harbor_global_function_registry' ) ) {
 			// Mirror the instance registry's registration window: only accept
 			// writes before wp_loaded so callbacks can't be injected after bootstrap.
 			if ( ! did_action( 'wp_loaded' ) ) {
-				$warning = static function() {
-					if ( ! did_action( 'init' ) && ! doing_action( 'init' ) ) {
-						_doing_it_wrong( __FUNCTION__, 'Harbor API is only safe to use after or during the init hook.', 'TBD' );
-					}
-				};
-
-				$registry[ $key ][ $version ] = static function() use ( $callback, $warning ) {
-					$warning();
-					return $callback();
+				$registry[ $key ][ $version ] = static function ( ...$args ) use ( $callback ) {
+					return $callback( ...$args );
 				};
 			}
 			return null;
