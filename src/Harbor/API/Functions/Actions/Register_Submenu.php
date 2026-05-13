@@ -2,6 +2,9 @@
 
 namespace LiquidWeb\Harbor\API\Functions\Actions;
 
+use LiquidWeb\Harbor\Config;
+use LiquidWeb\Harbor\Premium_Plugin_Registry;
+
 /**
  * Registers a submenu item under a plugin's existing menu that links to the Harbor feature manager.
  *
@@ -15,6 +18,10 @@ class Register_Submenu {
 	 * @return void
 	 */
 	public function __invoke( string $parent_slug ): void {
+		if ( ! Config::get_container()->get( Premium_Plugin_Registry::class )->any() ) {
+			return;
+		}
+
 		add_action(
 			'admin_menu',
 			static function () use ( $parent_slug ): void {
