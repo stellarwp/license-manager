@@ -105,31 +105,6 @@ class Config {
 	}
 
 	/**
-	 * Checks if there is at least one premium plugin.
-	 *
-	 * @since TBD
-	 *
-	 * @return bool
-	 */
-	public static function is_there_at_least_one_premium_plugin(): bool {
-		return ! empty(
-			array_filter(
-				/**
-				 * Filters the premium plugin existence callbacks.
-				 *
-				 * @since TBD
-				 *
-				 * @param array<callable> $callbacks The callbacks to check if the premium plugin exists.
-				 *
-				 * @return array<callable>
-				 */
-				(array) apply_filters( 'lw_harbor/premium_plugin_existence_callbacks', [] ),
-				fn( callable $callback ): bool => Cast::to_bool( $callback() )
-			)
-		);
-	}
-
-	/**
 	 * Resets this class back to the defaults.
 	 *
 	 * @since 1.0.0

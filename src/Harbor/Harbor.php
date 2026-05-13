@@ -50,6 +50,7 @@ class Harbor {
 		$container->singleton( API\Functions\Provider::class );
 		$container->singleton( CLI\Provider::class );
 		$container->singleton( Cron\Provider::class );
+		$container->singleton( Premium_Plugin_Registry::class );
 
 		// API\Functions\Provider owns loading global-functions.php and registering
 		// the user-facing global function callbacks. Run it synchronously here -
@@ -57,7 +58,7 @@ class Harbor {
 		// defined when this instance registers itself into the cross-instance registry.
 		$container->get( API\Functions\Provider::class )->register();
 
-		if ( Config::is_there_at_least_one_premium_plugin() ) {
+		if ( $container->get( Premium_Plugin_Registry::class )->any() ) {
 			$container->get( View\Provider::class )->register();
 			$container->get( Consent\Provider::class )->register();
 			$container->get( Admin\Provider::class )->register();
