@@ -224,7 +224,7 @@ final class GlobalFunctionsTest extends HarborTestCase {
 	// -------------------------------------------------------------------------
 
 	public function test_get_licensed_domain_matches_site_url_host(): void {
-		$parsed = wp_parse_url( get_option( 'siteurl', '' ) );
+		$parsed   = wp_parse_url( get_option( 'siteurl', '' ) );
 		$expected = strtolower( $parsed['host'] ?? '' );
 
 		$domain = lw_harbor_get_licensed_domain();
