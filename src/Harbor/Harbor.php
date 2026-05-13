@@ -70,13 +70,13 @@ class Harbor {
 			$container->get( Cron\Provider::class )->register();
 
 			/**
-			 * Fires when Harbor is fully loaded.
+			 * Fires when Harbor is loaded.
 			 *
 			 * @since TBD
 			 *
 			 * @return void
 			 */
-			do_action( 'lw_harbor/fully_loaded' );
+			do_action( 'lw_harbor/loaded' );
 		}
 
 		static::register_instance_hooks();
