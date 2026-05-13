@@ -37,8 +37,8 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 		parent::setUp();
 
 		global $wp_filter;
-		$this->saved_filter = $wp_filter['lw_harbor/premium_plugin_existence_callbacks'] ?? null;
-		unset( $wp_filter['lw_harbor/premium_plugin_existence_callbacks'] );
+		$this->saved_filter = $wp_filter['lw_harbor/premium_plugin_exists'] ?? null;
+		unset( $wp_filter['lw_harbor/premium_plugin_exists'] );
 
 		$this->registry = new Premium_Plugin_Registry();
 	}
@@ -50,9 +50,9 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 	 */
 	protected function tearDown(): void {
 		global $wp_filter;
-		unset( $wp_filter['lw_harbor/premium_plugin_existence_callbacks'] );
+		unset( $wp_filter['lw_harbor/premium_plugin_exists'] );
 		if ( $this->saved_filter !== null ) {
-			$wp_filter['lw_harbor/premium_plugin_existence_callbacks'] = $this->saved_filter;
+			$wp_filter['lw_harbor/premium_plugin_exists'] = $this->saved_filter;
 		}
 
 		parent::tearDown();
@@ -74,11 +74,8 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 	 */
 	public function test_returns_true_when_a_registered_callback_returns_true(): void {
 		add_filter(
-			'lw_harbor/premium_plugin_existence_callbacks',
-			static function ( array $callbacks ): array {
-				$callbacks[] = static fn(): bool => true;
-				return $callbacks;
-			}
+			'lw_harbor/premium_plugin_exists',
+			'__return_true'
 		);
 
 		$this->assertTrue( $this->registry->any() );
@@ -91,12 +88,8 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 	 */
 	public function test_returns_false_when_all_registered_callbacks_return_false(): void {
 		add_filter(
-			'lw_harbor/premium_plugin_existence_callbacks',
-			static function ( array $callbacks ): array {
-				$callbacks[] = static fn(): bool => false;
-				$callbacks[] = static fn(): bool => false;
-				return $callbacks;
-			}
+			'lw_harbor/premium_plugin_exists',
+			'__return_false'
 		);
 
 		$this->assertFalse( $this->registry->any() );
@@ -109,13 +102,12 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 	 */
 	public function test_returns_true_when_at_least_one_of_many_callbacks_returns_true(): void {
 		add_filter(
-			'lw_harbor/premium_plugin_existence_callbacks',
-			static function ( array $callbacks ): array {
-				$callbacks[] = static fn(): bool => false;
-				$callbacks[] = static fn(): bool => true;
-				$callbacks[] = static fn(): bool => false;
-				return $callbacks;
-			}
+			'lw_harbor/premium_plugin_exists',
+			'__return_false'
+		);
+		add_filter(
+			'lw_harbor/premium_plugin_exists',
+			'__return_true'
 		);
 
 		$this->assertTrue( $this->registry->any() );
@@ -128,13 +120,16 @@ final class Premium_Plugin_RegistryTest extends HarborTestCase {
 	 */
 	public function test_returns_false_when_a_non_scalar_callback_returns(): void {
 		add_filter(
-			'lw_harbor/premium_plugin_existence_callbacks',
-			static function ( array $callbacks ): array {
-				$callbacks[] = static fn() => new stdClass();
-				$callbacks[] = static fn() => [ 'nonempty' ];
-				$callbacks[] = static fn() => null;
-				return $callbacks;
-			}
+			'lw_harbor/premium_plugin_exists',
+			static fn() => new stdClass()
+		);
+		add_filter(
+			'lw_harbor/premium_plugin_exists',
+			static fn() => [ 'nonempty' ]
+		);
+		add_filter(
+			'lw_harbor/premium_plugin_exists',
+			static fn() => null
 		);
 
 		$this->assertFalse( $this->registry->any() );

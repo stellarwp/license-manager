@@ -35,11 +35,8 @@ class Harbor_E2E_Container extends DI52Container implements ContainerInterface {
 // Without this the deferred registration short-circuits and the UI loads with no
 // product data.
 add_filter(
-	'lw_harbor/premium_plugin_existence_callbacks',
-	static function ( array $callbacks ): array {
-		$callbacks[] = static fn(): bool => true;
-		return $callbacks;
-	}
+	'lw_harbor/premium_plugin_exists',
+	'__return_true'
 );
 
 add_action(

@@ -17,11 +17,8 @@ use LiquidWeb\Harbor\Harbor;
 // that depend on provider bindings (License_Repository, Portal_Client, etc.)
 // or on hooks added by provider register_hooks() observe an empty container.
 add_filter(
-	'lw_harbor/premium_plugin_existence_callbacks',
-	static function ( array $callbacks ): array {
-		$callbacks[] = static fn(): bool => true;
-		return $callbacks;
-	}
+	'lw_harbor/premium_plugin_exists',
+	'__return_true'
 );
 
 add_action(
