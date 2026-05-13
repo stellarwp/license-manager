@@ -18,7 +18,11 @@ class Register_Submenu {
 	 * @return void
 	 */
 	public function __invoke( string $parent_slug ): void {
-		if ( ! Config::get_container()->get( Premium_Plugin_Registry::class )->any() ) {
+		if (
+			! Config::get_container()->get( Premium_Plugin_Registry::class )->any()
+			/** This filter is documented in src/Harbor/Admin/Feature_Manager_Page.php */
+			|| ! apply_filters( 'lw-harbor/hide_menu_item', false )
+		) {
 			return;
 		}
 
