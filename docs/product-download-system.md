@@ -31,17 +31,19 @@ The desired experience is:
 
 ## Operating contexts
 
-Harbor must distinguish between two product contexts.
+Harbor must distinguish between two product contexts. The context should be determined by the presence of an embedded license key in an installed Liquid Web premium package, not by the license key the user manually enters into Harbor.
+
+A manually entered license key proves the customer has entitlement, but it does not by itself prove that externally distributed product code is already present on the site. An embedded license key does. WordPress.org-distributed products should never contain an embedded Liquid Web premium license key, while premium packages delivered by Liquid Web systems are expected to include one.
 
 ### WordPress.org-only context
 
-A site is in the WordPress.org-only context when the only Liquid Web products present are products distributed through WordPress.org.
+A site is in the WordPress.org-only context when Harbor does not detect an embedded license key in any installed Liquid Web premium package. In this context, the site may still have a manually entered license key, but it has not yet proven that a premium package delivered by Liquid Web systems is installed.
 
 In this context, Harbor is operating under the constraints of WordPress.org-distributed code. It may present information and guide the user, but it must not directly deliver non-WordPress.org executable code into the WordPress filesystem.
 
 ### Premium-present context
 
-A site is in the premium-present context when at least one Liquid Web premium or otherwise non-WordPress.org product package is already installed on the site.
+A site is in the premium-present context when Harbor detects an embedded license key in an installed Liquid Web premium package. The embedded key is used only as a contextual signal that premium code delivered by Liquid Web systems is already present. It is separate from the active license key the customer may enter, change, or remove in the Harbor interface.
 
 In this context, the site already contains product code distributed outside WordPress.org. Premium product management may rely on the behavior and update mechanisms provided by that premium code, subject to the product’s own licensing and consent requirements.
 
@@ -107,6 +109,8 @@ The interface should still be explicit about what action is occurring and should
 
 ### Hiding or disabling the Harbor products page
 
+When Harbor detects the premium-present context, the system should not require the WordPress.org external communication consent screen for the premium management experience. The consent and revoke-access flow is intended for WordPress.org-only contexts where externally hosted catalog and licensing communication needs explicit disclosure.
+
 The system should provide a way for site owners or developers to hide or disable the Harbor product management page.
 
 This gives customers control over whether the product discovery surface appears in their WordPress admin and helps address concerns from users who do not want a bundled product management interface.
@@ -119,6 +123,8 @@ The system should not depend on the claim that Liquid Web is a trusted source fo
 
 The system should not make license entry equivalent to permission for direct server-side installation of premium code in a WordPress.org-only context.
 
+The system should not use a manually entered license key as the signal that premium code is already installed. Premium-present context should come from detecting an embedded license key in an installed premium package.
+
 ## Success criteria
 
 The system is successful when:
@@ -128,17 +134,18 @@ The system is successful when:
 - The user clearly understands when they are downloading a ZIP versus installing a product.
 - WordPress.org-hosted products continue to support normal install and activation flows.
 - Premium product management remains efficient once premium code is already present on the site.
+- Premium-present behavior is enabled by detecting an embedded license key in an installed premium package, not merely by detecting a manually entered license key.
 - Developers and site owners have a documented way to hide or disable the Harbor product page.
 
 ## State model
 
 ```mermaid
 stateDiagram-v2
-    [*] --> WordPressOrgOnly: Only Liquid Web .org products installed
+    [*] --> WordPressOrgOnly: No embedded premium license key detected
     WordPressOrgOnly --> ManualPremiumDownload: User enters license and chooses premium product
     ManualPremiumDownload --> UserUploadsZip: ZIP downloaded to user's device
-    UserUploadsZip --> PremiumPresent: User uploads and installs premium package
-    PremiumPresent --> ManagedPremiumExperience: Premium code is present
+    UserUploadsZip --> PremiumPresent: User uploads and installs premium package with embedded key
+    PremiumPresent --> ManagedPremiumExperience: Embedded premium key detected
 
     WordPressOrgOnly --> WordPressOrgInstall: User installs .org product
     WordPressOrgInstall --> WordPressOrgOnly: No premium package installed
