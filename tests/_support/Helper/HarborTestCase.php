@@ -31,16 +31,6 @@ class HarborTestCase extends WPTestCase {
 		// triggers _doing_it_wrong here. Expect it so individual tests don't fail.
 		$this->setExpectedIncorrectUsage( '_lw_harbor_instance_registry' );
 
-		// Pretend a premium addon is active so Config::is_there_at_least_one_premium_plugin()
-		// returns true and Harbor::register_providers() actually registers providers.
-		add_filter(
-			'lw_harbor/premium_plugin_existence_callbacks',
-			static function ( array $callbacks ): array {
-				$callbacks[] = static fn(): bool => true;
-				return $callbacks;
-			}
-		);
-
 		$container = new Container();
 		$container->singleton( ContainerInterface::class, $container );
 		Config::set_container( $container );
