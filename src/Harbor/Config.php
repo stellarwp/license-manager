@@ -124,7 +124,7 @@ class Config {
 				 * @return array<callable>
 				 */
 				(array) apply_filters( 'lw_harbor/premium_plugin_existence_callbacks', [] ),
-				fn( callable $callback ): bool => $callback()
+				fn( callable $callback ): bool => Cast::to_bool( $callback() )
 			)
 		);
 	}

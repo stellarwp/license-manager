@@ -85,7 +85,7 @@ if ( ! function_exists( '_lw_harbor_global_function_registry' ) ) {
 					}
 				};
 
-				$registry[ $key ][ $version ] = static function( ...$args ) use ( $callback, $warning ) {
+				$registry[ $key ][ $version ] = static function ( ...$args ) use ( $callback, $warning ) {
 					$warning();
 					return $callback( ...$args );
 				};
