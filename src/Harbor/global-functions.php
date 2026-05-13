@@ -33,13 +33,21 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 		/** @var array<string, string[]> $instances */
 		static $instances = [];
 
+		if ( did_action( 'wp_loaded' ) ) {
+			_doing_it_wrong( __FUNCTION__, 'Registrations are only accepted during the bootstrap window (before wp_loaded).', 'TBD' );
+			return $instances;
+		}
+
+		if ( '' === $version ) {
+			_doing_it_wrong( __FUNCTION__, 'Version is required.', 'TBD' );
+			return $instances;
+		}
+
 		// Only accept registrations during the bootstrap window (before wp_loaded).
 		// All real Harbor instances initialize during plugins_loaded, so anything
 		// arriving after wp_loaded is outside the expected lifecycle and is ignored
 		// to prevent external code from injecting fake versions into the registry.
-		if ( $version !== '' && ! did_action( 'wp_loaded' ) ) {
-			$instances[ $version ][] = $plugin_basename;
-		}
+		$instances[ $version ][] = $plugin_basename;
 
 		return $instances;
 	}
@@ -71,7 +79,16 @@ if ( ! function_exists( '_lw_harbor_global_function_registry' ) ) {
 			// Mirror the instance registry's registration window: only accept
 			// writes before wp_loaded so callbacks can't be injected after bootstrap.
 			if ( ! did_action( 'wp_loaded' ) ) {
-				$registry[ $key ][ $version ] = $callback;
+				$warning = static function() {
+					if ( ! did_action( 'init' ) && ! doing_action( 'init' ) ) {
+						_doing_it_wrong( __FUNCTION__, 'Harbor API is only safe to use after or during the init hook.', 'TBD' );
+					}
+				};
+
+				$registry[ $key ][ $version ] = static function() use ( $callback, $warning ) {
+					$warning();
+					return $callback();
+				};
 			}
 			return null;
 		}
