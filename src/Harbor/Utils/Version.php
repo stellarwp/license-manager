@@ -14,7 +14,6 @@ use LiquidWeb\Harbor\Harbor;
  * _lw_harbor_instance_registry() function as the cross-copy registry.
  *
  * @since 1.0.0
- * @since TBD - Restricted API access.
  */
 class Version {
 
@@ -37,7 +36,7 @@ class Version {
 	 *
 	 * @return bool
 	 */
-	private static function is_highest(): bool {
+	public static function is_highest(): bool {
 		return self::is_highest_among( array_keys( _lw_harbor_instance_registry() ) );
 	}
 
@@ -50,7 +49,7 @@ class Version {
 	 *
 	 * @return bool
 	 */
-	private static function is_highest_among( array $versions ): bool {
+	public static function is_highest_among( array $versions ): bool {
 		$highest = array_reduce(
 			$versions,
 			static function ( string $carry, string $v ): string {
@@ -98,7 +97,7 @@ class Version {
 	 *
 	 * @return bool
 	 */
-	private static function is_leader(): bool {
+	public static function is_leader(): bool {
 		return self::$claimed_leadership;
 	}
 
