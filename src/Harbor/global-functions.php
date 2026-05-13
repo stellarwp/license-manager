@@ -11,6 +11,8 @@
  * equivalents to ensure they always execute the most up-to-date implementation.
  */
 
+use LiquidWeb\Harbor\Utils\Lifecycle;
+
 if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 	/**
 	 * Reads from or writes to the active Harbor instance registry.
@@ -33,8 +35,14 @@ if ( ! function_exists( '_lw_harbor_instance_registry' ) ) {
 		/** @var array<string, string[]> $instances */
 		static $instances = [];
 
-		if ( did_action( 'wp_loaded' ) ) {
-			_doing_it_wrong( __FUNCTION__, 'Registrations are only accepted during the bootstrap window (before wp_loaded).', 'TBD' );
+		if ( ! Lifecycle::is_bootstrap_window_open() ) {
+			_doing_it_wrong(
+				__FUNCTION__,
+				esc_html(
+					sprintf( 'Registrations are only accepted during the bootstrap window (before %s).', Lifecycle::get_bootstrap_end_hook() )
+				),
+				'TBD'
+			);
 			return $instances;
 		}
 
@@ -78,7 +86,7 @@ if ( ! function_exists( '_lw_harbor_global_function_registry' ) ) {
 		if ( $callback !== null ) {
 			// Mirror the instance registry's registration window: only accept
 			// writes before wp_loaded so callbacks can't be injected after bootstrap.
-			if ( ! did_action( 'wp_loaded' ) ) {
+			if ( Lifecycle::is_bootstrap_window_open() ) {
 				$registry[ $key ][ $version ] = static function ( ...$args ) use ( $callback ) {
 					return $callback( ...$args );
 				};
