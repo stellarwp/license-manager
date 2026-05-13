@@ -18,6 +18,4 @@ export enum ErrorCode {
 	CatalogRefreshFailed = 'catalog-refresh-failed',
 	LegacyLicensesFetchFailed = 'legacy-licenses-fetch-failed',
 	ResolutionFailed = 'resolution-failed',
-	ConsentOptInFailed = 'consent-opt-in-failed',
-	ConsentRevokeFailed = 'consent-revoke-failed',
 }

@@ -88,6 +88,5 @@ add_action(
 	'init',
 	static function () {
 		add_option( 'lw_harbor_unified_license_key', 'LWSW-UNIFIED-PRO-2026' );
-		add_option( 'lw-harbor-allowed-external-api-communications', true );
 	}
 );

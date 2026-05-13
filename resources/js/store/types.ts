@@ -88,24 +88,12 @@ export interface LegacyLicensesState {
 	bySlug: Record<string, LegacyLicense>;
 }
 
-export interface ConsentState {
-	/**
-	 * Whether a revoke request is in flight.
-	 */
-	isRevoking: boolean;
-	/**
-	 * The error from the last failed revoke, cleared when a new one starts.
-	 */
-	revokeError: HarborError | null;
-}
-
 export interface State {
 	features: FeaturesState;
 	harborHosts: HarborHostsState;
 	license: LicenseState;
 	catalog: CatalogState;
 	legacyLicenses: LegacyLicensesState;
-	consent: ConsentState;
 }
 
 // ---------------------------------------------------------------------------
@@ -132,9 +120,7 @@ export type Action =
 	| { type: 'DELETE_LICENSE_FAILED'; error: HarborError }
 	| { type: 'REFRESH_LICENSE_START' }
 	| { type: 'REFRESH_LICENSE_FINISHED'; license: License }
-	| { type: 'REFRESH_LICENSE_FAILED'; error: HarborError }
-	| { type: 'REVOKE_CONSENT_START' }
-	| { type: 'REVOKE_CONSENT_FAILED'; error: HarborError };
+	| { type: 'REFRESH_LICENSE_FAILED'; error: HarborError };
 
 // ---------------------------------------------------------------------------
 // Thunk

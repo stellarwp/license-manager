@@ -6,7 +6,4 @@ export interface HarborData {
     subscriptionsUrl:  string;
     domain:            string;
     version:           string;
-    licensingBaseUrl?: string;
-    portalBaseUrl?:    string;
-    heraldBaseUrl?:    string;
 }

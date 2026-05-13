@@ -12,7 +12,6 @@ module.exports = {
     ...defaultConfig,
     entry: {
         index:    path.resolve( process.cwd(), 'resources', 'js', 'index.tsx' ),
-        'opt-in': path.resolve( process.cwd(), 'resources', 'js', 'opt-in.tsx' ),
     },
     output: {
         path:          outputPath,
