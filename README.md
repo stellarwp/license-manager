@@ -136,3 +136,15 @@ Start with [Harbor Overview](/docs/harbor.md) for the full architecture.
 - [Integration Guide](/docs/guides/integration.md) — How to integrate your plugin with Harbor.
 - [CLI Commands](/docs/guides/cli.md) — WP-CLI commands for feature management.
 - [Testing](/docs/guides/testing.md) — PHP tests with Codeception/`slic`; E2E tests with Playwright/wp-env.
+
+### Plugins with Harbor
+
+- [GiveWP](https://github.com/impress-org/givewp)
+- [LearnDash](https://github.com/stellarwp/learndash-core)
+- [MemberDash](https://github.com/stellarwp/memberdash)
+- [The Events Calendar](https://github.com/the-events-calendar/the-events-calendar)
+- [Event Tickets](https://github.com/the-events-calendar/event-tickets)
+- [RCP](https://github.com/stellarwp/restrict-content-pro)
+- [Kadence Blocks](https://github.com/stellarwp/kadence-blocks)
+- [Kadence Shop Kit](https://github.com/stellarwp/kadence-shop-kit)
+- [Kadence Theme Kit Pro](https://github.com/stellarwp/kadence-pro)
