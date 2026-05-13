@@ -139,12 +139,14 @@ Start with [Harbor Overview](/docs/harbor.md) for the full architecture.
 
 ### Plugins with Harbor
 
-- [GiveWP](https://github.com/impress-org/givewp)
-- [LearnDash](https://github.com/stellarwp/learndash-core)
-- [MemberDash](https://github.com/stellarwp/memberdash)
-- [The Events Calendar](https://github.com/the-events-calendar/the-events-calendar)
-- [Event Tickets](https://github.com/the-events-calendar/event-tickets)
-- [RCP](https://github.com/stellarwp/restrict-content-pro)
-- [Kadence Blocks](https://github.com/stellarwp/kadence-blocks)
-- [Kadence Shop Kit](https://github.com/stellarwp/kadence-shop-kit)
-- [Kadence Theme Kit Pro](https://github.com/stellarwp/kadence-pro)
+| Plugin name             | Repository                                                                                            | Distribution                                                   | Note                                                                        |
+|-------------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------------------------------|
+| GiveWP                  | [impress-org/givewp](https://github.com/impress-org/givewp)                                           | https://wordpress.org/plugins/give/                            |                                                                             |
+| LearnDash               | [stellarwp/learndash-core](https://github.com/stellarwp/learndash-core)                               | https://herald.nexcess.com/admin/products/sfwd-lms             |                                                                             |
+| MemberDash              | [stellarwp/memberdash](https://github.com/stellarwp/memberdash)                                       | https://herald.nexcess.com/admin/products/memberdash           |                                                                             |
+| The Events Calendar     | [the-events-calendar/the-events-calendar](https://github.com/the-events-calendar/the-events-calendar) | https://wordpress.org/plugins/the-events-calendar/             | https://github.com/the-events-calendar/tribe-common should be updated first |
+| Event Tickets           | [the-events-calendar/event-tickets](https://github.com/the-events-calendar/event-tickets)             | https://wordpress.org/plugins/event-tickets/                   | https://github.com/the-events-calendar/tribe-common should be updated first |
+| Kadence Memberships Pro | [stellarwp/restrict-content-pro](https://github.com/stellarwp/restrict-content-pro)                   | https://herald.nexcess.com/admin/products/restrict-content-pro |                                                                             |
+| Kadence Blocks          | [stellarwp/kadence-blocks](https://github.com/stellarwp/kadence-blocks)                               | https://wordpress.org/plugins/kadence-blocks/                  |                                                                             |
+| Kadence Shop Kit        | [stellarwp/kadence-shop-kit](https://github.com/stellarwp/kadence-shop-kit)                           | https://herald.nexcess.com/admin/products/kadence-shop-kit     |                                                                             |
+| Kadence Theme Kit Pro   | [stellarwp/kadence-pro](https://github.com/stellarwp/kadence-pro)                                     | https://herald.nexcess.com/admin/products/kadence-theme-pro    |                                                                             |
