@@ -21,7 +21,7 @@ class Register_Submenu {
 		if (
 			! Config::get_container()->get( Premium_Plugin_Registry::class )->any()
 			/** This filter is documented in src/Harbor/Admin/Feature_Manager_Page.php */
-			|| ! apply_filters( 'lw-harbor/hide_menu_item', false )
+			|| apply_filters( 'lw-harbor/hide_menu_item', false )
 		) {
 			return;
 		}
