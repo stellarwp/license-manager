@@ -185,10 +185,10 @@ class Feature_Manager_Page {
 			$handle,
 			'harborData',
 			[
-				'restUrl'             => rest_url( 'liquidweb/harbor/v1/' ),
-				'nonce'               => wp_create_nonce( 'wp_rest' ),
-				'pluginsUrl'          => admin_url( 'plugins.php' ),
-				'activationUrl'       => Config::get_portal_base_url() . '/subscriptions/?' . http_build_query(
+				'restUrl'          => rest_url( 'liquidweb/harbor/v1/' ),
+				'nonce'            => wp_create_nonce( 'wp_rest' ),
+				'pluginsUrl'       => admin_url( 'plugins.php' ),
+				'activationUrl'    => Config::get_portal_base_url() . '/subscriptions/?' . http_build_query(
 					[
 						'portal-referral' => 'plugin',
 						'redirect_url'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&refresh=auto' ),
@@ -198,9 +198,9 @@ class Feature_Manager_Page {
 					'&',
 					PHP_QUERY_RFC3986
 				),
-				'subscriptionsUrl'    => Config::get_portal_base_url() . '/subscriptions/',
-				'domain'              => $this->site_data->get_domain(),
-				'version'             => Harbor::VERSION,
+				'subscriptionsUrl' => Config::get_portal_base_url() . '/subscriptions/',
+				'domain'           => $this->site_data->get_domain(),
+				'version'          => Harbor::VERSION,
 			]
 		);
 

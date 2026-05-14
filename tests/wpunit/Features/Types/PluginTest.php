@@ -98,7 +98,7 @@ final class PluginTest extends HarborTestCase {
 				'plugin_file'       => 'test-feature/test-feature.php',
 				'is_available'      => true,
 				'documentation_url' => 'https://example.com/docs',
-				'release_date'       => '2025-11-15',
+				'release_date'      => '2025-11-15',
 				'installed_version' => '1.0.0',
 			]
 		);
@@ -113,7 +113,7 @@ final class PluginTest extends HarborTestCase {
 				'plugin_file'       => 'test-feature/test-feature.php',
 				'is_available'      => true,
 				'documentation_url' => 'https://example.com/docs',
-				'release_date'       => '2025-11-15',
+				'release_date'      => '2025-11-15',
 				'installed_version' => '1.0.0',
 				'type'              => 'plugin',
 				'wporg_slug'        => null,
@@ -142,7 +142,7 @@ final class PluginTest extends HarborTestCase {
 			'documentation_url' => 'https://example.com/docs',
 			'plugin_file'       => 'test-feature/test-feature.php',
 			'wporg_slug'        => null,
-			'release_date'       => '2025-11-15',
+			'release_date'      => '2025-11-15',
 			'installed_version' => '1.2.3',
 			'version'           => null,
 			'changelog'         => null,

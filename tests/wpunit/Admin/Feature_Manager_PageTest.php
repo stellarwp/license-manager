@@ -300,7 +300,7 @@ class Feature_Manager_PageTest extends HarborTestCase {
 				},
 			]
 		);
-		$catalog = $this->makeEmpty( Catalog_Repository::class, [ 'refresh' => null ] );
+		$catalog         = $this->makeEmpty( Catalog_Repository::class, [ 'refresh' => null ] );
 
 		$page = new Feature_Manager_Page( $site_data, $license_manager, $catalog );
 		$page->maybe_redirect_after_refresh();
