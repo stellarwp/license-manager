@@ -23,6 +23,8 @@ composer require stellarwp/harbor
 
 Initializing the Harbor library should be done within the `plugins_loaded` action, preferably at priority `0`.
 
+Harbor only boots its providers when at least one premium plugin announces itself via the `lw_harbor/premium_plugin_exists` filter. **The filter must be attached before `Harbor::init()` is called**, otherwise the gate inside `Harbor::init()` short-circuits and the providers, REST routes, admin page, and `lw_harbor/loaded` action are never registered. The simplest pattern is to add the filter on the line immediately above the `Harbor::init()` call (as shown below), but anywhere earlier in the request works just as well.
+
 ```php
 use LiquidWeb\Harbor\Config;
 use LiquidWeb\Harbor\Harbor;
@@ -43,6 +45,12 @@ add_action( 'plugins_loaded', function() {
  // e.g. define( 'MY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) )
  Config::set_plugin_basename( MY_PLUGIN_BASENAME );
  Config::set_container( $container );
+
+ // Announce that this premium plugin should bring Harbor online.
+ // Must be added before Harbor::init(). Anywhere earlier in the request works,
+ // but the line above the call is the simplest pattern.
+ add_filter( 'lw_harbor/premium_plugin_exists', '__return_true' );
+
  Harbor::init();
 }, 0 );
 ```

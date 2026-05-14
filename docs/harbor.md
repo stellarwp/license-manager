@@ -29,6 +29,12 @@ Most entry plugins are free and available on WordPress.org. This is deliberate. 
 
 All entry plugins share the same unified `LWSW-` key. When an entry plugin activates and detects a unified key on the site, it registers itself with the leader and defers to it. If the entry plugin shipped with an embedded key and the site doesn't have one yet, the embedded key becomes the site's key.
 
+## The Premium-Plugin Gate
+
+Each Harbor instance stays dormant until at least one premium plugin announces itself through the `lw_harbor/premium_plugin_exists` filter. `Harbor::init()` queries the filter via `Premium_Plugin_Registry::any()` and only then registers providers, REST routes, the admin page, and fires the `lw_harbor/loaded` action. This keeps Harbor silent on sites that only have free entry plugins installed.
+
+The filter must be attached before `Harbor::init()` is called. Anywhere earlier in the request works; the simplest pattern is the line right above the `Harbor::init()` call. See the [Integration Guide](guides/integration.md#the-premium-plugin-gate) for the integrator-facing rules.
+
 ## The Three Data Layers
 
 Harbor is organized around three data layers. Each answers a different question, and none is sufficient alone.
