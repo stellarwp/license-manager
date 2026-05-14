@@ -33,6 +33,12 @@ Multiple vendor-prefixed copies negotiate leadership through a shared global fun
 
 `Version::is_highest()` (in `src/Harbor/Utils/Version.php`) reads the registry and returns `true` if this instance's version string is greater than or equal to all registered versions. `Version::should_handle( $action )` layers a per-responsibility mutex on top: it fires `do_action( 'lw-harbor/handled/{action}' )` the first time a qualifying instance claims a responsibility, and any subsequent call (even from the same instance) sees `did_action()` return `true` and backs off. This ensures exactly one instance handles each shared responsibility — admin page, REST routes, etc. — even when two copies run the same version.
 
+## Premium-Plugin Gate
+
+Leader election happens regardless of whether Harbor will actually do anything on the site. The provider stack (admin page, REST routes, licensing/portal/feature subsystems) is gated separately by `Premium_Plugin_Registry::any()`, which applies the `lw_harbor/premium_plugin_exists` filter inside `Harbor::init()`. If no callback returns `true`, the leader registers the cross-instance hooks and the global function registry (so other instances can still discover each other) but skips everything else and does not fire `lw_harbor/loaded`.
+
+The filter must be attached before `Harbor::init()` is called. Anywhere earlier in the request works; the simplest pattern is the line right above the `Harbor::init()` call. See the [Integration Guide](../guides/integration.md#the-premium-plugin-gate) for the integrator-facing contract.
+
 ## Fat Leader
 
 ### Key and License State

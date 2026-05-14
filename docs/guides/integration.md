@@ -18,6 +18,10 @@ Harbor must be initialized once per plugin, typically inside a service provider 
 use Boomshakalaka\LiquidWeb\Harbor\Config;
 use Boomshakalaka\LiquidWeb\Harbor\Harbor;
 
+// Announce this premium plugin to Harbor's bootstrap gate.
+// This MUST run before Harbor::init(). See "The premium-plugin gate" below.
+add_filter('lw_harbor/premium_plugin_exists', '__return_true');
+
 class HarborServiceProvider
 {
     public function register(): void
@@ -30,7 +34,7 @@ class HarborServiceProvider
         // Give Harbor access to your DI container
         Config::set_container($container);
 
-        // Boot all Harbor subsystems
+        // Boot all Harbor subsystems (only if the premium-plugin gate passes)
         Harbor::init();
     }
 
@@ -45,8 +49,28 @@ class HarborServiceProvider
 
 - `Config::set_plugin_basename()` must receive the plugin basename (e.g. `myplugin/myplugin.php`). Define a constant like `MY_PLUGIN_BASENAME` in your main plugin file using `plugin_basename( __FILE__ )` and pass that — calling `plugin_basename( __FILE__ )` from inside a service class will resolve the wrong file
 - `Config::set_container()` must be called before `Harbor::init()`
-- `Harbor::init()` sets up all internal providers (storage, API, licensing, admin UI, etc.)
+- `Harbor::init()` sets up all internal providers (storage, API, licensing, admin UI, etc.), but only when the premium-plugin gate passes (see next section)
 - Register the Harbor service provider after all other providers so the container is fully configured
+
+### The premium-plugin gate
+
+`Harbor::init()` only registers providers, REST routes, the admin page, and the `lw_harbor/loaded` action when at least one callback on the `lw_harbor/premium_plugin_exists` filter returns `true`. This keeps Harbor dormant on sites that have only free entry plugins installed.
+
+**The filter must be attached before `Harbor::init()` is called.** Anywhere earlier in the request works; the simplest pattern is to attach it on the line right above the `Harbor::init()` call (as shown in the example above). If your plugin attaches the filter from a service class that itself is loaded inside `Harbor::init()`, it is too late: the gate has already been evaluated.
+
+```php
+add_filter('lw_harbor/premium_plugin_exists', '__return_true');
+```
+
+Use a real condition (e.g. a license check) instead of `__return_true` if you want the gate to remain closed when the premium plugin is installed but not licensed.
+
+Once the gate passes, Harbor fires the `lw_harbor/loaded` action. Hook anything that depends on Harbor being fully booted (admin notices, submenu registrations, REST consumers) on this action rather than on `plugins_loaded` directly.
+
+```php
+add_action('lw_harbor/loaded', function () {
+    // Safe to call lw_harbor_register_submenu(), query the leader, etc.
+});
+```
 
 ---
 
@@ -195,10 +219,12 @@ $url = lw_harbor_get_license_page_url(); // string (empty string if Harbor is no
 If your plugin has its own top-level admin menu, call `lw_harbor_register_submenu()` to append a **Licensing** item that links directly to the Harbor Feature Manager page. This lets users reach the unified license UI without leaving your plugin's menu area.
 
 ```php
-lw_harbor_register_submenu('my-plugin-menu-slug');
+add_action('lw_harbor/loaded', function () {
+    lw_harbor_register_submenu('my-plugin-menu-slug');
+});
 ```
 
-Call this during or after `plugins_loaded`, before the `admin_menu` hook fires. The item is always appended last in the submenu so it does not disrupt your plugin's own menu order.
+`lw_harbor_register_submenu()` is a no-op until the `lw_harbor/loaded` action has fired, so hook the call into that action (or any later hook). The item is always appended last in the submenu so it does not disrupt your plugin's own menu order.
 
 The function always delegates to the highest-version Harbor instance on the site, so it is safe to call even when multiple plugins bundle Harbor.
 
@@ -210,7 +236,7 @@ By default, Harbor registers a **Liquid Web Products** entry under the WordPress
 add_filter('lw-harbor/hide_menu_item', '__return_true');
 ```
 
-The Feature Manager page itself remains registered — direct URLs and submenu links from `lw_harbor_register_submenu()` continue to work. Only the visible Settings menu entry is removed.
+The Feature Manager page itself remains registered, so direct URLs continue to work. The filter hides both the standalone **Settings → Liquid Web Products** entry and any submenu items added through `lw_harbor_register_submenu()`.
 
 ---
 
@@ -224,11 +250,17 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 
 ### Filters
 
-| Filter                                       | Purpose                                                                                  |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `lw-harbor/legacy_licenses`                  | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`.          |
-| `lw-harbor/hide_menu_item`                   | Hide the **Liquid Web Products** entry under Settings without unregistering the page.    |
-| `lw-harbor/allow_external_api_communications`| Override the stored consent state. Receives and returns `bool $allowed`.                 |
+| Filter                            | Purpose                                                                                                                                                                                                |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `lw_harbor/premium_plugin_exists` | Announce that a premium plugin is present so `Harbor::init()` registers its providers. Receives and returns `bool`. **Must be attached before `Harbor::init()` runs**; see [Initialization](#1-initialization). |
+| `lw-harbor/legacy_licenses`       | Report pre-existing licenses to Harbor. Receives and returns `array $licenses`.                                                                                                                        |
+| `lw-harbor/hide_menu_item`        | Hide the **Liquid Web Products** Settings entry and any `lw_harbor_register_submenu()` items without unregistering the page itself.                                                                    |
+
+### Actions
+
+| Action             | Purpose                                                                                                                                                                                          |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `lw_harbor/loaded` | Fires once Harbor finishes registering providers. Only fires when the premium-plugin gate passes. Hook integrations that depend on Harbor being booted (submenu registrations, etc.) onto this. |
 
 ### Global Functions
 
@@ -241,6 +273,5 @@ See [Section 2](#2-bundling-a-license-key). Bundling a key is done entirely thro
 | `lw_harbor_is_feature_available`               | `(string $slug): bool`              | Check if the customer's license/tier includes this feature.                     |
 | `lw_harbor_get_license_page_url`               | `(): string`                        | Get the admin URL for the Feature Manager page (empty string if inactive).      |
 | `lw_harbor_get_licensed_domain`                | `(): string`                        | Get the domain Harbor uses for licensing on this site.                          |
-| `lw_harbor_register_submenu`                   | `(string $parent_slug): void`       | Append a Licensing submenu item to a plugin's top-level admin menu.             |
+| `lw_harbor_register_submenu`                   | `(string $parent_slug): void`       | Append a Licensing submenu item to a plugin's top-level admin menu. No-op until `lw_harbor/loaded` has fired. |
 | `lw_harbor_display_legacy_license_page_notice` | `(string $product_name = ''): void` | Display a notice on a legacy license page pointing users to the unified system. |
-| `lw_harbor_has_consent`                        | `(): bool`                          | Whether the site owner has opted in to external Liquid Web API communications.  |
