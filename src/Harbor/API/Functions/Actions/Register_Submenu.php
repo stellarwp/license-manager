@@ -2,9 +2,6 @@
 
 namespace LiquidWeb\Harbor\API\Functions\Actions;
 
-use LiquidWeb\Harbor\Config;
-use LiquidWeb\Harbor\Premium_Plugin_Registry;
-
 /**
  * Registers a submenu item under a plugin's existing menu that links to the Harbor feature manager.
  *
@@ -19,7 +16,7 @@ class Register_Submenu {
 	 */
 	public function __invoke( string $parent_slug ): void {
 		if (
-			! Config::get_container()->get( Premium_Plugin_Registry::class )->any()
+			! did_action( 'lw_harbor/loaded' )
 			/** This filter is documented in src/Harbor/Admin/Feature_Manager_Page.php */
 			|| apply_filters( 'lw-harbor/hide_menu_item', false )
 		) {
