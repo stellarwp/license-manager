@@ -1,9 +1,10 @@
 ### [1.2.0] 2026-05-13
 
+* Feature - The features page no longer shows unless a Premium Addon has been registered.
+* Tweak - Added the `lw_harbor/loaded` action to indicate when Harbor is loaded.
 * Tweak - Added the `lw_harbor/premium_plugin_exists` filter to declare whether a premium plugin exists on a site.
 * Tweak - Removed opt-in as it will not be necessary now that external communications are gated behind a Premium Addon enabling Harbor.
-* Tweak - Added the `lw_harbor/loaded` action to indicate when Harbor is loaded.
-* Feature - The features page no longer shows unless a Premium Addon has been registered.
+* Tweak - The `lw-harbor/hide_menu_item` now also applies to the submenu item created by `lw_harbor_register_submenu()`.
 
 ### [1.1.0] 2026-05-12
 

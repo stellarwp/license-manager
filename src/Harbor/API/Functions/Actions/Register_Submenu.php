@@ -15,6 +15,14 @@ class Register_Submenu {
 	 * @return void
 	 */
 	public function __invoke( string $parent_slug ): void {
+		if (
+			! did_action( 'lw_harbor/loaded' )
+			/** This filter is documented in src/Harbor/Admin/Feature_Manager_Page.php */
+			|| apply_filters( 'lw-harbor/hide_menu_item', false )
+		) {
+			return;
+		}
+
 		add_action(
 			'admin_menu',
 			static function () use ( $parent_slug ): void {
