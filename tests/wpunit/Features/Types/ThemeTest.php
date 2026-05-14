@@ -91,7 +91,7 @@ final class ThemeTest extends HarborTestCase {
 				'description'       => 'Test theme description.',
 				'is_available'      => true,
 				'documentation_url' => 'https://example.com/docs',
-				'release_date'       => '2025-11-15',
+				'release_date'      => '2025-11-15',
 				'installed_version' => '2.0.0',
 			]
 		);
@@ -105,7 +105,7 @@ final class ThemeTest extends HarborTestCase {
 				'description'       => 'Test theme description.',
 				'is_available'      => true,
 				'documentation_url' => 'https://example.com/docs',
-				'release_date'       => '2025-11-15',
+				'release_date'      => '2025-11-15',
 				'installed_version' => '2.0.0',
 				'type'              => 'theme',
 				'wporg_slug'        => null,
