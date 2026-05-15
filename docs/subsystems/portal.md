@@ -219,7 +219,14 @@ Legacy:   {herald_base_url}/legacy/download?plugin={slug}&key={legacy_key}&site=
 
 `Herald_Url_Builder` reads three inputs: the Unified license key via `Licensing\Repositories\License_Repository`, the active legacy license (if any) by slug via `Legacy\License_Repository::find()`, and the site domain from `Site\Data`.
 
-**Precedence.** An active legacy license whose `slug` matches the requested feature wins over a stored Unified key. This is intentional: a legacy-only customer who later installs a Unified key (or has one auto-stored from a sibling Harbor instance) should still route through Herald's `/legacy/download` endpoint for slugs covered by their legacy entitlement. A legacy entry only takes precedence when its `is_active` flag is `true` and its `key` is non-empty; otherwise the builder falls back to the Unified URL.
+**Precedence.** An active legacy license whose `slug` matches the requested feature wins over a stored Unified key. This is intentional and deliberately inverts the order used during feature resolution (see [Features: Resolution](features.md#resolution), where Unified is the primary and Legacy is the fallback grant).
+
+The two orders answer different questions:
+
+- *Resolution* asks "should this feature be shown as available at all?" Either source of entitlement is sufficient, and Unified is checked first because it is the canonical, modern source.
+- *URL building* asks "which key should authenticate the actual ZIP fetch?" Legacy keys are scoped to a specific slug via their `slug` field, so when a matching legacy entry exists, Harbor knows Herald will accept that key for that slug. The Unified key only authenticates features inside its `capabilities` array, and the URL builder does not consult licensing state to find out which features that includes. Preferring legacy when present therefore avoids generating Unified URLs that Herald would reject in mixed-entitlement scenarios (for example, a customer on a Unified tier that does not include a legacy add-on they still hold).
+
+A legacy entry only takes precedence when its `is_active` flag is `true` and its `key` is non-empty. Otherwise the builder falls back to the Unified URL.
 
 `build()` returns an empty string when the domain is empty, or when neither a matching active legacy key nor a Unified key is available. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
 
