@@ -29,14 +29,14 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_returns_empty_array_when_no_filter_adds_licenses(): void {
+	public function test_returns_empty_array_when_no_filter_adds_licenses(): void {
 		$this->assertSame( [], $this->repository->all() );
 	}
 
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_normalizes_array_items_to_legacy_license_instances(): void {
+	public function test_normalizes_array_items_to_legacy_license_instances(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -67,7 +67,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_merges_licenses_from_multiple_filter_callbacks(): void {
+	public function test_merges_licenses_from_multiple_filter_callbacks(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -111,7 +111,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_ignores_non_array_items(): void {
+	public function test_ignores_non_array_items(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -173,7 +173,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_finds_license_by_slug(): void {
+	public function test_finds_license_by_slug(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -213,7 +213,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_returns_null_when_slug_not_found(): void {
+	public function test_returns_null_when_slug_not_found(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -237,7 +237,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_caches_results_across_multiple_calls(): void {
+	public function test_caches_results_across_multiple_calls(): void {
 		$call_count = 0;
 
 		add_filter(
@@ -270,7 +270,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_all_active_returns_only_active_licenses(): void {
+	public function test_all_active_returns_only_active_licenses(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -305,7 +305,7 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_all_inactive_returns_only_inactive_licenses(): void {
+	public function test_all_inactive_returns_only_inactive_licenses(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
@@ -348,14 +348,14 @@ final class License_RepositoryTest extends HarborTestCase {
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_returns_false_for_has_any_when_empty(): void {
+	public function test_returns_false_for_has_any_when_empty(): void {
 		$this->assertFalse( $this->repository->has_any() );
 	}
 
 	/**
 	 * @since 1.0.0
 	 */
-	public function it_returns_true_for_has_any_when_licenses_exist(): void {
+	public function test_returns_true_for_has_any_when_licenses_exist(): void {
 		add_filter(
 			'lw-harbor/legacy_licenses',
 			static function ( array $licenses ) {
