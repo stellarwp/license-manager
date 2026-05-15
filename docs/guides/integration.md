@@ -130,6 +130,18 @@ add_filter('lw-harbor/legacy_licenses', function (array $licenses): array {
 
 > **Tip:** If a single license key covers multiple add-ons, emit one entry per add-on slug so each slug can display a legacy license badge on the Feature Manager page.
 
+### How Harbor uses reported legacy keys
+
+Beyond surfacing legacy entries in the unified license UI, Harbor wires the reported key into feature availability and updates:
+
+1. **Availability.** An `is_active = true` entry marks the catalog feature matching its `slug` as available and in-tier, even when no unified license is installed (or when the installed unified tier does not include that feature).
+2. **Updates.** Update checks proceed for matching slugs, and the package URL routes through Herald's `/legacy/download` endpoint using the reported key. Harbor does not depend on a legacy licensing server to validate or serve the download.
+3. **Inactive entries.** An entry with `is_active = false` is treated as informational only. It surfaces in admin notices urging the user to renew or reactivate, but does not grant availability or updates.
+
+**What `is_active` means.** Harbor takes this flag at face value from your plugin. It should reflect whatever your existing licensing system already considers a valid, in-good-standing license: for example, the result of a recent successful validation against your licensing server. Harbor does not (and cannot) independently verify the key; it trusts the reporting plugin to decide whether the customer is currently entitled to use the product. Regardless of the `is_active` value reported here, Herald validates the key server-side when serving the actual ZIP download, so a falsely-reported `is_active = true` cannot be used to obtain a package the customer is not entitled to.
+
+**Malformed entries.** `key` and `slug` are both required (see the table above). Entries missing either field are not considered legacy licenses at all. They are dropped at repository intake and never appear in the UI, notices, availability checks, or download URLs. Only emit entries you have a real key for.
+
 ### Admin notices for inactive legacy licenses
 
 Once you report licenses via this filter, Harbor automatically displays consolidated admin notices for any inactive licenses that are not already covered by a StellarWP v3 unified license. Notices are grouped by product, shown only to administrators, and are dismissible per user for 7 days.

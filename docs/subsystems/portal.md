@@ -210,13 +210,18 @@ The catalog is the menu. Licensing is the receipt. Feature resolution is the wai
 
 Download URLs for exclusive (non-WordPress.org) features are not stored in the catalog response. They are built at runtime by an implementation of the `Download_Url_Builder` contract (`Portal\Contracts\Download_Url_Builder`). The contract is intentionally minimal — a single `build( string $slug ): string` method — so the download backend can be swapped without touching consumers.
 
-The default implementation is `Herald_Url_Builder`, which constructs Herald download URLs using local data:
+The default implementation is `Herald_Url_Builder`, which produces one of two URL formats depending on which license type covers the requested slug:
 
 ```
-{herald_base_url}/download/{slug}/latest/{license_key}/zip?site={domain}
+Unified:  {herald_base_url}/download/{slug}/latest/{license_key}/zip?site={domain}
+Legacy:   {herald_base_url}/legacy/download?plugin={slug}&key={legacy_key}&site={domain}
 ```
 
-It reads the license key via the `License_Key_Provider` contract (satisfied by `License_Repository`) and the site domain from `Site\Data`. If either is unavailable (no key stored, or empty domain), it returns an empty string. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
+`Herald_Url_Builder` reads three inputs: the Unified license key via `Licensing\Repositories\License_Repository`, the active legacy license (if any) by slug via `Legacy\License_Repository::find()`, and the site domain from `Site\Data`.
+
+**Precedence.** An active legacy license whose `slug` matches the requested feature wins over a stored Unified key. This is intentional: a legacy-only customer who later installs a Unified key (or has one auto-stored from a sibling Harbor instance) should still route through Herald's `/legacy/download` endpoint for slugs covered by their legacy entitlement. A legacy entry only takes precedence when its `is_active` flag is `true` and its `key` is non-empty; otherwise the builder falls back to the Unified URL.
+
+`build()` returns an empty string when the domain is empty, or when neither a matching active legacy key nor a Unified key is available. The Herald base URL defaults to `https://herald.stellarwp.com` and is configurable via `Config::set_herald_base_url()`.
 
 The Portal `Provider` binds `Download_Url_Builder` to `Herald_Url_Builder` in the container. To swap implementations (for example, to point at a different download service or to inject a test double), register a different binding for `Download_Url_Builder::class`.
 
