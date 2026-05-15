@@ -134,6 +134,43 @@ final class License_RepositoryTest extends HarborTestCase {
 	}
 
 	/**
+	 * @since TBD
+	 */
+	public function test_drops_entries_with_empty_key_or_slug(): void {
+		add_filter(
+			'lw-harbor/legacy_licenses',
+			static function ( array $licenses ) {
+				$licenses[] = [
+					'key'     => '',
+					'slug'    => 'missing-key',
+					'name'    => 'Missing Key',
+					'product' => 'P',
+				];
+				$licenses[] = [
+					'key'     => 'orphan',
+					'slug'    => '',
+					'name'    => 'Missing Slug',
+					'product' => 'P',
+				];
+				$licenses[] = [
+					'key'     => 'valid-key',
+					'slug'    => 'valid-plugin',
+					'name'    => 'Valid',
+					'product' => 'P',
+				];
+
+				return $licenses;
+			}
+		);
+
+		$result = $this->repository->all();
+
+		$this->assertCount( 1, $result, 'Malformed entries (empty key or empty slug) must be dropped at repository intake.' );
+		$this->assertSame( 'valid-plugin', $result[0]->slug );
+		$this->assertSame( 'valid-key', $result[0]->key );
+	}
+
+	/**
 	 * @since 1.0.0
 	 */
 	public function it_finds_license_by_slug(): void {
