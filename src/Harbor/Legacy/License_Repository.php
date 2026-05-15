@@ -34,10 +34,22 @@ class License_Repository {
 		$licenses = [];
 
 		foreach ( $filtered_licenses as $license ) {
-			if ( is_array( $license ) ) {
-				/** @var array<string, mixed> $license */
-				$licenses[] = Legacy_License::from_data( $license );
+			if ( ! is_array( $license ) ) {
+				continue;
 			}
+
+			/** @var array<string, mixed> $license */
+			$candidate = Legacy_License::from_data( $license );
+
+			// Reject malformed entries that violate the integration contract.
+			// Both `key` and `slug` are documented as required; entries missing
+			// either are dropped here so they never reach UI, notices, or any
+			// downstream consumer.
+			if ( $candidate->key === '' || $candidate->slug === '' ) {
+				continue;
+			}
+
+			$licenses[] = $candidate;
 		}
 
 		$this->cache = $licenses;

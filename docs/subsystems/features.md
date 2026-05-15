@@ -66,15 +66,18 @@ flowchart TD
     HasLicense -->|No| FreeTier{"min_tier at\nrank 0 (free)?"}
 
     InCaps -->|Yes| Available["Available"]
-    InCaps -->|No| Unavailable["Unavailable"]
+    InCaps -->|No| LegacyCheck{"Active legacy license\nfor this slug?"}
 
     FreeTier -->|Yes| AvailableFallback["Available\n(fallback)"]
-    FreeTier -->|No| UnavailableFallback["Unavailable"]
+    FreeTier -->|No| LegacyCheck
+
+    LegacyCheck -->|Yes| AvailableLegacy["Available\n(legacy grant)"]
+    LegacyCheck -->|No| Unavailable["Unavailable"]
 
     Available --> EnabledCheck
     Unavailable --> EnabledCheck
     AvailableFallback --> EnabledCheck
-    UnavailableFallback --> EnabledCheck
+    AvailableLegacy --> EnabledCheck
 
     EnabledCheck{"Check local enabled state\n(per strategy)"}
 
@@ -99,6 +102,7 @@ Edge cases:
 - No licensing entry for a product (unlicensed): the resolver falls back to tier rank comparison using rank 0, making only free-tier features (`minimum_tier` at rank 0) available. Paid-tier features are unavailable.
 - A feature capable but outside the catalog tier: it is available — capabilities override the catalog tier.
 - A feature in the customer's catalog tier but absent from capabilities: it is unavailable — capabilities are the authority.
+- An active legacy license whose `slug` matches a catalog feature marks that feature as available and in-tier, even with no Unified license or with a Unified tier that doesn't include the feature. The legacy `key` must be non-empty and `is_active` must be `true` for the grant to apply. This lets legacy customers continue to receive updates through Harbor without a Unified key. Resolution checks Unified entitlement first and treats legacy as a fallback grant; download URL construction uses the inverse order so the legacy key authenticates downloads for its specific slug. See [Portal: Download URL Builder](portal.md#download-url-builder) for the rationale and the resulting URL format.
 
 ## The Manager
 

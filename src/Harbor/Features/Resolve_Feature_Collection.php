@@ -10,6 +10,7 @@ use LiquidWeb\Harbor\Features\Types\Feature;
 use LiquidWeb\Harbor\Features\Types\Plugin;
 use LiquidWeb\Harbor\Features\Types\Service;
 use LiquidWeb\Harbor\Features\Types\Theme;
+use LiquidWeb\Harbor\Legacy\License_Repository as Legacy_License_Repository;
 use LiquidWeb\Harbor\Licensing\Enums\Validation_Status;
 use LiquidWeb\Harbor\Licensing\Error_Code as Licensing_Error_Code;
 use LiquidWeb\Harbor\Licensing\License_Manager;
@@ -24,6 +25,8 @@ use WP_Error;
  * For each catalog feature, computes is_available and in_catalog_tier by checking
  * the product entry's capabilities array and the user's licensed tier rank.
  * dot.org and free-tier (rank 0) features are unconditionally available regardless of capabilities.
+ * An active legacy license whose slug matches the catalog feature also grants availability
+ * (and counts as in-tier), regardless of Unified capabilities or tier rank.
  *
  * @since 1.0.0
  */
@@ -59,6 +62,15 @@ class Resolve_Feature_Collection {
 	private Data $site_data;
 
 	/**
+	 * The legacy license repository.
+	 *
+	 * @since TBD
+	 *
+	 * @var Legacy_License_Repository
+	 */
+	private Legacy_License_Repository $legacy_repository;
+
+	/**
 	 * Map of catalog type strings to Feature subclass names.
 	 *
 	 * @since 1.0.0
@@ -76,18 +88,21 @@ class Resolve_Feature_Collection {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Catalog_Repository $catalog   The catalog repository.
-	 * @param License_Manager    $licensing The license manager.
-	 * @param Data               $site_data The site data provider.
+	 * @param Catalog_Repository        $catalog           The catalog repository.
+	 * @param License_Manager           $licensing         The license manager.
+	 * @param Data                      $site_data         The site data provider.
+	 * @param Legacy_License_Repository $legacy_repository The legacy license repository.
 	 */
 	public function __construct(
 		Catalog_Repository $catalog,
 		License_Manager $licensing,
-		Data $site_data
+		Data $site_data,
+		Legacy_License_Repository $legacy_repository
 	) {
-		$this->catalog   = $catalog;
-		$this->licensing = $licensing;
-		$this->site_data = $site_data;
+		$this->catalog           = $catalog;
+		$this->licensing         = $licensing;
+		$this->site_data         = $site_data;
+		$this->legacy_repository = $legacy_repository;
 	}
 
 	/**
@@ -248,7 +263,9 @@ class Resolve_Feature_Collection {
 	 * and computes is_available and in_catalog_tier.
 	 *
 	 * dot.org and free-tier (rank 0) features are unconditionally available regardless of capabilities.
-	 * When capabilities is null (no license), all paid-tier features are unavailable and not in tier.
+	 * An active legacy license whose slug matches the catalog feature also grants availability and
+	 * counts as in-tier, regardless of Unified capabilities or tier rank. The legacy key must be
+	 * non-empty for the grant to apply.
 	 *
 	 * @since 1.0.0
 	 *
@@ -282,17 +299,22 @@ class Resolve_Feature_Collection {
 		$minimum_tier = $product->get_tier_by_slug( $catalog_feature->get_minimum_tier() );
 		$minimum_rank = $minimum_tier !== null ? $minimum_tier->get_rank() : PHP_INT_MAX;
 
+		$legacy_license   = $this->legacy_repository->find( $catalog_feature->get_slug() );
+		$has_legacy_grant = $legacy_license !== null
+			&& $legacy_license->is_active
+			&& $legacy_license->key !== '';
+
 		if ( $catalog_feature->is_wporg() || $minimum_rank === 0 ) {
 			// WordPress.org and free-tier features are unconditionally available — capabilities and tier are irrelevant.
 			$is_available    = true;
 			$in_catalog_tier = true;
 		} elseif ( $capabilities === null ) {
-			// No license: paid-tier features are neither available nor in tier.
-			$is_available    = false;
-			$in_catalog_tier = false;
+			// No Unified license: paid-tier features only available when a legacy key covers them.
+			$is_available    = $has_legacy_grant;
+			$in_catalog_tier = $has_legacy_grant;
 		} else {
-			$is_available    = in_array( $catalog_feature->get_slug(), $capabilities, true );
-			$in_catalog_tier = ( $license_tier_rank >= $minimum_rank );
+			$is_available    = in_array( $catalog_feature->get_slug(), $capabilities, true ) || $has_legacy_grant;
+			$in_catalog_tier = $license_tier_rank >= $minimum_rank || $has_legacy_grant;
 		}
 
 		$data = [
